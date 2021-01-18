@@ -1,0 +1,68 @@
+## Ignore bundler config.
+/.bundle
+
+# Mac OS X files
+.DS_Store
+
+# Ignore application configuration (Figaro gem for using ENV variables)
+/config/application.yml
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
+# Don't include uploads and precompiled assets
+/public/uploads
+/public/assets
+
+# Standard .gitignore file for Ruby on Rails from github.com
+*.rbc
+capybara-*.html
+.rspec
+/public/system
+/coverage/
+/spec/tmp
+**.orig
+rerun.txt
+pickle-email-*.html
+
+# Ignore the default SQLite database.
+/db/*.sqlite3
+/db/*.sqlite3-journal
+/db/*.sqlite3-*
+
+# Ignore all logfiles and tempfiles.
+/log
+/tmp
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+# Ignore uploaded files in development.
+/storage/*
+!/storage/.keep
+
+# Environment normalization:
+/.bundle
+/vendor/bundle
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key
+
+# Ignore Byebug command history file.
+.byebug_history
+/public/packs
+/public/packs-test
+/node_modules
+yarn-debug.log*
+yarn-error.log*
+.yarn-integrity
+
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
