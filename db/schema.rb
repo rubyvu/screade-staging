@@ -26,11 +26,11 @@ ActiveRecord::Schema.define(version: 2021_01_19_141126) do
     t.index ["owner_id"], name: "index_devices_on_owner_id"
   end
 
-  create_table "groups", force: :cascade do |t|
+  create_table "news_categories", force: :cascade do |t|
     t.string "title", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["title"], name: "index_groups_on_title", unique: true
+    t.index ["title"], name: "index_news_categories_on_title", unique: true
   end
 
   create_table "users", force: :cascade do |t|
