@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
+  # Web routes
   devise_for :users
+  resources :dashboard, only: [:index]
   
   # API routes
   namespace :api, defaults: { format: 'json' } do

@@ -14,7 +14,6 @@ gem 'puma', '5.1.1'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
-gem 'bootstrap', '~> 4.5.3'
 
 # HTML template engine
 gem 'slim-rails'

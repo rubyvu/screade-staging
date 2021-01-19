@@ -1,3 +1,8 @@
+// Import libs from node modules
+import 'bootstrap';
+import jQuery from 'jquery';
+import 'jquery-ujs';
+
 // Import entry stylesheets for pack - IMPORTANT!
 import 'stylesheets/application';
 

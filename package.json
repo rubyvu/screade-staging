@@ -6,6 +6,12 @@
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "5.2.1",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "bootstrap": "^4.5.3",
+    "jquery": "^3.5.1",
+    "jquery-ui": "^1.12.1",
+    "jquery-ujs": "^1.2.2",
+    "popper.js": "^1.16.1",
     "turbolinks": "^5.2.0"
   },
   "version": "0.1.0",
