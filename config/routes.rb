@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  # Admin panel routes
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
+  
   # Web routes
   devise_for :users
   resources :dashboard, only: [:index]

@@ -15,6 +15,9 @@ gem 'puma', '5.1.1'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 
+# Admin panel
+gem 'activeadmin'
+
 # HTML template engine
 gem 'slim-rails'
 
