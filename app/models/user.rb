@@ -9,6 +9,10 @@ class User < ApplicationRecord
   # Constants
   EMAIL_FORMAT = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
   
+  # File Uploader
+  mount_uploader :profile_picture, AvatarUploader
+  mount_uploader :banner_picture, BannerUploader
+  
   # Associations
   has_many :devices, class_name: 'Device', foreign_key: 'owner_id', dependent: :destroy
   

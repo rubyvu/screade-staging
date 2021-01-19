@@ -49,9 +49,14 @@ gem 'devise'
 # Job queue
 gem 'que'
 
-# Image processor for uploaded images with ActiveStorage
+# AWS S3 adapter for Carrierwave
+gem 'fog-aws'
+
+# File uploading
+gem 'carrierwave'
+
+# Image processor for uploaded images with Carrierwave
 gem 'mini_magick'
-gem 'image_processing'
 
 # Pagination for ActiveRecord
 gem 'kaminari'
