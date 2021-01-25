@@ -28,6 +28,12 @@ class Api::V1::ApiController < ActionController::Base
         return
       end
       
+      # Check that User is not locked
+      if @current_device.owner.access_locked?
+        render json: { errors: ['User has been blocked, please contact support.'] }, status: :unauthorized
+        return
+      end
+      
       @current_user = @current_device.owner
     end
     

@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   
   # Web routes
-  devise_for :users
+  root to: 'dashboard#index'
+  devise_for :users, controllers: { passwords: 'users/passwords' }
   resources :dashboard, only: [:index]
   resources :news_categories, only: [:show]
   

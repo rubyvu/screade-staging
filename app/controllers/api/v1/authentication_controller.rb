@@ -71,6 +71,6 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
     end
     
     def user_params
-      params.require(:user).permit(:birthday, :email, :first_name, :last_name, :password, :password_confirmation, :phone_number, :profile_picture)
+      params.require(:user).permit(:birthday, :email, :first_name, :last_name, :password, :password_confirmation, :phone_number, :profile_picture, :security_question_answer, :username, :user_security_question_id)
     end
 end

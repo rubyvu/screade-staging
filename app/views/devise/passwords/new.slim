@@ -1,0 +1,21 @@
+h2 Forgot your password?
+
+= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+  = render "devise/shared/error_messages", resource: resource
+  
+  .field
+    = f.label :username
+    = f.text_field :username, autofocus: true, autocomplete: "username"
+    
+  .field
+    = f.label :user_security_question
+    = f.select :user_security_question_id, UserSecurityQuestion.all.map{ |q| [q.title, q.id] }
+ 
+  .field
+    = f.label :security_question_answer
+    = f.text_field :security_question_answer
+    
+  .actions
+    = f.submit "Send me reset password instructions"
+    
+= render "devise/shared/links"

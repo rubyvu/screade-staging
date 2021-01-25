@@ -4,6 +4,11 @@ h2 Edit #{resource_name.to_s.humanize}
   = render "devise/shared/error_messages", resource: resource
   
   .field
+    = f.label :username
+    br
+    = f.text_field :username, autofocus: true, autocomplete: "username"
+    
+  .field
     = f.label :email
     br
     = f.email_field :email, autofocus: true, autocomplete: "email"
@@ -29,6 +34,14 @@ h2 Edit #{resource_name.to_s.humanize}
     = f.label :current_password
     br
     = f.password_field :current_password, autocomplete: "current-password"
+    
+  .field
+    = f.label :user_security_question
+    = f.select :user_security_question_id, UserSecurityQuestion.all.map{|q| [q.title, q.id] }
+ 
+  .field
+    = f.label :security_question_answer
+    = f.text_field :security_question_answer
     
   .actions
     = f.submit "Update"

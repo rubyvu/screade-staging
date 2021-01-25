@@ -1,10 +1,7 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
-  # Include default devise modules. Others available are:
-  devise :database_authenticatable, :registerable
+  # :confirmable, :timeoutable, :trackable and :omniauthable
+  devise :confirmable, :database_authenticatable, :lockable, :registerable, :recoverable, :validatable
   
   # Constants
   EMAIL_FORMAT = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
@@ -14,6 +11,7 @@ class User < ApplicationRecord
   mount_uploader :banner_picture, BannerUploader
   
   # Associations
+  has_one :user_security_question
   has_many :devices, class_name: 'Device', foreign_key: 'owner_id', dependent: :destroy
   
   # Fields validations
@@ -21,6 +19,9 @@ class User < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :password, presence: true
+  validates :security_question_answer, presence: true
+  validates :username, presence: true, uniqueness: true
+  validates :user_security_question_id, presence: true
   
   # Normalization
   def email=(value)
