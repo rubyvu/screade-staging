@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_25_094008) do
+ActiveRecord::Schema.define(version: 2021_01_26_115857) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,62 @@ ActiveRecord::Schema.define(version: 2021_01_25_094008) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["title"], name: "index_news_categories_on_title", unique: true
+  end
+
+  create_table "que_jobs", comment: "4", force: :cascade do |t|
+    t.integer "priority", limit: 2, default: 100, null: false
+    t.datetime "run_at", default: -> { "now()" }, null: false
+    t.text "job_class", null: false
+    t.integer "error_count", default: 0, null: false
+    t.text "last_error_message"
+    t.text "queue", default: "default", null: false
+    t.text "last_error_backtrace"
+    t.datetime "finished_at"
+    t.datetime "expired_at"
+    t.jsonb "args", default: [], null: false
+    t.jsonb "data", default: {}, null: false
+    t.index ["args"], name: "que_jobs_args_gin_idx", opclass: :jsonb_path_ops, using: :gin
+    t.index ["data"], name: "que_jobs_data_gin_idx", opclass: :jsonb_path_ops, using: :gin
+    t.index ["job_class"], name: "que_scheduler_job_in_que_jobs_unique_index", unique: true, where: "(job_class = 'Que::Scheduler::SchedulerJob'::text)"
+    t.index ["queue", "priority", "run_at", "id"], name: "que_poll_idx", where: "((finished_at IS NULL) AND (expired_at IS NULL))"
+    t.check_constraint "(char_length(last_error_message) <= 500) AND (char_length(last_error_backtrace) <= 10000)", name: "error_length"
+    t.check_constraint "(jsonb_typeof(data) = 'object'::text) AND ((NOT (data ? 'tags'::text)) OR ((jsonb_typeof((data -> 'tags'::text)) = 'array'::text) AND (jsonb_array_length((data -> 'tags'::text)) <= 5) AND que_validate_tags((data -> 'tags'::text))))", name: "valid_data"
+    t.check_constraint "char_length(queue) <= 100", name: "queue_length"
+    t.check_constraint "jsonb_typeof(args) = 'array'::text", name: "valid_args"
+    t.check_constraint nil, name: "job_class_length"
+  end
+
+  create_table "que_lockers", primary_key: "pid", id: :integer, default: nil, force: :cascade do |t|
+    t.integer "worker_count", null: false
+    t.integer "worker_priorities", null: false, array: true
+    t.integer "ruby_pid", null: false
+    t.text "ruby_hostname", null: false
+    t.text "queues", null: false, array: true
+    t.boolean "listening", null: false
+    t.check_constraint "(array_ndims(queues) = 1) AND (array_length(queues, 1) IS NOT NULL)", name: "valid_queues"
+    t.check_constraint "(array_ndims(worker_priorities) = 1) AND (array_length(worker_priorities, 1) IS NOT NULL)", name: "valid_worker_priorities"
+  end
+
+  create_table "que_scheduler_audit", primary_key: "scheduler_job_id", id: :bigint, default: nil, comment: "6", force: :cascade do |t|
+    t.datetime "executed_at", null: false
+  end
+
+  create_table "que_scheduler_audit_enqueued", id: false, force: :cascade do |t|
+    t.bigint "scheduler_job_id", null: false
+    t.string "job_class", limit: 255, null: false
+    t.string "queue", limit: 255
+    t.integer "priority"
+    t.jsonb "args", null: false
+    t.bigint "job_id"
+    t.datetime "run_at"
+    t.index ["args"], name: "que_scheduler_audit_enqueued_args"
+    t.index ["job_class"], name: "que_scheduler_audit_enqueued_job_class"
+    t.index ["job_id"], name: "que_scheduler_audit_enqueued_job_id"
+  end
+
+  create_table "que_values", primary_key: "key", id: :text, force: :cascade do |t|
+    t.jsonb "value", default: {}, null: false
+    t.check_constraint "jsonb_typeof(value) = 'object'::text", name: "valid_value"
   end
 
   create_table "user_security_questions", force: :cascade do |t|
@@ -81,4 +137,5 @@ ActiveRecord::Schema.define(version: 2021_01_25_094008) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "que_scheduler_audit_enqueued", "que_scheduler_audit", column: "scheduler_job_id", primary_key: "scheduler_job_id", name: "que_scheduler_audit_enqueued_scheduler_job_id_fkey"
 end

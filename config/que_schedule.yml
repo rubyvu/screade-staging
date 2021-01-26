@@ -1,0 +1,5 @@
+test_schedule_job:
+  cron: "* * * * *" # Run every minute
+  class: Schedule::TestJob
+  queue: schedule
+  schedule_type: default

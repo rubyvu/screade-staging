@@ -332,4 +332,7 @@ ActiveAdmin.setup do |config|
   # You can switch to using Webpacker here.
   #
   config.use_webpacker = true
+  
+  # == Skip User Device authentication
+  config.skip_before_action :authenticate_user!
 end

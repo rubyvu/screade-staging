@@ -49,7 +49,9 @@ gem 'active_model_serializers'
 gem 'devise'
 
 # Job queue
-gem 'que'
+gem 'que', '~> 1.0.0.beta4'
+gem 'que-web'
+gem 'que-scheduler'
 
 # AWS S3 adapter for Carrierwave
 gem 'fog-aws'

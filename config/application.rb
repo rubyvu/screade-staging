@@ -11,6 +11,12 @@ module ScreadeRails
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
     
+    # Use que for job managing
+    config.active_job.queue_adapter = :que
+    
+    # Set the format for schema.rb
+    config.active_record.schema_format = :sql
+    
     # Load ENV variables
     Figaro.load
     
