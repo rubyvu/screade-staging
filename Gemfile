@@ -12,9 +12,6 @@ gem 'pg', '1.2.3'
 # Use Puma as the app server
 gem 'puma', '5.1.1'
 
-# Use SCSS for stylesheets
-gem 'sass-rails', '>= 6'
-
 # Admin panel
 gem 'activeadmin'
 
