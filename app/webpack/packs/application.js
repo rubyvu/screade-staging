@@ -6,8 +6,8 @@ import 'jquery-ujs';
 // Import entry stylesheets for pack - IMPORTANT!
 import 'stylesheets/application';
 
-const images = require.context('../images', true)
-const imagePath = (name) => images(name, true)
+// const images = require.context('../images', true)
+// const imagePath = (name) => images(name, true)
 
 /**
  * @class Singleton App.
