@@ -1,0 +1,2 @@
+web: rails s -p ${1:-3000} -e ${RACK_ENV:-development}
+webpacker: ./bin/webpack-dev-server

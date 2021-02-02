@@ -8,10 +8,10 @@ default: &default
   port: <%= ENV['RDS_PORT'] %>
   pool: <%= ENV.fetch('RDS_DB_POOL') { 5 } %>
   
-development:
+production:
   <<: *default
   
-production:
+development:
   <<: *default
   
 test:

@@ -1,15 +1,18 @@
 require 'que/web'
 
 Rails.application.routes.draw do
+  root to: 'dashboard#index'
+  
   # Admin panel routes
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+  
+  # Que web panel
   authenticate :admin_user do
     mount Que::Web, at: 'admin/que'
   end
   
   # Web routes
-  root to: 'dashboard#index'
   devise_for :users, controllers: { passwords: 'users/passwords' }
   resources :dashboard, only: [:index]
   resources :news_categories, only: [:show]
@@ -26,5 +29,4 @@ Rails.application.routes.draw do
       end
     end
   end
-  
 end

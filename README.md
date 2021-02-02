@@ -1,24 +1,22 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Webpacker
+### Run server with webpacker in watch mode:
+- Run rails server with default 3000 port:
+```
+  foreman start -f Procfile
+```
+- If need run local server with custom port:
+```
+  foreman start -f Procfile -p 3010
+```
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### Run server with use Hot Reloading (HMR):
+- Run rails server with webpacker in dev mode with default 3000 port:
+```
+  foreman start -f Procfile.dev
+```
+- If need run local server with custom port:
+```
+  foreman start -f Procfile.dev -p 3010
+```
