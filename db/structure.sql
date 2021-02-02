@@ -452,7 +452,8 @@ CREATE TABLE public.schema_migrations (
 
 CREATE TABLE public.user_security_questions (
     id bigint NOT NULL,
-    title character varying NOT NULL
+    title character varying NOT NULL,
+    question_identifier character varying NOT NULL
 );
 
 
@@ -693,10 +694,10 @@ CREATE UNIQUE INDEX index_news_categories_on_title ON public.news_categories USI
 
 
 --
--- Name: index_user_security_questions_on_title; Type: INDEX; Schema: public; Owner: -
+-- Name: index_user_security_questions_on_question_identifier; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_user_security_questions_on_title ON public.user_security_questions USING btree (title);
+CREATE UNIQUE INDEX index_user_security_questions_on_question_identifier ON public.user_security_questions USING btree (question_identifier);
 
 
 --
@@ -820,6 +821,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210125093347'),
 ('20210125094008'),
 ('20210126094957'),
-('20210126115857');
+('20210126115857'),
+('20210202140726');
 
 
