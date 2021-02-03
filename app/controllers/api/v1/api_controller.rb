@@ -28,13 +28,20 @@ class Api::V1::ApiController < ActionController::Base
         return
       end
       
+      # Set User
+      @current_user = @current_device.owner
+      
       # Check that User is not locked
-      if @current_device.owner.access_locked?
+      if @current_user.access_locked?
         render json: { errors: ['User has been blocked, please contact support.'] }, status: :unauthorized
         return
       end
       
-      @current_user = @current_device.owner
+      # Check that user confirmed his email after a while
+      if @current_user.confirmed_at.blank? && @current_user.created_at < DateTime.current - Devise.allow_unconfirmed_access_for
+        render json: { errors: ['Confirm your email address to continue using Screade.'] }, status: :unauthorized
+        return
+      end
     end
     
     def disable_caching
