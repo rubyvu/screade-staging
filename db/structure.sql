@@ -357,6 +357,44 @@ ALTER SEQUENCE public.devices_id_seq OWNED BY public.devices.id;
 
 
 --
+-- Name: news_articles; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.news_articles (
+    id bigint NOT NULL,
+    country_id integer NOT NULL,
+    news_category_id integer NOT NULL,
+    published_at timestamp without time zone NOT NULL,
+    author character varying NOT NULL,
+    title character varying NOT NULL,
+    description text NOT NULL,
+    url character varying NOT NULL,
+    img_url character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: news_articles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.news_articles_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: news_articles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.news_articles_id_seq OWNED BY public.news_articles.id;
+
+
+--
 -- Name: news_categories; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -580,6 +618,13 @@ ALTER TABLE ONLY public.devices ALTER COLUMN id SET DEFAULT nextval('public.devi
 
 
 --
+-- Name: news_articles id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.news_articles ALTER COLUMN id SET DEFAULT nextval('public.news_articles_id_seq'::regclass);
+
+
+--
 -- Name: news_categories id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -637,6 +682,14 @@ ALTER TABLE ONLY public.countries
 
 ALTER TABLE ONLY public.devices
     ADD CONSTRAINT devices_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: news_articles news_articles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.news_articles
+    ADD CONSTRAINT news_articles_pkey PRIMARY KEY (id);
 
 
 --
@@ -736,6 +789,13 @@ CREATE UNIQUE INDEX index_devices_on_access_token ON public.devices USING btree 
 --
 
 CREATE INDEX index_devices_on_owner_id ON public.devices USING btree (owner_id);
+
+
+--
+-- Name: index_news_articles_on_url; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_news_articles_on_url ON public.news_articles USING btree (url);
 
 
 --
@@ -875,6 +935,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210126094957'),
 ('20210126115857'),
 ('20210202140726'),
-('20210203122737');
+('20210203122737'),
+('20210203151112');
 
 

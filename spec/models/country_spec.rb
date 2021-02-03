@@ -6,7 +6,7 @@ RSpec.describe Country, type: :model do
   end
   
   context 'associations' do
-    
+    it { should have_many(:news_articles).class_name('NewsArticle') }
   end
   
   context 'validations' do
