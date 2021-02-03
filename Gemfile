@@ -77,7 +77,9 @@ group :development, :test do
   
   # Fake data generator for FactoryBot
   gem 'faker'
-
+  
+  # News API
+  gem 'news-api'
 end
 
 group :development do
