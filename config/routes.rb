@@ -20,11 +20,21 @@ Rails.application.routes.draw do
   # API routes
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
+      
+      resources :news_articles, only: [:show]
       resources :authentication, only: [] do
         collection do
           post :sign_in
           post :sign_up
           delete :sign_out
+        end
+      end
+      
+      resources :home, only: [] do
+        collection do
+          get :news
+          get :breaking_news
+          get :trends
         end
       end
     end
