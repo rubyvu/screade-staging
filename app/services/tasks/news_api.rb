@@ -22,13 +22,8 @@ module Tasks
       
       all_category_articles = get_all_category_articles(country.code, category.title)
       all_category_articles.each do |article|
-        # Since all_category_articles stored data in publishedAt order that started
-        # from the newest, we can interrupt an iterator when finding a match in DB
-        return if NewsArticle.exists?(url: article.url)
-        
         article_attr = {
           country: country,
-          news_category: category,
           published_at: article.publishedAt,
           author: article.author,
           title: article.title,
@@ -37,8 +32,16 @@ module Tasks
           img_url: article.urlToImage
         }
         
-        new_article = NewsArticle.new(article_attr)
-        puts "!!!!!!! ERROR: #{new_article.errors.full_messages}" unless new_article.save
+        article = NewsArticle.find_by(url: article.url)
+        unless article
+          article = NewsArticle.new(article_attr)
+          unless article.save
+            puts "!!!!!!! ERROR: #{article.errors.full_messages}"
+            next
+          end
+        end
+        
+        article.news_categories << category if article && article.news_categories.pluck(:title).exclude?(category.title)
       end
     end
     

@@ -6,7 +6,6 @@ class NewsArticle < ApplicationRecord
   
   # Association validation
   validates :country, presence: true
-  validates :news_category, presence: true
   
   # Fields validations
   validates :title, presence: true
