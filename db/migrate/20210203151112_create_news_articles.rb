@@ -4,9 +4,9 @@ class CreateNewsArticles < ActiveRecord::Migration[6.1]
       t.integer :country_id, null: false
       t.integer :news_category_id, null: false
       t.datetime :published_at, null: false
-      t.string :author, null: false
+      t.string :author
       t.string :title, null: false
-      t.text :description, null: false
+      t.text :description
       t.string :url, null: false
       t.string :img_url
       t.timestamps

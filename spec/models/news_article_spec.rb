@@ -22,8 +22,6 @@ RSpec.describe NewsArticle, type: :model do
     end
     
     context 'fields' do
-      it { should validate_presence_of(:author) }
-      it { should validate_presence_of(:description) }
       it { should validate_presence_of(:title) }
       it { should validate_presence_of(:published_at) }
       it { should validate_uniqueness_of(:url) }

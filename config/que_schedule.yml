@@ -1,5 +1,5 @@
-test_schedule_job:
-  cron: "* * * * *" # Run every minute
-  class: Schedule::TestJob
+get_news_articles_job:
+  cron: "*/10 * * * *" # Run every 10 minute
+  class: Schedule::GetNewsArticlesJob
   queue: schedule
   schedule_type: default

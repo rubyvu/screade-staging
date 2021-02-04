@@ -3,39 +3,24 @@ module Tasks
     
     @news = News.new(ENV['NEWS_API_KEY'])
     
-    def self.get_articles(country_title)
-      country = Country.find_by(title: country)
+    def self.get_articles(country_code)
+      country = Country.find_by(code: country_code)
       return unless country
       
       NewsCategory.all.each do |category|
-        all_category_articles = get_all_category_articles(country.title, category.title)
-        
         # Create Que job to save Article
-        # JOB.create_articles(country.title, category.title, all_category_articles) if all_category_articles.count > 0
+        CreateNewsArticlesJob.perform_later(country.code, category.title)
       end
     end
     
-    def self.get_all_category_articles(country, category, page=1, all_articles=[])
-      begin
-        news_array = @news.get_top_headlines(country: country, category: category, page: page, pageSize: '100')
-      rescue
-        puts "----- News API error while getting top headlines articles"
-        news_array = []
-      end
-      all_articles + news_array
-      
-      return all_articles if news_array.count < 100
-      
-      get_category_articles(country, category, page+1, all_articles)
-    end
-    
-    def self.create_articles(country_title, category_title, all_category_articles)
-      country = Country.find_by(title: country_title)
+    def self.create_articles(country_code, category_title)
+      country = Country.find_by(code: country_code)
       return unless country
       
       category = NewsCategory.find_by(title: category_title)
       return unless category
       
+      all_category_articles = get_all_category_articles(country.code, category.title)
       all_category_articles.each do |article|
         # Since all_category_articles stored data in publishedAt order that started
         # from the newest, we can interrupt an iterator when finding a match in DB
@@ -43,19 +28,39 @@ module Tasks
         
         article_attr = {
           country: country,
-          category: category,
-          published_at: article.published_at,
+          news_category: category,
+          published_at: article.publishedAt,
           author: article.author,
           title: article.title,
           description: article.description,
           url: article.url,
-          img_url: article.img_url
+          img_url: article.urlToImage
         }
         
         new_article = NewsArticle.new(article_attr)
-        puts new_article.errors.full_messages unless new_article.save
+        puts "!!!!!!! ERROR: #{new_article.errors.full_messages}" unless new_article.save
       end
     end
     
+    private
+      def self.get_all_category_articles(country_code, category, page=1, all_articles=[])
+        puts "=============================="
+        puts "Country: #{country_code}"
+        puts "Category: #{category}"
+        puts "Page: #{page}"
+        
+        begin
+          # Return all headline articles published in 24 hour
+          news_array = @news.get_top_headlines(country: country_code, category: category, page: page, pageSize: '100')
+        rescue
+          puts "!!!!!!! ERROR: Cannot get Top Headlines for #{country_code} country, #{category} category"
+          news_array = []
+        end
+        
+        all_articles += news_array
+        return all_articles if news_array.count < 100
+        
+        get_all_category_articles(country_code, category, page+1, all_articles)
+      end
   end
 end
