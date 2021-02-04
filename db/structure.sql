@@ -363,7 +363,6 @@ ALTER SEQUENCE public.devices_id_seq OWNED BY public.devices.id;
 CREATE TABLE public.news_articles (
     id bigint NOT NULL,
     country_id integer NOT NULL,
-    news_category_id integer NOT NULL,
     published_at timestamp without time zone NOT NULL,
     author character varying,
     title character varying NOT NULL,
@@ -372,6 +371,16 @@ CREATE TABLE public.news_articles (
     img_url character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: news_articles_categories; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.news_articles_categories (
+    news_article_id bigint NOT NULL,
+    news_category_id bigint NOT NULL
 );
 
 
@@ -792,6 +801,13 @@ CREATE INDEX index_devices_on_owner_id ON public.devices USING btree (owner_id);
 
 
 --
+-- Name: index_news_articles_categories_on_ids; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_news_articles_categories_on_ids ON public.news_articles_categories USING btree (news_article_id, news_category_id);
+
+
+--
 -- Name: index_news_articles_on_url; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -936,6 +952,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210126115857'),
 ('20210202140726'),
 ('20210203122737'),
-('20210203151112');
+('20210203151112'),
+('20210204133433');
 
 
