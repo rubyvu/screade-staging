@@ -391,6 +391,39 @@ ALTER SEQUENCE public.devices_id_seq OWNED BY public.devices.id;
 
 
 --
+-- Name: lits; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.lits (
+    id bigint NOT NULL,
+    user_id integer NOT NULL,
+    source_id integer NOT NULL,
+    source_type character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: lits_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.lits_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: lits_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.lits_id_seq OWNED BY public.lits.id;
+
+
+--
 -- Name: news_articles; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -669,6 +702,13 @@ ALTER TABLE ONLY public.devices ALTER COLUMN id SET DEFAULT nextval('public.devi
 
 
 --
+-- Name: lits id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.lits ALTER COLUMN id SET DEFAULT nextval('public.lits_id_seq'::regclass);
+
+
+--
 -- Name: news_articles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -741,6 +781,14 @@ ALTER TABLE ONLY public.countries
 
 ALTER TABLE ONLY public.devices
     ADD CONSTRAINT devices_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: lits lits_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.lits
+    ADD CONSTRAINT lits_pkey PRIMARY KEY (id);
 
 
 --
@@ -855,6 +903,13 @@ CREATE UNIQUE INDEX index_devices_on_access_token ON public.devices USING btree 
 --
 
 CREATE INDEX index_devices_on_owner_id ON public.devices USING btree (owner_id);
+
+
+--
+-- Name: index_lits_on_source_id_and_source_type; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_lits_on_source_id_and_source_type ON public.lits USING btree (source_id, source_type);
 
 
 --
@@ -1013,6 +1068,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210204133433'),
 ('20210205094311'),
 ('20210205123832'),
-('20210205131632');
+('20210205131632'),
+('20210205133755');
 
 
