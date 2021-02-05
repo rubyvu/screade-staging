@@ -11,6 +11,7 @@ class User < ApplicationRecord
   mount_uploader :banner_picture, BannerUploader
   
   # Associations
+  belongs_to :country
   has_one :user_security_question
   has_many :devices, class_name: 'Device', foreign_key: 'owner_id', dependent: :destroy
   

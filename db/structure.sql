@@ -616,7 +616,8 @@ CREATE TABLE public.users (
     banner_picture_hex character varying,
     username character varying NOT NULL,
     user_security_question_id integer NOT NULL,
-    security_question_answer character varying NOT NULL
+    security_question_answer character varying NOT NULL,
+    country_id integer NOT NULL
 );
 
 
@@ -1011,6 +1012,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210203151112'),
 ('20210204133433'),
 ('20210205094311'),
-('20210205123832');
+('20210205123832'),
+('20210205131632');
 
 
