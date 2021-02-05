@@ -332,7 +332,8 @@ ALTER SEQUENCE public.breaking_news_id_seq OWNED BY public.breaking_news.id;
 CREATE TABLE public.countries (
     id bigint NOT NULL,
     title character varying NOT NULL,
-    code character varying NOT NULL
+    code character varying NOT NULL,
+    is_national_news boolean DEFAULT false
 );
 
 
@@ -1009,6 +1010,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210203122737'),
 ('20210203151112'),
 ('20210204133433'),
-('20210205094311');
+('20210205094311'),
+('20210205123832');
 
 

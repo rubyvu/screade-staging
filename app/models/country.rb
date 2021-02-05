@@ -1,6 +1,6 @@
 class Country < ApplicationRecord
   # Constants
-  DEFAULT_COUNTRIES = %w(ae ar at au be bg br ca ch cn co cu cz de eg fr gb gr hk hu id ie il in it jp kr lt lv ma mx my ng nl no nz ph pl pt ro rs ru sa se sg si sk th tr tw ua us ve za)
+  COUNTRIES_WITH_NATIONAL_NEWS = %w(AE AR AT AU BE BG BR CA CH CN CO CU CZ DE EG FR GB GR HK HU ID IE IL IN IT JP KR LT LV MA MX MY NG NL NO NZ PH PL PT RO RS RU SA SE SG SI SK TH TR TW UA US VE ZA)
   
   # Associations
   has_many :breaking_news, class_name: 'BreakingNews'
@@ -8,10 +8,10 @@ class Country < ApplicationRecord
   
   # Fields validations
   validates :title, presence: true
-  validates :code, presence: true, uniqueness: true, inclusion: { in: Country::DEFAULT_COUNTRIES, message: "New category should exists in default categories list" }
+  validates :code, presence: true, uniqueness: true
   
   # Normalization
   def code=(value)
-    super(value&.downcase)
+    super(value&.upcase)
   end
 end

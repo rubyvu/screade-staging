@@ -80,6 +80,9 @@ group :development, :test do
   
   # News API
   gem 'news-api'
+  
+  # All countries
+  gem 'city-state'
 end
 
 group :development do
