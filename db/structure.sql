@@ -293,6 +293,39 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: breaking_news; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.breaking_news (
+    id bigint NOT NULL,
+    title character varying NOT NULL,
+    is_active boolean DEFAULT false,
+    country_id integer NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: breaking_news_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.breaking_news_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: breaking_news_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.breaking_news_id_seq OWNED BY public.breaking_news.id;
+
+
+--
 -- Name: countries; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -613,6 +646,13 @@ ALTER TABLE ONLY public.admin_users ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: breaking_news id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.breaking_news ALTER COLUMN id SET DEFAULT nextval('public.breaking_news_id_seq'::regclass);
+
+
+--
 -- Name: countries id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -675,6 +715,14 @@ ALTER TABLE ONLY public.admin_users
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: breaking_news breaking_news_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.breaking_news
+    ADD CONSTRAINT breaking_news_pkey PRIMARY KEY (id);
 
 
 --
@@ -777,6 +825,13 @@ CREATE UNIQUE INDEX index_admin_users_on_email ON public.admin_users USING btree
 --
 
 CREATE UNIQUE INDEX index_admin_users_on_reset_password_token ON public.admin_users USING btree (reset_password_token);
+
+
+--
+-- Name: index_breaking_news_on_country_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_breaking_news_on_country_id ON public.breaking_news USING btree (country_id);
 
 
 --
@@ -953,6 +1008,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210202140726'),
 ('20210203122737'),
 ('20210203151112'),
-('20210204133433');
+('20210204133433'),
+('20210205094311');
 
 
