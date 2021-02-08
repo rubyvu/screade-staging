@@ -20,8 +20,6 @@ Rails.application.routes.draw do
   # API routes
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
-      
-      resources :news_articles, only: [:show]
       resources :authentication, only: [] do
         collection do
           post :sign_in
@@ -30,6 +28,8 @@ Rails.application.routes.draw do
         end
       end
       
+      resources :countries, only: [:index]
+      resources :forgot_password, only: [:create]
       resources :home, only: [] do
         collection do
           get :news
@@ -37,6 +37,9 @@ Rails.application.routes.draw do
           get :trends
         end
       end
+      
+      resources :news_articles, only: [:show]
+      resources :user_security_questions, only: [:index]
     end
   end
 end
