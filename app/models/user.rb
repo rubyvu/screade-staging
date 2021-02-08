@@ -16,7 +16,7 @@ class User < ApplicationRecord
   has_many :devices, class_name: 'Device', foreign_key: 'owner_id', dependent: :destroy
   # Lits
   has_many :lits
-  has_many :lited_news_articles, through: :lits, source: :news_articles
+  has_many :lited_news_articles, through: :lits, source: :source, source_type: 'NewsArticle'
   
   # Fields validations
   validates :email, uniqueness: true, presence: true, length: { maximum: 100 }, format: { with: User::EMAIL_FORMAT }
