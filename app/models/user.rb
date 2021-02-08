@@ -14,6 +14,9 @@ class User < ApplicationRecord
   belongs_to :country
   belongs_to :user_security_question
   has_many :devices, class_name: 'Device', foreign_key: 'owner_id', dependent: :destroy
+  ## Comments
+  has_many :comments
+  has_many :commented_news_articles, through: :comments, source: :source, source_type: 'NewsArticle'
   ## Lits
   has_many :lits
   has_many :lited_news_articles, through: :lits, source: :source, source_type: 'NewsArticle'
