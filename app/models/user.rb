@@ -14,9 +14,12 @@ class User < ApplicationRecord
   belongs_to :country
   belongs_to :user_security_question
   has_many :devices, class_name: 'Device', foreign_key: 'owner_id', dependent: :destroy
-  # Lits
+  ## Lits
   has_many :lits
   has_many :lited_news_articles, through: :lits, source: :source, source_type: 'NewsArticle'
+  ## Lits
+  has_many :views
+  has_many :viewed_news_articles, through: :views, source: :source, source_type: 'NewsArticle'
   
   # Fields validations
   validates :email, uniqueness: true, presence: true, length: { maximum: 100 }, format: { with: User::EMAIL_FORMAT }

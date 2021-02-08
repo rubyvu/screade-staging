@@ -40,7 +40,7 @@ RSpec.describe Lit, type: :model do
       user = FactoryBot.create(:user, country: @country, user_security_question: @user_security_question)
       news_article = FactoryBot.create(:news_article, country: @country)
       
-      # Check that there now lits for new objects
+      # Check that there no lits for new objects
       expect(user.lits.count).to eq(0)
       expect(user.lited_news_articles.count).to eq(0)
       expect(news_article.lits.count).to eq(0)
@@ -71,7 +71,7 @@ RSpec.describe Lit, type: :model do
       # Remove lit
       lit_for_article.destroy
       
-      # Check that there now lits for exists objects
+      # Check that there no lits for exists objects
       expect(user.lits.count).to eq(0)
       expect(user.lited_news_articles.count).to eq(0)
       expect(news_article.lits.count).to eq(0)

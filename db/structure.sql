@@ -674,6 +674,39 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: views; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.views (
+    id bigint NOT NULL,
+    user_id integer NOT NULL,
+    source_id integer NOT NULL,
+    source_type character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: views_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.views_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: views_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.views_id_seq OWNED BY public.views.id;
+
+
+--
 -- Name: admin_users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -741,6 +774,13 @@ ALTER TABLE ONLY public.user_security_questions ALTER COLUMN id SET DEFAULT next
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Name: views id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.views ALTER COLUMN id SET DEFAULT nextval('public.views_id_seq'::regclass);
 
 
 --
@@ -864,6 +904,14 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: views views_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.views
+    ADD CONSTRAINT views_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: index_admin_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -969,6 +1017,13 @@ CREATE UNIQUE INDEX index_users_on_username ON public.users USING btree (usernam
 
 
 --
+-- Name: index_views_on_source_id_and_source_type; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_views_on_source_id_and_source_type ON public.views USING btree (source_id, source_type);
+
+
+--
 -- Name: que_jobs_args_gin_idx; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1069,6 +1124,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210205094311'),
 ('20210205123832'),
 ('20210205131632'),
-('20210205133755');
+('20210205133755'),
+('20210208101226');
 
 
