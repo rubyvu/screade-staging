@@ -19,23 +19,22 @@ html
       #navbarSupportedContent.collapse.navbar-collapse
         ul.navbar-nav.mr-auto
           li.nav-item.active
-            a.nav-link href="#"
-              | Home
-              span.sr-only (current)
+            a.nav-link href="#" Home
           li.nav-item
-            a.nav-link href="#"  Link
-          li.nav-item.dropdown
-            a#navbarDropdown.nav-link.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" role="button"
-              | Dropdown
-            .dropdown-menu aria-labelledby="navbarDropdown"
-              a.dropdown-item href="#"  Action
-              a.dropdown-item href="#"  Another action
-              .dropdown-divider
-              a.dropdown-item href="#"  Something else here
+            a.nav-link href="#" Groups
           li.nav-item
-            a.nav-link.disabled href="#"  Disabled
-        form.form-inline.my-2.my-lg-0
-          input.form-control.mr-sm-2 aria-label="Search" placeholder="Search" type="search" /
-          button.btn.btn-outline-success.my-2.my-sm-0 type="submit"  Search
-    
+            a.nav-link href="#" Calendar
+          li.nav-item
+            a.nav-link href="#" Images
+          li.nav-item
+            a.nav-link href="#" Posts
+          li.nav-item
+            a.nav-link href="#" Map
+          li.nav-item
+            a.nav-link href="#" Video
+            
+        .div
+          button.btn.btn-link.my-2.my-sm-0 Sign Up
+          button.btn.btn-primary.my-2.my-sm-0 Sign In
+          
     = yield
