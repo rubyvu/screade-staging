@@ -1,7 +1,7 @@
 require 'que/web'
 
 Rails.application.routes.draw do
-  root to: 'dashboard#index'
+  root to: 'home#index'
   
   # Admin panel routes
   devise_for :admin_users, ActiveAdmin::Devise.config
@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   
   # Web routes
   devise_for :users, controllers: { passwords: 'users/passwords' }
-  resources :dashboard, only: [:index]
+  resources :home, only: [:index]
   resources :news_categories, only: [:show]
   
   # API routes
