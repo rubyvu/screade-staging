@@ -32,7 +32,13 @@ Rails.application.routes.draw do
       end
       
       resources :countries, only: [:index]
-      resources :current_user, only: [:update]
+      resources :current_user, only: [] do
+        collection do
+          put :update
+          patch :update
+        end
+      end
+      
       resources :forgot_password, only: [:create]
       resources :home, only: [] do
         collection do

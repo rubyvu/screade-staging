@@ -3,7 +3,7 @@ class Api::V1::ForgotPasswordController < Api::V1::ApiController
   
   # POST /api/v1/forgot_password
   def create
-    user = User.find_by!(username: user_params[:username])
+    user = User.find_by!(email: user_params[:email])
     security_question = UserSecurityQuestion.find_by!(question_identifier: security_question_params[:question_identifier])
     
     if user.user_security_question == security_question && user.security_question_answer == security_question_params[:security_question_answer]
@@ -25,7 +25,7 @@ class Api::V1::ForgotPasswordController < Api::V1::ApiController
   
   private
     def user_params
-      params.require(:user).permit(:username)
+      params.require(:user).permit(:email)
     end
     
     def security_question_params

@@ -5,6 +5,7 @@ class User < ApplicationRecord
   
   # Constants
   EMAIL_FORMAT = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+  PASSWORD_FORMAT = /\A(?=.*[^a-zA-Z])/x  # Must contain at least one number or symbol
   
   # File Uploader
   mount_uploader :profile_picture, AvatarUploader
@@ -26,9 +27,7 @@ class User < ApplicationRecord
   
   # Fields validations
   validates :email, uniqueness: true, presence: true, length: { maximum: 100 }, format: { with: User::EMAIL_FORMAT }
-  validates :first_name, presence: true
-  validates :last_name, presence: true
-  validates :password, presence: true
+  validates :password, presence: true, length: { minimum: 8 }, format: { with: PASSWORD_FORMAT, message: 'must contain at least eight characters and one number or symbol' }, if: -> { self.password.present? }
   validates :security_question_answer, presence: true
   validates :username, presence: true, uniqueness: true
   validates :user_security_question_id, presence: true

@@ -660,8 +660,8 @@ ALTER SEQUENCE public.user_security_questions_id_seq OWNED BY public.user_securi
 
 CREATE TABLE public.users (
     id bigint NOT NULL,
-    first_name character varying NOT NULL,
-    last_name character varying NOT NULL,
+    first_name character varying,
+    last_name character varying,
     profile_picture character varying,
     profile_picture_hex character varying,
     phone_number character varying,
@@ -684,7 +684,8 @@ CREATE TABLE public.users (
     username character varying NOT NULL,
     user_security_question_id integer NOT NULL,
     security_question_answer character varying NOT NULL,
-    country_id integer NOT NULL
+    country_id integer NOT NULL,
+    middle_name character varying
 );
 
 
@@ -1182,6 +1183,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210205131632'),
 ('20210205133755'),
 ('20210208101226'),
-('20210208104456');
+('20210208104456'),
+('20210210133800');
 
 

@@ -6,6 +6,7 @@ $color-light-blue: #D4D7ED;
 $color-black: #000000;
 $color-red: #DA100B;
 $color-grey: #DCDCDC;
+$color-white: #FFFFFF;
 
 /**************************************
 * Custom bootstrab elements:
@@ -13,7 +14,8 @@ $color-grey: #DCDCDC;
 $primary: $color-blue;
 $danger: $color-red;
 
-@import 'navigation_bar.scss';
+@import 'navigation_bar';
+@import 'modale';
 
 /**************************************
 * Import stylesheets from node modules:

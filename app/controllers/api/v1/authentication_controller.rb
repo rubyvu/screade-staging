@@ -48,7 +48,7 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
     user.user_security_question = user_security_question
     
     unless user.valid?
-      render json: { errors: user.errors.full_messages }, status: :bad_request
+      render json: { errors: errors_by_attributes(user.errors) }, status: :bad_request
       return
     end
     
