@@ -13,7 +13,10 @@ Rails.application.routes.draw do
   end
   
   # Web routes
-  devise_for :users, controllers: { passwords: 'users/passwords' }
+  devise_for :users, controllers: {
+    sessions: 'users/sessions',
+    passwords: 'users/passwords'
+   }
   resources :home, only: [:index]
   resources :news_categories, only: [:show]
   
