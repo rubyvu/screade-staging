@@ -37,8 +37,9 @@ html
           - if current_user
             = link_to "Logout", destroy_user_session_path, method: :delete, class: 'btn btn-link my-2 my-sm-0'
           - else
-            = link_to "Sign Up", '', class: 'btn btn-link my-2 my-sm-0'
+            = link_to "Sign Up", '', class: 'btn btn-link my-2 my-sm-0', data: { toggle: "modal", target: ".sign-up-modal-lg" }
             = link_to "Sign In", '', class: 'btn btn-primary my-2 my-sm-0', data: { toggle: "modal", target: ".sign-in-modal-lg" }
     = yield
     
     = render 'shared/sign_in'
+    = render 'shared/sign_up'

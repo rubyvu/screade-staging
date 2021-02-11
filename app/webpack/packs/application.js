@@ -1,10 +1,10 @@
 // Import libs from node modules
 import 'bootstrap';
 import jQuery from 'jquery';
-import Rails from "@rails/ujs"
-import Turbolinks from "turbolinks"
-import * as ActiveStorage from "@rails/activestorage"
-import "channels"
+import Rails from "@rails/ujs";
+import Turbolinks from "turbolinks";
+import * as ActiveStorage from "@rails/activestorage";
+import "channels";
 
 // Import internal scripts
 import './shared/modals';

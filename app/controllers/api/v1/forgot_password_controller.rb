@@ -14,8 +14,7 @@ class Api::V1::ForgotPasswordController < Api::V1::ApiController
       # Send instructions so user can enter a new password
       user.send_reset_password_instructions
       
-      user_json = UserSerializer.new(user).attributes.as_json
-      render json: { user: user_json }, status: :ok
+      render json: { success: true }, status: :ok
     else
       user.increment_failed_attempts
       user.lock_access! if user.failed_attempts >= 3

@@ -2,14 +2,13 @@
   .modal-dialog.modal-dialog-centered.modal-lg
     .modal-content
       .modal-header
-        h4#exampleModalLabel.modal-title Sign In
+        h4.modal-title Sign In
         button.close aria-label="Close" data-dismiss="modal" type="button"
           = image_pack_tag('media/images/icons/ic_close.png')
       .modal-body
         .global-errors
         = form_for(resource, as: resource_name, url: session_path(resource_name), remote: true) do |f|
-          = render "devise/shared/error_messages", resource: resource
-          
+        
           .input-group.mb-3
             .input-group-prepend
               .input-group-text
@@ -27,11 +26,6 @@
             .input-group-append
               .input-group-text
                 = image_pack_tag('media/images/icons/ic_show_password.png', class: 'img-responsive', id: 'show-password-icon')
-            
-          - if devise_mapping.rememberable?
-            .field
-              = f.check_box :remember_me
-              = f.label :remember_me
           
           .actions.text-right
             = link_to 'Forgot password', new_password_path(resource_name)

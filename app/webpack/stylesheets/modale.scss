@@ -44,6 +44,30 @@
   
 }
 
+// Lable format
+.modal-dialog .modal-content .modal-body {
+  font-size: 14px;
+  color: $color-grey;
+}
+
+// Material field
+.modal-dialog .modal-content .modal-body .material-field {
+  margin: 12px 0px;
+  label { margin: 0; }
+  input { padding: 0; }
+  span.select2-container { display: block; }
+  span.select2-container .select2-selection__rendered { padding-left: 0;}
+  span.select2-selection {
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid $color-grey;
+  }
+  
+  &.dropdown { margin: 0 0 24px 0; }
+}
+
+span.flag-text  { margin-left: 10px !important; }
+
 // Input placeholder color and size Chrome, Firefox, Opera, Safari 10.1+
 .modal-dialog .modal-content .modal-body .form-control::placeholder {
   font-size: 14px;
@@ -71,9 +95,15 @@
   box-shadow: none !important;
 }
 
+// Checkbox
+.modal .form-check label {
+  color: $color-black;
+  font-size: 16px;
+}
+
 // Modal Footer
 .modal-content .modal-footer {
-  padding: 24px;
+  padding-top: 12px;
   border-top: none;
 }
 
@@ -86,3 +116,16 @@
 
 // Errors
 .modal-content .global-errors { color: $color-red; }
+
+// Step view
+.modal .step-wrapper { display: block; }
+.modal .step {
+  width: 72px;
+  height: 6px;
+  border-radius: 8px;
+  background-color: $color-blue;
+  display: inline-block;
+  margin-right: 12px;
+  
+  &.next { background-color: $color-grey; }
+}

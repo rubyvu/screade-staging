@@ -1,3 +1,7 @@
+import "select2";
+import "select2/dist/css/select2.min.css"
+import "flag-icon-css/css/flag-icon.css"
+
 $( document ).on('turbolinks:load', function() {
   
   // Show modal User password input
@@ -21,5 +25,25 @@ $( document ).on('turbolinks:load', function() {
   // Clear global error on
   $('.modal :input').change(function() {
     $('.modal .global-errors').html('')
+  })
+  
+  // County field
+  $('#user_country_id').select2({
+    dropdownParent: $('.sign-up-modal-lg'),
+    templateResult: formatCountry
+  });
+  
+  function formatCountry (country) {
+    if (!country.id) { return country.text; }
+    var $country = $(
+      '<span class="flag-icon flag-icon-'+ country.id.toLowerCase() +' flag-icon-squared"></span>' +
+      '<span class="flag-text">'+ country.text+"</span>"
+    );
+    return $country;
+  };
+  
+  // Secret Question field
+  $('#user_user_security_question_id').select2({
+    dropdownParent: $('.sign-up-modal-lg')
   })
 })
