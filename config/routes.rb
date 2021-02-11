@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   # Web routes
   devise_for :users, controllers: {
     sessions: 'users/sessions',
+    registrations: 'users/registrations',
     passwords: 'users/passwords'
    }
   resources :home, only: [:index]

@@ -116,6 +116,10 @@ span.flag-text  { margin-left: 10px !important; }
 
 // Errors
 .modal-content .global-errors { color: $color-red; }
+.modal-content .local-errors {
+  margin: 2px 0px;
+  color: $color-red;
+}
 
 // Step view
 .modal .step-wrapper { display: block; }

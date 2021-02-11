@@ -7,7 +7,7 @@
           = image_pack_tag('media/images/icons/ic_close.png')
       .modal-body
         .global-errors
-        = form_for(resource, as: resource_name, url: session_path(resource_name), remote: true) do |f|
+        = form_for(resource, as: resource_name, url: session_path(resource_name), remote: true, namespace: 'sign_in') do |f|
         
           .input-group.mb-3
             .input-group-prepend

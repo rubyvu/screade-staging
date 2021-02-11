@@ -20,6 +20,7 @@ $( document ).on('turbolinks:load', function() {
   $('.modal').on('hide.bs.modal', function (e) {
     $('.modal :input').not(':button, :submit, :reset, :hidden').val('').prop('checked', false).prop('selected', false);
     $('.modal .global-errors').html('')
+    $('.modal .local-errors').remove()
   })
   
   // Clear global error on
@@ -28,22 +29,37 @@ $( document ).on('turbolinks:load', function() {
   })
   
   // County field
-  $('#user_country_id').select2({
+  $('#sign_up_user_country_id').select2({
     dropdownParent: $('.sign-up-modal-lg'),
     templateResult: formatCountry
   });
   
   function formatCountry (country) {
-    if (!country.id) { return country.text; }
+    if (!country.title) { return country.text; }
     var $country = $(
-      '<span class="flag-icon flag-icon-'+ country.id.toLowerCase() +' flag-icon-squared"></span>' +
+      '<span class="flag-icon flag-icon-'+ country.title.toLowerCase() +' flag-icon-squared"></span>' +
       '<span class="flag-text">'+ country.text+"</span>"
     );
     return $country;
   };
   
   // Secret Question field
-  $('#user_user_security_question_id').select2({
+  $('#sign_up_user_user_security_question_id').select2({
     dropdownParent: $('.sign-up-modal-lg')
+  })
+  
+  // Block submit button on Sign Up
+  let signUpSubmitButton = $('#sign-up-submit-button')
+  
+  $('.sign-up-modal-lg').on('show.bs.modal', function (e) {
+    signUpSubmitButton.prop('disabled', true)
+  })
+  
+  $('#term-and-services-agreement').on('change', function() {
+    if ($(this).is(":checked")) {
+      signUpSubmitButton.prop('disabled', false)
+    } else {
+      signUpSubmitButton.prop('disabled', true)
+    }
   })
 })
