@@ -13,6 +13,13 @@ Rails.application.routes.draw do
   end
   
   # Web routes
+  resources :current_user, only: [] do
+    collection do
+      put :update
+      patch :update
+    end
+  end
+  
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations',

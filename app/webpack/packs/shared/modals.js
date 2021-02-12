@@ -1,12 +1,22 @@
 import "select2";
 import "select2/dist/css/select2.min.css"
+import moment from 'moment';
 import "flag-icon-css/css/flag-icon.css"
 
 $( document ).on('turbolinks:load', function() {
+  // Update user birthday date
+  $("#birthday_day, #birthday_month, #birthday_year").on('change', function () {
+    let year = $('#birthday_year').val()
+    let month = $('#birthday_month').val()
+    let day = $('#birthday_day').val()
+    
+    let date = moment(new Date(year, day, month)).format('YYYY-MM-DD')
+    $('#sign_up_update_user_birthday').val(date)
+  })
   
   // Show modal User password input
   $("#show-password-icon").on('click', function() {
-    let input = $(".modal #user_password")
+    let input = $(".modal #sign_in_user_password")
     if (input.attr("type") === "password") {
       $(this).css("opacity", 1)
       input.attr("type", "text");
@@ -16,9 +26,14 @@ $( document ).on('turbolinks:load', function() {
     }
   })
   
+  // Hide all modals on new modal open
+  $('.modal').on('show.bs.modal', function () {
+    $('.modal').modal('hide')
+  })
+  
   // Clear fields/errors on modal hide
   $('.modal').on('hide.bs.modal', function (e) {
-    $('.modal :input').not(':button, :submit, :reset, :hidden').val('').prop('checked', false).prop('selected', false);
+    $('.modal :input').not(':button, :submit, :reset, :hidden, .datepicker').val('').prop('checked', false).prop('selected', false);
     $('.modal .global-errors').html('')
     $('.modal .local-errors').remove()
   })
