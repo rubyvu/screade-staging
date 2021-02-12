@@ -1,8 +1,4 @@
-h1 Home
-
 ul#news-categories-list
   - @news_categories.each do |news_category|
     li
       = link_to news_category.title, [:news_category, id: news_category.id]
-  
-= link_to "Log Out", destroy_user_session_path, method: :delete

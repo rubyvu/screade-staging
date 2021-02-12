@@ -14,6 +14,15 @@ $color-white: #FFFFFF;
 $primary: $color-blue;
 $danger: $color-red;
 
+// TODO: remove this when design for mobile will be ready
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 1350px,
+  xl: 1200px
+);
+
 @import 'navigation_bar';
 @import 'modal';
 
@@ -37,7 +46,15 @@ html, body {
   height: 100%;
   margin: 0 auto;
   padding: 8px 100px;
-  border: 1px solid green;
+  //border: 1px solid green;
   font-family: 'roboto';
   font-weight: 400; // 900, 700, 500, 400, 300
+}
+
+@media (max-width: 960px) {
+  html, body { padding: 8px 50px; }
+}
+
+@media (max-width: 450px) {
+  html, body { padding: 8px 10px; }
 }
