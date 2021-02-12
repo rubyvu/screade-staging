@@ -1,0 +1,7 @@
+<%- if resource.errors.present? %>
+  $('.modal.forgot-password-modal-lg .global-errors').html("Incorrect Email/Question/Answer")
+<% else %>
+  let form = $('.modal.forgot-password-modal-lg form')
+  form.hide()
+  form.after('<div class="global-success">We have sent recovery instructions to your email.<div>')
+<% end %>

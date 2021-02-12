@@ -28,7 +28,7 @@
                 = image_pack_tag('media/images/icons/ic_show_password.png', class: 'img-responsive', id: 'show-password-icon')
           
           .actions.text-right
-            = link_to 'Forgot password', new_password_path(resource_name)
+            = link_to 'Forgot password', '', data: { toggle: "modal", target: ".forgot-password-modal-lg" }
             
           .actions
             = f.submit 'Sign In', class: 'btn btn-primary w-100'

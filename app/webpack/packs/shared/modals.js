@@ -63,6 +63,10 @@ $( document ).on('turbolinks:load', function() {
     dropdownParent: $('.sign-up-modal-lg')
   })
   
+  $('#sign_up_user_user_security_question_id, #forgot_password_user_user_security_question_id').select2({
+    dropdownParent: $('.forgot-password-modal-lg')
+  })
+  
   // Block submit button on Sign Up
   let signUpSubmitButton = $('#sign-up-submit-button')
   
