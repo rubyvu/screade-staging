@@ -1,8 +1,6 @@
 module Tasks
   class NewsApi
     
-    @news = News.new(ENV['NEWS_API_KEY'])
-    
     def self.get_articles(country_code)
       country = Country.find_by(code: country_code)
       return unless country
@@ -47,6 +45,8 @@ module Tasks
     
     private
       def self.get_all_category_articles(country_code, category, page=1, all_articles=[])
+        news = News.new(ENV['NEWS_API_KEY'])
+        
         puts "=============================="
         puts "Country: #{country_code}"
         puts "Category: #{category}"
@@ -54,7 +54,7 @@ module Tasks
         
         begin
           # Return all headline articles published in 24 hour
-          news_array = @news.get_top_headlines(country: country_code, category: category, page: page, pageSize: '100')
+          news_array = news.get_top_headlines(country: country_code, category: category, page: page, pageSize: '100')
         rescue
           puts "!!!!!!! ERROR: Cannot get Top Headlines for #{country_code} country, #{category} category"
           news_array = []

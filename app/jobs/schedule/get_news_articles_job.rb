@@ -1,7 +1,8 @@
 class Schedule::GetNewsArticlesJob < ApplicationJob
   
   def run
-    return if Rails.env.development?
+    # return if Rails.env.development?
+    return
     puts "Update News Articles ..."
     
     Country.all.each do |country|
