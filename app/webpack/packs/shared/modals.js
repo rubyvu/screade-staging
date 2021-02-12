@@ -81,4 +81,49 @@ $( document ).on('turbolinks:load', function() {
       signUpSubmitButton.prop('disabled', true)
     }
   })
+  
+  // Photo preview
+  $('.banner-image-mask').on('click', function() {
+     $("#sign_up_update_user_banner_picture").click();
+  })
+  
+  $('.profile-image-mask').on('click', function() {
+     $("#sign_up_update_user_profile_picture").click();
+  })
+  
+  $("#sign_up_update_user_banner_picture").change(function() {
+    readBannerURL(this);
+  });
+  
+  $("#sign_up_update_user_profile_picture").change(function() {
+    readProfileURL(this);
+  });
+  
+  function readBannerURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      
+      reader.onload = function(e) {
+        $('#banner-image').attr('src', e.target.result);
+        $('#banner-image').show();
+        $('#icon-add-banner').hide();
+      }
+      
+      reader.readAsDataURL(input.files[0]); // convert to base64 string
+    }
+  }
+  
+  function readProfileURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      
+      reader.onload = function(e) {
+        $('#profile-image').attr('src', e.target.result);
+        $('#profile-image').show();
+        $('#icon-add-profile').hide();
+      }
+      
+      reader.readAsDataURL(input.files[0]); // convert to base64 string
+    }
+  }
 })
