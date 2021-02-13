@@ -112,6 +112,14 @@ span.flag-text  { margin-left: 10px !important; }
   font-size: 16px;
 }
 
+// Selector
+.modal select {
+  outline: none !important;
+  box-shadow: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+}
+
 // Modal Footer
 .modal-content .modal-footer {
   padding: 24px;
