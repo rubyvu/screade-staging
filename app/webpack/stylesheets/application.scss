@@ -24,7 +24,8 @@ $grid-breakpoints: (
 );
 
 @import 'navigation_bar';
-@import 'modal';
+@import 'custom_fields';
+@import './modals/index';
 
 /**************************************
 * Import stylesheets from node modules:
@@ -39,8 +40,6 @@ $grid-breakpoints: (
 /**************************************
 * Internal styles:
 **************************************/
-
-
 html, body {
   max-width: 1440px;
   height: 100%;
