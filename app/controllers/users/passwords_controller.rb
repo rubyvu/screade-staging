@@ -3,7 +3,6 @@ class Users::PasswordsController < Devise::PasswordsController
   skip_before_action :require_no_authentication, :only => [:new, :create]
   
   respond_to :html, :js
-  
   # Remove layout for xhr request
   before_action proc { |controller| (controller.action_has_layout = false) if controller.request.xhr? }
   
