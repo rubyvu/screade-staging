@@ -45,7 +45,7 @@ $( document ).on('turbolinks:load', function() {
   
   // County field
   $('#sign_up_user_country_id').select2({
-    dropdownParent: $('.sign-up-modal-lg'),
+    dropdownParent: $('#modal-sign-up'),
     templateResult: formatCountry
   });
   
@@ -60,17 +60,17 @@ $( document ).on('turbolinks:load', function() {
   
   // Secret Question field
   $('#sign_up_user_user_security_question_id').select2({
-    dropdownParent: $('.sign-up-modal-lg')
+    dropdownParent: $('#modal-sign-up')
   })
   
   $('#forgot_password_user_user_security_question_id').select2({
-    dropdownParent: $('.forgot-password-modal-lg')
+    dropdownParent: $('#modal-forgot-password')
   })
   
   // Block submit button on Sign Up
   let signUpSubmitButton = $('#sign-up-submit-button')
   
-  $('.sign-up-modal-lg').on('show.bs.modal', function (e) {
+  $('#modal-sign-up').on('show.bs.modal', function (e) {
     signUpSubmitButton.prop('disabled', true)
   })
   

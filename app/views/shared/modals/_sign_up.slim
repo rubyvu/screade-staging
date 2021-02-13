@@ -1,4 +1,4 @@
-.modal.fade.sign-up-modal-lg.overflow-auto aria-hidden="true" aria-labelledby="myLargeModalLabel" role="dialog" tabindex="-1"
+.modal.fade.overflow-auto#modal-sign-up aria-hidden="true" aria-labelledby="myLargeModalLabel" role="dialog" tabindex="-1"
   .modal-dialog.modal-dialog-centered.modal-lg
     .modal-content
       .modal-header
@@ -8,11 +8,10 @@
           .step.next
         button.close aria-label="Close" data-dismiss="modal" type="button"
           = image_pack_tag('media/images/icons/ic_close.png')
+          
       .modal-body
         .global-errors
         = form_for(resource, as: resource_name, url: registration_path(resource_name), remote: true, namespace: 'sign_up') do |f|
-          = render "devise/shared/error_messages", resource: resource
-          
           .row
             .col
               .material-field
@@ -59,5 +58,5 @@
       .modal-footer
           p.m-auto
             span.mx-2 Already have an account?
-            = link_to 'Login', '', data: { toggle: "modal", target: ".sign-in-modal-lg" }
+            = link_to 'Login', '', data: { toggle: "modal", target: "#modal-sign-in" }
             
