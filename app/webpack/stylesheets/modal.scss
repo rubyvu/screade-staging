@@ -95,6 +95,17 @@ span.flag-text  { margin-left: 10px !important; }
   box-shadow: none !important;
 }
 
+// Input with number type
+.modal input::-webkit-outer-spin-button,
+.modal input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0; /* Chrome, Safari, Edge, Opera */
+}
+
+.modal input[type=number] {
+  -moz-appearance: textfield; /* Firefox */
+}
+
 // Checkbox
 .modal .form-check label {
   color: $color-black;
