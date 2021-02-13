@@ -1,5 +1,3 @@
-import "select2";
-import "select2/dist/css/select2.min.css"
 import moment from 'moment';
 import "flag-icon-css/css/flag-icon.css"
 
@@ -83,11 +81,11 @@ $( document ).on('turbolinks:load', function() {
   })
   
   // Photo preview
-  $('.banner-image-mask').on('click', function() {
+  $('#banner-image-mask').on('click', function() {
      $("#sign_up_update_user_banner_picture").click();
   })
   
-  $('.profile-image-mask').on('click', function() {
+  $('#profile-image-mask').on('click', function() {
      $("#sign_up_update_user_profile_picture").click();
   })
   
@@ -102,28 +100,26 @@ $( document ).on('turbolinks:load', function() {
   function readBannerURL(input) {
     if (input.files && input.files[0]) {
       var reader = new FileReader();
-      
       reader.onload = function(e) {
         $('#banner-image').attr('src', e.target.result);
         $('#banner-image').show();
         $('#icon-add-banner').hide();
       }
       
-      reader.readAsDataURL(input.files[0]); // convert to base64 string
+      reader.readAsDataURL(input.files[0]);
     }
   }
   
   function readProfileURL(input) {
     if (input.files && input.files[0]) {
       var reader = new FileReader();
-      
       reader.onload = function(e) {
         $('#profile-image').attr('src', e.target.result);
         $('#profile-image').show();
         $('#icon-add-profile').hide();
       }
       
-      reader.readAsDataURL(input.files[0]); // convert to base64 string
+      reader.readAsDataURL(input.files[0]);
     }
   }
 })
