@@ -1,0 +1,5 @@
+.news-categories-list
+  - news_categories.each do |news_category|
+    .category-element
+      = link_to news_category.title.capitalize, [:news_category, id: news_category.id]
+      = image_pack_tag('media/images/icons/ic_dropdown_arrow.png')

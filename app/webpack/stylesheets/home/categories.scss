@@ -1,0 +1,22 @@
+.news-categories-list {
+  width: 100%;
+  padding: 0;
+  list-style: none;
+}
+
+.news-categories-list .category-element {
+  display: inline-block;
+  margin: 16px 50px 16px 0px;
+}
+
+.news-categories-list .category-element img {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.news-categories-list .category-element a {
+  font-size: 14px;
+  font-weight: 500;
+  display: inline-block;
+  color: $color-black;
+}

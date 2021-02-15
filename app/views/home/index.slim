@@ -1,4 +1,1 @@
-ul#news-categories-list
-  - @news_categories.each do |news_category|
-    li
-      = link_to news_category.title, [:news_category, id: news_category.id]
+= render './shared/panels/news_categories', news_categories: @news_categories
