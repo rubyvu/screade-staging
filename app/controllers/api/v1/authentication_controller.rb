@@ -26,7 +26,7 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
     
     # Create Device
     unless device.save
-      render json: { errors: device.errors.full_messages }, status: :bad_request
+      render json: { errors: device.errors.full_messages }, status: :unprocessable_entity
       return
     end
     
