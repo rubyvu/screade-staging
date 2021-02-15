@@ -12,6 +12,11 @@ class UserSerializer < ActiveModel::Serializer
   
   attribute :email
   attribute :first_name
+  attribute :is_confirmed
+  def is_confirmed
+    object.confirmed?
+  end
+  
   attribute :last_name
   attribute :middle_name
   attribute :phone_number

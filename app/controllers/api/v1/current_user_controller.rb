@@ -10,6 +10,17 @@ class Api::V1::CurrentUserController < Api::V1::ApiController
     end
   end
   
+  # POST /api/v1/resend_email_confirmation
+  def resend_email_confirmation
+    if current_user.confirmed?
+      render json: { errors: ['User email has been already confirmed.'] }, status: :ok
+      return
+    end
+      
+    current_user.send_confirmation_instructions
+    render json: { success: true }, status: :ok
+  end
+  
   private
     def user_params
       params.require(:user).permit(:banner_picture, :birthday, :country_code, :email, :first_name, :last_name, :middle_name, :phone_number, :profile_picture)

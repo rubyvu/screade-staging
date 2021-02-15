@@ -45,6 +45,7 @@ Rails.application.routes.draw do
         collection do
           put :update
           patch :update
+          post :resend_email_confirmation
         end
       end
       
