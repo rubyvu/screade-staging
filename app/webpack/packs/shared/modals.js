@@ -57,15 +57,6 @@ $( document ).on('turbolinks:load', function() {
     return $country;
   };
   
-  // Secret Question field
-  $('#sign_up_user_user_security_question_id').select2({
-    dropdownParent: $('#modal-sign-up')
-  })
-  
-  $('#forgot_password_user_user_security_question_id').select2({
-    dropdownParent: $('#modal-forgot-password')
-  })
-  
   // Block submit button on Sign Up
   let signUpSubmitButton = $('#sign-up-submit-button')
   

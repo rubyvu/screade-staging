@@ -21,6 +21,8 @@ form .form-control {
   padding: 0.375rem 0.7rem;
 }
 
+form select.form-control { padding: 0.375rem 0rem; }
+
 // Input placeholder color and size Chrome, Firefox, Opera, Safari 10.1+
 .form-control::placeholder {
   font-size: 14px;

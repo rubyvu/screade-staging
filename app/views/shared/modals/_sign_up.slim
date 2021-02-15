@@ -40,7 +40,7 @@
           
           .material-field.dropdown
             = f.label 'Select a Question'
-            = f.select :user_security_question_id, UserSecurityQuestion.all.map{|q| [q.title, q.id] }, {}, { class: 'form-control select2' }
+            = f.select :user_security_question_id, UserSecurityQuestion.all.map{|q| [q.title, q.id] }, {}, { class: 'form-control' }
          
           .material-field
             = f.label 'Answer'
