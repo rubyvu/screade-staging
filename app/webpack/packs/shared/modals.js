@@ -44,7 +44,8 @@ $( document ).on('turbolinks:load', function() {
   // County field
   $('#sign_up_user_country_id').select2({
     dropdownParent: $('#modal-sign-up'),
-    templateResult: formatCountry
+    templateResult: formatCountry,
+    templateSelection: formatCountry
   });
   
   function formatCountry (country) {
