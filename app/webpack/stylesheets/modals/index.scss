@@ -58,3 +58,12 @@ span.flag-text  { margin-left: 10px !important; }
   
   &.next { background-color: $color-grey; }
 }
+
+// Disable autocomplite field for select2 in Safari browser
+.select2-search input::-webkit-contacts-auto-fill-button,
+.select2-search input::-webkit-credentials-auto-fill-button {
+  visibility: hidden;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+}
