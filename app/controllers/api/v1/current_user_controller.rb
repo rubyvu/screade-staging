@@ -10,10 +10,10 @@ class Api::V1::CurrentUserController < Api::V1::ApiController
     end
   end
   
-  # POST /api/v1/resend_email_confirmation
+  # POST /api/v1/current_user/resend_email_confirmation
   def resend_email_confirmation
     if current_user.confirmed?
-      render json: { errors: ['User email has been already confirmed.'] }, status: :ok
+      render json: { errors: ['User email has been already confirmed.'] }, status: :unprocessable_entity
       return
     end
       

@@ -10,6 +10,8 @@
 ```
   /api/v1/authentication/sign_in
   /api/v1/authentication/sign_up
+  /api/v1/countries/ (GET)
+  /api/v1/user_security_questions/ (GET)
 ```
 
 #### Request header

@@ -31,7 +31,7 @@ POST
 HTTP code 200 :ok
 {
   "access_token": "673bbac7d18c4056382c59f27d0197db"                            (string, required)
-  "user": "UserObject"                                                          (string, required)
+  "user": "UserObject"                                                          (object, required)
 }
 ```
 
