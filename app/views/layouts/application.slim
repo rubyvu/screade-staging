@@ -21,17 +21,17 @@ html
           li.nav-item.active
             = link_to 'Home', root_path, class: 'nav-link'
           li.nav-item
-            a.nav-link href="#" Groups
+            = link_to 'Groups', root_path, class: 'nav-link'
           li.nav-item
-            a.nav-link href="#" Calendar
+            = link_to 'Calendar', root_path, class: 'nav-link'
           li.nav-item
-            a.nav-link href="#" Images
+            = link_to 'Images', root_path, class: 'nav-link'
           li.nav-item
-            a.nav-link href="#" Posts
+            = link_to 'Posts', root_path, class: 'nav-link'
           li.nav-item
-            a.nav-link href="#" Map
+            = link_to 'Map', root_path, class: 'nav-link'
           li.nav-item
-            a.nav-link href="#" Video
+            = link_to 'Video', root_path, class: 'nav-link'
             
         .div
           - if current_user

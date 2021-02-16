@@ -17,6 +17,7 @@ import "select2/dist/css/select2.min.css"
 
 Rails.start()
 Turbolinks.start()
+Turbolinks.visit(window.location)
 ActiveStorage.start()
 window.$ = window.jQuery = jQuery;
 
@@ -33,7 +34,9 @@ window.App = new function () {
    * @protected
    */
   $(function() {
-    // Init Ticker for Breaking news
-    $('#webticker').webTicker({ height: '36px', duplicate: true });
+    $( document ).on('turbolinks:load', function() {
+      // Init Ticker for Breaking news
+      $('#webticker').webTicker({ height: '36px', duplicate: true });
+    })
   });
 }
