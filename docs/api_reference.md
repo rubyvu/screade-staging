@@ -26,5 +26,8 @@
 - [Get BreakingNews ](api/v1/home/breaking_news.md)
 - [Get Trends list](api/v1/home/trends.md)
 
+### News Articles
+- [Get News Article](api/v1/news_articles/show.md)
+
 ### User Security Question
 - [Get User Security Questions list](api/v1/user_security_questions/index.md)
