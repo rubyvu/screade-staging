@@ -6,6 +6,7 @@ import Turbolinks from "turbolinks";
 import * as ActiveStorage from "@rails/activestorage";
 import "channels";
 import "select2";
+import "webticker/jquery.webticker.min.js";
 
 // Import internal scripts
 import './shared/modals';
@@ -32,6 +33,7 @@ window.App = new function () {
    * @protected
    */
   $(function() {
-    
+    // Init Ticker for Breaking news
+    $('#webticker').webTicker({ height: '36px', duplicate: true });
   });
 }
