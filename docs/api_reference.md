@@ -22,9 +22,9 @@
 - [Get new password instructions](api/v1/forgot_password/create.md)
 
 ### Home
-- [Get News list](api/v1/forgot_password/news.md)
-- [Get BreakingNews ](api/v1/forgot_password/breaking_news.md)
-- [Get Trends list](api/v1/forgot_password/trends.md)
+- [Get News list](api/v1/home/news.md)
+- [Get BreakingNews ](api/v1/home/breaking_news.md)
+- [Get Trends list](api/v1/home/trends.md)
 
 ### User Security Question
 - [Get User Security Questions list](api/v1/user_security_questions/index.md)
