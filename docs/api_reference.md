@@ -21,5 +21,10 @@
 ### Forgot password
 - [Get new password instructions](api/v1/forgot_password/create.md)
 
+### Home
+- [Get News list](api/v1/forgot_password/news.md)
+- [Get BreakingNews ](api/v1/forgot_password/breaking_news.md)
+- [Get Trends list](api/v1/forgot_password/trends.md)
+
 ### User Security Question
 - [Get User Security Questions list](api/v1/user_security_questions/index.md)

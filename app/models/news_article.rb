@@ -20,4 +20,8 @@ class NewsArticle < ApplicationRecord
   validates :title, presence: true
   validates :published_at, presence: true
   validates :url, presence: true, uniqueness: true
+  
+  def get_type
+    self.class.name.underscore
+  end
 end
