@@ -8,7 +8,7 @@ class Api::V1::HomeController < Api::V1::ApiController
       news = ArticleNews.where().order(published_at: :desc).page(params[:page]).per(30)
     end
       
-    news_json = ActiveModel::Serializer::CollectionSerializer.new(news, serializer: NewsArticleSerializer).as_json
+    news_json = ActiveModel::Serializer::CollectionSerializer.new(news, serializer: NewsArticleSerializer, current_user: current_user).as_json
     render json: { news: news_json }, status: :ok
   end
   

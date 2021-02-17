@@ -24,4 +24,12 @@ class NewsArticle < ApplicationRecord
   def get_type
     self.class.name.underscore
   end
+  
+  def is_lited(user)
+    self.liting_users.include?(user)
+  end
+  
+  def is_viewed(user)
+    self.viewing_users.include?(user)
+  end
 end
