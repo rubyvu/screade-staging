@@ -1,0 +1,40 @@
+.trends-wraper {
+  margin: 24px 0px;
+  overflow-x: hidden;
+}
+
+.trend-card-wrapper {
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.trend-card-wrapper::-webkit-scrollbar { display: none; }
+
+.trend-card {
+  display: inline-flex;
+  align-items: center;
+  max-width: 200px;
+  margin: 12px 12px 12px 6px;
+  background-color: $color-white;
+  color: $color-black;
+  box-shadow: 0px 3px 14px rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+}
+
+.trend-card:hover {
+  text-decoration: none;
+  box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.12);
+}
+
+.trends-wraper img.trend-image {
+  width: 40px;
+  height: 40px;
+  margin: 8px;
+}
+
+.trends-wraper p {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin: 0;
+}
