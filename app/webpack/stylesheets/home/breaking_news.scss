@@ -1,4 +1,4 @@
-.breaking-news-wraper {
+.breaking-news-wrapper {
   display: flex;
   align-items: center;
   padding: 0;
@@ -9,7 +9,7 @@
   background-color: $color-white;
 }
 
-.breaking-news-wraper .breaking-news-label {
+.breaking-news-wrapper .breaking-news-label {
   flex-shrink: 0;
   height: 100%;
   background-color: $color-red;
@@ -19,14 +19,14 @@
   padding: 6px 16px;
 }
 
-.breaking-news-wraper .breaking-news-text-wrapper {
+.breaking-news-wrapper .breaking-news-text-wrapper {
   position: relative;
   height: 100%;
   width: 100%;
   overflow:hidden;
 }
 
-.breaking-news-wraper .breaking-news-text-wrapper .breaking-news-layout {
+.breaking-news-wrapper .breaking-news-text-wrapper .breaking-news-layout {
   position: absolute;
   top: 0;
   left: 0;
