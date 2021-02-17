@@ -1,6 +1,12 @@
 .news-wrapper
-  h4#news-label National News
-  
+  .my-4
+    h4.d-inline#news-label National News
+    
+    .float-right
+      label.switch
+        input type="checkbox"
+        span.slider.round
+        
   .news-cards-wrapper
     = link_to '', class: 'news-card' do
       .news-image-wrapper
