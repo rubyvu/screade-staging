@@ -3,9 +3,9 @@ class Api::V1::HomeController < Api::V1::ApiController
   # GET /api/v1/home/news
   def news
     if params[:is_national]
-      news = ArticleNews.where().order(published_at: :desc)
+      news = ArticleNews.where().order(published_at: :desc).page(params[:page]).per(30)
     else
-      news = ArticleNews.where().order(published_at: :desc)
+      news = ArticleNews.where().order(published_at: :desc).page(params[:page]).per(30)
     end
       
     news_json = ActiveModel::Serializer::CollectionSerializer.new(news, serializer: NewsArticleSerializer).as_json

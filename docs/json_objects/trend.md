@@ -11,6 +11,6 @@
   "id": "1"                                                                     (integer, required)
   "title": "Why some mens ..."                                                  (string, required)
   "img_url": "http://site.com/small.png"                                        (string, optional)
-  "type": 'newsarticle'                                                         (string, required)
+  "type": 'news_article'                                                         (string, required)
 }
 ```
