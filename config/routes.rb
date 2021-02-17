@@ -58,7 +58,15 @@ Rails.application.routes.draw do
         end
       end
       
-      resources :news_articles, only: [:show]
+      resources :news_articles, only: [:show] do
+        member do
+          post :comment
+          post :lit
+          post :view
+          delete :unlit
+          delete :unview
+        end
+      end
       resources :user_security_questions, only: [:index]
     end
   end
