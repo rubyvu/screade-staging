@@ -3,6 +3,8 @@ class HomeController < ApplicationController
   
   # GET /home
   def index
-    @news_categories = NewsCategory.all
+    @home = {}
+    @home[:breaking_news_title] = BreakingNews.find_by(is_active: true)&.title
+    @home[:news_categories] = NewsCategory.all
   end
 end
