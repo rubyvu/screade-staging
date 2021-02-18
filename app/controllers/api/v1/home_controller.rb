@@ -1,11 +1,12 @@
 class Api::V1::HomeController < Api::V1::ApiController
+  skip_before_action :authenticate, only: [:news, :breaking_news, :trends]
   
   # GET /api/v1/home/news
   def news
-    if params[:is_national]
-      news = ArticleNews.where().order(published_at: :desc).page(params[:page]).per(30)
+    if current_user && current_user.is_national_news? && params[:is_national]
+      news = NewsArticle.where(country: current_user.country).order(published_at: :desc).page(params[:page]).per(30)
     else
-      news = ArticleNews.where().order(published_at: :desc).page(params[:page]).per(30)
+      news = NewsArticle.order(published_at: :desc).page(params[:page]).per(30)
     end
       
     news_json = ActiveModel::Serializer::CollectionSerializer.new(news, serializer: NewsArticleSerializer, current_user: current_user).as_json

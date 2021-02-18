@@ -48,4 +48,8 @@ class User < ApplicationRecord
   def full_name
     "#{first_name} #{last_name}".strip
   end
+  
+  def is_national_news?
+    Country::COUNTRIES_WITH_NATIONAL_NEWS.include?(self.country.code)
+  end
 end

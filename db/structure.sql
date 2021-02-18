@@ -300,7 +300,6 @@ CREATE TABLE public.breaking_news (
     id bigint NOT NULL,
     title character varying NOT NULL,
     is_active boolean DEFAULT false,
-    country_id integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -976,13 +975,6 @@ CREATE UNIQUE INDEX index_admin_users_on_reset_password_token ON public.admin_us
 
 
 --
--- Name: index_breaking_news_on_country_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_breaking_news_on_country_id ON public.breaking_news USING btree (country_id);
-
-
---
 -- Name: index_comments_on_source_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1184,6 +1176,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210205133755'),
 ('20210208101226'),
 ('20210208104456'),
-('20210210133800');
+('20210210133800'),
+('20210218085846');
 
 
