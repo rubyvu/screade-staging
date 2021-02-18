@@ -1,4 +1,4 @@
 = render './shared/panels/news_categories', news_categories: @home[:news_categories]
 = render 'breaking_news', breaking_news_title: @home[:breaking_news_title] if @home[:breaking_news_title]
-= render 'trends'
+= render 'trends', trends: @home[:trends]
 = render 'news'
