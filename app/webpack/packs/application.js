@@ -36,7 +36,7 @@ window.App = new function () {
   $(function() {
     $( document ).on('turbolinks:load', function() {
       // Init Ticker for Breaking news
-      $('#webticker').webTicker({ height: '36px', duplicate: true });
+      $('#webticker').webTicker({ height: '36px', duplicate: true, startEmpty: false });
     })
   });
 }
