@@ -15,6 +15,15 @@ class Api::V1::ApiController < ActionController::Base
     @current_device
   end
   
+  def errors_by_attributes(errors)
+    errors_array = []
+    errors.each do |error|
+      errors_array << { "#{error.attribute}": "#{error.message}"}
+    end
+     
+    errors_array
+  end
+  
   private
     def authenticate
       # Check access_token presence

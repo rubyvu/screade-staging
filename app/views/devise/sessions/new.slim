@@ -1,4 +1,4 @@
-h2 Log in
+h2 Sign In
 
 = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
   = render "devise/shared/error_messages", resource: resource
@@ -19,6 +19,6 @@ h2 Log in
       = f.label :remember_me
       
   .actions
-    = f.submit "Log in"
+    = f.submit "Sign In"
     
 = render "devise/shared/links"

@@ -36,10 +36,19 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
   
   # POST /api/v1/authentication/sign_up
   def sign_up
+    # Check Country availability
+    country = Country.find_by!(code: user_params[:country_code])
+    
+    # Check Security Question availability
+    user_security_question = UserSecurityQuestion.find_by!(question_identifier: user_params[:user_security_question_identifier])
+    
     # Check User params
-    user = User.new(user_params)
+    user = User.new(user_params.except(:country_code, :user_security_question_identifier))
+    user.country = country
+    user.user_security_question = user_security_question
+    
     unless user.valid?
-      render json: { errors: user.errors.full_messages }, status: :bad_request
+      render json: { errors: errors_by_attributes(user.errors) }, status: :bad_request
       return
     end
     
@@ -71,6 +80,6 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
     end
     
     def user_params
-      params.require(:user).permit(:birthday, :email, :first_name, :last_name, :password, :password_confirmation, :phone_number, :profile_picture, :security_question_answer, :username, :user_security_question_id)
+      params.require(:user).permit(:country_code, :email, :password, :password_confirmation, :security_question_answer, :username, :user_security_question_identifier)
     end
 end

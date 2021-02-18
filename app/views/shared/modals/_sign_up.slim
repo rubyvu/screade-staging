@@ -1,0 +1,62 @@
+.modal.fade.overflow-auto#modal-sign-up aria-hidden="true" aria-labelledby="myLargeModalLabel" role="dialog" tabindex="-1"
+  .modal-dialog.modal-dialog-centered.modal-lg
+    .modal-content
+      .modal-header
+        .step-wrapper
+          h4.modal-title Sign Up
+          .step
+          .step.next
+        button.close aria-label="Close" data-dismiss="modal" type="button"
+          = image_pack_tag('media/images/icons/ic_close.png')
+          
+      .modal-body
+        .global-errors
+        = form_for(resource, as: resource_name, url: registration_path(resource_name), remote: true, namespace: 'sign_up') do |f|
+          .row
+            .col
+              .material-field
+                = f.label 'Username'
+                = f.text_field :username, class: 'form-control'
+                
+            .col
+              .material-field
+                = f.label 'Email'
+                = f.email_field :email, class: 'form-control'
+            
+          .row
+            .col
+              .material-field
+                = f.label 'Password'
+                = f.password_field :password, class: 'form-control'
+                
+            .col
+              .material-field
+                = f.label 'Repeat Password'
+                = f.password_field :password_confirmation, class: 'form-control'
+            
+          .material-field.dropdown
+            = f.label 'Country'
+            = f.select :country_id, Country.all.map{ |q| [q.title, q.id, {'title': q.code}] }
+          
+          .material-field.dropdown
+            = f.label 'Select a Question'
+            = f.select :user_security_question_id, UserSecurityQuestion.all.map{|q| [q.title, q.id] }, {}, { class: 'form-control' }
+         
+          .material-field
+            = f.label 'Answer'
+            = f.text_field :security_question_answer, class: 'form-control'
+            
+          .my-4
+            .form-check
+              input#term-and-services-agreement.form-check-input type="checkbox" /
+              label.form-check-label for="term-and-services-agreement"
+                | I have read and agree to Screade's #{link_to 'Terms and services', '', :target => "_blank" }
+            
+          .actions
+            = f.submit 'Next', class: 'btn btn-primary w-100', id: 'sign-up-submit-button', disabled: true
+              
+      .modal-footer
+          p.m-auto
+            span.mx-2 Already have an account?
+            = link_to 'Sign In', '', data: { toggle: "modal", target: "#modal-sign-in" }
+            

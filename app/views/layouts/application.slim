@@ -8,8 +8,40 @@ html
     
     = csrf_meta_tags
     = csp_meta_tag
-    = stylesheet_pack_tag 'application'
-    = javascript_pack_tag 'application'
+    = stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     
   body
+    nav.navbar.navbar-expand-lg.navbar-light
+      = image_pack_tag('media/images/screade-logo-main.png', id: 'navbar-logo')
+      button.navbar-toggler aria-controls="navbarSupportedContent" aria-expanded="false" aria-label=("Toggle navigation") data-target="#navbarSupportedContent" data-toggle="collapse" type="button"
+        span.navbar-toggler-icon
+      #navbarSupportedContent.collapse.navbar-collapse
+        ul.navbar-nav.mr-auto
+          li.nav-item.active
+            = link_to 'Home', root_path, class: 'nav-link'
+          li.nav-item
+            a.nav-link href="#" Groups
+          li.nav-item
+            a.nav-link href="#" Calendar
+          li.nav-item
+            a.nav-link href="#" Images
+          li.nav-item
+            a.nav-link href="#" Posts
+          li.nav-item
+            a.nav-link href="#" Map
+          li.nav-item
+            a.nav-link href="#" Video
+            
+        .div
+          - if current_user
+            = link_to "Sign Out", destroy_user_session_path, method: :delete, class: 'btn btn-link my-2 my-sm-0'
+          - else
+            = link_to "Sign Up", '', class: 'btn btn-link my-2 my-sm-0', data: { toggle: "modal", target: "#modal-sign-up" }
+            = link_to "Sign In", '', class: 'btn btn-primary my-2 my-sm-0', data: { toggle: "modal", target: "#modal-sign-in" }
     = yield
+    
+    = render 'shared/modals/sign_in'
+    = render 'shared/modals/sign_up'
+    = render 'shared/modals/sign_up_update'
+    = render 'shared/modals/forgot_password'

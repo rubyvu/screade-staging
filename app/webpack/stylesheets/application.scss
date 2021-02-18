@@ -1,10 +1,59 @@
 /**************************************
+* Variables:
+**************************************/
+$color-blue: #3F51B5;
+$color-light-blue: #D4D7ED;
+$color-black: #000000;
+$color-red: #DA100B;
+$color-grey: #9C9C9C;
+$color-white: #FFFFFF;
+
+/**************************************
+* Custom bootstrab elements:
+**************************************/
+$primary: $color-blue;
+$danger: $color-red;
+
+// TODO: remove this when design for mobile will be ready
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 1350px,
+  xl: 1200px
+);
+
+@import 'navigation_bar';
+@import 'custom_fields';
+@import './modals/index';
+
+/**************************************
 * Import stylesheets from node modules:
 **************************************/
 @import '~bootstrap/scss/bootstrap'; // Custom bootstrap variables must be set or imported *before* bootstrap.
 
+/**************************************
+* Internal fonts:
+**************************************/
+@import 'fonts';
+
+/**************************************
+* Internal styles:
+**************************************/
 html, body {
+  max-width: 1440px;
   height: 100%;
-  margin: 0;
-  padding: 0;
+  margin: 0 auto;
+  padding: 8px 100px;
+  //border: 1px solid green;
+  font-family: 'roboto';
+  font-weight: 400; // 900, 700, 500, 400, 300
+}
+
+@media (max-width: 960px) {
+  html, body { padding: 8px 50px; }
+}
+
+@media (max-width: 450px) {
+  html, body { padding: 8px 10px; }
 }

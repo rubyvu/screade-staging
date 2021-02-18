@@ -293,6 +293,104 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: breaking_news; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.breaking_news (
+    id bigint NOT NULL,
+    title character varying NOT NULL,
+    is_active boolean DEFAULT false,
+    country_id integer NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: breaking_news_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.breaking_news_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: breaking_news_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.breaking_news_id_seq OWNED BY public.breaking_news.id;
+
+
+--
+-- Name: comments; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.comments (
+    id bigint NOT NULL,
+    message text,
+    user_id integer NOT NULL,
+    source_id integer NOT NULL,
+    source_type character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.comments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.comments_id_seq OWNED BY public.comments.id;
+
+
+--
+-- Name: countries; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.countries (
+    id bigint NOT NULL,
+    title character varying NOT NULL,
+    code character varying NOT NULL,
+    is_national_news boolean DEFAULT false
+);
+
+
+--
+-- Name: countries_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.countries_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: countries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.countries_id_seq OWNED BY public.countries.id;
+
+
+--
 -- Name: devices; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -324,6 +422,86 @@ CREATE SEQUENCE public.devices_id_seq
 --
 
 ALTER SEQUENCE public.devices_id_seq OWNED BY public.devices.id;
+
+
+--
+-- Name: lits; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.lits (
+    id bigint NOT NULL,
+    user_id integer NOT NULL,
+    source_id integer NOT NULL,
+    source_type character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: lits_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.lits_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: lits_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.lits_id_seq OWNED BY public.lits.id;
+
+
+--
+-- Name: news_articles; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.news_articles (
+    id bigint NOT NULL,
+    country_id integer NOT NULL,
+    published_at timestamp without time zone NOT NULL,
+    author character varying,
+    title character varying NOT NULL,
+    description text,
+    url character varying NOT NULL,
+    img_url character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: news_articles_categories; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.news_articles_categories (
+    news_article_id bigint NOT NULL,
+    news_category_id bigint NOT NULL
+);
+
+
+--
+-- Name: news_articles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.news_articles_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: news_articles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.news_articles_id_seq OWNED BY public.news_articles.id;
 
 
 --
@@ -482,8 +660,8 @@ ALTER SEQUENCE public.user_security_questions_id_seq OWNED BY public.user_securi
 
 CREATE TABLE public.users (
     id bigint NOT NULL,
-    first_name character varying NOT NULL,
-    last_name character varying NOT NULL,
+    first_name character varying,
+    last_name character varying,
     profile_picture character varying,
     profile_picture_hex character varying,
     phone_number character varying,
@@ -505,7 +683,9 @@ CREATE TABLE public.users (
     banner_picture_hex character varying,
     username character varying NOT NULL,
     user_security_question_id integer NOT NULL,
-    security_question_answer character varying NOT NULL
+    security_question_answer character varying NOT NULL,
+    country_id integer NOT NULL,
+    middle_name character varying
 );
 
 
@@ -529,6 +709,39 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: views; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.views (
+    id bigint NOT NULL,
+    user_id integer NOT NULL,
+    source_id integer NOT NULL,
+    source_type character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: views_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.views_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: views_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.views_id_seq OWNED BY public.views.id;
+
+
+--
 -- Name: admin_users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -536,10 +749,45 @@ ALTER TABLE ONLY public.admin_users ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: breaking_news id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.breaking_news ALTER COLUMN id SET DEFAULT nextval('public.breaking_news_id_seq'::regclass);
+
+
+--
+-- Name: comments id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.comments ALTER COLUMN id SET DEFAULT nextval('public.comments_id_seq'::regclass);
+
+
+--
+-- Name: countries id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.countries ALTER COLUMN id SET DEFAULT nextval('public.countries_id_seq'::regclass);
+
+
+--
 -- Name: devices id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.devices ALTER COLUMN id SET DEFAULT nextval('public.devices_id_seq'::regclass);
+
+
+--
+-- Name: lits id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.lits ALTER COLUMN id SET DEFAULT nextval('public.lits_id_seq'::regclass);
+
+
+--
+-- Name: news_articles id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.news_articles ALTER COLUMN id SET DEFAULT nextval('public.news_articles_id_seq'::regclass);
 
 
 --
@@ -571,6 +819,13 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 
 --
+-- Name: views id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.views ALTER COLUMN id SET DEFAULT nextval('public.views_id_seq'::regclass);
+
+
+--
 -- Name: admin_users admin_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -587,11 +842,51 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 
 --
+-- Name: breaking_news breaking_news_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.breaking_news
+    ADD CONSTRAINT breaking_news_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: comments comments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.comments
+    ADD CONSTRAINT comments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: countries countries_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.countries
+    ADD CONSTRAINT countries_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: devices devices_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.devices
     ADD CONSTRAINT devices_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: lits lits_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.lits
+    ADD CONSTRAINT lits_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: news_articles news_articles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.news_articles
+    ADD CONSTRAINT news_articles_pkey PRIMARY KEY (id);
 
 
 --
@@ -659,6 +954,14 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: views views_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.views
+    ADD CONSTRAINT views_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: index_admin_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -673,6 +976,27 @@ CREATE UNIQUE INDEX index_admin_users_on_reset_password_token ON public.admin_us
 
 
 --
+-- Name: index_breaking_news_on_country_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_breaking_news_on_country_id ON public.breaking_news USING btree (country_id);
+
+
+--
+-- Name: index_comments_on_source_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_comments_on_source_id ON public.comments USING btree (source_id);
+
+
+--
+-- Name: index_countries_on_code; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_countries_on_code ON public.countries USING btree (code);
+
+
+--
 -- Name: index_devices_on_access_token; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -684,6 +1008,27 @@ CREATE UNIQUE INDEX index_devices_on_access_token ON public.devices USING btree 
 --
 
 CREATE INDEX index_devices_on_owner_id ON public.devices USING btree (owner_id);
+
+
+--
+-- Name: index_lits_on_source_id_and_source_type; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_lits_on_source_id_and_source_type ON public.lits USING btree (source_id, source_type);
+
+
+--
+-- Name: index_news_articles_categories_on_ids; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_news_articles_categories_on_ids ON public.news_articles_categories USING btree (news_article_id, news_category_id);
+
+
+--
+-- Name: index_news_articles_on_url; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_news_articles_on_url ON public.news_articles USING btree (url);
 
 
 --
@@ -726,6 +1071,13 @@ CREATE UNIQUE INDEX index_users_on_reset_password_token ON public.users USING bt
 --
 
 CREATE UNIQUE INDEX index_users_on_username ON public.users USING btree (username);
+
+
+--
+-- Name: index_views_on_source_id_and_source_type; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_views_on_source_id_and_source_type ON public.views USING btree (source_id, source_type);
 
 
 --
@@ -822,6 +1174,16 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210125094008'),
 ('20210126094957'),
 ('20210126115857'),
-('20210202140726');
+('20210202140726'),
+('20210203122737'),
+('20210203151112'),
+('20210204133433'),
+('20210205094311'),
+('20210205123832'),
+('20210205131632'),
+('20210205133755'),
+('20210208101226'),
+('20210208104456'),
+('20210210133800');
 
 

@@ -1,7 +1,7 @@
 require 'que/web'
 
 Rails.application.routes.draw do
-  root to: 'dashboard#index'
+  root to: 'home#index'
   
   # Admin panel routes
   devise_for :admin_users, ActiveAdmin::Devise.config
@@ -13,8 +13,20 @@ Rails.application.routes.draw do
   end
   
   # Web routes
-  devise_for :users, controllers: { passwords: 'users/passwords' }
-  resources :dashboard, only: [:index]
+  resources :current_user, only: [] do
+    collection do
+      put :update
+      patch :update
+    end
+  end
+  
+  devise_for :users, controllers: {
+    confirmations: 'users/confirmations',
+    sessions: 'users/sessions',
+    registrations: 'users/registrations',
+    passwords: 'users/passwords'
+   }
+  resources :home, only: [:index]
   resources :news_categories, only: [:show]
   
   # API routes
@@ -27,6 +39,26 @@ Rails.application.routes.draw do
           delete :sign_out
         end
       end
+      
+      resources :countries, only: [:index]
+      resources :current_user, only: [] do
+        collection do
+          put :update
+          patch :update
+        end
+      end
+      
+      resources :forgot_password, only: [:create]
+      resources :home, only: [] do
+        collection do
+          get :news
+          get :breaking_news
+          get :trends
+        end
+      end
+      
+      resources :news_articles, only: [:show]
+      resources :user_security_questions, only: [:index]
     end
   end
 end

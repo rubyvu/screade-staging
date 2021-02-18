@@ -1,0 +1,9 @@
+$('.modal .local-errors').remove()
+
+<% if resource.errors.present? %>
+  <% resource.errors.each do |error| %>
+    $("#sign_up_user_<%= error.attribute %>").parent().append("<div class='local-errors'><span><%= error.message %></span></div>")
+  <% end %>
+<% else %>
+  $('#modal-sign-up-update').modal('show')
+<% end %>

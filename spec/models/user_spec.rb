@@ -1,8 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  before :all do
+    @country = Country.find_by(code: 'US') || FactoryBot.create(:country, code: 'US')
+    @user_security_question = FactoryBot.create(:user_security_question)
+  end
+  
   it 'should have a valid factory' do
-    expect(FactoryBot.build(:user)).to be_valid
+    expect(FactoryBot.build(:user, country: @country, user_security_question: @user_security_question)).to be_valid
   end
   
   context 'associations' do
@@ -10,7 +15,7 @@ RSpec.describe User, type: :model do
   end
   
   context 'validations' do
-    subject { FactoryBot.build(:user) }
+    subject { FactoryBot.build(:user, country: @country, user_security_question: @user_security_question) }
     
     context 'associations' do
     end
