@@ -27,8 +27,7 @@ class Api::V1::HomeController < Api::V1::ApiController
   
   # GET /api/v1/home/trends
   def trends
-    # TODO: Add calculation for Trends
-    trends = ArticleNews.order(published_at: :desc).limit(6)
+    trends = NewsArticle.left_joins(:lits).group(:id).order('COUNT(lits.id) DESC').limit(6)
     trends_json = ActiveModel::Serializer::CollectionSerializer.new(trends, serializer: TrendSerializer).as_json
     render json: { trends: trends_json }, status: :ok
   end
