@@ -9,9 +9,9 @@
 ```
 {
   "comments_count": "1"                                                         (integer, required)
-  "description" : "Article description field"                                   (text, required)
+  "description" : "Article description field"                                   (text, optional)
   "is_lited": "false"                                                           (boolean, required)
-  "img_url": "http://site.com/small.png"                                        (string, required)
+  "img_url": "http://site.com/small.png"                                        (string, optional)
   "is_viewed": "true"                                                           (boolean, required)
   "lits_count": "1"                                                             (integer, required)
   "title": "Why some mens ..."                                                  (string, required)

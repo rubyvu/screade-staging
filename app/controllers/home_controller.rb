@@ -5,6 +5,9 @@ class HomeController < ApplicationController
   def index
     @home = {}
     
+    # News Categories
+    @home[:news_categories] = NewsCategory.all
+    
     # Breaking News
     @home[:breaking_news_title] = BreakingNews.find_by(is_active: true)&.title
     
@@ -14,7 +17,11 @@ class HomeController < ApplicationController
       @home[:trends] << { url: trend.url, title: trend.title, img_url: trend.img_url }
     end
     
-    # News
-    @home[:news_categories] = NewsCategory.all
+    
+    if current_user && current_user.is_national_news? && params[:is_national]
+      @home[:news_articles] = NewsArticle.where(country: current_user.country).order(published_at: :desc).limit(16)
+    else
+      @home[:news_articles] = NewsArticle.order(published_at: :desc).limit(16)
+    end
   end
 end

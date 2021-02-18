@@ -1,6 +1,6 @@
 .news-wrapper
   .my-4
-    h4.d-inline#news-label National News
+    h4.d-inline#news-label World News
     
     .float-right
       label.switch
@@ -8,45 +8,14 @@
         span.slider.round
         
   .news-cards-wrapper
-    = link_to '', class: 'news-card' do
-      .news-image-wrapper
-        = image_pack_tag('media/images/bg-picture-authentication.png', class: 'news-image')
-      p.news-title A lot of text for example in this card and some of the
-      p.news-description A new crop of customers - people who once commuted to the city but now work from home and do not go anywhere
-      
-    = link_to '', class: 'news-card' do
-      .news-image-wrapper
-        = image_pack_tag('media/images/screade-logo-big.png', class: 'news-image')
-      p.news-title A lot of text for example in this card and some of the
-      p.news-description A new crop of customers - people who once commuted to the city but now work from home and do not go anywhere
-      
-    = link_to '', class: 'news-card' do
-      .news-image-wrapper
-        = image_pack_tag('media/images/bg-picture-authentication.png', class: 'news-image')
-      p.news-title A lot of text for example in this card and some of the
-      p.news-description A new crop of customers - people who once commuted to the city but now work from home and do not go anywhere
-      
-    = link_to '', class: 'news-card' do
-      .news-image-wrapper
-        = image_pack_tag('media/images/bg-picture-authentication.png', class: 'news-image')
-      p.news-title A lot of text for example in this card and some of the
-      p.news-description A new crop of customers - people who once commuted to the city but now work from home and do not go anywhere
-      
-    = link_to '', class: 'news-card' do
-      .news-image-wrapper
-        = image_pack_tag('media/images/bg-picture-authentication.png', class: 'news-image')
-      p.news-title A lot of text for example in this card and some of the
-      p.news-description A new crop of customers - people who once commuted to the city but now work from home and do not go anywhere
-      
-    = link_to '', class: 'news-card' do
-      .news-image-wrapper
-        = image_pack_tag('media/images/bg-picture-authentication.png', class: 'news-image')
-      p.news-title A lot of text for example in this card and some of the
-      p.news-description A new crop of customers - people who once commuted to the city but now work from home and do not go anywhere
-      
-    = link_to '', class: 'news-card' do
-      .news-image-wrapper
-        = image_pack_tag('media/images/bg-picture-authentication.png', class: 'news-image')
-      p.news-title A lot of text for example in this card and some of the
-      p.news-description A new crop of customers - people who once commuted to the city but now work from home and do not go anywhere
-      
+    - news_articles.each do |news_article|
+      = link_to news_article.url, class: 'news-card' do
+        .news-image-wrapper
+          - if news_article.img_url
+            = image_tag(news_article.img_url, class: 'news-image')
+          - else
+            = image_pack_tag('media/images/bg-picture-authentication.png', class: 'news-image')
+        p.news-title
+          = news_article.title
+        p.news-description
+          = news_article.description
