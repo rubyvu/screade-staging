@@ -47,6 +47,21 @@
   border-left: 5px solid $color-red;
 }
 
+.breaking-news-wrapper .breaking-news {
+  height: 100%;
+}
+
+.breaking-news-wrapper .breaking-news #webticker,
+.breaking-news-wrapper .breaking-news li {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 300;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .tickercontainer li {
   font-size: 16px;
   font-weight: 300;
