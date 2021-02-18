@@ -1,15 +1,20 @@
 .news-wrapper
   .my-4
-    h4.d-inline#news-label World News
+    h4.d-inline#news-label #{is_national ? "National News" : "World News"}
     
-    .float-right
-      label.switch
-        input type="checkbox"
-        span.slider.round
+    - if current_user
+      .float-right
+        label.switch
+          - if is_national
+            input#news-switcher type="checkbox" checked="checked"
+          - else
+            input#news-switcher type="checkbox"
+            
+          span.slider.round
         
   .news-cards-wrapper
     - news_articles.each do |news_article|
-      = link_to news_article.url, class: 'news-card' do
+      = link_to news_article.url, class: 'news-card', target: '_blank' do
         .news-image-wrapper
           - if news_article.img_url
             = image_tag(news_article.img_url, class: 'news-image')
@@ -19,3 +24,24 @@
           = news_article.title
         p.news-description
           = news_article.description
+          
+  .mt-4.d-flex.justify-content-center
+    .mx-4
+      = link_to_prev_page news_articles, 'Previous Page'
+      
+    .mx-4
+      = link_to_next_page news_articles, 'Next Page'
+      
+javascript:
+  $('#news-switcher').click(function() {
+    var queryParams = new URLSearchParams(window.location.search);
+    if( $(this).is(':checked') ) {
+      queryParams.set("is_national", "true");
+    } else {
+      queryParams.set("is_national", "false");
+    }
+    
+    queryParams.set("page", "1");
+    history.replaceState(null, null, "?"+queryParams.toString());
+    window.location.href = document.URL
+  });

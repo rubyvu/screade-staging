@@ -19,9 +19,11 @@ class HomeController < ApplicationController
     
     
     if current_user && current_user.is_national_news? && params[:is_national]
-      @home[:news_articles] = NewsArticle.where(country: current_user.country).order(published_at: :desc).limit(16)
+      @home[:news_articles] = NewsArticle.where(country: current_user.country).order(published_at: :desc).page(params[:page]).per(16)
+      @home[:is_national] = true
     else
-      @home[:news_articles] = NewsArticle.order(published_at: :desc).limit(16)
+      @home[:news_articles] = NewsArticle.order(published_at: :desc).page(params[:page]).per(16)
+      @home[:is_national] = false
     end
   end
 end
