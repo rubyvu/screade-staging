@@ -1,6 +1,7 @@
 class Schedule::GetNewsArticlesJob < ApplicationJob
   
   def run
+    puts "=== run GetNewsArticlesJob === #{DateTime.now}"
     # return if Rails.env.development?
     return
     puts "Update News Articles ..."
