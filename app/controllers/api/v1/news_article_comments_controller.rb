@@ -4,7 +4,7 @@ class Api::V1::NewsArticleCommentsController < Api::V1::ApiController
   
   # GET /api/v1/news_articles/:news_article_id/news_article_comments
   def index
-    comments_jons = ActiveModel::Serializer::CollectionSerializer.new(@news_article.comments.page(params[:page]).per(30), serializer: CommentSerializer).as_json
+    comments_jons = ActiveModel::Serializer::CollectionSerializer.new(@news_article.comments.order(created_at: :desc).page(params[:page]).per(30), serializer: CommentSerializer).as_json
     render json: { comments: comments_jons }, status: :ok
   end
   
