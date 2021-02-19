@@ -8,6 +8,6 @@
 ### Object structure
 ```
 {
-  "title": "Why some mens ..."                                                  (string, required)
+  "title": "Why some people ..."                                                (string, required)
 }
 ```

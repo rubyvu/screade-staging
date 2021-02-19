@@ -21,7 +21,7 @@ GET
 ```
 HTTP code 200 :ok
 {
-  "article: "NewArticle"                                                        (objects, required)
+  "news_article: "NewArticle"                                                   (objects, required)
 }
 ```
 

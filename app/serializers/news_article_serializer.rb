@@ -6,6 +6,7 @@ class NewsArticleSerializer < ActiveModel::Serializer
   
   attribute :description
   attribute :img_url
+  attribute :id
   
   attribute :is_lited
   def is_lited

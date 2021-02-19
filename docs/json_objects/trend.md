@@ -9,8 +9,8 @@
 ```
 {
   "id": "1"                                                                     (integer, required)
-  "title": "Why some mens ..."                                                  (string, required)
+  "title": "Why some people ..."                                                (string, required)
   "img_url": "http://site.com/small.png"                                        (string, optional)
-  "type": 'news_article'                                                         (string, required)
+  "type": 'news_article'                                                        (string, required)
 }
 ```
