@@ -59,8 +59,8 @@ Rails.application.routes.draw do
       end
       
       resources :news_articles, only: [:show] do
+        resources :news_article_comments, only: [:index, :create]
         member do
-          post :comment
           post :lit
           post :view
           delete :unlit

@@ -28,7 +28,8 @@
 
 ### News Articles
 - [Get News Article](api/v1/news_articles/show.md)
-- [Add Comment to Article](api/v1/news_articles/comment.md)
+- [List of Article Comments](api/v1/news_articles/index_comment.md)
+- [Add Comment to Article](api/v1/news_articles/create_comment.md)
 - [Lit Article](api/v1/news_articles/lit.md)
 - [Unlit Article](api/v1/news_articles/unlit.md)
 - [View Article](api/v1/news_articles/view.md)

@@ -1,5 +1,5 @@
 class Api::V1::NewsArticlesController < Api::V1::ApiController
-  before_action :get_article, only: [:comment, :lit, :show, :view, :unlit]
+  before_action :get_article, only: [:lit, :show, :view, :unlit]
   
   # GET /api/v1/news_articles/:id
   def show
@@ -14,19 +14,6 @@ class Api::V1::NewsArticlesController < Api::V1::ApiController
       render json: { success: true }, status: :ok
     else
       render json: { success: false }, status: :ok
-    end
-  end
-  
-  # POST /api/v1/news_articles/:id/comment
-  def comment
-    comment = Comment.new(comment_params)
-    comment.source = @news_article
-    comment.user = current_user
-    if comment.save
-      comment_jons = CommentSerializer.new(current_user).as_json
-      render json: { comment: comment_jons }, status: :ok
-    else
-      render json: { errors: comment.errors.full_messages }, status: :unprocessable_entity
     end
   end
   
@@ -50,9 +37,5 @@ class Api::V1::NewsArticlesController < Api::V1::ApiController
   private
     def get_article
       @news_article = NewsArticle.find(params[:id])
-    end
-    
-    def comment_params
-      params.require(:comment).permit(:message)
     end
 end

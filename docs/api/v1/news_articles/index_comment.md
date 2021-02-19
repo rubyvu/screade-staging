@@ -1,4 +1,4 @@
-## News Article Comment - API endpoint
+## List of Article Comment - API endpoint
 
 ### Navigation
 [README](../../../../README.md)
@@ -6,18 +6,14 @@
 [API reference](../../../api_reference.md)
 
 ### HTTP method
-POST
+GET
 
 ### API endpoint
-`/api/v1/news_articles/:id/comment`
+`/api/v1/news_articles/:news_article_id/news_article_comments`
 
 ### Request body
 ```
-{
-  "comment": {
-    "message": 'New message example'                                            (string, required)
-  }
-}
+{}
 ```
 
 ### Response
@@ -25,7 +21,7 @@ POST
 ```
 HTTP code 200 :ok
 {
-  "comment: "Comment"                                                           (objects, required)
+  "comments: "[Comment]"                                                        (array of objects, required)
 }
 ```
 
