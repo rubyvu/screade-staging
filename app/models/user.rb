@@ -52,4 +52,9 @@ class User < ApplicationRecord
   def is_national_news?
     Country::COUNTRIES_WITH_NATIONAL_NEWS.include?(self.country.code)
   end
+  
+  # Show reconfirmed link if User doesn't confirm his email or confirmation token expired
+  def can_be_reconfirmed?
+    self.confirmation_period_expired? && !self.confirmed?
+  end
 end

@@ -1,0 +1,2 @@
+.confirmation-notification
+  = link_to 'PLEASE CONFIRM YOUR EMAIL', user_confirmation_path(user: { email: current_user.email}), method: :post

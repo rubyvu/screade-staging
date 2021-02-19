@@ -1,0 +1,10 @@
+.confirmation-notification {
+  width: 100%;
+  background-color: $color-red;
+  text-align: center;
+  
+  a, a:hover {
+    color: $color-white;
+    font-weight: 400;
+  }
+}
