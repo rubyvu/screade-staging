@@ -10,6 +10,7 @@ import "webticker/jquery.webticker.min.js";
 
 // Import internal scripts
 import './shared/modals';
+import './shared/news_articles';
 
 // Import entry stylesheets for pack - IMPORTANT!
 import 'stylesheets/application';
@@ -17,7 +18,6 @@ import "select2/dist/css/select2.min.css"
 
 Rails.start()
 Turbolinks.start()
-Turbolinks.visit(window.location)
 ActiveStorage.start()
 window.$ = window.jQuery = jQuery;
 
@@ -34,8 +34,13 @@ window.App = new function () {
    * @protected
    */
   $(function() {
+    $(document).ready(function() {
+      //Init Ticker for Breaking news on page reload
+      $('#webticker').webTicker({ height: '36px', duplicate: true, startEmpty: false });
+    })
+    
     $( document ).on('turbolinks:load', function() {
-      // Init Ticker for Breaking news
+      //Init Ticker for Breaking news on page load
       $('#webticker').webTicker({ height: '36px', duplicate: true, startEmpty: false });
     })
   });

@@ -3,7 +3,7 @@ class Api::V1::NewsArticlesController < Api::V1::ApiController
   
   # GET /api/v1/news_articles/:id
   def show
-    news_article_json = NewsArticleSerializer.new(@news_article).as_json
+    news_article_json = NewsArticleSerializer.new(@news_article, current_user: current_user).as_json
     render json: { news_article: news_article_json }, status: :ok
   end
   

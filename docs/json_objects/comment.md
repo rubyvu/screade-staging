@@ -16,4 +16,4 @@
 ```
 
 ### References
-- [Country JSON object](../../../json_objects/user.md)
+- [Country JSON object](../json_objects/user.md)

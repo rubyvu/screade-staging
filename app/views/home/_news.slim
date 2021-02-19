@@ -1,16 +1,16 @@
 .news-wrapper
   .my-4
-    h4.d-inline#news-label #{is_national ? "National News" : "World News"}
-    
-    - if current_user
-      .float-right
-        label.switch
-          - if is_national
-            input#news-switcher type="checkbox" checked="checked"
-          - else
-            input#news-switcher type="checkbox"
-            
-          span.slider.round
+    - if current_user&.is_national_news?
+      h4.d-inline National News
+      label.switch.news
+        - if is_national
+          input#news-switcher type="checkbox"
+        - else
+          input#news-switcher type="checkbox" checked="checked"
+          
+        span.slider.round
+          
+    h4.d-inline World News
         
   .news-cards-wrapper
     - news_articles.each do |news_article|
@@ -31,17 +31,3 @@
       
     .mx-4
       = link_to_next_page news_articles, 'Next Page'
-      
-javascript:
-  $('#news-switcher').click(function() {
-    var queryParams = new URLSearchParams(window.location.search);
-    if( $(this).is(':checked') ) {
-      queryParams.set("is_national", "true");
-    } else {
-      queryParams.set("is_national", "false");
-    }
-    
-    queryParams.set("page", "1");
-    history.replaceState(null, null, "?"+queryParams.toString());
-    window.location.href = document.URL
-  });

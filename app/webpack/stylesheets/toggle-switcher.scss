@@ -4,6 +4,12 @@
   display: inline-block;
   width: 34px;
   height: 14px;
+  top: 4px;
+  
+  &.news {
+    margin-top: 10px;
+    margin: 0 24px;
+  }
 }
 
 /* Hide default HTML checkbox */

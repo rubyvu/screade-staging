@@ -17,13 +17,12 @@ class HomeController < ApplicationController
       @home[:trends] << { url: trend.url, title: trend.title, img_url: trend.img_url }
     end
     
-    
-    if current_user && current_user.is_national_news? && params[:is_national]
+    # News articles
+    @home[:is_national] = params[:is_national].blank? || params[:is_national].to_s.downcase == "true"
+    if @home[:is_national] && current_user&.is_national_news?
       @home[:news_articles] = NewsArticle.where(country: current_user.country).order(published_at: :desc).page(params[:page]).per(16)
-      @home[:is_national] = true
     else
       @home[:news_articles] = NewsArticle.order(published_at: :desc).page(params[:page]).per(16)
-      @home[:is_national] = false
     end
   end
 end
