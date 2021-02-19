@@ -1003,10 +1003,10 @@ CREATE INDEX index_devices_on_owner_id ON public.devices USING btree (owner_id);
 
 
 --
--- Name: index_lits_on_source_id_and_source_type; Type: INDEX; Schema: public; Owner: -
+-- Name: index_lits_on_source_id_and_source_type_and_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_lits_on_source_id_and_source_type ON public.lits USING btree (source_id, source_type);
+CREATE UNIQUE INDEX index_lits_on_source_id_and_source_type_and_user_id ON public.lits USING btree (source_id, source_type, user_id);
 
 
 --
@@ -1066,10 +1066,10 @@ CREATE UNIQUE INDEX index_users_on_username ON public.users USING btree (usernam
 
 
 --
--- Name: index_views_on_source_id_and_source_type; Type: INDEX; Schema: public; Owner: -
+-- Name: index_views_on_source_id_and_source_type_and_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_views_on_source_id_and_source_type ON public.views USING btree (source_id, source_type);
+CREATE UNIQUE INDEX index_views_on_source_id_and_source_type_and_user_id ON public.views USING btree (source_id, source_type, user_id);
 
 
 --
@@ -1177,6 +1177,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210208101226'),
 ('20210208104456'),
 ('20210210133800'),
-('20210218085846');
+('20210218085846'),
+('20210219165401');
 
 

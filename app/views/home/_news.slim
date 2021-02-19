@@ -14,7 +14,7 @@
         
   .news-cards-wrapper
     - news_articles.each do |news_article|
-      .news-card
+      .news-card value="#{news_article.id}"
         .news-image-wrapper
           - if news_article.img_url
             = image_tag(news_article.img_url, class: 'news-image')
@@ -34,7 +34,7 @@
               i class=(news_article.is_viewed(current_user) ? "ic view active" : "ic view")
               span.info-panel-value #{news_article.views.count}
               
-        = link_to news_article.url, class: '', target: '_blank' do
+        = link_to news_article.url, class: 'news-article-link', target: '_blank' do
           p.news-title
             = news_article.title
           p.news-description

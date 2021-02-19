@@ -27,6 +27,13 @@ Rails.application.routes.draw do
     passwords: 'users/passwords'
    }
   resources :home, only: [:index]
+  resources :news_articles, only: [] do
+    member do
+      post :lit
+      post :view
+      delete :unlit
+    end
+  end
   resources :news_categories, only: [:show]
   
   # API routes
