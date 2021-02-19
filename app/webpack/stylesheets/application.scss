@@ -24,8 +24,9 @@ $grid-breakpoints: (
   xl: 1200px
 );
 
-@import 'navigation_bar';
+@import 'icons';
 @import 'custom_fields';
+@import 'navigation_bar';
 @import 'kaminari';
 @import 'notification';
 @import 'toggle-switcher';

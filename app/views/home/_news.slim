@@ -14,16 +14,31 @@
         
   .news-cards-wrapper
     - news_articles.each do |news_article|
-      = link_to news_article.url, class: 'news-card', target: '_blank' do
+      .news-card
         .news-image-wrapper
           - if news_article.img_url
             = image_tag(news_article.img_url, class: 'news-image')
           - else
             = image_pack_tag('media/images/bg-picture-authentication.png', class: 'news-image')
-        p.news-title
-          = news_article.title
-        p.news-description
-          = news_article.description
+            
+          .info-panel
+            .info-panel-value-wrapper
+              i class=(news_article.is_lited(current_user) ? "ic lit active" : "ic lit")
+              span.info-panel-value #{news_article.lits.count}
+              
+            .info-panel-value-wrapper
+              i class=(news_article.is_commented(current_user) ? "ic comment active" : "ic comment")
+              span.info-panel-value #{news_article.comments.count}
+              
+            .info-panel-value-wrapper
+              i class=(news_article.is_viewed(current_user) ? "ic view active" : "ic view")
+              span.info-panel-value #{news_article.views.count}
+              
+        = link_to news_article.url, class: '', target: '_blank' do
+          p.news-title
+            = news_article.title
+          p.news-description
+            = news_article.description
           
   .mt-4.d-flex.justify-content-center
     = paginate news_articles
