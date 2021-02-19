@@ -6,6 +6,7 @@ $color-light-blue: #D4D7ED;
 $color-black: #000000;
 $color-red: #DA100B;
 $color-grey: #9C9C9C;
+$color-light-grey: #EBF0F3;
 $color-white: #FFFFFF;
 
 /**************************************
@@ -25,6 +26,7 @@ $grid-breakpoints: (
 
 @import 'navigation_bar';
 @import 'custom_fields';
+@import 'kaminari';
 @import 'notification';
 @import 'toggle-switcher';
 @import './modals/index';

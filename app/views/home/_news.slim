@@ -26,8 +26,5 @@
           = news_article.description
           
   .mt-4.d-flex.justify-content-center
-    .mx-4
-      = link_to_prev_page news_articles, 'Previous Page'
-      
-    .mx-4
-      = link_to_next_page news_articles, 'Next Page'
+    = paginate news_articles
+    

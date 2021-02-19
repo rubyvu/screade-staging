@@ -14,7 +14,7 @@ class Api::V1::NewsArticleCommentsController < Api::V1::ApiController
     comment.source = @news_article
     comment.user = current_user
     if comment.save
-      comment_jons = CommentSerializer.new(current_user).as_json
+      comment_jons = CommentSerializer.new(comment).as_json
       render json: { comment: comment_jons }, status: :ok
     else
       render json: { errors: comment.errors.full_messages }, status: :unprocessable_entity
