@@ -32,7 +32,6 @@
 - [Lit Article](api/v1/news_articles/lit.md)
 - [Unlit Article](api/v1/news_articles/unlit.md)
 - [View Article](api/v1/news_articles/view.md)
-- [Unview Article](api/v1/news_articles/unview.md)
 
 ### User Security Question
 - [Get User Security Questions list](api/v1/user_security_questions/index.md)

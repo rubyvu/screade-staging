@@ -64,7 +64,6 @@ Rails.application.routes.draw do
           post :lit
           post :view
           delete :unlit
-          delete :unview
         end
       end
       resources :user_security_questions, only: [:index]

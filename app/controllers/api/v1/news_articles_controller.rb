@@ -1,5 +1,5 @@
 class Api::V1::NewsArticlesController < Api::V1::ApiController
-  before_action :get_article, only: [:comment, :lit, :show, :view, :unlit, :unview]
+  before_action :get_article, only: [:comment, :lit, :show, :view, :unlit]
   
   # GET /api/v1/news_articles/:id
   def show
@@ -44,13 +44,6 @@ class Api::V1::NewsArticlesController < Api::V1::ApiController
   def unlit
     lit = Lit.find_by!(source: @news_article, user: current_user)
     lit.destroy
-    render json: { success: true }, status: :ok
-  end
-  
-  # DELETE /api/v1/news_articles/:id/unview
-  def unview
-    view = View.find_by!(source: @news_article, user: current_user)
-    view.destroy
     render json: { success: true }, status: :ok
   end
   
