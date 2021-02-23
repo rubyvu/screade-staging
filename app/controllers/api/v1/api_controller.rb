@@ -15,6 +15,10 @@ class Api::V1::ApiController < ActionController::Base
     @current_device
   end
   
+  def is_device_token?
+    request.headers['X-Device-Token'].present?
+  end
+  
   def errors_by_attributes(errors)
     errors_array = []
     errors.each do |error|
