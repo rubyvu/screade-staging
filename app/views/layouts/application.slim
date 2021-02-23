@@ -12,7 +12,8 @@ html
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     
     // AddSense
-    script async="" data-ad-client="ca-pub-6870429523010770" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+    - if Rails.env.production?
+      script async="" data-ad-client="ca-pub-6870429523010770" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
     
   body
     nav.navbar.navbar-expand-lg.navbar-light
