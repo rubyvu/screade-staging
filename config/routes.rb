@@ -47,6 +47,12 @@ Rails.application.routes.draw do
         end
       end
       
+      resources :comments, only: [] do
+        member do
+          post :lit
+          delete :unlit
+        end
+      end
       resources :countries, only: [:index]
       resources :current_user, only: [] do
         collection do

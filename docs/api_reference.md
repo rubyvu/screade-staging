@@ -28,11 +28,15 @@
 
 ### News Articles
 - [Get News Article](api/v1/news_articles/show.md)
-- [List of Article Comments](api/v1/news_articles/index_comment.md)
-- [Add Comment to Article](api/v1/news_articles/create_comment.md)
 - [Lit Article](api/v1/news_articles/lit.md)
 - [Unlit Article](api/v1/news_articles/unlit.md)
 - [View Article](api/v1/news_articles/view.md)
+
+### Comments
+- [List of Article Comments](api/v1/news_articles/index_comment.md)
+- [Add Comment to Article](api/v1/news_articles/create_comment.md)
+- [Lit Comment](api/v1/comments/lit.md)
+- [Unlit Comment](api/v1/comments/unlit.md)
 
 ### User Security Question
 - [Get User Security Questions list](api/v1/user_security_questions/index.md)

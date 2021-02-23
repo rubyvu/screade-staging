@@ -1,6 +1,6 @@
 class Lit < ApplicationRecord
   
-  SOURCE_TYPES = %w(NewsArticle)
+  SOURCE_TYPES = %w(NewsArticle Comment)
   
   # Associations
   belongs_to :user

@@ -10,4 +10,15 @@ class CommentSerializer < ActiveModel::Serializer
   def commentator
     UserSerializer.new(object.user).as_json
   end
+  
+  attribute :is_lited
+  def is_lited
+    current_user = instance_options[:current_user]
+    current_user && current_user.kind_of?(User) ? object.is_lited(current_user) : false
+  end
+  
+  attribute :lits_count
+  def lits_count
+    object.lits.count
+  end
 end
