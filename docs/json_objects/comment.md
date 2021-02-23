@@ -16,6 +16,3 @@
   "lits_count": "10"                                                            (integer, required)
 }
 ```
-
-### References
-- [Country JSON object](../json_objects/user.md)
