@@ -1,6 +1,6 @@
 class NewsArticlesController < ApplicationController
   skip_before_action :authenticate_user!, only: [:comments]
-  before_action :get_article, only: [:comments, :lit, :view, :unlit]
+  before_action :get_article, only: [:comments, :create_comment, :lit, :view, :unlit]
   
   # POST /news_articles/:id/lit
   def lit
@@ -31,15 +31,25 @@ class NewsArticlesController < ApplicationController
   
   # GET /news_articles/:id/comments
   def comments
+    @new_comment = Comment.new()
     @comments = Comment.where(source: @news_article).order(created_at: :desc)
+  end
+  
+  # POST /news_articles/:id/create_comment
+  def create_comment
+    new_comment = Comment.new(comment_params)
+    new_comment.source = @news_article
+    new_comment.user = current_user
+    new_comment.save
+    redirect_to comments_news_article_path(@news_article)
   end
   
   private
     def get_article
-      @news_article = NewsArticle.find_by(id: params[:id])
-      # unless @news_article
-      #   render json: { errors: ['Record not found.'] }, status: :not_found
-      #   return
-      # end
+      @news_article = NewsArticle.find_by!(id: params[:id])
+    end
+    
+    def comment_params
+      params.require(:comment).permit(:message)
     end
 end
