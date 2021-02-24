@@ -1,1 +1,3 @@
-= render '/comments/index', comments: @comments
+.content-comment-wrapper
+  = render 'show', news_article: @news_article
+  = render '/comments/index', comments: @comments

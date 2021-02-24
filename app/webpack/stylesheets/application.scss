@@ -28,10 +28,13 @@ $grid-breakpoints: (
 @import 'custom_fields';
 @import 'navigation_bar';
 @import 'kaminari';
+@import 'main-elements';
 @import 'notification';
 @import 'toggle-switcher';
+@import './comments/index';
 @import './modals/index';
-@import '/home/index';
+@import './home/index';
+@import './news_articles/index';
 
 /**************************************
 * Import stylesheets from node modules:

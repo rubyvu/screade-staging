@@ -1,1 +1,21 @@
-h1 Comments
+.comments-wrapper
+  h5 Comments
+  
+  
+  
+  - comments.each do |comment|
+    .comment-wrapper
+      .comment-image-wrapper
+        - if comment.user.profile_picture.url
+          = image_tag(comment.user.profile_picture.square_320.url, class: 'profile-image')
+        - else
+          = image_pack_tag('media/images/icons/btn_add_photo.png', class: 'profile-image')
+        
+      .comment-content-wrapper
+        .comment-user-name
+          = comment.user.full_name
+        .comment-date
+          = comment.created_at.strftime('%d.%m.%Y')
+        .comment-text
+          = comment.message
+          
