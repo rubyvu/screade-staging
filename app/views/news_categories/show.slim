@@ -1,4 +1,2 @@
-= render './shared/panels/news_categories', news_categories: @news_categories
-.mt-4
-  h5
-    = @news_category.title&.capitalize
+= render './shared/panels/news_categories', news_categories: @category[:news_categories]
+= render './home/news', news_articles: @category[:news_articles], is_national: @category[:is_national]
