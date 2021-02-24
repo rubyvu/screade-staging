@@ -5,8 +5,8 @@ class Api::V1::NewsArticleCommentsController < Api::V1::ApiController
   # GET /api/v1/news_articles/:news_article_id/news_article_comments
   def index
     authenticate if is_device_token?
-    comments_jons = ActiveModel::Serializer::CollectionSerializer.new(@news_article.comments.order(created_at: :desc).page(params[:page]).per(30), serializer: CommentSerializer, current_user: current_user).as_json
-    render json: { comments: comments_jons }, status: :ok
+    comments_json = ActiveModel::Serializer::CollectionSerializer.new(@news_article.comments.order(created_at: :desc).page(params[:page]).per(30), serializer: CommentSerializer, current_user: current_user).as_json
+    render json: { comments: comments_json }, status: :ok
   end
   
   # POST /api/v1/news_articles/:news_article_id/news_article_comments
@@ -15,8 +15,8 @@ class Api::V1::NewsArticleCommentsController < Api::V1::ApiController
     comment.source = @news_article
     comment.user = current_user
     if comment.save
-      comment_jons = CommentSerializer.new(comment, current_user: current_user).as_json
-      render json: { comment: comment_jons }, status: :ok
+      comment_json = CommentSerializer.new(comment, current_user: current_user).as_json
+      render json: { comment: comment_json }, status: :ok
     else
       render json: { errors: comment.errors.full_messages }, status: :unprocessable_entity
     end

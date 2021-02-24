@@ -21,7 +21,7 @@ DELETE
 ```
 HTTP code 200 :ok
 {
-  "success: "true"                                                              (boolean, required)
+  "news_article: "NewsArticle"                                                  (object, required)
 }
 ```
 
@@ -33,3 +33,14 @@ HTTP code 404 :not_found
   "errors": ['Record not found.']                                               (array of strings, required)
 }
 ```
+
+- when Lit params is not valid
+```
+HTTP code 422 :unprocessable_entity
+{
+  "errors": ["Source is required"]                                              (array of strings, required)
+}
+```
+
+### References
+- [User JSON object](../../../json_objects/news_article.md)

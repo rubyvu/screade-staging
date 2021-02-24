@@ -5,9 +5,10 @@ class Api::V1::CommentsController < Api::V1::ApiController
   def lit
     lit = Lit.new(source: @comment, user: current_user)
     if lit.save
-      render json: { success: true }, status: :ok
+      comment_json = CommentSerializer.new(@comment, current_user: current_user).as_json
+      render json: { comment: comment_json }, status: :ok
     else
-      render json: { success: false }, status: :ok
+      render json: { errors: lit.errors.full_messages }, status: :unprocessable_entity
     end
   end
   
@@ -15,7 +16,9 @@ class Api::V1::CommentsController < Api::V1::ApiController
   def unlit
     lit = Lit.find_by!(source: @comment, user: current_user)
     lit.destroy
-    render json: { success: true }, status: :ok
+    
+    comment_json = CommentSerializer.new(@comment, current_user: current_user).as_json
+    render json: { comment: comment_json }, status: :ok
   end
   
   private
