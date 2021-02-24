@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   resources :home, only: [:index]
   resources :news_articles, only: [] do
     member do
+      get :comments
       post :lit
       post :view
       delete :unlit

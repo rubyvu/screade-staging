@@ -27,7 +27,8 @@
               span.info-panel-value #{news_article.lits.count}
               
             .info-panel-value-wrapper
-              i class=(news_article.is_commented(current_user) ? "ic comment active" : "ic comment")
+              = link_to comments_news_article_path(news_article), class: 'comment-link-icon' do
+                i class=(news_article.is_commented(current_user) ? "ic comment active" : "ic comment")
               span.info-panel-value #{news_article.comments.count}
               
             .info-panel-value-wrapper

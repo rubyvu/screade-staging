@@ -1,5 +1,6 @@
 class NewsArticlesController < ApplicationController
-  before_action :get_article, only: [:lit, :view, :unlit]
+  skip_before_action :authenticate_user!, only: [:comments]
+  before_action :get_article, only: [:comments, :lit, :view, :unlit]
   
   # POST /news_articles/:id/lit
   def lit
@@ -26,6 +27,11 @@ class NewsArticlesController < ApplicationController
     lit = Lit.find_by!(source: @news_article, user: current_user)
     lit.destroy
     render json: { success: true }, status: :ok
+  end
+  
+  # GET /news_articles/:id/comments
+  def comments
+    @comments = Comment.where(source: @news_article).order(created_at: :desc)
   end
   
   private
