@@ -13,10 +13,18 @@ $( document ).on('turbolinks:load', function() {
     window.location.href = document.URL
   });
   
-  // News Articles Lits
+  // News Articles Lits for on Home and NewsArticles Comments pages
   $('.ic.lit').parent().on('click', function() {
     const iconObject = $(this)
-    const articleId = iconObject.parents('.news-card:first').attr('value');
+    
+    var articleId = ''
+    // Get Article ID from Home or NewsArticles Comments pages
+    if ($('.news-card').length > 0) {
+      articleId = iconObject.parents('.news-card:first').attr('value');
+    } else if ( $('.news-info-panel').length > 0 ) {
+      articleId = iconObject.parents('.news-info-panel:first').attr('value');
+    }
+    
     var litCounter = +(iconObject.children('span').text())
     
     if ( iconObject.children('.ic').hasClass('active') ) {
