@@ -12,7 +12,7 @@
             = f.submit '', class: 'btn btn-link send-message-button'
             
   .comments-scroll
-    - comments.each do |comment|
+    - comments.each_with_index do |comment, index|
       .comment-wrapper
         .comment-image-wrapper
           - if comment.user.profile_picture.url
@@ -27,4 +27,6 @@
             = comment.created_at.strftime('%d.%m.%Y')
           .comment-text
             = comment.message
-          
+      
+      - if (index+1)%5 == 0 && Rails.env.production?
+        //= render './shared/ads/home_banner'
