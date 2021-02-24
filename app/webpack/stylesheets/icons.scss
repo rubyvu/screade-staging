@@ -15,6 +15,10 @@
   display: inline-flex;
   width: auto;
   margin-right: 16px;
+  
+  &.pointer-disable {
+    cursor: default;
+  }
 }
 
 .info-panel .info-panel-value-wrapper span.info-panel-value {

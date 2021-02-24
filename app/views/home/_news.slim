@@ -22,7 +22,7 @@
             = image_pack_tag('media/images/bg-picture-authentication.png', class: 'news-image')
             
           .info-panel
-            .info-panel-value-wrapper
+            .div class="#{ current_user ? 'info-panel-value-wrapper' : 'info-panel-value-wrapper pointer-disable' }"
               i class=(news_article.is_lited(current_user) ? "ic lit active" : "ic lit")
               span.info-panel-value #{news_article.lits.count}
               
@@ -31,7 +31,7 @@
                 i class=(news_article.is_commented(current_user) ? "ic comment active" : "ic comment")
               span.info-panel-value #{news_article.comments.count}
               
-            .info-panel-value-wrapper
+            .info-panel-value-wrapper.pointer-disable
               i class=(news_article.is_viewed(current_user) ? "ic view active" : "ic view")
               span.info-panel-value #{news_article.views.count}
               

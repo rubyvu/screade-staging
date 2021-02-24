@@ -17,6 +17,9 @@ $( document ).on('turbolinks:load', function() {
   $('.ic.lit').parent().on('click', function() {
     const iconObject = $(this)
     
+    // Do not send request if icon disabled
+    if ( $(this).hasClass('pointer-disable') ) { return }
+    
     var articleId = ''
     // Get Article ID from Home or NewsArticles Comments pages
     if ($('.news-card').length > 0) {
