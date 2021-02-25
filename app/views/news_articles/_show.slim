@@ -1,4 +1,9 @@
 .news-article-wrapper
+  .mb-4
+    - news_article.news_categories.each do |news_category|
+      span.title-main-wrapper
+        = news_category.title.capitalize
+  
   - if news_article.img_url.present?
     = image_tag(news_article.img_url, class: 'url-full-image')
   - else

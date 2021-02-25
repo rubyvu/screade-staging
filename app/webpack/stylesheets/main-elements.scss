@@ -12,3 +12,14 @@
   width: 100%;
   border-radius: 4px;
 }
+
+// Title element with bg
+.title-main-wrapper {
+  background-color: $color-blue;
+  border-radius: 16px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 400px;
+  color: $color-white;
+  margin-right: 8px;
+}
