@@ -31,15 +31,25 @@
 }
 
 .navbar-icon-wrappers {
+  cursor: pointer;
   justify-content: center;
   height: 20px;
   width: 20px;
   display: inline-flex;
-  padding: 2px 18px;
+  margin: 0 10px;
   
   &.search-icon {
     border-right: solid 1px $color-light-grey;
     padding-right: 24px;
     margin-right: 6px;
   }
+}
+
+// Dropdown
+.navbar-icon-wrappers .dropdown-toggle::after { display: none; }
+.navbar-icon-wrappers a.dropdown-item {
+  border-bottom: solid 1px $color-light-grey;
+  padding: 0.5rem 1.5rem;
+  
+  &.no-border { border: none; }
 }
