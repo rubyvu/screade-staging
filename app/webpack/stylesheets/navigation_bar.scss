@@ -29,3 +29,17 @@
   outline: none !important;
   box-shadow: none !important;
 }
+
+.navbar-icon-wrappers {
+  justify-content: center;
+  height: 20px;
+  width: 20px;
+  display: inline-flex;
+  padding: 2px 18px;
+  
+  &.search-icon {
+    border-right: solid 1px $color-light-grey;
+    padding-right: 24px;
+    margin-right: 6px;
+  }
+}

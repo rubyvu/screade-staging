@@ -37,12 +37,28 @@ html
           li.nav-item
             = link_to 'Video', root_path, class: 'nav-link'
             
-        .div
-          - if current_user
-            = link_to "Sign Out", destroy_user_session_path, method: :delete, class: 'btn btn-link my-2 my-sm-0'
-          - else
-            = link_to "Sign Up", '', class: 'btn btn-link my-2 my-sm-0', data: { toggle: "modal", target: "#modal-sign-up" }
-            = link_to "Sign In", '', class: 'btn btn-primary my-2 my-sm-0', data: { toggle: "modal", target: "#modal-sign-in" }
+        - if current_user
+          .div.d-flex.align-items-center
+            .navbar-icon-wrappers.search-icon
+              = image_pack_tag('media/images/icons/ic_search.png', id: 'search-icon')
+            .navbar-icon-wrappers
+              = image_pack_tag('media/images/icons/ic_dialog.png')
+            .navbar-icon-wrappers
+              = image_pack_tag('media/images/icons/ic_notification.png')
+            .navbar-icon-wrappers
+              = image_pack_tag('media/images/icons/ic_settings.png')
+              
+            .d-inline-flex.ml-1
+              - if current_user.profile_picture.present?
+                = image_tag(current_user.profile_picture.square_320.url, class: 'profile-image')
+              - else
+                = image_pack_tag('media/images/icons/btn_add_photo.png', class: 'profile-image')
+        - else
+          = link_to "Sign Up", '', class: 'btn btn-link my-2 my-sm-0', data: { toggle: "modal", target: "#modal-sign-up" }
+          = link_to "Sign In", '', class: 'btn btn-primary my-2 my-sm-0', data: { toggle: "modal", target: "#modal-sign-in" }
+          
+          // = link_to "Sign Out", destroy_user_session_path, method: :delete, class: 'btn btn-link my-2 my-sm-0'
+              
     = yield
     
     = render 'shared/modals/sign_in'
