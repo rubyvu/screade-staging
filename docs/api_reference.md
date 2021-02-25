@@ -11,6 +11,10 @@
 - [Sign Up](api/v1/authentication/sign_up.md)
 - [Sign Out](api/v1/authentication/sign_out.md)
 
+### Categories
+- [List of all News Categories](api/v1/news_categories/index.md)
+- [List of NewsArticles for each Category](api/v1/news_categories/news.md)
+
 ### Comments
 - [List of Article Comments](api/v1/news_articles/index_comment.md)
 - [Add Comment to Article](api/v1/news_articles/create_comment.md)

@@ -81,6 +81,12 @@ Rails.application.routes.draw do
           delete :unlit
         end
       end
+      
+      resources :news_categories, only: [:index] do
+        member do
+          get :news
+        end
+      end
       resources :user_security_questions, only: [:index]
     end
   end
