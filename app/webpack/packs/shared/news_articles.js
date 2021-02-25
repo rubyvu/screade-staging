@@ -52,9 +52,7 @@ $( document ).on('turbolinks:load', function() {
       });
     }
   })
-});
-
-$(document).ready(function() {
+  
   // News Articles Views
   $('.news-article-link').on('click', function() {
     const iconObject = $(this).closest('.news-card').find('i.ic.view')
@@ -73,4 +71,4 @@ $(document).ready(function() {
       });
     }
   })
-})
+});
