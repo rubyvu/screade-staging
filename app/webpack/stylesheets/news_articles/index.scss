@@ -25,3 +25,7 @@
     }
   }
 }
+
+@media (max-width: map-get($grid-breakpoints, "md")) {
+  .content-comment-wrapper { display: block; }
+}
