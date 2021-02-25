@@ -11,6 +11,7 @@
   "comments_count": "1"                                                         (integer, required)
   "description" : "Article description field"                                   (text, optional)
   "id" : "1"                                                                    (integer, required)
+  "is_commented": "false"                                                       (boolean, required)
   "is_lited": "false"                                                           (boolean, required)
   "img_url": "http://site.com/small.png"                                        (string, optional)
   "is_viewed": "true"                                                           (boolean, required)

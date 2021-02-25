@@ -8,6 +8,12 @@ class NewsArticleSerializer < ActiveModel::Serializer
   attribute :img_url
   attribute :id
   
+  attribute :is_commented
+  def is_commented
+    current_user = instance_options[:current_user]
+    current_user && current_user.kind_of?(User) ? object.is_commented(current_user) : false
+  end
+  
   attribute :is_lited
   def is_lited
     current_user = instance_options[:current_user]

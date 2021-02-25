@@ -26,6 +26,8 @@
   color: $color-white;
   font-size: 14px;
   font-weight: 500;
+  
+  &.color-black { color: $color-black; }
 }
 
 // Link block for info-panel
@@ -38,27 +40,51 @@ i.ic {
   height: 20px;
   width: 20px;
 }
+
+/* Lit */
 i.ic.lit:after {
   content: url('../images/icons/ic_lit.png');
- }
- 
+}
+
+i.ic.lit.reverse:after {
+  content: url('../images/icons/ic_lit_reverse.png');
+}
+
 i.ic.lit.active:after {
   content: url('../images/icons/ic_lit_active.png');
- }
- 
+}
+
+i.ic.lit.active.reverse:after {
+  content: url('../images/icons/ic_lit_active_reverse.png');
+}
+
+/* View */
 i.ic.view:after {
   content: url('../images/icons/ic_view.png');
- }
- 
+}
+
+i.ic.view.reverse:after {
+  content: url('../images/icons/ic_view_reverse.png');
+}
+
 i.ic.view.active:after {
   content: url('../images/icons/ic_view_active.png');
- }
- 
+}
+
+/* Comment */
 i.ic.comment:after {
   content: url('../images/icons/ic_comment.png');
- }
+}
+
+i.ic.comment.reverse:after {
+  content: url('../images/icons/ic_comment_reverse.png');
+}
  
 i.ic.comment.active:after {
   content: url('../images/icons/ic_comment_active.png');
+}
+
+i.ic.comment.active.reverse:after {
+  content: url('../images/icons/ic_comment_reverse.png');
 }
   
