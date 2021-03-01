@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :timeoutable, :trackable and :omniauthable
-  devise :confirmable, :database_authenticatable, :lockable, :registerable, :recoverable, :validatable
+  devise :confirmable, :database_authenticatable, :lockable, :registerable, :recoverable, :validatable, authentication_keys: [:login]
   
   # Constants
   EMAIL_FORMAT = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
