@@ -1,4 +1,4 @@
-.modal.fade.overflow-auto#modal-sign-up-update aria-hidden="true" aria-labelledby="myLargeModalLabel" role="dialog" tabindex="-1"
+.modal.fade.overflow-auto#modal-sign-up-update aria-hidden="true" aria-labelledby="myLargeModalLabel" role="dialog" tabindex="-1" data-backdrop="static" data-keyboard="false"
   .modal-dialog.modal-dialog-centered.modal-lg
     .modal-content
       .modal-header
@@ -6,9 +6,7 @@
           h4.modal-title Sign Up
           .step
           .step
-        button.close aria-label="Close" data-dismiss="modal" type="button"
-          = image_pack_tag('media/images/icons/ic_close.png')
-          
+        
       .modal-body
         .global-errors
         = form_for resource, url: current_user_index_path(), namespace: 'sign_up_update', method: :put do |f|
@@ -30,27 +28,27 @@
             .col
               .material-field
                 = f.label 'First Name'
-                = f.text_field :first_name, class: 'form-control'
+                = f.text_field :first_name, class: 'form-control', required: true
                 
             .col
               .material-field
                 = f.label 'Middle Name'
-                = f.text_field :middle_name, class: 'form-control'
+                = f.text_field :middle_name, class: 'form-control', required: true
                 
           .row
             .col
               .material-field
                 = f.label 'Last Name'
-                = f.text_field :last_name, class: 'form-control'
+                = f.text_field :last_name, class: 'form-control', required: true
                 
             .col
               .material-field
                 = f.label 'Phone number'
-                = f.text_field :phone_number, class: 'form-control', type: 'number'
+                = f.text_field :phone_number, class: 'form-control', type: 'number', required: true
             
           .material-field
             = f.label 'Date of Birth'
-            = f.hidden_field :birthday
+            = f.hidden_field :birthday, required: true
             .row
               .col
                 = select_tag :birthday_day, options_for_select(Date::MONTHNAMES.compact.map.with_index { |day, index| [day, index] }), class: 'form-control datepicker'
@@ -63,6 +61,4 @@
             = f.submit 'Save', class: 'btn btn-primary w-100'
               
       .modal-footer
-          p.m-auto
-            = link_to 'Skip this step', root_url
             

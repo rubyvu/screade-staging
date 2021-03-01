@@ -22,7 +22,7 @@
               .input-group-text
                 = image_pack_tag('media/images/icons/ic_password.png', class: 'img-responsive')
                 
-            = f.password_field :password, class: 'form-control', placeholder: 'Password'
+            = f.password_field :password, class: 'form-control', placeholder: 'Password', autocomplete: 'new-password'
             
             .input-group-append
               .input-group-text
