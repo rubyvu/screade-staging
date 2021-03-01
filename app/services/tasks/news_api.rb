@@ -65,6 +65,11 @@ module Tasks
       end
       
       sources.each do |source|
+        puts "----- #{source.id} -----"
+        puts "===== Source Name: #{source.name} ====="
+        puts "===== Source Country: #{source.country} ====="
+        puts "===== Source Language: #{source.language} ====="
+        
         next if NewsSource.exists?(source_identifier: source.id)
         
         country = Country.find_by(code: source.country.upcase)
