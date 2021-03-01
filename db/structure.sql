@@ -470,7 +470,8 @@ CREATE TABLE public.news_articles (
     url character varying NOT NULL,
     img_url character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    news_source_id integer
 );
 
 
@@ -532,6 +533,40 @@ CREATE SEQUENCE public.news_categories_id_seq
 --
 
 ALTER SEQUENCE public.news_categories_id_seq OWNED BY public.news_categories.id;
+
+
+--
+-- Name: news_sources; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.news_sources (
+    id bigint NOT NULL,
+    source_identifier character varying NOT NULL,
+    name character varying,
+    language character varying,
+    country_id integer NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: news_sources_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.news_sources_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: news_sources_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.news_sources_id_seq OWNED BY public.news_sources.id;
 
 
 --
@@ -797,6 +832,13 @@ ALTER TABLE ONLY public.news_categories ALTER COLUMN id SET DEFAULT nextval('pub
 
 
 --
+-- Name: news_sources id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.news_sources ALTER COLUMN id SET DEFAULT nextval('public.news_sources_id_seq'::regclass);
+
+
+--
 -- Name: que_jobs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -894,6 +936,14 @@ ALTER TABLE ONLY public.news_articles
 
 ALTER TABLE ONLY public.news_categories
     ADD CONSTRAINT news_categories_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: news_sources news_sources_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.news_sources
+    ADD CONSTRAINT news_sources_pkey PRIMARY KEY (id);
 
 
 --
@@ -1028,6 +1078,20 @@ CREATE UNIQUE INDEX index_news_articles_on_url ON public.news_articles USING btr
 --
 
 CREATE UNIQUE INDEX index_news_categories_on_title ON public.news_categories USING btree (title);
+
+
+--
+-- Name: index_news_sources_on_country_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_news_sources_on_country_id ON public.news_sources USING btree (country_id);
+
+
+--
+-- Name: index_news_sources_on_source_identifier; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_news_sources_on_source_identifier ON public.news_sources USING btree (source_identifier);
 
 
 --
@@ -1178,6 +1242,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210208104456'),
 ('20210210133800'),
 ('20210218085846'),
-('20210219165401');
+('20210219165401'),
+('20210301112248'),
+('20210301112452');
 
 

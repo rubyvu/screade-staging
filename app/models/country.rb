@@ -4,6 +4,7 @@ class Country < ApplicationRecord
   
   # Associations
   has_many :news_articles, class_name: 'NewsArticle'
+  has_many :news_sources, class_name: 'NewsSource'
   has_many :users, class_name: 'User'
   
   # Fields validations

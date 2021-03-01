@@ -2,6 +2,7 @@ class NewsArticle < ApplicationRecord
   
   # Associations
   belongs_to :country
+  belongs_to :news_source, optional: true
   has_and_belongs_to_many :news_categories
   ## Comments
   has_many :comments, as: :source, dependent: :destroy
