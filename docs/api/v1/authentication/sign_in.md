@@ -15,7 +15,7 @@ POST
 ```
 {
   "user": {
-    "email": "example@gmail.com"                                                (string, required)
+    "login": "example@gmail.com" or "username"                                  (string, required)
     "password": "123123123"                                                     (string, required)
   },
   "device": {
@@ -56,7 +56,7 @@ HTTP code 400 :bad_request
 ```
 HTTP code 404 :not_found
 {
-  errors: ["Record not found"]                                                  (array of strings, required)
+  errors: ["User with this email or username doesn'texist"]                     (array of strings, required)
 }
 ```
 

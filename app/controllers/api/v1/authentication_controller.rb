@@ -3,21 +3,25 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
   
   # POST /api/v1/authentication/sign_in
   def sign_in
-    email = user_params[:email]
-    if email.blank?
-      render json: { errors: ['Email is required'] }, status: :bad_request
+    login = user_sign_in_params[:login]
+    if login.blank?
+      render json: { errors: ['Login is required'] }, status: :bad_request
       return
     end
     
-    password = user_params[:password]
+    password = user_sign_in_params[:password]
     if password.blank?
       render json: { errors: ['Password is required'] }, status: :bad_request
       return
     end
     
-    user = User.find_by!(email: email.downcase)
-    unless user.valid_password?(password)
-      render json: { errors: ["User with this email doesn't exist or password is wrong"] }, status: :not_found
+    user = User.find_by(username: login.downcase)
+    if user.nil?
+      user = User.find_by(email: login.downcase)
+    end
+    
+    if user.nil?
+      render json: { errors: ["User with this email or username doesn't exist"] }, status: :not_found
       return
     end
     
@@ -81,5 +85,9 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
     
     def user_params
       params.require(:user).permit(:country_code, :email, :password, :password_confirmation, :security_question_answer, :username, :user_security_question_identifier)
+    end
+    
+    def user_sign_in_params
+      params.require(:user).permit(:login, :password)
     end
 end

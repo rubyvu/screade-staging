@@ -32,6 +32,9 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true
   validates :user_security_question_id, presence: true
   
+  # Virtual attributes
+  attr_writer :login
+  
   # Normalization
   def email=(value)
     super(value&.downcase&.strip)
@@ -43,6 +46,10 @@ class User < ApplicationRecord
   
   def last_name=(value)
     super(value&.strip)
+  end
+  
+  def username=(value)
+    super(value&.downcase&.strip)
   end
   
   def full_name
@@ -57,4 +64,18 @@ class User < ApplicationRecord
   def can_be_reconfirmed?
     self.confirmation_period_expired? && !self.confirmed?
   end
+  
+  # Authenticate form email or username
+  def login
+    @login || self.username || self.email
+  end
+  
+  def self.find_for_database_authentication(warden_conditions)
+     conditions = warden_conditions.dup
+     if login = conditions.delete(:login)
+       where(conditions.to_h).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
+     elsif conditions.has_key?(:username) || conditions.has_key?(:email)
+       where(conditions.to_h).first
+     end
+   end
 end
