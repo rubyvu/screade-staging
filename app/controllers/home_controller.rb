@@ -22,7 +22,11 @@ class HomeController < ApplicationController
     if @home[:is_national] && current_user&.is_national_news?
       @home[:news_articles] = NewsArticle.where(country: current_user.country).order(published_at: :desc).page(params[:page]).per(16)
     else
-      @home[:news_articles] = NewsArticle.order(published_at: :desc).page(params[:page]).per(16)
+      if current_user&.is_world_news?
+        @home[:news_articles] = NewsArticle.joins(:news_source).where(news_sources: { language: current_user.country.languages }).order(published_at: :desc).page(params[:page]).per(16)
+      else
+        @home[:news_articles] = NewsArticle.order(published_at: :desc).page(params[:page]).per(16)
+      end
     end
   end
 end

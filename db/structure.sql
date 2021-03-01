@@ -390,6 +390,16 @@ ALTER SEQUENCE public.countries_id_seq OWNED BY public.countries.id;
 
 
 --
+-- Name: countries_languages; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.countries_languages (
+    country_id bigint NOT NULL,
+    language_id bigint NOT NULL
+);
+
+
+--
 -- Name: devices; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -421,6 +431,38 @@ CREATE SEQUENCE public.devices_id_seq
 --
 
 ALTER SEQUENCE public.devices_id_seq OWNED BY public.devices.id;
+
+
+--
+-- Name: languages; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.languages (
+    id bigint NOT NULL,
+    code character varying NOT NULL,
+    title character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: languages_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.languages_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: languages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.languages_id_seq OWNED BY public.languages.id;
 
 
 --
@@ -543,7 +585,7 @@ CREATE TABLE public.news_sources (
     id bigint NOT NULL,
     source_identifier character varying NOT NULL,
     name character varying,
-    language character varying,
+    language_id integer NOT NULL,
     country_id integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
@@ -811,6 +853,13 @@ ALTER TABLE ONLY public.devices ALTER COLUMN id SET DEFAULT nextval('public.devi
 
 
 --
+-- Name: languages id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.languages ALTER COLUMN id SET DEFAULT nextval('public.languages_id_seq'::regclass);
+
+
+--
 -- Name: lits id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -912,6 +961,14 @@ ALTER TABLE ONLY public.countries
 
 ALTER TABLE ONLY public.devices
     ADD CONSTRAINT devices_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: languages languages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.languages
+    ADD CONSTRAINT languages_pkey PRIMARY KEY (id);
 
 
 --
@@ -1032,6 +1089,13 @@ CREATE INDEX index_comments_on_source_id ON public.comments USING btree (source_
 
 
 --
+-- Name: index_countries_languages_on_country_id_and_language_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_countries_languages_on_country_id_and_language_id ON public.countries_languages USING btree (country_id, language_id);
+
+
+--
 -- Name: index_countries_on_code; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1050,6 +1114,13 @@ CREATE UNIQUE INDEX index_devices_on_access_token ON public.devices USING btree 
 --
 
 CREATE INDEX index_devices_on_owner_id ON public.devices USING btree (owner_id);
+
+
+--
+-- Name: index_languages_on_code; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_languages_on_code ON public.languages USING btree (code);
 
 
 --
@@ -1244,6 +1315,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210218085846'),
 ('20210219165401'),
 ('20210301112248'),
-('20210301112452');
+('20210301112452'),
+('20210301135852'),
+('20210301140923');
 
 

@@ -57,7 +57,11 @@ class User < ApplicationRecord
   end
   
   def is_national_news?
-    Country::COUNTRIES_WITH_NATIONAL_NEWS.include?(self.country.code) && self.country.news_articles.present?
+    self.country.is_national_news && self.country.news_articles.present?
+  end
+  
+  def is_world_news?
+    self.country.is_national_news && self.country.languages.count > 0
   end
   
   # Show reconfirmed link if User doesn't confirm his email or confirmation token expired

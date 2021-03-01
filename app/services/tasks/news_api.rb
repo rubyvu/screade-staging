@@ -68,7 +68,12 @@ module Tasks
         next if NewsSource.exists?(source_identifier: source.id)
         
         country = Country.find_by(code: source.country.upcase)
-        news_source = NewsSource.new(source_identifier: source.id, name: source.name, country: country, language: source.language)
+        next unless country
+        
+        language = Language.find_by(code: source.language.upcase)
+        next unless language
+        
+        news_source = NewsSource.new(source_identifier: source.id, name: source.name, country: country, language: language)
         unless news_source.save
           puts "!!!!!!! ERROR: Cannot save NewsSource with next errors #{news_source.errors.full_messages}"
         end

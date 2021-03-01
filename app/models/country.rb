@@ -6,6 +6,7 @@ class Country < ApplicationRecord
   has_many :news_articles, class_name: 'NewsArticle'
   has_many :news_sources, class_name: 'NewsSource'
   has_many :users, class_name: 'User'
+  has_and_belongs_to_many :languages
   
   # Fields validations
   validates :title, presence: true

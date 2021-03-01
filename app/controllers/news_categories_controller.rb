@@ -13,7 +13,11 @@ class NewsCategoriesController < ApplicationController
     if @category[:is_national] && current_user&.is_national_news?
       @category[:news_articles] = NewsArticle.joins(:news_categories).where(news_articles: { country: current_user.country }, news_categories: { id: news_category.id }).order(published_at: :desc).page(params[:page]).per(16)
     else
-      @category[:news_articles] = NewsArticle.joins(:news_categories).where(news_categories: { id: news_category.id }).order(published_at: :desc).page(params[:page]).per(16)
+      if current_user&.is_world_news?
+        @category[:news_articles] = NewsArticle.joins(:news_source, :news_categories).where(news_sources: { language: current_user.country.languages }, news_categories: { id: news_category.id }).order(published_at: :desc).page(params[:page]).per(16)
+      else
+        @category[:news_articles] = NewsArticle.joins(:news_categories).where(news_categories: { id: news_category.id }).order(published_at: :desc).page(params[:page]).per(16)
+      end
     end
   end
 end
