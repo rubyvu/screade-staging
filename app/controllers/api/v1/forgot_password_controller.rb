@@ -34,7 +34,7 @@ class Api::V1::ForgotPasswordController < Api::V1::ApiController
       render json: { success: true }, status: :ok
     else
       user.increment_failed_attempts
-      user.lock_access! if user.failed_attempts >= 3
+      user.lock_access! if user.failed_attempts >= 5
       render json: { errors: ['Record not found.'] }, status: :not_found
     end
   end

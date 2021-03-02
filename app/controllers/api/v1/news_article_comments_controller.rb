@@ -1,10 +1,10 @@
 class Api::V1::NewsArticleCommentsController < Api::V1::ApiController
   skip_before_action :authenticate, only: [:index]
+  before_action :authenticate, only: [:index], if: :is_device_token?
   before_action :get_article
   
   # GET /api/v1/news_articles/:news_article_id/news_article_comments
   def index
-    authenticate if is_device_token?
     comments_json = ActiveModel::Serializer::CollectionSerializer.new(@news_article.comments.order(created_at: :desc).page(params[:page]).per(30), serializer: CommentSerializer, current_user: current_user).as_json
     render json: { comments: comments_json }, status: :ok
   end

@@ -1,5 +1,6 @@
 class Api::V1::NewsCategoriesController < Api::V1::ApiController
   skip_before_action :authenticate, only: [:index, :news_articles]
+  before_action :authenticate, only: [:news], if: :is_device_token?
   
   # GET /api/v1/news_categories/
   def index
@@ -10,8 +11,6 @@ class Api::V1::NewsCategoriesController < Api::V1::ApiController
   
   # GET /api/v1/news_categories/:id/news
   def news
-    authenticate if is_device_token?
-    
     news_category = NewsCategory.find(params[:id])
     if current_user && current_user.is_national_news? && params[:is_national]
       news = NewsArticle.joins(:news_categories).where(news_articles: { country: current_user.country }, news_categories: { id: news_category.id }).order(published_at: :desc).page(params[:page]).per(30)

@@ -1,10 +1,9 @@
 class Api::V1::HomeController < Api::V1::ApiController
   skip_before_action :authenticate, only: [:news, :breaking_news, :trends]
+  before_action :authenticate, only: [:news], if: :is_device_token?
   
   # GET /api/v1/home/news
   def news
-    authenticate if is_device_token?
-    
     if current_user && current_user.is_national_news? && params[:is_national]
       news = NewsArticle.where(country: current_user.country).order(published_at: :desc).page(params[:page]).per(30)
     else
