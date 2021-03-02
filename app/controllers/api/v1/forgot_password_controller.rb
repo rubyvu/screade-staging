@@ -1,10 +1,27 @@
 class Api::V1::ForgotPasswordController < Api::V1::ApiController
   skip_before_action :authenticate, only: [:create]
   
+  # GET /api/v1/forgot_password/security_question
+  def security_question
+    user = User.find_by!(email: user_params[:email])
+    
+    user_security_question = user.user_security_question
+    unless user_security_question
+      render json: { errors: ['Record not found.'] }, status: :not_found
+    end
+    
+    security_question_json = UserSecurityQuestionSerializer.new(user_security_question).as_json
+    render json: { security_question: security_question_json }, status: :ok
+  end
+  
   # POST /api/v1/forgot_password
   def create
     user = User.find_by!(email: user_params[:email])
-    security_question = UserSecurityQuestion.find_by!(question_identifier: security_question_params[:question_identifier])
+    if user.failed_attempts >= 5
+      render json: { errors: ['You have reached the limit of incorrect answers, your profile has been blocked.'] }, status: :forbidden
+    end
+      
+    security_question = user.user_security_question.find_by!(question_identifier: security_question_params[:question_identifier])
     
     if user.user_security_question == security_question && user.security_question_answer == security_question_params[:security_question_answer]
       # Generate random, long password that the user will never know

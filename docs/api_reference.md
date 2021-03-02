@@ -29,6 +29,7 @@
 - [Resend email confirmation to current user](api/v1/current_user/resend_email_confirmation.md)
 
 ### Forgot password
+- [Get security question for User](api/v1/forgot_password/security_question.md)
 - [Get new password instructions](api/v1/forgot_password/create.md)
 
 ### Home

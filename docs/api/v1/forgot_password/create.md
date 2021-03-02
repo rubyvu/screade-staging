@@ -41,3 +41,11 @@ HTTP code 404 :not_found
   "errors": ['Record not found.']                                               (array of strings, required)
 }
 ```
+
+- when User reach limit of incorrect answers attempts
+```
+HTTP code 403 :forbidden
+{
+  "errors": ['You have reached the limit of incorrect answers, your profile has been blocked.']     (array of strings, required)
+}
+```

@@ -87,7 +87,9 @@ Rails.application.routes.draw do
           get :news
         end
       end
-      resources :user_security_questions, only: [:index]
+      resources :user_security_questions, only: [:index] do
+        get :security_question
+      end
     end
   end
 end
