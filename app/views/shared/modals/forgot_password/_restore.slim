@@ -9,14 +9,8 @@
       .modal-body
         .global-errors
         = form_for(resource, as: resource_name, url: password_path(resource_name), namespace: 'forgot_password', html: { method: :post }, remote: true) do |f|
-          
-          .material-field
-            = f.label 'Email'
-            = f.email_field :email, class: 'form-control'
-            
-          .material-field.dropdown.my-4
-            = f.label 'Select a Question'
-            = f.select :user_security_question_id, UserSecurityQuestion.all.map{|q| [q.title, q.id] }, {}, { class: 'form-control select2' }
+          = f.hidden_field :email
+          = f.hidden_field :user_security_question_id
           
           .material-field
             = f.label 'Answer'

@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     registrations: 'users/registrations',
     passwords: 'users/passwords'
    }
+   
   resources :home, only: [:index]
   resources :news_articles, only: [] do
     member do
@@ -37,6 +38,11 @@ Rails.application.routes.draw do
     end
   end
   resources :news_categories, only: [:show]
+  resources :forgot_password, only: [] do
+    collection do
+      post :security_question
+    end
+  end
   
   # API routes
   namespace :api, defaults: { format: 'json' } do
@@ -64,7 +70,12 @@ Rails.application.routes.draw do
         end
       end
       
-      resources :forgot_password, only: [:create]
+      resources :forgot_password, only: [:create] do
+        collection do
+          get :security_question
+        end
+      end
+      
       resources :home, only: [] do
         collection do
           get :news
@@ -87,9 +98,7 @@ Rails.application.routes.draw do
           get :news
         end
       end
-      resources :user_security_questions, only: [:index] do
-        get :security_question
-      end
+      resources :user_security_questions, only: [:index]
     end
   end
 end

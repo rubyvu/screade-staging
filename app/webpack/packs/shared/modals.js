@@ -114,4 +114,20 @@ $( document ).on('turbolinks:load', function() {
       reader.readAsDataURL(input.files[0]);
     }
   }
+  
+  // Forgot password
+  $("#get-user-security-question").on('ajax:complete', function(event) {
+    let eventResponse = event.detail[0];
+    if ( eventResponse.status !== 200 ) {
+      $("#modal-forgot-password-security-question .global-errors").html("Incorrect Email")
+    } else {
+      $("#modal-forgot-password-security-question").modal('hide')
+      $("#modal-forgot-password").modal('show')
+      
+      let responseJson = JSON.parse(eventResponse.response)
+      $('#forgot_password_user_email').val(responseJson.email)
+      $('#forgot_password_user_user_security_question_id').val(responseJson.security_question.question_identifier)
+      $('#modal-forgot-password .material-field').prepend('<h5>' + responseJson.security_question.title + '</h5>')
+    }
+  })
 })
