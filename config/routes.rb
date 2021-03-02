@@ -64,6 +64,7 @@ Rails.application.routes.draw do
       resources :countries, only: [:index]
       resources :current_user, only: [] do
         collection do
+          get :info
           put :update
           patch :update
           post :resend_email_confirmation

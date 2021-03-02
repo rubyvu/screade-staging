@@ -1,5 +1,11 @@
 class Api::V1::CurrentUserController < Api::V1::ApiController
   
+  # GET /api/v1/current_user/info
+  def info
+    user_json = UserSerializer.new(current_user).as_json
+    render json: { user: user_json }, status: :ok
+  end
+  
   # PUT/PATCH /api/v1/current_user
   def update
     if current_user.update(user_params)

@@ -25,6 +25,7 @@
 - [Get Countries list](api/v1/countries/index.md)
 
 ### Current User
+- [Get current user info](api/v1/current_user/info.md)
 - [Update current user](api/v1/current_user/update.md)
 - [Resend email confirmation to current user](api/v1/current_user/resend_email_confirmation.md)
 
