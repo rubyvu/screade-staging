@@ -4,14 +4,13 @@ class Api::V1::HomeController < Api::V1::ApiController
   
   # GET /api/v1/home/news
   def news
-    if current_user && current_user.is_national_news? && params[:is_national]
-      news = NewsArticle.where(country: current_user.country).order(published_at: :desc).page(params[:page]).per(30)
+    current_country = current_user&.country || Country.find_by(code: params[:location_code])
+    if current_country && params[:is_national]
+      news = NewsArticle.where(country: current_country).order(published_at: :desc).page(params[:page]).per(30)
+    elsif current_country
+      news = NewsArticle.joins(:news_source).where(news_sources: { language: current_country.languages }).order(published_at: :desc).page(params[:page]).per(30)
     else
-      if current_user&.is_world_news?
-        news = NewsArticle.joins(:news_source).where(news_sources: { language: current_user.country.languages }).order(published_at: :desc).page(params[:page]).per(30)
-      else
-        news = NewsArticle.order(published_at: :desc).page(params[:page]).per(30)
-      end
+      news = NewsArticle.order(published_at: :desc).page(params[:page]).per(30)
     end
       
     news_json = ActiveModel::Serializer::CollectionSerializer.new(news, serializer: NewsArticleSerializer, current_user: current_user).as_json

@@ -25,6 +25,12 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
       return
     end
     
+    # Check that User is not locked
+    if user.access_locked?
+      render json: { errors: ['User has been blocked, please contact support.'] }, status: :forbidden
+      return
+    end
+    
     device = Device.new(device_params)
     device.owner = user
     
