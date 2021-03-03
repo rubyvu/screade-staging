@@ -11,9 +11,13 @@ class User < ApplicationRecord
   mount_uploader :profile_picture, AvatarUploader
   mount_uploader :banner_picture, BannerUploader
   
+  # Callbacks
+  after_commit :set_user_settings, on: [:create]
+  
   # Associations
   belongs_to :country
   belongs_to :user_security_question
+  has_one :setting, dependent: :destroy
   has_many :devices, class_name: 'Device', foreign_key: 'owner_id', dependent: :destroy
   ## Comments
   has_many :comments
@@ -21,7 +25,7 @@ class User < ApplicationRecord
   ## Lits
   has_many :lits
   has_many :lited_news_articles, through: :lits, source: :source, source_type: 'NewsArticle'
-  ## Lits
+  ## Views
   has_many :views
   has_many :viewed_news_articles, through: :views, source: :source, source_type: 'NewsArticle'
   
@@ -75,11 +79,16 @@ class User < ApplicationRecord
   end
   
   def self.find_for_database_authentication(warden_conditions)
-     conditions = warden_conditions.dup
-     if login = conditions.delete(:login)
-       where(conditions.to_h).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
-     elsif conditions.has_key?(:username) || conditions.has_key?(:email)
-       where(conditions.to_h).first
-     end
-   end
+    conditions = warden_conditions.dup
+    if login = conditions.delete(:login)
+      where(conditions.to_h).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
+    elsif conditions.has_key?(:username) || conditions.has_key?(:email)
+      where(conditions.to_h).first
+    end
+  end
+   
+  def set_user_settings
+    return if user.setting
+    user.build_setting()
+  end
 end
