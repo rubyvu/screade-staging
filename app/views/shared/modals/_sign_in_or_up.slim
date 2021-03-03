@@ -1,0 +1,12 @@
+.modal.fade.overflow-auto#modal-sign-in-or-sign-up aria-hidden="true" aria-labelledby="myLargeModalLabel" role="dialog" tabindex="-1"
+  .modal-dialog.modal-dialog-centered.modal-lg
+    .modal-content
+      .modal-header
+        button.close aria-label="Close" data-dismiss="modal" type="button"
+          = image_pack_tag('media/images/icons/ic_close.png')
+          
+      .modal-body
+        = link_to "Sign In", '#', class: 'btn btn-primary w-100 my-2', data: { toggle: "modal", target: "#modal-sign-in" }
+        = link_to "Sign Up", '#', class: 'btn btn-outline-primary w-100 my-2', data: { toggle: "modal", target: "#modal-sign-up" }
+        = link_to 'Forgot password', '#', class: 'btn btn-link w-100 my-2', data: { toggle: "modal", target: "#modal-forgot-password-security-question" }
+        

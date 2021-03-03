@@ -24,18 +24,32 @@ html
         ul.navbar-nav.mr-auto
           li.nav-item
             = link_to 'Home', root_path, class: 'nav-link'
-          li.nav-item
-            = link_to 'Groups', root_path, class: 'nav-link'
-          li.nav-item
-            = link_to 'Calendar', root_path, class: 'nav-link'
-          li.nav-item
-            = link_to 'Images', root_path, class: 'nav-link'
-          li.nav-item
-            = link_to 'Posts', root_path, class: 'nav-link'
-          li.nav-item
-            = link_to 'Map', root_path, class: 'nav-link'
-          li.nav-item
-            = link_to 'Video', root_path, class: 'nav-link'
+          - if current_user
+            li.nav-item
+              = link_to 'Groups', root_path, class: 'nav-link'
+            li.nav-item
+              = link_to 'Calendar', root_path, class: 'nav-link'
+            li.nav-item
+              = link_to 'Images', root_path, class: 'nav-link'
+            li.nav-item
+              = link_to 'Posts', root_path, class: 'nav-link'
+            li.nav-item
+              = link_to 'Map', root_path, class: 'nav-link'
+            li.nav-item
+              = link_to 'Video', root_path, class: 'nav-link'
+          - else
+            li.nav-item
+              = link_to 'Groups', '#', class: 'nav-link', data: { toggle: "modal", target: "#modal-sign-in-or-sign-up" }
+            li.nav-item
+              = link_to 'Calendar', '#', class: 'nav-link', data: { toggle: "modal", target: "#modal-sign-in-or-sign-up" }
+            li.nav-item
+              = link_to 'Images', '#', class: 'nav-link', data: { toggle: "modal", target: "#modal-sign-in-or-sign-up" }
+            li.nav-item
+              = link_to 'Posts', '#', class: 'nav-link', data: { toggle: "modal", target: "#modal-sign-in-or-sign-up" }
+            li.nav-item
+              = link_to 'Map', '#', class: 'nav-link', data: { toggle: "modal", target: "#modal-sign-in-or-sign-up" }
+            li.nav-item
+              = link_to 'Video', '#', class: 'nav-link', data: { toggle: "modal", target: "#modal-sign-in-or-sign-up" }
             
         - if current_user
           .div.d-flex.align-items-center
@@ -72,6 +86,7 @@ html
     
     = render 'shared/modals/sign_in'
     = render 'shared/modals/sign_up'
+    = render 'shared/modals/sign_in_or_up'
     = render 'shared/modals/sign_up_update'
     = render 'shared/modals/forgot_password/security_question'
     = render 'shared/modals/forgot_password/restore'
