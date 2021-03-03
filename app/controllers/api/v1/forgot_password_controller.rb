@@ -19,6 +19,7 @@ class Api::V1::ForgotPasswordController < Api::V1::ApiController
     user = User.find_by!(email: user_params[:email])
     if user.failed_attempts >= 5
       render json: { errors: ['You have reached the limit of incorrect answers, your profile has been blocked.'] }, status: :forbidden
+      return
     end
       
     security_question = UserSecurityQuestion.find_by!(question_identifier: security_question_params[:question_identifier])
