@@ -1,14 +1,13 @@
 .news-wrapper
   .my-4
-    - if current_user&.is_national_news?
-      h4.d-inline National News
-      label.switch.news
-        - if is_national
-          input#news-switcher type="checkbox"
-        - else
-          input#news-switcher type="checkbox" checked="checked"
-          
-        span.slider.round
+    h4.d-inline National News
+    label.switch.news
+      - if is_national
+        input#news-switcher type="checkbox"
+      - else
+        input#news-switcher type="checkbox" checked="checked"
+        
+      span.slider.round
           
     h4.d-inline World News
         

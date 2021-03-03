@@ -16,19 +16,19 @@ end
 
 # Create and Assign Languages
 default_languages = [
-  { code: 'AR', title: 'Arabic', countries: ['AR'] },
-  { code: 'DE', title: 'German', countries: ['DE'] },
-  { code: 'EN', title: 'English', countries: ['CA', 'US', 'UK'] },
-  { code: 'ES', title: 'Spanish', countries: ['SE'] },
-  { code: 'FR', title: 'French', countries: ['CA', 'FR'] },
+  { code: 'AR', title: 'Arabic', countries: ['AE', 'EG', 'MA', 'SA'] },
+  { code: 'DE', title: 'German', countries: ['AT', 'BE', 'DE', 'CH', 'IT'] },
+  { code: 'EN', title: 'English', countries: ['AU', 'CA', 'US', 'GB', 'HK', 'IE', 'IN', 'KR', 'NG', 'NZ', 'PH', 'SG', 'ZA'] },
+  { code: 'ES', title: 'Spanish', countries: ['AR', 'CO', 'CU', 'SE', 'MX', 'VE'] },
+  { code: 'FR', title: 'French', countries: ['BE', 'CA', 'CH', 'FR', 'IT', 'MA'] },
   { code: 'HE', title: 'Hebrew', countries: ['IL'] },
-  { code: 'IT', title: 'Italian', countries: ['IT'] },
-  { code: 'NL', title: 'Dutch', countries: ['NL'] },
+  { code: 'IT', title: 'Italian', countries: ['CH', 'IT'] },
+  { code: 'NL', title: 'Dutch', countries: ['BE', 'NL'] },
   { code: 'NO', title: 'Norwegian', countries: ['NO', 'SE'] },
-  { code: 'PT', title: 'Portuguese', countries: ['PT'] },
+  { code: 'PT', title: 'Portuguese', countries: ['BR', 'PT'] },
   { code: 'RU', title: 'Russian', countries: ['RU', 'UA'] },
   { code: 'SE', title: 'Northern Sami', countries: ['NO', 'SE'] },
-  { code: 'ZH', title: 'Chinese', countries: ['CN'] }
+  { code: 'ZH', title: 'Chinese', countries: ['CN', 'HK', 'TW'] }
 ]
 
 default_languages.each do |language|

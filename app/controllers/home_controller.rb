@@ -19,14 +19,15 @@ class HomeController < ApplicationController
     
     # News articles
     @home[:is_national] = params[:is_national].blank? || params[:is_national].to_s.downcase == "true"
-    if @home[:is_national] && current_user&.is_national_news?
-      @home[:news_articles] = NewsArticle.where(country: current_user.country).order(published_at: :desc).page(params[:page]).per(16)
+    ## Get Country from User or by IP
+    current_country = current_user&.country || Country.find_by(code: current_location)
+    
+    if @home[:is_national] && current_country
+        @home[:news_articles] = NewsArticle.where(country: current_country).order(published_at: :desc).page(params[:page]).per(16)
+    elsif current_country
+        @home[:news_articles] = NewsArticle.joins(:news_source).where(news_sources: { language: current_country.languages }).order(published_at: :desc).page(params[:page]).per(16)
     else
-      if current_user&.is_world_news?
-        @home[:news_articles] = NewsArticle.joins(:news_source).where(news_sources: { language: current_user.country.languages }).order(published_at: :desc).page(params[:page]).per(16)
-      else
-        @home[:news_articles] = NewsArticle.order(published_at: :desc).page(params[:page]).per(16)
-      end
+      @home[:news_articles] = NewsArticle.order(published_at: :desc).page(params[:page]).per(16)
     end
   end
 end

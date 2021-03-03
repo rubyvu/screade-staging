@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   before_action :redirect_from_apex_to_www
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :set_location
   
   # Helpers for custom Devise modal views
   helper_method :resource_name, :resource, :devise_mapping, :resource_class
@@ -22,6 +23,10 @@ class ApplicationController < ActionController::Base
     @devise_mapping ||= Devise.mappings[:user]
   end
   
+  def current_location
+    @current_location
+  end
+  
   protected
     def configure_permitted_parameters
       devise_parameter_sanitizer.permit(:sign_up, keys: [:birthday, :country_id, :email, :first_name, :last_name, :phone_number, :profile_picture, :security_question_answer, :username, :user_security_question_id])
@@ -32,5 +37,10 @@ class ApplicationController < ActionController::Base
       if request.host == 'screade.com'
         redirect_to 'https://www.screade.com' + request.fullpath, status: 301
       end
+    end
+    
+    def set_location
+      result = request.location
+      @current_location = result.country_code.upcase
     end
 end
