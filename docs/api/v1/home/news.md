@@ -16,7 +16,7 @@ GET
 {
   "is_national": true                                                           (boolen, optional)
   "page": 1                                                                     (integer, required)
-  "location_code": "UA"                                                         (string, required)
+  "location_code": "UA"                                                         (string, optional)
 }
 ```
 
