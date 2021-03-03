@@ -37,12 +37,15 @@ Rails.application.routes.draw do
       delete :unlit
     end
   end
+  
   resources :news_categories, only: [:show]
   resources :forgot_password, only: [] do
     collection do
       post :security_question
     end
   end
+  
+  resources :user_images
   
   # API routes
   namespace :api, defaults: { format: 'json' } do

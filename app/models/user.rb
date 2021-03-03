@@ -28,6 +28,8 @@ class User < ApplicationRecord
   ## Views
   has_many :views
   has_many :viewed_news_articles, through: :views, source: :source, source_type: 'NewsArticle'
+  ## Images and Videos
+  has_many :user_assets, dependent: :destroy
   
   # Fields validations
   validates :email, uniqueness: true, presence: true, length: { maximum: 100 }, format: { with: User::EMAIL_FORMAT }

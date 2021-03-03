@@ -55,6 +55,7 @@ gem 'fog-aws'
 
 # File uploading
 gem 'carrierwave'
+gem 'carrierwave_direct'
 
 # Image processor for uploaded images with Carrierwave
 gem 'mini_magick'
