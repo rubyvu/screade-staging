@@ -21,7 +21,7 @@ class Api::V1::ForgotPasswordController < Api::V1::ApiController
       render json: { errors: ['You have reached the limit of incorrect answers, your profile has been blocked.'] }, status: :forbidden
     end
       
-    security_question = user.user_security_question.find_by!(question_identifier: security_question_params[:question_identifier])
+    security_question = UserSecurityQuestion.find_by!(question_identifier: security_question_params[:question_identifier])
     
     if user.user_security_question == security_question && user.security_question_answer == security_question_params[:security_question_answer]
       # Generate random, long password that the user will never know
