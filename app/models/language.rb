@@ -4,6 +4,7 @@ class Language < ApplicationRecord
   
   # Associations
   has_and_belongs_to_many :countries
+  has_and_belongs_to_many :users
   has_many :news_sources
   
   # Fields validations

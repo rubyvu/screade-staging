@@ -24,6 +24,8 @@ class User < ApplicationRecord
   ## Lits
   has_many :views
   has_many :viewed_news_articles, through: :views, source: :source, source_type: 'NewsArticle'
+  # Languages
+  has_and_belongs_to_many :languages
   
   # Fields validations
   validates :email, uniqueness: true, presence: true, length: { maximum: 100 }, format: { with: User::EMAIL_FORMAT }

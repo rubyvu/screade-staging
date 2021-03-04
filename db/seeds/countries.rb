@@ -1,6 +1,8 @@
 # Create Countries in DB
 countries_with_national_news = Country::COUNTRIES_WITH_NATIONAL_NEWS
 CS.countries.map do |code, title|
+  next if code.length > 2
+  
   code = code.to_s
   next if Country.exists?(code: code, title: title)
   
@@ -44,3 +46,11 @@ default_languages.each do |language|
     current_language.countries << country
   end
 end
+
+# Set English as default laguage for Countries without languages
+english_language = Language.find_by(code: 'EN')
+Country.joins("LEFT JOIN countries_languages ON countries.id = countries_languages.country_id").where("countries_languages.country_id IS NULL").each do |country|
+  next if country.languages.count > 0
+  country.languages << english_language
+end
+      

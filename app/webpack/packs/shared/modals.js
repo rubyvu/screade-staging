@@ -42,8 +42,10 @@ $( document ).on('turbolinks:load', function() {
   })
   
   // County field
+  $('#sign_up_user_country_id').prepend('<option selected></option>')
   $('#sign_up_user_country_id').select2({
     dropdownParent: $('#modal-sign-up'),
+    placeholder: "",
     templateResult: formatCountry,
     templateSelection: formatCountry
   });
@@ -56,6 +58,15 @@ $( document ).on('turbolinks:load', function() {
     );
     return $country;
   };
+  
+  // Language field
+  $('#sign_up_update_user_language_ids').prepend('<option selected></option>')  // Empty placeholder for multiple elements step 1
+  $('#sign_up_update_user_language_ids').select2({
+    dropdownParent: $('#modal-sign-up-update'),
+    placeholder: "Please select a language",
+    multiple: true
+  });
+  $('#sign_up_update_user_language_ids option')[0].remove();                    // Empty placeholder for multiple elements step 2
   
   // Block submit button on Sign Up
   let signUpSubmitButton = $('#sign-up-submit-button')

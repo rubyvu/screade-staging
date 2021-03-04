@@ -28,27 +28,31 @@
             .col
               .material-field
                 = f.label 'First Name'
-                = f.text_field :first_name, class: 'form-control', required: true
+                = f.text_field :first_name, class: 'form-control'
                 
             .col
               .material-field
                 = f.label 'Middle Name'
-                = f.text_field :middle_name, class: 'form-control', required: true
+                = f.text_field :middle_name, class: 'form-control'
                 
           .row
             .col
               .material-field
                 = f.label 'Last Name'
-                = f.text_field :last_name, class: 'form-control', required: true
+                = f.text_field :last_name, class: 'form-control'
                 
             .col
               .material-field
                 = f.label 'Phone number'
-                = f.text_field :phone_number, class: 'form-control', type: 'number', required: true
+                = f.text_field :phone_number, class: 'form-control', type: 'number'
+                
+          .material-field
+            = f.label 'Language'
+            = f.select :language_ids, Language.all.map{ |q| [q.title, q.id, {'title': q.code}] }, {}, { multiple: true }
             
           .material-field
             = f.label 'Date of Birth'
-            = f.hidden_field :birthday, required: true
+            = f.hidden_field :birthday
             .row
               .col
                 = select_tag :birthday_day, options_for_select(Date::MONTHNAMES.compact.map.with_index { |day, index| [day, index] }), class: 'form-control datepicker'
