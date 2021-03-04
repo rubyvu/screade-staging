@@ -8,7 +8,7 @@ class CreateSettings < ActiveRecord::Migration[6.1]
       t.boolean :is_videos, default: true
       t.boolean :is_posts, default: true
       t.integer :user_id, null: false
-      t.index :user
+      t.index :user_id
     end
   end
 end

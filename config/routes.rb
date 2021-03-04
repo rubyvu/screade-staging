@@ -45,7 +45,7 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :user_images
+  resources :user_assets
   
   # API routes
   namespace :api, defaults: { format: 'json' } do
