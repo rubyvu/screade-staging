@@ -1,5 +1,5 @@
 class Api::V1::NewsCategoriesController < Api::V1::ApiController
-  skip_before_action :authenticate, only: [:index, :news_articles]
+  skip_before_action :authenticate, only: [:news]
   before_action :authenticate, only: [:news], if: :is_device_token?
   
   # GET /api/v1/news_categories/
