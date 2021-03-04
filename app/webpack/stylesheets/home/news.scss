@@ -2,6 +2,15 @@
   margin: 24px 0px;
 }
 
+.news-wrapper .news-switcher-title {
+  display: inline-block;
+  cursor: pointer;
+  
+  &.active {
+    color: $color-blue;
+  }
+}
+
 .news-wrapper .news-cards-wrapper {
 }
 

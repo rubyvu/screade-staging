@@ -1,6 +1,6 @@
 .news-wrapper
   .my-4
-    h4.d-inline National News
+    h4.news-switcher-title#news-switcher-national class="#{'active' if is_national}" National News
     label.switch.news
       - if is_national
         input#news-switcher type="checkbox"
@@ -9,7 +9,7 @@
         
       span.slider.round
           
-    h4.d-inline World News
+    h4.news-switcher-title#news-switcher-world class="#{'active' unless is_national}" World News
         
   .news-cards-wrapper
     - news_articles.each do |news_article|

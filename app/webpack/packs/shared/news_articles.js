@@ -1,8 +1,31 @@
 $( document ).on('turbolinks:load', function() {
   // News Switcher from National to World
   $('#news-switcher').click(function() {
+    updateParamsBySwitcher($(this))
+  });
+  
+  $('#news-switcher-world, #news-switcher-national').click(function() {
+    let nationalNews = $('#news-switcher-national')
+    let worldNews = $('#news-switcher-world')
+    
+    if (nationalNews.is(this)) {
+      $('#news-switcher').prop('checked', false);
+      $(this).addClass('active')
+      worldNews.removeClass('active')
+    } else if (worldNews.is(this)) {
+      $('#news-switcher').prop('checked', true);
+      $(this).addClass('active')
+      nationalNews.removeClass('active')
+    } else {
+      return
+    }
+    
+    updateParamsBySwitcher($('#news-switcher'))
+  })
+  
+  function updateParamsBySwitcher(switcher) {
     var queryParams = new URLSearchParams(window.location.search);
-    if( $(this).is(':checked') ) {
+    if( switcher.is(':checked') ) {
       queryParams.set("is_national", "false");
     } else {
       queryParams.set("is_national", "true");
@@ -11,7 +34,7 @@ $( document ).on('turbolinks:load', function() {
     queryParams.set("page", "1");
     history.replaceState(null, null, "?"+queryParams.toString());
     window.location.href = document.URL
-  });
+  }
   
   // News Articles Lits for on Home and NewsArticles Comments pages
   $('.ic.lit').parent().on('click', function() {
