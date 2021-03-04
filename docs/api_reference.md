@@ -38,6 +38,9 @@
 - [Get BreakingNews ](api/v1/home/breaking_news.md)
 - [Get Trends list](api/v1/home/trends.md)
 
+### Languages
+- [Get Languages list](api/v1/languages/index.md)
+
 ### News Articles
 - [Get News Article](api/v1/news_articles/show.md)
 - [Lit Article](api/v1/news_articles/lit.md)

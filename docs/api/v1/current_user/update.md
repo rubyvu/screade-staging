@@ -20,6 +20,7 @@ PUT/PATCH
     "country_code": "UA"                                                        (string, required)
     "email": "example@gmail.com"                                                (string, required)
     "first_name": "John",                                                       (string, optional)
+    "languages_ids": "[1, 2]"                                                   (array, optional)
     "last_name": "Doe",                                                         (string, optional)
     "middle_name": "Michael",                                                   (string, optional)
     "phone_number": "506988478",                                                (string, optional)
