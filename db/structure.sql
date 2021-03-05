@@ -466,6 +466,16 @@ ALTER SEQUENCE public.languages_id_seq OWNED BY public.languages.id;
 
 
 --
+-- Name: languages_users; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.languages_users (
+    user_id bigint NOT NULL,
+    language_id bigint NOT NULL
+);
+
+
+--
 -- Name: lits; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1124,6 +1134,13 @@ CREATE UNIQUE INDEX index_languages_on_code ON public.languages USING btree (cod
 
 
 --
+-- Name: index_languages_users_on_user_id_and_language_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_languages_users_on_user_id_and_language_id ON public.languages_users USING btree (user_id, language_id);
+
+
+--
 -- Name: index_lits_on_source_id_and_source_type_and_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1317,6 +1334,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210301112248'),
 ('20210301112452'),
 ('20210301135852'),
-('20210301140923');
+('20210301140923'),
+('20210304090402');
 
 

@@ -88,6 +88,7 @@ Rails.application.routes.draw do
         end
       end
       
+      resources :languages, only: [:index]
       resources :news_articles, only: [:show] do
         resources :news_article_comments, only: [:index, :create]
         member do

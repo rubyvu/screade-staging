@@ -31,13 +31,15 @@ label.switch {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: $color-grey;
+  // background-color: $color-grey;
+  background-color: $color-blue;
   -webkit-transition: .4s;
   transition: .4s;
 }
 
 .slider:before {
-  border: 3px solid $color-grey;
+  // border: 3px solid $color-grey;
+  border: 3px solid $color-blue;
   position: absolute;
   content: "";
   height: 22px;

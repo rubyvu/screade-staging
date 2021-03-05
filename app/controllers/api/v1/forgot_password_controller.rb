@@ -3,7 +3,7 @@ class Api::V1::ForgotPasswordController < Api::V1::ApiController
   
   # GET /api/v1/forgot_password/security_question
   def security_question
-    user = User.find_by!(email: user_params[:email])
+    user = User.find_by!(email: params[:email])
     
     user_security_question = user.user_security_question
     unless user_security_question

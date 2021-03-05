@@ -1,6 +1,6 @@
 class Api::V1::NewsArticleCommentsController < Api::V1::ApiController
   skip_before_action :authenticate, only: [:index]
-  before_action :authenticate, only: [:index], if: :is_device_token?
+  before_action :authenticate, only: [:index, :create], if: :is_device_token?
   before_action :get_article
   
   # GET /api/v1/news_articles/:news_article_id/news_article_comments

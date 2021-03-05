@@ -30,6 +30,8 @@ class User < ApplicationRecord
   has_many :viewed_news_articles, through: :views, source: :source, source_type: 'NewsArticle'
   ## Images and Videos
   has_many :user_assets, dependent: :destroy
+  # Languages
+  has_and_belongs_to_many :languages
   
   # Fields validations
   validates :email, uniqueness: true, presence: true, length: { maximum: 100 }, format: { with: User::EMAIL_FORMAT }

@@ -11,12 +11,10 @@ GET
 ### API endpoint
 `/api/v1/forgot_password/security_question`
 
-### Request body
+### Params
 ```
 {
-  "user": {
-    "email": "example@gmail.com"                                                (string, required)
-  }
+  "email": "example@gmail.com"                                                  (string, required)
 }
 ```
 

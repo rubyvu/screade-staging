@@ -4,15 +4,21 @@ class Api::V1::HomeController < Api::V1::ApiController
   
   # GET /api/v1/home/news
   def news
-    current_country = current_user&.country || Country.find_by(code: params[:location_code])
-    if current_country && params[:is_national]
-      news = NewsArticle.where(country: current_country).order(published_at: :desc).page(params[:page]).per(30)
-    elsif current_country
-      news = NewsArticle.joins(:news_source).where(news_sources: { language: current_country.languages }).order(published_at: :desc).page(params[:page]).per(30)
+    default_language = Language.find_by(code: 'EN')
+    default_country = Country.find_by(code: params[:location_code])
+    
+    if params[:is_national]
+      news_articles = current_user&.country&.news_articles
+      news_articles = default_country&.news_articles if news_articles.blank?
+      news_articles = NewsArticle.where(news_source: default_language.news_sources) if news_articles.blank?
     else
-      news = NewsArticle.order(published_at: :desc).page(params[:page]).per(30)
+      news_articles = NewsArticle.joins(:news_source).where(news_sources: { language: current_user&.languages })
+      news_articles = NewsArticle.joins(:news_source).where(news_sources: { language: current_user&.country&.languages }) if news_articles.blank?
+      news_articles = NewsArticle.joins(:news_source).where(news_sources: { language: default_country&.languages }) if news_articles.blank?
+      news_articles = NewsArticle.all if news_articles.blank?
     end
-      
+    
+    news = news_articles.order(published_at: :desc).page(params[:page]).per(30)
     news_json = ActiveModel::Serializer::CollectionSerializer.new(news, serializer: NewsArticleSerializer, current_user: current_user).as_json
     render json: { news: news_json }, status: :ok
   end
