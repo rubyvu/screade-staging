@@ -45,7 +45,11 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :user_assets
+  resources :user_assets do
+    collection do
+      get :webhook
+    end
+  end
   
   # API routes
   namespace :api, defaults: { format: 'json' } do

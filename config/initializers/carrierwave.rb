@@ -1,5 +1,4 @@
 CarrierWave.configure do |config|
-  config.fog_provider = 'fog/aws'
   config.fog_credentials = {
     provider:               'AWS',
     aws_access_key_id:      ENV['AWS_S3_ACCESS_KEY_ID'],
@@ -9,7 +8,7 @@ CarrierWave.configure do |config|
 
   config.fog_directory  = ENV['AWS_S3_PRIVATE_BUCKET']
   config.fog_public     = false
-  # Set URL expiration to 24 hours(in seconds)
-  config.fog_authenticated_url_expiration = 86400
+  # # Set URL expiration to 24 hours(in seconds)
+  # config.fog_authenticated_url_expiration = 86400
   config.cache_dir      = Rails.root.join('tmp', 'uploads')
 end
