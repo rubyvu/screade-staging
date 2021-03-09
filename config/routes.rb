@@ -45,7 +45,13 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :user_assets do
+  resources :user_images, only: [:new] do
+    collection do
+      get :webhook
+    end
+  end
+  
+  resources :user_videos, only: [:new] do
     collection do
       get :webhook
     end

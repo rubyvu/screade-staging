@@ -1,4 +1,5 @@
 class UserImageUploader < CarrierWave::Uploader::Base
+  include CarrierWave::MiniMagick
   include CarrierWaveDirect::Uploader
   
   # Callbacks
@@ -12,12 +13,20 @@ class UserImageUploader < CarrierWave::Uploader::Base
     %w(jpg jpeg png)
   end
   
+  version :rectangle_160_160 do
+    process resize_to_fill: [160, 160]
+  end
+  
+  version :rectangle_1024_768 do
+    process resize_to_fill: [1024, 768]
+  end
+  
   protected
     def secure_token(length)
-      model.asset_hex ||= SecureRandom.hex(length)
+      model.file_hex ||= SecureRandom.hex(length)
     end
     
     def reset_secure_token(file)
-      model.asset_hex = nil
+      model.file_hex = nil
     end
 end
