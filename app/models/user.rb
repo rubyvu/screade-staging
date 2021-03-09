@@ -29,7 +29,8 @@ class User < ApplicationRecord
   has_many :views
   has_many :viewed_news_articles, through: :views, source: :source, source_type: 'NewsArticle'
   ## Images and Videos
-  has_many :user_assets, dependent: :destroy
+  has_many :user_images, dependent: :destroy
+  has_many :user_videos, dependent: :destroy
   # Languages
   has_and_belongs_to_many :languages
   

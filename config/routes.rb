@@ -113,6 +113,12 @@ Rails.application.routes.draw do
           get :news
         end
       end
+      resources :user_assets, only: [:images],  param: :username do
+        member do
+          get :images
+          get :videos
+        end
+      end
       resources :user_security_questions, only: [:index]
     end
   end

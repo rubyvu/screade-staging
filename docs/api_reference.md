@@ -47,5 +47,9 @@
 - [Unlit Article](api/v1/news_articles/unlit.md)
 - [View Article](api/v1/news_articles/view.md)
 
+### User Assets
+- [Images](api/v1/user_assets/images.md)
+- [Videos](api/v1/user_assets/videos.md)
+
 ### User Security Question
 - [Get User Security Questions list](api/v1/user_security_questions/index.md)

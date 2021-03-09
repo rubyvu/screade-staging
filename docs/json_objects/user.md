@@ -1,4 +1,4 @@
-## Uers JSON object
+## User JSON object
 
 ### Navigation
 [README](../../README.md)
