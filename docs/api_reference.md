@@ -50,6 +50,8 @@
 ### User Assets
 - [Images](api/v1/user_assets/images.md)
 - [Videos](api/v1/user_assets/videos.md)
+- [Get URL for File upload](api/v1/user_assets/upload_url.md)
+- [Confirm File upload to URL](api/v1/user_assets/confirmation.md)
 
 ### User Security Question
 - [Get User Security Questions list](api/v1/user_security_questions/index.md)
