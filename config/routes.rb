@@ -114,6 +114,11 @@ Rails.application.routes.draw do
         end
       end
       resources :user_assets, only: [:images],  param: :username do
+        collection do
+          get :upload_url
+          post :confirmation
+        end
+        
         member do
           get :images
           get :videos
