@@ -466,16 +466,6 @@ ALTER SEQUENCE public.languages_id_seq OWNED BY public.languages.id;
 
 
 --
--- Name: languages_users; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.languages_users (
-    user_id bigint NOT NULL,
-    language_id bigint NOT NULL
-);
-
-
---
 -- Name: lits; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -711,74 +701,6 @@ CREATE TABLE public.schema_migrations (
 
 
 --
--- Name: settings; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.settings (
-    id bigint NOT NULL,
-    font_family character varying,
-    font_style character varying,
-    is_notification boolean DEFAULT true,
-    is_images boolean DEFAULT true,
-    is_videos boolean DEFAULT true,
-    is_posts boolean DEFAULT true,
-    user_id integer NOT NULL
-);
-
-
---
--- Name: settings_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.settings_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: settings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.settings_id_seq OWNED BY public.settings.id;
-
-
---
--- Name: user_images; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.user_images (
-    id bigint NOT NULL,
-    file character varying,
-    file_hex character varying,
-    user_id integer NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: user_images_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.user_images_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: user_images_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.user_images_id_seq OWNED BY public.user_images.id;
-
-
---
 -- Name: user_security_questions; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -806,39 +728,6 @@ CREATE SEQUENCE public.user_security_questions_id_seq
 --
 
 ALTER SEQUENCE public.user_security_questions_id_seq OWNED BY public.user_security_questions.id;
-
-
---
--- Name: user_videos; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.user_videos (
-    id bigint NOT NULL,
-    file character varying,
-    file_hex character varying,
-    user_id integer NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: user_videos_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.user_videos_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: user_videos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.user_videos_id_seq OWNED BY public.user_videos.id;
 
 
 --
@@ -1006,31 +895,10 @@ ALTER TABLE ONLY public.que_jobs ALTER COLUMN id SET DEFAULT nextval('public.que
 
 
 --
--- Name: settings id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.settings ALTER COLUMN id SET DEFAULT nextval('public.settings_id_seq'::regclass);
-
-
---
--- Name: user_images id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.user_images ALTER COLUMN id SET DEFAULT nextval('public.user_images_id_seq'::regclass);
-
-
---
 -- Name: user_security_questions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.user_security_questions ALTER COLUMN id SET DEFAULT nextval('public.user_security_questions_id_seq'::regclass);
-
-
---
--- Name: user_videos id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.user_videos ALTER COLUMN id SET DEFAULT nextval('public.user_videos_id_seq'::regclass);
 
 
 --
@@ -1176,35 +1044,11 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
--- Name: settings settings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.settings
-    ADD CONSTRAINT settings_pkey PRIMARY KEY (id);
-
-
---
--- Name: user_images user_images_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.user_images
-    ADD CONSTRAINT user_images_pkey PRIMARY KEY (id);
-
-
---
 -- Name: user_security_questions user_security_questions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.user_security_questions
     ADD CONSTRAINT user_security_questions_pkey PRIMARY KEY (id);
-
-
---
--- Name: user_videos user_videos_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.user_videos
-    ADD CONSTRAINT user_videos_pkey PRIMARY KEY (id);
 
 
 --
@@ -1280,13 +1124,6 @@ CREATE UNIQUE INDEX index_languages_on_code ON public.languages USING btree (cod
 
 
 --
--- Name: index_languages_users_on_user_id_and_language_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_languages_users_on_user_id_and_language_id ON public.languages_users USING btree (user_id, language_id);
-
-
---
 -- Name: index_lits_on_source_id_and_source_type_and_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1326,13 +1163,6 @@ CREATE INDEX index_news_sources_on_country_id ON public.news_sources USING btree
 --
 
 CREATE UNIQUE INDEX index_news_sources_on_source_identifier ON public.news_sources USING btree (source_identifier);
-
-
---
--- Name: index_settings_on_user_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_settings_on_user_id ON public.settings USING btree (user_id);
 
 
 --
@@ -1487,10 +1317,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210301112248'),
 ('20210301112452'),
 ('20210301135852'),
-('20210301140923'),
-('20210303145022'),
-('20210304090402'),
-('20210309133445'),
-('20210309133453');
+('20210301140923');
 
 
