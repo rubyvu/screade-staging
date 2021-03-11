@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
   end
   
   def current_location
-    @current_location
+    cookies[:current_location]
   end
   
   protected
@@ -40,7 +40,12 @@ class ApplicationController < ActionController::Base
     end
     
     def set_location
-      result = request.location
-      @current_location = result.country_code.upcase
+      return if cookies[:current_location].present?
+      begin
+        result = request.location
+        cookies[:current_location] = result.country_code&.upcase
+      rescue
+        puts "[WARNING]: Location request limit reached"
+      end
     end
 end
