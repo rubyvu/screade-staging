@@ -20,7 +20,7 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
       user = User.find_by(email: login.downcase)
     end
     
-    if user.nil?
+    if user.nil? || !user.valid_password?(password)
       render json: { errors: ["User with this email or username doesn't exist"] }, status: :not_found
       return
     end
