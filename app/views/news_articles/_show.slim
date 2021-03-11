@@ -12,7 +12,7 @@
   .news-info-panel value="#{news_article.id}"
     .info-panel
       .div class="#{ current_user ? 'info-panel-value-wrapper' : 'info-panel-value-wrapper pointer-disable' }"
-        i class=(news_article.is_lited(current_user) ? "ic lit reverse active" : "ic lit reverse")
+        i class=(news_article.is_lited(current_user) ? "ic lit active reverse" : "ic lit reverse")
         span.info-panel-value.color-black #{news_article.lits.count}
         
       .info-panel-value-wrapper.pointer-disable

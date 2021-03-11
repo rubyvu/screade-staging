@@ -13,6 +13,13 @@ Rails.application.routes.draw do
   end
   
   # Web routes
+  resources :comments, only: [] do
+    member do
+      post :lit
+      delete :unlit
+    end
+  end
+  
   resources :current_user, only: [] do
     collection do
       put :update

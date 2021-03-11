@@ -37,7 +37,7 @@ $( document ).on('turbolinks:load', function() {
   }
   
   // News Articles Lits for on Home and NewsArticles Comments pages
-  $('.ic.lit').parent().on('click', function() {
+  $('.news-info-panel .ic.lit, .info-panel .ic.lit').parent().on('click', function() {
     const iconObject = $(this)
     
     // Do not send request if icon disabled
@@ -67,6 +67,44 @@ $( document ).on('turbolinks:load', function() {
       $.ajax({
         type: "POST",
         url: window.location.origin + '/news_articles/' + articleId + '/lit'
+      }).done(function( data ) {
+        if ( data.success ) {
+          iconObject.children('.ic').addClass('active')
+          iconObject.children('span').text(litCounter+1)
+        }
+      });
+    }
+  })
+  
+  // Comment lits
+  $('.comment-lit .ic.lit').parent().on('click', function() {
+    const iconObject = $(this)
+    
+    // Do not send request if icon disabled
+    if ( $(this).hasClass('pointer-disable') ) { return }
+    
+    var commentId = ''
+    // Get Comment ID
+    if ( $('.comment-wrapper').length > 0 ) {
+      commentId = iconObject.parents('.comment-content-wrapper:first').attr('value');
+    }
+    
+    var litCounter = +(iconObject.children('span').text())
+    
+    if ( iconObject.children('.ic').hasClass('active') ) {
+      $.ajax({
+        type: "DELETE",
+        url: window.location.origin + '/comments/' + commentId + '/unlit'
+      }).done(function( data ) {
+        if ( data.success ) {
+          iconObject.children('.ic').removeClass('active')
+          iconObject.children('span').text(litCounter-1)
+         }
+      });
+    } else {
+      $.ajax({
+        type: "POST",
+        url: window.location.origin + '/comments/' + commentId + '/lit'
       }).done(function( data ) {
         if ( data.success ) {
           iconObject.children('.ic').addClass('active')
