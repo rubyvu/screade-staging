@@ -5,4 +5,6 @@ class UserVideoSerializer < ActiveModel::Serializer
   def file_url
     object.file.url
   end
+  
+  attribute :id
 end
