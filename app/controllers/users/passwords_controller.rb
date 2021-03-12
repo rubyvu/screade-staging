@@ -13,7 +13,7 @@ class Users::PasswordsController < Devise::PasswordsController
     user = User.find_by(email: resource.email)
     if user && resource.errors.present?
       user.increment_failed_attempts
-      user.lock_access! if user.failed_attempts >= 3
+      user.lock_access! if user.failed_attempts >= 5
     end
   end
 end

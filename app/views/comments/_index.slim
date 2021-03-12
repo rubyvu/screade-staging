@@ -20,13 +20,17 @@
           - else
             = image_pack_tag('media/images/icons/btn_add_photo.png', class: 'profile-image')
           
-        .comment-content-wrapper
+        .comment-content-wrapper value="#{comment.id}"
           .comment-user-name
             = comment.user.full_name.present? ? comment.user.full_name : comment.user.username
-          .comment-date
-            = comment.created_at.strftime('%d.%m.%Y')
           .comment-text
             = comment.message
+          .comment-date
+            = comment.created_at.strftime('%m/%d/%Y-%I:%M%p')
+            
+            .div class="#{ current_user ? 'comment-lit' : 'comment-lit pointer-disable' }"
+              span.info-panel-value.color-black #{comment.lits.count}
+              i class=(comment.is_lited(current_user) ? "ic lit active reverse" : "ic lit reverse")
       
       - if (index+1)%5 == 0 && Rails.env.production?
         //= render './shared/ads/home_banner'
