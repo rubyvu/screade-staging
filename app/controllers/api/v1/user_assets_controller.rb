@@ -3,13 +3,13 @@ class Api::V1::UserAssetsController < Api::V1::ApiController
   
   # GET /api/v1/user_assets/:username/images
   def images
-    images_json = ActiveModel::Serializer::CollectionSerializer.new(@user.user_images.where.not("file is NULL"), serializer: UserImageSerializer).as_json
+    images_json = ActiveModel::Serializer::CollectionSerializer.new(@user.user_images.where.not("file is NULL").page(params[:page]).per(30), serializer: UserImageSerializer).as_json
     render json: { images: images_json }, status: :ok
   end
   
   # GET /api/v1/user_assets/:username/videos
   def videos
-    videos_json = ActiveModel::Serializer::CollectionSerializer.new(@user.user_videos.where.not("file is NULL"), serializer: UserVideoSerializer).as_json
+    videos_json = ActiveModel::Serializer::CollectionSerializer.new(@user.user_videos.where.not("file is NULL").page(params[:page]).per(30), serializer: UserVideoSerializer).as_json
     render json: { videos: videos_json }, status: :ok
   end
   
