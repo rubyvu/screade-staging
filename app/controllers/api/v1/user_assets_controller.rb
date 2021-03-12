@@ -54,14 +54,8 @@ class Api::V1::UserAssetsController < Api::V1::ApiController
       return
     end
     
-    # TODO: move this to que worker
-    asset_uploader.file_key = key
-    asset_uploader.remote_file_url = Tasks::AwsS3Api.get_presigned_url(asset_uploader.file_key)
-    if asset_uploader.save
-      render json: { success: true }, status: :ok
-    else
-      render json: { errors: asset_uploader.errors.full_messages }, status: :unprocessable_entity
-    end
+    CreateUserAssetsJob.perform_later(asset_uploader.class.name, asset_uploader.id, key)
+    render json: { success: true }, status: :ok
   end
   
   private
