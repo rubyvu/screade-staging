@@ -136,6 +136,11 @@ Rails.application.routes.draw do
         end
         
         member do
+          post :destroy_images
+          post :destroy_videos
+        end
+        
+        member do
           get :images
           get :videos
         end

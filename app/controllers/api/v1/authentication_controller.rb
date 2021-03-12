@@ -5,13 +5,13 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
   def sign_in
     login = user_sign_in_params[:login]
     if login.blank?
-      render json: { errors: ['Login is required'] }, status: :bad_request
+      render json: { errors: ['Login is required'] }, status: :unprocessable_entity
       return
     end
     
     password = user_sign_in_params[:password]
     if password.blank?
-      render json: { errors: ['Password is required'] }, status: :bad_request
+      render json: { errors: ['Password is required'] }, status: :unprocessable_entity
       return
     end
     
@@ -58,7 +58,7 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
     user.user_security_question = user_security_question
     
     unless user.valid?
-      render json: { errors: errors_by_attributes(user.errors) }, status: :bad_request
+      render json: { errors: errors_by_attributes(user.errors) }, status: :unprocessable_entity
       return
     end
     
@@ -66,7 +66,7 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
     device = Device.new(device_params)
     device.owner = user
     unless device.valid?
-      render json: { errors: device.errors.full_messages }, status: :bad_request
+      render json: { errors: device.errors.full_messages }, status: :unprocessable_entity
       return
     end
     

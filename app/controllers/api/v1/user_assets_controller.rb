@@ -22,11 +22,12 @@ class Api::V1::UserAssetsController < Api::V1::ApiController
     end
     
     store_path = "uploads/#{SecureRandom.uuid}/#{filename}"
+    
     url = Tasks::AwsS3Api.set_presigned_url(store_path)
     if url.present?
       render json: { url: url, key: store_path }, status: :ok
     else
-      render json: { errors: ['Faild to generate image upload url.'] }, status: :unprocessable_entity
+      render json: { errors: ['Failed to generate image upload url.'] }, status: :unprocessable_entity
     end
   end
   
@@ -58,6 +59,20 @@ class Api::V1::UserAssetsController < Api::V1::ApiController
     render json: { success: true }, status: :ok
   end
   
+  # POST /api/v1/user_assets/destroy_images
+  def destroy_images
+    images = UserImages.where(id: user_image_params[:ids])
+    images.destroy_all
+    render json: { success: true }, status: :ok
+  end
+  
+  # POST /api/v1/user_assets/destroy_videos
+  def destroy_videos
+    videos = UserVideo.where(id: user_video_params[:ids])
+    images.destroy_all
+    render json: { success: true }, status: :ok
+  end
+  
   private
     def set_user
       @user = User.find_by!(username: params[:username])
@@ -65,5 +80,13 @@ class Api::V1::UserAssetsController < Api::V1::ApiController
     
     def confirmation_params
       params.require(:confirmation).permit(:key)
+    end
+    
+    def user_image_params
+      params.require(:user_image).permit(ids: [])
+    end
+    
+    def user_video_params
+      params.require(:user_video).permit(ids: [])
     end
 end

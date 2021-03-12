@@ -38,7 +38,7 @@ HTTP code 200 :ok
 #### Errors
 - when email params is missing
 ```
-HTTP code 400 :bad_request
+HTTP code 422 :unprocessable_entity
 {
   "errors": ["Email is required"]                                               (array of strings, required)
 }
@@ -46,7 +46,7 @@ HTTP code 400 :bad_request
 
 - when password params is missing
 ```
-HTTP code 400 :bad_request
+HTTP code 422 :unprocessable_entity
 {
   "errors": ["Password is required"]                                            (array of strings, required)
 }
