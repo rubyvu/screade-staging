@@ -133,9 +133,6 @@ Rails.application.routes.draw do
         collection do
           get :upload_url
           post :confirmation
-        end
-        
-        member do
           post :destroy_images
           post :destroy_videos
         end
