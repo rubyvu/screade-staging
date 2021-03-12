@@ -85,6 +85,7 @@ Rails.application.routes.draw do
       resources :current_user, only: [] do
         collection do
           get :info
+          get :settings
           put :update
           patch :update
           post :resend_email_confirmation

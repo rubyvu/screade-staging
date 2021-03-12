@@ -92,8 +92,9 @@ class User < ApplicationRecord
     end
   end
    
-  def set_user_settings
-    return if user.setting
-    user.build_setting()
-  end
+  private
+    def set_user_settings
+      return if self.setting.present?
+      Setting.get_setting(self)
+    end
 end

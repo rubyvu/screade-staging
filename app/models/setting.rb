@@ -3,8 +3,11 @@ class Setting < ApplicationRecord
   FONT_FAMILIES = %w(Roboto)
   FONT_STYLE = %w(normal)
   
-  # Association validation
+  # Association
   belongs_to :user
+  
+  # Association validation
+  validates :user, presence: true, uniqueness: true
   
   # Validations
   validates :font_family, presence: true, inclusion: { in: Setting::FONT_FAMILIES }
@@ -14,43 +17,20 @@ class Setting < ApplicationRecord
   validates :is_posts, presence: true
   validates :is_videos, presence: true
   
-  def self.font_family
-    get_settings().font_family
-  end
-  
-  def self.font_style
-    get_settings().font_style
-  end
-  
-  def self.is_images
-    get_settings().is_images
-  end
-  
-  def self.is_notification
-    get_settings().is_notification
-  end
-  
-  def self.is_videos
-    get_settings().is_videos
-  end
-  
-  def self.is_posts
-    get_settings().is_posts
-  end
-  
-  def self.get_settings
-    settings = Setting.first
-    if settings.nil?
+  def self.get_setting(user)
+    setting = Setting.find_by(user: user)
+    if setting.nil?
       params = {
-        font_family: 'Roboto'
+        font_family: 'Roboto',
         font_style: 'normal',
         is_notification: true,
         is_images: true,
         is_videos: true,
-        is_posts: true
+        is_posts: true,
+        user_id: user.id
       }
-      settings = Setting.create(params)
+      setting = Setting.create(params)
     end
-    return settings
+    return setting
   end
 end

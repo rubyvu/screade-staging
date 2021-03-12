@@ -10,5 +10,10 @@ class CreateSettings < ActiveRecord::Migration[6.1]
       t.integer :user_id, null: false
       t.index :user_id
     end
+    
+    # Set Setting model to exists Users
+    User.includes(:setting).where(setting: { id: nil }).each do |user|
+      Setting.get_setting(user)
+    end
   end
 end
