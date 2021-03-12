@@ -85,7 +85,6 @@ Rails.application.routes.draw do
       resources :current_user, only: [] do
         collection do
           get :info
-          get :settings
           put :update
           patch :update
           post :resend_email_confirmation
@@ -121,6 +120,8 @@ Rails.application.routes.draw do
           get :news
         end
       end
+      
+      resources :settings, only: [:index, :update]
       resources :user_assets, only: [:images],  param: :username do
         collection do
           get :upload_url

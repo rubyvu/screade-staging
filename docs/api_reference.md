@@ -26,7 +26,6 @@
 
 ### Current User
 - [Get current user Info](api/v1/current_user/info.md)
-- [Get current user Settings](api/v1/current_user/settings.md)
 - [Update current user](api/v1/current_user/update.md)
 - [Resend email confirmation to current user](api/v1/current_user/resend_email_confirmation.md)
 
@@ -56,3 +55,7 @@
 
 ### User Security Question
 - [Get User Security Questions list](api/v1/user_security_questions/index.md)
+
+### User Settings
+- [Get user Settings](api/v1/settings/index.md)
+- [Update user Settings](api/v1/settings/update.md)

@@ -9,7 +9,7 @@
 GET
 
 ### API endpoint
-`/api/v1/current_user/settings`
+`/api/v1/settings`
 
 ### Request body
 ```
