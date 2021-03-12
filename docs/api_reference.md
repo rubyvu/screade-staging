@@ -47,6 +47,13 @@
 - [Unlit Article](api/v1/news_articles/unlit.md)
 - [View Article](api/v1/news_articles/view.md)
 
+### Squad Requst
+- [Accept request](api/v1/squad_requests/accept.md)
+- [Create new request](api/v1/squad_requests/create.md)
+- [Decline request](api/v1/squad_requests/decline.md)
+- [Get requsts list](api/v1/squad_requests/index.md)
+
+
 ### User Assets
 - [Images](api/v1/user_assets/images.md)
 - [Videos](api/v1/user_assets/videos.md)

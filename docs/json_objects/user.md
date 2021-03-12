@@ -13,6 +13,7 @@
   "email": "example@gmail.com",                                                 (string, required)
   "first_name": "John",                                                         (string, optional)
   "is_confirmed": "true",                                                       (boolean, required)
+  "languages": [Language],                                                      (object, required)
   "last_name": "Doe",                                                           (string, optional)
   "middle_name": "Michael",                                                     (string, optional)
   "phone_number": "506988478",                                                  (string, optional)
@@ -20,3 +21,6 @@
   "username": "john"                                                            (string, required)
 }
 ```
+
+### References
+- [Language JSON object](../../../json_objects/language.md)

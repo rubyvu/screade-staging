@@ -35,7 +35,7 @@ HTTP code 200 :ok
 ```
 HTTP code 422 ::unprocessable_entity
 {
-  "errors": ['Font style can't be blank']                                       array of strings, required)
+  "errors": ['Font style can't be blank']                                       (array of strings, required)
 }
 ```
 

@@ -122,6 +122,13 @@ Rails.application.routes.draw do
       end
       
       resources :settings, only: [:index, :update]
+      resources :squad_requsts, only: [:index, :create] do
+        member do
+          post :accept
+          post :decline
+        end
+      end
+      
       resources :user_assets, only: [:images],  param: :username do
         collection do
           get :upload_url
