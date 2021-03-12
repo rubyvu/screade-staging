@@ -746,6 +746,40 @@ ALTER SEQUENCE public.settings_id_seq OWNED BY public.settings.id;
 
 
 --
+-- Name: squad_requests; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.squad_requests (
+    id bigint NOT NULL,
+    receiver_id integer,
+    requestor_id integer,
+    accepted_at timestamp without time zone,
+    declined_at timestamp without time zone,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: squad_requests_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.squad_requests_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: squad_requests_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.squad_requests_id_seq OWNED BY public.squad_requests.id;
+
+
+--
 -- Name: user_images; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1013,6 +1047,13 @@ ALTER TABLE ONLY public.settings ALTER COLUMN id SET DEFAULT nextval('public.set
 
 
 --
+-- Name: squad_requests id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.squad_requests ALTER COLUMN id SET DEFAULT nextval('public.squad_requests_id_seq'::regclass);
+
+
+--
 -- Name: user_images id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1184,6 +1225,14 @@ ALTER TABLE ONLY public.settings
 
 
 --
+-- Name: squad_requests squad_requests_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.squad_requests
+    ADD CONSTRAINT squad_requests_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: user_images user_images_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1333,6 +1382,13 @@ CREATE UNIQUE INDEX index_news_sources_on_source_identifier ON public.news_sourc
 --
 
 CREATE INDEX index_settings_on_user_id ON public.settings USING btree (user_id);
+
+
+--
+-- Name: index_squad_requests_on_receiver_id_and_requestor_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_squad_requests_on_receiver_id_and_requestor_id ON public.squad_requests USING btree (receiver_id, requestor_id);
 
 
 --
@@ -1491,6 +1547,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210303145022'),
 ('20210304090402'),
 ('20210309133445'),
-('20210309133453');
+('20210309133453'),
+('20210312094345');
 
 

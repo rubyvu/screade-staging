@@ -19,6 +19,9 @@ class User < ApplicationRecord
   belongs_to :user_security_question
   has_one :setting, dependent: :destroy
   has_many :devices, class_name: 'Device', foreign_key: 'owner_id', dependent: :destroy
+  ## Squad requests
+  has_many :squad_requests_as_receiver, foreign_key: :receiver_id, class_name: 'SquadRequest', dependent: :destroy
+  has_many :squad_requests_as_requestor, foreign_key: :requestor_id, class_name: 'SquadRequest', dependent: :destroy
   ## Comments
   has_many :comments
   has_many :commented_news_articles, through: :comments, source: :source, source_type: 'NewsArticle'
