@@ -32,7 +32,10 @@ class Api::V1::ApiController < ActionController::Base
     def authenticate
       # Check access_token presence
       access_token = request.headers['X-Device-Token']
-      return if access_token.nil?
+      if access_token.blank?
+        render json: { errors: ['Device token should be present.'] }, status: :unauthorized
+        return
+      end
       
       # Check if Device with this access_token exists
       @current_device = Device.find_by(access_token: access_token)
