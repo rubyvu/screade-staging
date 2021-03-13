@@ -44,10 +44,23 @@ Rails.application.routes.draw do
       delete :unlit
     end
   end
+  
   resources :news_categories, only: [:show]
   resources :forgot_password, only: [] do
     collection do
       post :security_question
+    end
+  end
+  
+  resources :user_images, only: [:new] do
+    collection do
+      get :webhook
+    end
+  end
+  
+  resources :user_videos, only: [:new] do
+    collection do
+      get :webhook
     end
   end
   
@@ -105,6 +118,28 @@ Rails.application.routes.draw do
       resources :news_categories, only: [:index] do
         member do
           get :news
+        end
+      end
+      
+      resources :settings, only: [:index, :update]
+      resources :squad_requsts, only: [:index, :create] do
+        member do
+          post :accept
+          post :decline
+        end
+      end
+      
+      resources :user_assets, only: [:images],  param: :username do
+        collection do
+          get :upload_url
+          post :confirmation
+          post :destroy_images
+          post :destroy_videos
+        end
+        
+        member do
+          get :images
+          get :videos
         end
       end
       resources :user_security_questions, only: [:index]

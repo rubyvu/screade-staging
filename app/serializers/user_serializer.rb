@@ -18,6 +18,11 @@ class UserSerializer < ActiveModel::Serializer
   end
   
   attribute :last_name
+  attribute :languages
+  def languages
+    ActiveModel::Serializer::CollectionSerializer.new(object.languages, serializer: LanguageSerializer).as_json
+  end
+  
   attribute :middle_name
   attribute :phone_number
   

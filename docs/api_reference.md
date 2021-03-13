@@ -25,7 +25,7 @@
 - [Get Countries list](api/v1/countries/index.md)
 
 ### Current User
-- [Get current user info](api/v1/current_user/info.md)
+- [Get current user Info](api/v1/current_user/info.md)
 - [Update current user](api/v1/current_user/update.md)
 - [Resend email confirmation to current user](api/v1/current_user/resend_email_confirmation.md)
 
@@ -47,5 +47,24 @@
 - [Unlit Article](api/v1/news_articles/unlit.md)
 - [View Article](api/v1/news_articles/view.md)
 
+### Squad Requst
+- [Accept request](api/v1/squad_requests/accept.md)
+- [Create new request](api/v1/squad_requests/create.md)
+- [Decline request](api/v1/squad_requests/decline.md)
+- [Get requsts list](api/v1/squad_requests/index.md)
+
+
+### User Assets
+- [Get Images](api/v1/user_assets/images.md)
+- [Get Videos](api/v1/user_assets/videos.md)
+- [Destroy Images](api/v1/user_assets/destroy_images.md)
+- [Destroy Videos](api/v1/user_assets/destroy_videos.md)
+- [Get URL for File upload](api/v1/user_assets/upload_url.md)
+- [Confirm File upload to URL](api/v1/user_assets/confirmation.md)
+
 ### User Security Question
 - [Get User Security Questions list](api/v1/user_security_questions/index.md)
+
+### User Settings
+- [Get user Settings](api/v1/settings/index.md)
+- [Update user Settings](api/v1/settings/update.md)

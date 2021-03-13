@@ -11,19 +11,29 @@ class User < ApplicationRecord
   mount_uploader :profile_picture, AvatarUploader
   mount_uploader :banner_picture, BannerUploader
   
+  # Callbacks
+  after_commit :set_user_settings, on: [:create]
+  
   # Associations
   belongs_to :country
   belongs_to :user_security_question
+  has_one :setting, dependent: :destroy
   has_many :devices, class_name: 'Device', foreign_key: 'owner_id', dependent: :destroy
+  ## Squad requests
+  has_many :squad_requests_as_receiver, foreign_key: :receiver_id, class_name: 'SquadRequest', dependent: :destroy
+  has_many :squad_requests_as_requestor, foreign_key: :requestor_id, class_name: 'SquadRequest', dependent: :destroy
   ## Comments
   has_many :comments
   has_many :commented_news_articles, through: :comments, source: :source, source_type: 'NewsArticle'
   ## Lits
   has_many :lits
   has_many :lited_news_articles, through: :lits, source: :source, source_type: 'NewsArticle'
-  ## Lits
+  ## Views
   has_many :views
   has_many :viewed_news_articles, through: :views, source: :source, source_type: 'NewsArticle'
+  ## Images and Videos
+  has_many :user_images, dependent: :destroy
+  has_many :user_videos, dependent: :destroy
   # Languages
   has_and_belongs_to_many :languages
   
@@ -77,11 +87,17 @@ class User < ApplicationRecord
   end
   
   def self.find_for_database_authentication(warden_conditions)
-     conditions = warden_conditions.dup
-     if login = conditions.delete(:login)
-       where(conditions.to_h).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
-     elsif conditions.has_key?(:username) || conditions.has_key?(:email)
-       where(conditions.to_h).first
-     end
-   end
+    conditions = warden_conditions.dup
+    if login = conditions.delete(:login)
+      where(conditions.to_h).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
+    elsif conditions.has_key?(:username) || conditions.has_key?(:email)
+      where(conditions.to_h).first
+    end
+  end
+   
+  private
+    def set_user_settings
+      return if self.setting.present?
+      Setting.get_setting(self)
+    end
 end

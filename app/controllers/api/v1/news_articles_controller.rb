@@ -1,4 +1,6 @@
 class Api::V1::NewsArticlesController < Api::V1::ApiController
+  skip_before_action :authenticate, only: [:show]
+  before_action :authenticate, only: [:show, :lit, :view, :unlit], if: :is_device_token?
   before_action :get_article, only: [:lit, :show, :view, :unlit]
   
   # GET /api/v1/news_articles/:id
