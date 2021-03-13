@@ -20,6 +20,16 @@ module Tasks
       
       all_category_articles = get_all_category_articles(country.code, category.title)
       all_category_articles.each do |article|
+        
+        # Create new Sources
+        news_source = nil
+        source_identifier = article.id
+        
+        if source_identifier
+          news_source = NewsSource.find_by(source_identifier: source_identifier)
+          CreateNewsSourcesJob.perform_later if news_source.blank?
+        end
+        
         article_attr = {
           country: country,
           published_at: article.publishedAt,
@@ -27,7 +37,8 @@ module Tasks
           title: article.title,
           description: article.description,
           url: article.url,
-          img_url: article.urlToImage
+          img_url: article.urlToImage,
+          news_source: news_source
         }
         
         article = NewsArticle.find_by(url: article.url)
@@ -40,6 +51,37 @@ module Tasks
         end
         
         article.news_categories << category if article && article.news_categories.pluck(:title).exclude?(category.title)
+      end
+    end
+    
+    def self.create_sources()
+      news = News.new(ENV['NEWS_API_KEY'])
+      begin
+        # Get Source info
+        sources = news.get_sources()
+      rescue
+        puts "!!!!!!! ERROR: Cannot get Sources list"
+        return
+      end
+      
+      sources.each do |source|
+        puts "----- #{source.id} -----"
+        puts "===== Source Name: #{source.name} ====="
+        puts "===== Source Country: #{source.country} ====="
+        puts "===== Source Language: #{source.language} ====="
+        
+        next if NewsSource.exists?(source_identifier: source.id)
+        
+        country = Country.find_by(code: source.country.upcase)
+        next unless country
+        
+        language = Language.find_by(code: source.language.upcase)
+        next unless language
+        
+        news_source = NewsSource.new(source_identifier: source.id, name: source.name, country: country, language: language)
+        unless news_source.save
+          puts "!!!!!!! ERROR: Cannot save NewsSource with next errors #{news_source.errors.full_messages}"
+        end
       end
     end
     

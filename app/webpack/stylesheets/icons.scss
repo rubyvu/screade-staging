@@ -1,0 +1,86 @@
+// Panel with Lit, View, Comment icons
+.info-panel {
+  display: inline-flex;
+  align-items: center;
+  position: absolute;
+  height: 48px;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  padding: 0 16px;
+}
+
+.info-panel .info-panel-value-wrapper {
+  cursor: pointer;
+  display: inline-flex;
+  width: auto;
+  margin-right: 16px;
+  
+  &.pointer-disable {
+    cursor: default;
+  }
+}
+
+.info-panel .info-panel-value-wrapper span.info-panel-value {
+  margin-left: 4px;
+  color: $color-white;
+  font-size: 14px;
+  font-weight: 500;
+  
+  &.color-black { color: $color-black; }
+}
+
+// Link block for info-panel
+.info-panel .comment-link-icon {
+  line-height: 1;
+}
+
+// Icons
+i.ic {
+  height: 20px;
+  width: 20px;
+}
+
+/* Lit */
+i.ic.lit:after {
+  content: url('../images/icons/ic_lit.png');
+}
+
+i.ic.lit.reverse:after {
+  content: url('../images/icons/ic_lit_reverse.png');
+}
+
+i.ic.lit.active:after {
+  content: url('../images/icons/ic_lit_active.png');
+}
+
+/* View */
+i.ic.view:after {
+  content: url('../images/icons/ic_view.png');
+}
+
+i.ic.view.reverse:after {
+  content: url('../images/icons/ic_view_reverse.png');
+}
+
+i.ic.view.active:after {
+  content: url('../images/icons/ic_view_active.png');
+}
+
+/* Comment */
+i.ic.comment:after {
+  content: url('../images/icons/ic_comment.png');
+}
+
+i.ic.comment.reverse:after {
+  content: url('../images/icons/ic_comment_reverse.png');
+}
+ 
+i.ic.comment.active:after {
+  content: url('../images/icons/ic_comment_active.png');
+}
+
+i.ic.comment.active.reverse:after {
+  content: url('../images/icons/ic_comment_active_reverse.png');
+}
+  

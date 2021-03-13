@@ -2,6 +2,7 @@ class NewsArticle < ApplicationRecord
   
   # Associations
   belongs_to :country
+  belongs_to :news_source, optional: true
   has_and_belongs_to_many :news_categories
   ## Comments
   has_many :comments, as: :source, dependent: :destroy
@@ -20,4 +21,20 @@ class NewsArticle < ApplicationRecord
   validates :title, presence: true
   validates :published_at, presence: true
   validates :url, presence: true, uniqueness: true
+  
+  def get_type
+    self.class.name.underscore
+  end
+  
+  def is_lited(user)
+    user.present? && self.liting_users.include?(user)
+  end
+  
+  def is_commented(user)
+    user.present? &&  self.commenting_users.include?(user)
+  end
+  
+  def is_viewed(user)
+    user.present? && self.viewing_users.include?(user)
+  end
 end

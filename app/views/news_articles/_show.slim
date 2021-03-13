@@ -1,0 +1,26 @@
+.news-article-wrapper
+  .mb-4
+    - news_article.news_categories.each do |news_category|
+      span.title-main-wrapper
+        = news_category.title.capitalize
+  
+  - if news_article.img_url.present?
+    = image_tag(news_article.img_url, class: 'url-full-image')
+  - else
+    = image_pack_tag('media/images/bg-picture-authentication.png', class: 'url-full-image')
+    
+  .news-info-panel value="#{news_article.id}"
+    .info-panel
+      .div class="#{ current_user ? 'info-panel-value-wrapper' : 'info-panel-value-wrapper pointer-disable' }"
+        i class=(news_article.is_lited(current_user) ? "ic lit active reverse" : "ic lit reverse")
+        span.info-panel-value.color-black #{news_article.lits.count}
+        
+      .info-panel-value-wrapper.pointer-disable
+        i class=(news_article.is_commented(current_user) ? "ic comment reverse active" : "ic comment reverse")
+        span.info-panel-value.color-black #{news_article.comments.count}
+    
+  .news-article-text
+    .news-article-title
+      = news_article.title
+    .news-article-description
+      = news_article.description

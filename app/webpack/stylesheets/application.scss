@@ -6,6 +6,7 @@ $color-light-blue: #D4D7ED;
 $color-black: #000000;
 $color-red: #DA100B;
 $color-grey: #9C9C9C;
+$color-light-grey: #EBF0F3;
 $color-white: #FFFFFF;
 
 /**************************************
@@ -19,13 +20,21 @@ $grid-breakpoints: (
   xs: 0,
   sm: 576px,
   md: 768px,
-  lg: 1350px,
+  lg: 1174px,
   xl: 1200px
 );
 
-@import 'navigation_bar';
+@import 'icons';
 @import 'custom_fields';
+@import 'navigation_bar';
+@import 'kaminari';
+@import 'main-elements';
+@import 'notification';
+@import 'toggle-switcher';
+@import './comments/index';
 @import './modals/index';
+@import './home/index';
+@import './news_articles/index';
 
 /**************************************
 * Import stylesheets from node modules:
@@ -42,12 +51,22 @@ $grid-breakpoints: (
 **************************************/
 html, body {
   max-width: 1440px;
-  height: 100%;
   margin: 0 auto;
-  padding: 8px 100px;
+  padding: 8px 50px;
   //border: 1px solid green;
   font-family: 'roboto';
   font-weight: 400; // 900, 700, 500, 400, 300
+}
+
+// Prevent text from selection
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 }
 
 @media (max-width: 960px) {

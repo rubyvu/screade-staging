@@ -1,0 +1,36 @@
+.comments-wrapper
+  h5 Comments
+  
+  - if current_user
+    = form_for(@new_comment, url: create_comment_news_article_path, html: { method: :post }) do |f|
+        
+      .input-group.mb-3
+        = f.text_field :message, autofocus: false, autocomplete: 'off', placeholder: "Write a comment", class: 'form-control'
+        
+        .input-group-append
+          .input-group-text.submit-button
+            = f.submit '', class: 'btn btn-link send-message-button'
+            
+  .comments-scroll
+    - comments.each_with_index do |comment, index|
+      .comment-wrapper
+        .comment-image-wrapper
+          - if comment.user.profile_picture.url
+            = image_tag(comment.user.profile_picture.square_320.url, class: 'profile-image')
+          - else
+            = image_pack_tag('media/images/icons/btn_add_photo.png', class: 'profile-image')
+          
+        .comment-content-wrapper value="#{comment.id}"
+          .comment-user-name
+            = comment.user.full_name.present? ? comment.user.full_name : comment.user.username
+          .comment-text
+            = comment.message
+          .comment-date
+            = comment.created_at.strftime('%m/%d/%Y-%I:%M%p')
+            
+            .div class="#{ current_user ? 'comment-lit' : 'comment-lit pointer-disable' }"
+              span.info-panel-value.color-black #{comment.lits.count}
+              i class=(comment.is_lited(current_user) ? "ic lit active reverse" : "ic lit reverse")
+      
+      - if (index+1)%5 == 0 && Rails.env.production?
+        //= render './shared/ads/home_banner'

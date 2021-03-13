@@ -300,7 +300,6 @@ CREATE TABLE public.breaking_news (
     id bigint NOT NULL,
     title character varying NOT NULL,
     is_active boolean DEFAULT false,
-    country_id integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -391,6 +390,16 @@ ALTER SEQUENCE public.countries_id_seq OWNED BY public.countries.id;
 
 
 --
+-- Name: countries_languages; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.countries_languages (
+    country_id bigint NOT NULL,
+    language_id bigint NOT NULL
+);
+
+
+--
 -- Name: devices; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -422,6 +431,48 @@ CREATE SEQUENCE public.devices_id_seq
 --
 
 ALTER SEQUENCE public.devices_id_seq OWNED BY public.devices.id;
+
+
+--
+-- Name: languages; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.languages (
+    id bigint NOT NULL,
+    code character varying NOT NULL,
+    title character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: languages_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.languages_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: languages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.languages_id_seq OWNED BY public.languages.id;
+
+
+--
+-- Name: languages_users; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.languages_users (
+    user_id bigint NOT NULL,
+    language_id bigint NOT NULL
+);
 
 
 --
@@ -471,7 +522,8 @@ CREATE TABLE public.news_articles (
     url character varying NOT NULL,
     img_url character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    news_source_id integer
 );
 
 
@@ -533,6 +585,40 @@ CREATE SEQUENCE public.news_categories_id_seq
 --
 
 ALTER SEQUENCE public.news_categories_id_seq OWNED BY public.news_categories.id;
+
+
+--
+-- Name: news_sources; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.news_sources (
+    id bigint NOT NULL,
+    source_identifier character varying NOT NULL,
+    name character varying,
+    language_id integer NOT NULL,
+    country_id integer NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: news_sources_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.news_sources_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: news_sources_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.news_sources_id_seq OWNED BY public.news_sources.id;
 
 
 --
@@ -777,6 +863,13 @@ ALTER TABLE ONLY public.devices ALTER COLUMN id SET DEFAULT nextval('public.devi
 
 
 --
+-- Name: languages id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.languages ALTER COLUMN id SET DEFAULT nextval('public.languages_id_seq'::regclass);
+
+
+--
 -- Name: lits id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -795,6 +888,13 @@ ALTER TABLE ONLY public.news_articles ALTER COLUMN id SET DEFAULT nextval('publi
 --
 
 ALTER TABLE ONLY public.news_categories ALTER COLUMN id SET DEFAULT nextval('public.news_categories_id_seq'::regclass);
+
+
+--
+-- Name: news_sources id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.news_sources ALTER COLUMN id SET DEFAULT nextval('public.news_sources_id_seq'::regclass);
 
 
 --
@@ -874,6 +974,14 @@ ALTER TABLE ONLY public.devices
 
 
 --
+-- Name: languages languages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.languages
+    ADD CONSTRAINT languages_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: lits lits_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -895,6 +1003,14 @@ ALTER TABLE ONLY public.news_articles
 
 ALTER TABLE ONLY public.news_categories
     ADD CONSTRAINT news_categories_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: news_sources news_sources_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.news_sources
+    ADD CONSTRAINT news_sources_pkey PRIMARY KEY (id);
 
 
 --
@@ -976,17 +1092,17 @@ CREATE UNIQUE INDEX index_admin_users_on_reset_password_token ON public.admin_us
 
 
 --
--- Name: index_breaking_news_on_country_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_breaking_news_on_country_id ON public.breaking_news USING btree (country_id);
-
-
---
 -- Name: index_comments_on_source_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_comments_on_source_id ON public.comments USING btree (source_id);
+
+
+--
+-- Name: index_countries_languages_on_country_id_and_language_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_countries_languages_on_country_id_and_language_id ON public.countries_languages USING btree (country_id, language_id);
 
 
 --
@@ -1011,10 +1127,24 @@ CREATE INDEX index_devices_on_owner_id ON public.devices USING btree (owner_id);
 
 
 --
--- Name: index_lits_on_source_id_and_source_type; Type: INDEX; Schema: public; Owner: -
+-- Name: index_languages_on_code; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_lits_on_source_id_and_source_type ON public.lits USING btree (source_id, source_type);
+CREATE UNIQUE INDEX index_languages_on_code ON public.languages USING btree (code);
+
+
+--
+-- Name: index_languages_users_on_user_id_and_language_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_languages_users_on_user_id_and_language_id ON public.languages_users USING btree (user_id, language_id);
+
+
+--
+-- Name: index_lits_on_source_id_and_source_type_and_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_lits_on_source_id_and_source_type_and_user_id ON public.lits USING btree (source_id, source_type, user_id);
 
 
 --
@@ -1036,6 +1166,20 @@ CREATE UNIQUE INDEX index_news_articles_on_url ON public.news_articles USING btr
 --
 
 CREATE UNIQUE INDEX index_news_categories_on_title ON public.news_categories USING btree (title);
+
+
+--
+-- Name: index_news_sources_on_country_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_news_sources_on_country_id ON public.news_sources USING btree (country_id);
+
+
+--
+-- Name: index_news_sources_on_source_identifier; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_news_sources_on_source_identifier ON public.news_sources USING btree (source_identifier);
 
 
 --
@@ -1074,10 +1218,10 @@ CREATE UNIQUE INDEX index_users_on_username ON public.users USING btree (usernam
 
 
 --
--- Name: index_views_on_source_id_and_source_type; Type: INDEX; Schema: public; Owner: -
+-- Name: index_views_on_source_id_and_source_type_and_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_views_on_source_id_and_source_type ON public.views USING btree (source_id, source_type);
+CREATE UNIQUE INDEX index_views_on_source_id_and_source_type_and_user_id ON public.views USING btree (source_id, source_type, user_id);
 
 
 --
@@ -1184,6 +1328,13 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210205133755'),
 ('20210208101226'),
 ('20210208104456'),
-('20210210133800');
+('20210210133800'),
+('20210218085846'),
+('20210219165401'),
+('20210301112248'),
+('20210301112452'),
+('20210301135852'),
+('20210301140923'),
+('20210304090402');
 
 

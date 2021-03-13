@@ -6,9 +6,11 @@ import Turbolinks from "turbolinks";
 import * as ActiveStorage from "@rails/activestorage";
 import "channels";
 import "select2";
+import "webticker/jquery.webticker.min.js";
 
 // Import internal scripts
 import './shared/modals';
+import './shared/news_articles';
 
 // Import entry stylesheets for pack - IMPORTANT!
 import 'stylesheets/application';
@@ -32,6 +34,14 @@ window.App = new function () {
    * @protected
    */
   $(function() {
+    $(document).ready(function() {
+      //Init Ticker for Breaking news on page reload
+      $('#webticker').webTicker({ height: '36px', duplicate: true, startEmpty: false });
+    })
     
+    $( document ).on('turbolinks:load', function() {
+      //Init Ticker for Breaking news on page load
+      $('#webticker').webTicker({ height: '36px', duplicate: true, startEmpty: false });
+    })
   });
 }

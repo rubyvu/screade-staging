@@ -15,6 +15,10 @@ class Api::V1::ApiController < ActionController::Base
     @current_device
   end
   
+  def is_device_token?
+    request.headers['X-Device-Token'].present?
+  end
+  
   def errors_by_attributes(errors)
     errors_array = []
     errors.each do |error|
@@ -42,13 +46,7 @@ class Api::V1::ApiController < ActionController::Base
       
       # Check that User is not locked
       if @current_user.access_locked?
-        render json: { errors: ['User has been blocked, please contact support.'] }, status: :unauthorized
-        return
-      end
-      
-      # Check that user confirmed his email after a while
-      if @current_user.confirmed_at.blank? && @current_user.created_at < DateTime.current - Devise.allow_unconfirmed_access_for
-        render json: { errors: ['Confirm your email address to continue using Screade.'] }, status: :unauthorized
+        render json: { errors: ['User has been blocked, please contact support.'] }, status: :forbidden
         return
       end
     end

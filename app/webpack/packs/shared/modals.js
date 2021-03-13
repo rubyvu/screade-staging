@@ -42,8 +42,10 @@ $( document ).on('turbolinks:load', function() {
   })
   
   // County field
+  $('#sign_up_user_country_id').prepend('<option selected></option>')
   $('#sign_up_user_country_id').select2({
     dropdownParent: $('#modal-sign-up'),
+    placeholder: "",
     templateResult: formatCountry,
     templateSelection: formatCountry
   });
@@ -56,6 +58,15 @@ $( document ).on('turbolinks:load', function() {
     );
     return $country;
   };
+  
+  // Language field
+  $('#sign_up_update_user_language_ids').prepend('<option selected></option>')  // Empty placeholder for multiple elements step 1
+  $('#sign_up_update_user_language_ids').select2({
+    dropdownParent: $('#modal-sign-up-update'),
+    placeholder: "Please select a language",
+    multiple: true
+  });
+  $('#sign_up_update_user_language_ids option')[0].remove();                    // Empty placeholder for multiple elements step 2
   
   // Block submit button on Sign Up
   let signUpSubmitButton = $('#sign-up-submit-button')
@@ -114,4 +125,20 @@ $( document ).on('turbolinks:load', function() {
       reader.readAsDataURL(input.files[0]);
     }
   }
+  
+  // Forgot password
+  $("#get-user-security-question").on('ajax:complete', function(event) {
+    let eventResponse = event.detail[0];
+    if ( eventResponse.status !== 200 ) {
+      $("#modal-forgot-password-security-question .global-errors").html("Incorrect Email")
+    } else {
+      $("#modal-forgot-password-security-question").modal('hide')
+      $("#modal-forgot-password").modal('show')
+      
+      let responseJson = JSON.parse(eventResponse.response)
+      $('#forgot_password_user_email').val(responseJson.email)
+      $('#forgot_password_user_user_security_question_id').val(responseJson.security_question.question_identifier)
+      $('#modal-forgot-password .material-field').prepend('<h5>' + responseJson.security_question.title + '</h5>')
+    }
+  })
 })

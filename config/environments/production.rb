@@ -25,7 +25,7 @@ Rails.application.configure do
   config.public_file_server.enabled = true
   
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  config.asset_host = 'https://screade.com/'
+  config.asset_host = 'https://www.screade.com/'
   
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
@@ -61,8 +61,8 @@ Rails.application.configure do
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.asset_host = 'https://screade.com'
-  config.action_mailer.default_url_options = { host: 'https://screade.com' }
+  config.action_mailer.asset_host = 'https://www.screade.com'
+  config.action_mailer.default_url_options = { host: 'https://www.screade.com' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     user_name: ENV['SMTP_USERNAME'],

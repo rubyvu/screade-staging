@@ -15,21 +15,21 @@
               .input-group-text
                 = image_pack_tag('media/images/icons/ic_email.png', class: 'img-responsive')
               
-            = f.email_field :email, autofocus: true, class: 'form-control', placeholder: 'Email'
+            = f.text_field :login, autofocus: true, class: 'form-control', placeholder: 'Login'
             
           .input-group.mb-3
             .input-group-prepend
               .input-group-text
                 = image_pack_tag('media/images/icons/ic_password.png', class: 'img-responsive')
                 
-            = f.password_field :password, class: 'form-control', placeholder: 'Password'
+            = f.password_field :password, class: 'form-control', placeholder: 'Password', autocomplete: 'new-password'
             
             .input-group-append
               .input-group-text
                 = image_pack_tag('media/images/icons/ic_show_password.png', class: 'img-responsive', id: 'show-password-icon')
           
           .actions.text-right
-            = link_to 'Forgot password', '', data: { toggle: "modal", target: "#modal-forgot-password" }
+            = link_to 'Forgot password', '', data: { toggle: "modal", target: "#modal-forgot-password-security-question" }
             
           .actions
             = f.submit 'Sign In', class: 'btn btn-primary w-100'

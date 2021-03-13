@@ -8,6 +8,6 @@ class CurrentUserController < ApplicationController
   
   private
     def user_params
-      params.require(:user).permit(:banner_picture, :birthday, :country_code, :email, :first_name, :last_name, :middle_name, :phone_number, :profile_picture)
+      params.require(:user).permit(:banner_picture, :birthday, :country_code, :email, :first_name, :last_name, :middle_name, :phone_number, :profile_picture, language_ids: [])
     end
 end

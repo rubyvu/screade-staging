@@ -1,0 +1,25 @@
+// Profile image
+.profile-image {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background-color: $color-light-grey;
+  object-fit: cover;
+}
+
+// Full Article, Post image
+.url-full-image {
+  width: 100%;
+  border-radius: 4px;
+}
+
+// Title element with bg
+.title-main-wrapper {
+  background-color: $color-blue;
+  border-radius: 16px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 400px;
+  color: $color-white;
+  margin-right: 8px;
+}

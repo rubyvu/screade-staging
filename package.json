@@ -16,7 +16,8 @@
     "moment": "^2.29.1",
     "popper.js": "^1.16.1",
     "select2": "^4.1.0-rc.0",
-    "turbolinks": "^5.2.0"
+    "turbolinks": "^5.2.0",
+    "webticker": "^3.0.0"
   },
   "version": "0.1.0",
   "devDependencies": {

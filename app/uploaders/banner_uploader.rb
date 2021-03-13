@@ -33,10 +33,10 @@ class BannerUploader < CarrierWave::Uploader::Base
   
   protected
     def secure_token(length)
-      model.banner_picture ||= SecureRandom.hex(length)
+      model.banner_picture_hex ||= SecureRandom.hex(length)
     end
     
     def reset_secure_token(file)
-      model.banner_picture = nil
+      model.banner_picture_hex = nil
     end
 end
