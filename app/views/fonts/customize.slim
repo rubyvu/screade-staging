@@ -1,0 +1,42 @@
+.font-customizer-wrapper
+  h5 Customize
+  .alphabet.roboto.normal
+    span A B C D E F G H I J K L M N O P Q R S T U V W X Y Z 1 2 3 4 5 6 7 8 9 0
+
+  = form_for @setting, url: setting_path(@setting) do |f|
+    .row
+      .col-sm-8
+        h6 Font-Family
+        .material-field
+          = f.radio_button :font_family, 'Roboto'
+          = f.label 'Roboto'
+        
+        .material-field
+          = f.radio_button :font_family, 'Vivaldi'
+          = f.label 'Vivaldi'
+        
+        .material-field
+          = f.radio_button :font_family, 'Times New Roman'
+          = f.label 'Times New Roman'
+        
+        .material-field
+          = f.radio_button :font_family, 'Broadway'
+          = f.label 'Broadway'
+      
+      .col-sm-4
+        h6 Font-Style
+        .material-field
+          = f.radio_button :font_style, 'normal'
+          = f.label 'Normal'
+          
+        .material-field
+          = f.radio_button :font_style, 'bold'
+          = f.label 'Bold'
+          
+        .material-field
+          = f.radio_button :font_style, 'italic'
+          = f.label 'Italic'
+          
+    = f.submit 'Submit', class: 'btn btn-primary w-100'
+            
+            

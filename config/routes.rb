@@ -13,6 +13,13 @@ Rails.application.routes.draw do
   end
   
   # Web routes
+  devise_for :users, controllers: {
+    confirmations: 'users/confirmations',
+    sessions: 'users/sessions',
+    registrations: 'users/registrations',
+    passwords: 'users/passwords'
+  }
+  
   resources :comments, only: [] do
     member do
       post :lit
@@ -27,13 +34,11 @@ Rails.application.routes.draw do
     end
   end
   
-  devise_for :users, controllers: {
-    confirmations: 'users/confirmations',
-    sessions: 'users/sessions',
-    registrations: 'users/registrations',
-    passwords: 'users/passwords'
-   }
-   
+  resources :fonts, only: [] do
+    collection do
+      get :customize
+    end
+  end
   resources :home, only: [:index]
   resources :news_articles, only: [] do
     member do
@@ -52,6 +57,7 @@ Rails.application.routes.draw do
     end
   end
   
+  resources :settings, only: [:update]
   resources :user_images, only: [:new] do
     collection do
       get :webhook

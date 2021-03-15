@@ -1,7 +1,7 @@
 class Setting < ApplicationRecord
   # Constants
-  FONT_FAMILIES = %w(Roboto)
-  FONT_STYLE = %w(normal)
+  FONT_FAMILIES = ['Roboto', 'Vivaldi', 'Times New Roman', 'Broadway']
+  FONT_STYLE = ['normal', 'bold', 'italic']
   
   # Association
   belongs_to :user
