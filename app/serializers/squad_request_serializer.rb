@@ -1,5 +1,4 @@
 class SquadRequestSerializer < ActiveModel::Serializer
-  
   attribute :accepted_at
   attribute :declined_at
   attribute :receiver
@@ -11,3 +10,4 @@ class SquadRequestSerializer < ActiveModel::Serializer
   def requestor
     UserSerializer.new(object.requestor).as_json
   end
+end
