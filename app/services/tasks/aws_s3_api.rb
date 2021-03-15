@@ -14,19 +14,10 @@ module Tasks
       obj.presigned_url(:get)
     end
     
-    def self.set_presigned_url(store_path)
-      asset_type = store_path.split('.').last
-      if UserImage::IMAGE_RESOLUTIONS.include?(asset_type)
-        uploader = UserImage.new.file
-      elsif UserVideo::VIDEO_RESOLUTIONS.include?(asset_type)
-        uploader = UserVideo.new.file
-      else
-        return nil
-      end
-      
+    def self.set_presigned_url(store_path, file)
       expires = 1.hour.from_now
       fog_s3 = Fog::AWS::Storage.new(aws_access_key_id: ENV['AWS_S3_ACCESS_KEY_ID'], aws_secret_access_key: ENV['AWS_S3_SECRET_ACCESS_KEY'])
-      fog_s3.put_object_url(uploader.fog_directory, store_path, expires)
+      fog_s3.put_object_url(file.fog_directory, store_path, expires)
     end
   end
 end

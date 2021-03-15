@@ -22,10 +22,19 @@ class Api::V1::UserAssetsController < Api::V1::ApiController
     end
     
     store_path = "uploads/#{SecureRandom.uuid}/#{filename}"
+    asset_type = store_path.split('.').last
+    if UserImage::IMAGE_RESOLUTIONS.include?(asset_type)
+      uploader = UserImage.new(user: current_user)
+    elsif UserVideo::VIDEO_RESOLUTIONS.include?(asset_type)
+      uploader = UserVideo.new(user: current_user)
+    else
+      render json: { errors: ['Wrong file format.']}, status: :unprocessable_entity
+      return
+    end
     
-    url = Tasks::AwsS3Api.set_presigned_url(store_path)
-    if url.present?
-      render json: { url: url, key: store_path }, status: :ok
+    url = Tasks::AwsS3Api.set_presigned_url(store_path, uploader.file)
+    if url.present? && uploader.save
+      render json: { url: url, key: store_path, uploader_id: uploader.id }, status: :ok
     else
       render json: { errors: ['Failed to generate image upload url.'] }, status: :unprocessable_entity
     end
@@ -40,18 +49,13 @@ class Api::V1::UserAssetsController < Api::V1::ApiController
     end
     
     asset_type = key.split('.').last
+    uploader_id = confirmation_params[:uploader_id]
     if UserImage::IMAGE_RESOLUTIONS.include?(asset_type)
-      asset_uploader = UserImage.new
+      asset_uploader = UserImage.find(uploader_id)
     elsif UserVideo::VIDEO_RESOLUTIONS.include?(asset_type)
-      asset_uploader = UserVideo.new
+      asset_uploader = UserVideo.find(uploader_id)
     else
       render json: { errors: ['Wrong key format.']}, status: :bad_request
-      return
-    end
-    
-    asset_uploader.user = current_user
-    unless asset_uploader.save
-      render json: { errors: asset_uploader.errors.full_messages }, status: :unprocessable_entity
       return
     end
     
@@ -79,7 +83,7 @@ class Api::V1::UserAssetsController < Api::V1::ApiController
     end
     
     def confirmation_params
-      params.require(:confirmation).permit(:key)
+      params.require(:confirmation).permit(:key, :uploader_id)
     end
     
     def user_image_params
