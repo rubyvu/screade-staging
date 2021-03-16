@@ -10,6 +10,7 @@ import "webticker/jquery.webticker.min.js";
 
 // Import internal scripts
 import './shared/font_customizer';
+import './shared/image_viewer';
 import './shared/modals';
 import './shared/news_articles';
 
