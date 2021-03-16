@@ -30,4 +30,12 @@
     .user-profile-squad-buttons
       = link_to "Requests", '', class: "btn btn-primary mx-2 fonts-styling #{@user.setting.font_family} #{@user.setting.font_style}"
       = link_to "Squad", '', class: "btn btn-outline-primary mx-2 fonts-styling #{@user.setting.font_family} #{@user.setting.font_style}"
-      
+    
+  .user-profile-assets-wrapper
+    h4 Images
+    = link_to 'See all', user_image_path(@user.username), class: 'see-all-assets'
+    
+    .user-profile-assets
+      - @images.each do |user_image|
+        .image-wrapper
+          = image_tag(user_image.file.url, class: 'user-asset')

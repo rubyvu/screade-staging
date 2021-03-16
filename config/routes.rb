@@ -58,7 +58,11 @@ Rails.application.routes.draw do
   end
   
   resources :settings, only: [:update]
-  resources :user_images, only: [:new] do
+  resources :user_images, only: [:new], param: :username do
+    member do
+      get :index
+    end
+    
     collection do
       get :webhook
     end
@@ -129,7 +133,11 @@ Rails.application.routes.draw do
         end
       end
       
-      resources :settings, only: [:index, :update]
+      resources :settings, only: [:index] do
+        collection do
+          put :update
+        end
+      end
       resources :squad_requsts, only: [:index, :create] do
         member do
           post :accept

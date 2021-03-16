@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show]
   
   def show
-    
+    @images = @user.user_images.order(updated_at: :desc).limit(6)
   end
   
   private

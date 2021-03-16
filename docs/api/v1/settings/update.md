@@ -29,7 +29,7 @@ PUT/PATCH
 ```
 HTTP code 200 :ok
 {
-  "settings": "Settings"                                                        (object, required)
+  "setting": "Setting"                                                         (object, required)
 }
 ```
 
@@ -43,4 +43,4 @@ HTTP code 422 ::unprocessable_entity
 ```
 
 ### References
-- [Settings JSON object](../../../json_objects/settings.md)
+- [Setting JSON object](../../../json_objects/settings.md)

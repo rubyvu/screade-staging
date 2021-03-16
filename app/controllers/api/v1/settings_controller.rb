@@ -2,24 +2,24 @@ class Api::V1::SettingsController < Api::V1::ApiController
   
   # GET /api/v1/settings
   def index
-    settings = Setting.get_setting(current_user)
-    settings_json = SettingsSerializer.new(settings).as_json
-    render json: { settings: settings_json }, status: :ok
+    setting = Setting.get_setting(current_user)
+    setting_json = SettingsSerializer.new(setting).as_json
+    render json: { setting: setting_json }, status: :ok
   end
   
   # PUT/PATCH /api/v1/settings
   def update
-    settings = Setting.get_setting(current_user)
-    if settings.update(settings_params)
-      settings_json = SettingsSerializer.new(settings).as_json
-      render json: { settings: settings_json }, status: :ok
+    setting = Setting.get_setting(current_user)
+    if setting.update(setting_params)
+      setting_json = SettingsSerializer.new(setting).as_json
+      render json: { setting: setting_json }, status: :ok
     else
-      render json: { errors: settings.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: setting.errors.full_messages }, status: :unprocessable_entity
     end
   end
   
   private
-    def settings_params
+    def setting_params
       params.require(:setting).permit(:font_family, :font_style, :is_notification, :is_images, :is_videos, :is_posts)
     end
 end

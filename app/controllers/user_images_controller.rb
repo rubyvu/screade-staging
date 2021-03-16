@@ -1,4 +1,10 @@
 class UserImagesController < ApplicationController
+  before_action :set_user, only: [:index]
+  
+  # GET /user_images/:username
+  def index
+    
+  end
   
   def new
     @image_uploader = UserImage.new.file
@@ -12,4 +18,9 @@ class UserImagesController < ApplicationController
     new_user_image.remote_file_url = Tasks::AwsS3Api.get_presigned_url(new_user_image.file_key)
     new_user_image.save!
   end
+  
+  private
+    def set_user
+      @user = User.find_by!(username: params[:username])
+    end
 end
