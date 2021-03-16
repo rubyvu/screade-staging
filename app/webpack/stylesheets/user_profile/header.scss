@@ -1,0 +1,78 @@
+.user-profile-wrapper {
+  margin-top: 24px;
+  
+  .user-profile-header {
+    position: relative;
+    height: 254px;
+    
+    // Banner
+    .user-profile-banner-wrapper {
+      position: relative;
+      width: 100%;
+      height: 194px;
+      object-fit: cover;
+      text-align: center;
+      overflow: hidden;
+      
+      
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    
+    .user-profile-banner-wrapper:before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      left:0;
+      top: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0) 62.36%, rgba(0, 0, 0, 0.5) 100%);
+    }
+    
+    // Avatar
+    .user-profile-avatar-wrapper {
+      position: absolute;
+      bottom: 0;
+      left: 24px;
+      img {
+        height: 120px;
+        width: 120px;
+        border-radius: 50%;
+        background-color: $color-light-grey;
+        object-fit: cover;
+      }
+    }
+    
+    // Name
+    .user-profile-name {
+      position: absolute;
+      bottom: 90px;
+      left: 150px;
+      padding: 0 16px;
+      color: $color-white;
+      font-size: 20px;
+    }
+    
+    // Info panel
+    .info-panel {
+      position: absolute;
+      bottom: 58px;
+      left: 150px;
+    }
+    
+    // Squad buttons
+    .user-profile-squad-buttons {
+      position: absolute;
+      bottom: 0;
+      left: 164px;
+      
+      .btn {
+        padding: 10px 60px;
+        font-size: 16px
+      }
+    }
+  }
+}

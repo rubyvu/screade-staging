@@ -1,0 +1,33 @@
+.user-profile-wrapper
+  .user-profile-header
+    .user-profile-banner-wrapper
+      - if @user.banner_picture.url.present?
+        = image_tag(@user.banner_picture.url)
+      - else
+        = image_pack_tag('media/images/placeholders/placeholder-banner-profile.png')
+        
+    .user-profile-avatar-wrapper
+      - if @user.profile_picture.url
+        = image_tag(@user.profile_picture.square_320.url)
+      - else
+        = image_pack_tag('media/images/placeholders/placeholder-user-profile.png')
+    
+    .user-profile-name.fonts-styling class="#{@user.setting.font_family} #{@user.setting.font_style}"
+      h5 #{@user.full_name.present? ? @user.full_name : @user.username.capitalize}
+    .info-panel
+      .info-panel-value-wrapper.pointer-disable
+        i.ic.lit
+        span.info-panel-value #{@user.lits.count}
+        
+      .info-panel-value-wrapper.pointer-disable
+        i.ic.comment
+        span.info-panel-value #{@user.comments.count}
+        
+      .info-panel-value-wrapper.pointer-disable
+        i.ic.view
+        span.info-panel-value 0
+        
+    .user-profile-squad-buttons
+      = link_to "Requests", '', class: "btn btn-primary mx-2 fonts-styling #{@user.setting.font_family} #{@user.setting.font_style}"
+      = link_to "Squad", '', class: "btn btn-outline-primary mx-2 fonts-styling #{@user.setting.font_family} #{@user.setting.font_style}"
+      

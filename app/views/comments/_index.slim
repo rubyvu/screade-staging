@@ -20,12 +20,12 @@
               - if comment.user.profile_picture.url
                 = image_tag(comment.user.profile_picture.square_320.url, class: 'profile-image')
               - else
-                = image_pack_tag('media/images/icons/btn_add_photo.png', class: 'profile-image')
+                = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
           - else
             - if comment.user.profile_picture.url
               = image_tag(comment.user.profile_picture.square_320.url, class: 'profile-image')
             - else
-              = image_pack_tag('media/images/icons/btn_add_photo.png', class: 'profile-image')
+              = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
           
         .comment-content-wrapper value="#{comment.id}"
           .comment-user-name
