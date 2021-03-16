@@ -3,7 +3,7 @@ class UserImagesController < ApplicationController
   
   # GET /user_images/:username
   def index
-    
+    @images = @user.user_images.order(updated_at: :desc).page(params[:page]).per(24)
   end
   
   def new
