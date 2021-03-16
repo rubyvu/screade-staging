@@ -3,7 +3,7 @@ class Api::V1::UserAssetsController < Api::V1::ApiController
   
   # GET /api/v1/user_assets/:username/images
   def images
-    images_json = ActiveModel::Serializer::CollectionSerializer.new(@user.user_images.where.not("file is NULL").order(updated_at: :desc).page(params[:page]).per(30), serializer: UserImageSerializer).as_json
+    images_json = ActiveModel::Serializer::CollectionSerializer.new(@user.user_images.order(updated_at: :desc).page(params[:page]).per(30), serializer: UserImageSerializer).as_json
     render json: { images: images_json }, status: :ok
   end
   

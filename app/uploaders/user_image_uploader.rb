@@ -13,6 +13,10 @@ class UserImageUploader < CarrierWave::Uploader::Base
     %w(jpg jpeg png)
   end
   
+  def default_url
+    ActionMailer::Base.asset_host + ActionController::Base.helpers.asset_pack_path('media/images/placeholders/placeholder-news.png')
+  end
+  
   version :rectangle_160_160 do
     process resize_to_fill: [160, 160]
   end
