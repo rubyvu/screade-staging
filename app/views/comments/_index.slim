@@ -15,10 +15,17 @@
     - comments.each_with_index do |comment, index|
       .comment-wrapper
         .comment-image-wrapper
-          - if comment.user.profile_picture.url
-            = image_tag(comment.user.profile_picture.square_320.url, class: 'profile-image')
+          - if current_user
+            = link_to user_path(comment.user.username) do
+              - if comment.user.profile_picture.url
+                = image_tag(comment.user.profile_picture.square_320.url, class: 'profile-image')
+              - else
+                = image_pack_tag('media/images/icons/btn_add_photo.png', class: 'profile-image')
           - else
-            = image_pack_tag('media/images/icons/btn_add_photo.png', class: 'profile-image')
+            - if comment.user.profile_picture.url
+              = image_tag(comment.user.profile_picture.square_320.url, class: 'profile-image')
+            - else
+              = image_pack_tag('media/images/icons/btn_add_photo.png', class: 'profile-image')
           
         .comment-content-wrapper value="#{comment.id}"
           .comment-user-name

@@ -74,10 +74,11 @@ html
                 = link_to "Sign Out", destroy_user_session_path, method: :delete, class: 'dropdown-item no-border text-danger'
                 
             .d-inline-flex.ml-1
-              - if current_user.profile_picture.present?
-                = image_tag(current_user.profile_picture.square_320.url, class: 'profile-image')
-              - else
-                = image_pack_tag('media/images/icons/btn_add_photo.png', class: 'profile-image')
+              = link_to user_path(current_user.username) do
+                - if current_user.profile_picture.present?
+                  = image_tag(current_user.profile_picture.square_320.url, class: 'profile-image')
+                - else
+                  = image_pack_tag('media/images/icons/btn_add_photo.png', class: 'profile-image')
         - else
           = link_to "Sign Up", '', class: 'btn btn-link my-2 my-sm-0', data: { toggle: "modal", target: "#modal-sign-up" }
           = link_to "Sign In", '', class: 'btn btn-primary my-2 my-sm-0', data: { toggle: "modal", target: "#modal-sign-in" }

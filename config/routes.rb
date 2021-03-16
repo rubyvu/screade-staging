@@ -70,6 +70,8 @@ Rails.application.routes.draw do
     end
   end
   
+  resources :users, only: [:show], param: :username
+  
   # API routes
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
