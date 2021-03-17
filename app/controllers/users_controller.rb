@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   
   def show
     @images = @user.user_images.order(updated_at: :desc).limit(6)
+    @videos = @user.user_videos.order(updated_at: :desc).limit(6)
   end
   
   private

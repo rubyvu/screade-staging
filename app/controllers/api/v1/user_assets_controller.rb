@@ -73,7 +73,7 @@ class Api::V1::UserAssetsController < Api::V1::ApiController
   # POST /api/v1/user_assets/destroy_videos
   def destroy_videos
     videos = current_user.user_videos.where(id: user_video_params[:ids])
-    images.destroy_all
+    videos.destroy_all
     render json: { success: true }, status: :ok
   end
   

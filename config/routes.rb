@@ -61,15 +61,13 @@ Rails.application.routes.draw do
   resources :user_images, only: [], param: :username do
     member do
       get :index
-    end
-    
-    member do
       get :webhook
     end
   end
   
-  resources :user_videos, only: [:new] do
-    collection do
+  resources :user_videos, only: [], param: :username do
+    member do
+      get :index
       get :webhook
     end
   end

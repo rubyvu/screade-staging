@@ -24,6 +24,15 @@ $( document ).on('turbolinks:load', function() {
     });
   });
   
-  // Upload UserImage on file select
-  $("#user_image_uploader_image").change(function() { this.form.submit(); });
+  // Upload UserImage UserVideo on file select
+  $("#user_image_uploader_image, #user_video_uploader_image").change(function() {
+    
+    // Check that file is less than 10MB
+    if (this.files[0].size >= 10485760) {
+      alert(this.files[0].size);
+      return
+    }
+    
+    this.form.submit();
+  });
 })

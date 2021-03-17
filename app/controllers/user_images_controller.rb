@@ -16,8 +16,12 @@ class UserImagesController < ApplicationController
   
   # GET /user_images/:username/webhook
   def webhook
-    new_user_image = UserImage.create(user: current_user)
-    CreateUserAssetsJob.perform_later('UserImage', new_user_image.id, params[:key])
+    key = params[:key]
+    if key.present? && UserImage::IMAGE_RESOLUTIONS.include?(key.split('.').last)
+      new_user_image = UserImage.create(user: current_user)
+      CreateUserAssetsJob.perform_later('UserImage', new_user_image.id, key)
+    end
+    
     redirect_to user_image_path(username: params[:username])
   end
   
