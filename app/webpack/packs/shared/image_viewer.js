@@ -1,8 +1,8 @@
 $( document ).on('turbolinks:load', function() {
   
   // Full screen image on click
-  $('img[data-enlargeable]').addClass('img-enlargeable').click(function(){
-    let src = $(this).attr('src');
+  $('img[data-enlargeable]').addClass('img-enlargeable').parent().click(function(){
+    let src = $(this).find('img').attr('src');
     let modal;
     
     function removeModal(){ modal.remove(); $('body').off('keyup.modal-close'); }

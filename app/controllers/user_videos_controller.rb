@@ -25,6 +25,13 @@ class UserVideosController < ApplicationController
     redirect_to user_video_path(username: params[:username])
   end
   
+  # DELETE /user_videos/destroy
+  def destroy
+    user_video = UserVideo.find_by!(user: current_user, id: params[:id])
+    user_video.destroy
+    redirect_to user_video_path(username: current_user.username)
+  end
+  
   private
     def set_user
       @user = User.find_by!(username: params[:username])

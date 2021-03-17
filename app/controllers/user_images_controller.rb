@@ -25,6 +25,13 @@ class UserImagesController < ApplicationController
     redirect_to user_image_path(username: params[:username])
   end
   
+  # DELETE /user_images/destroy
+  def destroy
+    user_image = UserImage.find_by!(user: current_user, id: params[:id])
+    user_image.destroy
+    redirect_to user_image_path(username: current_user.username)
+  end
+  
   private
     def set_user
       @user = User.find_by!(username: params[:username])

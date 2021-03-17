@@ -63,12 +63,20 @@ Rails.application.routes.draw do
       get :index
       get :webhook
     end
+    
+    collection do
+      delete :destroy
+    end
   end
   
   resources :user_videos, only: [], param: :username do
     member do
       get :index
       get :webhook
+    end
+    
+    collection do
+      delete :destroy
     end
   end
   
