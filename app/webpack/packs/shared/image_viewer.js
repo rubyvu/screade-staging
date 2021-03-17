@@ -23,4 +23,7 @@ $( document ).on('turbolinks:load', function() {
       if (e.key === 'Escape'){ removeModal(); }
     });
   });
+  
+  // Upload UserImage on file select
+  $("#user_image_uploader_image").change(function() { this.form.submit(); });
 })

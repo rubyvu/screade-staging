@@ -1,0 +1,4 @@
+= direct_upload_form_for @image_uploader do |f|
+  = f.file_field :image, class: 'upload-user-asset'
+  = f.label :image, class: 'upload-user-asset-button' do
+    = image_pack_tag('media/images/buttons/button_add_image.png')

@@ -122,9 +122,23 @@ select {
 }
 
 // Buttons
-// # Submit button
+//// Submit button
 input[type="submit"].send-message-button {
   background-image: url('../images/icons/ic_send_message.png');
   background-repeat: no-repeat;
   padding: 0rem 0.75rem;
+}
+
+//// Floating action button +
+input[type="file"].upload-user-asset {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+label.upload-user-asset-button {
+  cursor: pointer;
 }

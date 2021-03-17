@@ -1,22 +1,24 @@
 class UserImagesController < ApplicationController
-  before_action :set_user, only: [:index]
+  before_action :set_user, only: [:index, :webhook]
   
   # GET /user_images/:username
   def index
     @images = @user.user_images.order(updated_at: :desc).page(params[:page]).per(24)
+    
+    if @user == current_user
+      @image_uploader = UserImage.new.file
+      @image_uploader.success_action_redirect = webhook_user_image_url(username: params[:username])
+      @image_uploader.policy(enforce_utf8: false)
+    else
+      @image_uploader = nil
+    end
   end
   
-  def new
-    @image_uploader = UserImage.new.file
-    @image_uploader.success_action_redirect = webhook_user_images_url
-    @image_uploader.policy(enforce_utf8: false)
-  end
-  
+  # GET /user_images/:username/webhook
   def webhook
-    new_user_image = UserImage.create(user: User.find_by(username: 'xyz'))
-    new_user_image.file_key = params[:key]
-    new_user_image.remote_file_url = Tasks::AwsS3Api.get_presigned_url(new_user_image.file_key)
-    new_user_image.save!
+    new_user_image = UserImage.create(user: current_user)
+    CreateUserAssetsJob.perform_later('UserImage', new_user_image.id, params[:key])
+    redirect_to user_image_path(username: params[:username])
   end
   
   private

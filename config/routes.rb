@@ -58,12 +58,12 @@ Rails.application.routes.draw do
   end
   
   resources :settings, only: [:update]
-  resources :user_images, only: [:new], param: :username do
+  resources :user_images, only: [], param: :username do
     member do
       get :index
     end
     
-    collection do
+    member do
       get :webhook
     end
   end
