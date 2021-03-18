@@ -1,8 +1,8 @@
 class UserVideosController < ApplicationController
-  before_action :set_user, only: [:index, :webhook]
+  before_action :set_user, only: [:videos, :webhook]
   
-  # GET /user_videos/:username
-  def index
+  # GET /user_videos/:username/videos
+  def videos
     @videos = @user.user_videos.order(updated_at: :desc).page(params[:page]).per(24)
     
     if @user == current_user
@@ -22,14 +22,21 @@ class UserVideosController < ApplicationController
       CreateUserAssetsJob.perform_later('UserVideo', new_user_video.id, key)
     end
     
-    redirect_to user_video_path(username: params[:username])
+    redirect_to videos_user_video_path(username: params[:username])
   end
   
   # DELETE /user_videos/destroy
   def destroy
     user_video = UserVideo.find_by!(user: current_user, id: params[:id])
     user_video.destroy
-    redirect_to user_video_path(username: current_user.username)
+    redirect_to videos_user_video_path(username: current_user.username)
+  end
+  
+  # GET /user_videos/processed_urls
+  def processed_urls
+    user_videos = UserVideo.where(id: params[:ids])
+    videos_json = ActiveModel::Serializer::CollectionSerializer.new(user_videos, serializer: UserVideoSerializer).as_json
+    render json: { videos: videos_json }, status: :ok
   end
   
   private

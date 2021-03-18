@@ -1,7 +1,12 @@
 $( document ).on('turbolinks:load', function() {
   
   // Full screen image on click
-  $('img[data-enlargeable]').addClass('img-enlargeable').parent().click(function(){
+  $('img[data-enlargeable]').addClass('img-enlargeable').parent().click(function(e){
+    // Prevent Video play if clicked on delete icon
+    if($(e.target).closest(".destroy-asset").length > 0) {
+      return
+    }
+    
     let src = $(this).find('img').attr('src');
     let modal;
     

@@ -60,23 +60,25 @@ Rails.application.routes.draw do
   resources :settings, only: [:update]
   resources :user_images, only: [], param: :username do
     member do
-      get :index
+      get :images
       get :webhook
     end
     
     collection do
       delete :destroy
+      get :processed_urls
     end
   end
   
   resources :user_videos, only: [], param: :username do
     member do
-      get :index
+      get :videos
       get :webhook
     end
     
     collection do
       delete :destroy
+      get :processed_urls
     end
   end
   

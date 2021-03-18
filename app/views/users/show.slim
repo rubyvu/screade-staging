@@ -33,7 +33,7 @@
     
   .user-profile-assets-wrapper
     h4 Images
-    = link_to 'See all', user_image_path(@user.username), class: 'see-all-assets'
+    = link_to 'See all', images_user_image_path(@user.username), class: 'see-all-assets'
     
     .user-profile-assets
       - @images.each do |user_image|
@@ -42,7 +42,7 @@
           
   .user-profile-assets-wrapper
     h4 Videos
-    = link_to 'See all', user_video_path(@user.username), class: 'see-all-assets'
+    = link_to 'See all', videos_user_video_path(@user.username), class: 'see-all-assets'
     
     .user-profile-assets
       - @videos.each do |user_video|

@@ -2,7 +2,7 @@
   .user-profile-assets.full-list
     - @images.each do |user_image|
       .image-wrapper.custom-size
-        = image_tag(user_image.file.url, class: 'user-asset', data: { 'enlargeable': true })
+        = image_tag(user_image.file.url, class: 'user-asset', data: { 'enlargeable': true, 'image-loaded': user_image.file.present?, 'image-id': user_image.id })
         
         - if user_image.user == current_user
           = link_to user_images_path(id: user_image.id), class: 'destroy-asset', method: :delete, data: { confirm: 'Do you really want to delete this Image?' } do

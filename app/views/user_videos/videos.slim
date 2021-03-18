@@ -3,9 +3,9 @@
     - @videos.each do |user_video|
       .image-wrapper.custom-size
         - if user_video.file.present?
-          = image_tag(user_video.file.thumb.url, class: 'user-asset', data: { 'video-url': user_video.file.url })
+          = image_tag(user_video.file.thumb.url, class: 'user-asset', data: { 'video-url': user_video.file.url, 'video-loaded': user_video.file.present?, 'video-id': user_video.id })
         - else
-          = image_tag(user_video.file.url, class: 'user-asset')
+          = image_tag(user_video.file.url, class: 'user-asset', data: { 'video-loaded': user_video.file.present?, 'video-id': user_video.id })
         
         - if user_video.user == current_user
           = link_to user_videos_path(id: user_video.id), class: 'destroy-asset', method: :delete, data: { confirm: 'Do you really want to delete this Video?' }  do

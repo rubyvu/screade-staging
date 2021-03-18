@@ -1,8 +1,8 @@
 class UserImagesController < ApplicationController
-  before_action :set_user, only: [:index, :webhook]
+  before_action :set_user, only: [:images, :webhook]
   
   # GET /user_images/:username
-  def index
+  def images
     @images = @user.user_images.order(updated_at: :desc).page(params[:page]).per(24)
     
     if @user == current_user
@@ -22,14 +22,21 @@ class UserImagesController < ApplicationController
       CreateUserAssetsJob.perform_later('UserImage', new_user_image.id, key)
     end
     
-    redirect_to user_image_path(username: params[:username])
+    redirect_to images_user_image_path(username: params[:username])
   end
   
   # DELETE /user_images/destroy
   def destroy
     user_image = UserImage.find_by!(user: current_user, id: params[:id])
     user_image.destroy
-    redirect_to user_image_path(username: current_user.username)
+    redirect_to images_user_image_path(username: current_user.username)
+  end
+  
+  # GET /user_images/processed_urls
+  def processed_urls
+    user_images = UserImage.where(id: params[:ids])
+    images_json = ActiveModel::Serializer::CollectionSerializer.new(user_images, serializer: UserImageSerializer).as_json
+    render json: { images: images_json }, status: :ok
   end
   
   private
