@@ -14,8 +14,6 @@
   "email": "example@gmail.com",                                                 (string, required)
   "first_name": "John",                                                         (string, optional)
   "is_confirmed": "true",                                                       (boolean, required)
-  "is_images": "true",                                                          (boolean, required)
-  "is_videos": "true",                                                          (boolean, required)
   "languages": [Language],                                                      (object, required)
   "last_name": "Doe",                                                           (string, optional)
   "lits_count": "0",                                                            (integer, required)

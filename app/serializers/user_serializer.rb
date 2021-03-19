@@ -23,16 +23,6 @@ class UserSerializer < ActiveModel::Serializer
     object&.confirmed? || false
   end
   
-  attribute :is_images
-  def is_images
-    object.setting.is_images
-  end
-  
-  attribute :is_videos
-  def is_videos
-    object.setting.is_videos
-  end
-  
   attribute :last_name
   attribute :languages
   def languages
