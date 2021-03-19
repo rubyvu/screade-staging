@@ -16,6 +16,7 @@
   height: 194px;
   background: $color-light-blue;
   position: relative;
+  cursor: pointer;
 }
 .icon-add-banner {
   position: absolute;
@@ -50,6 +51,7 @@
   position: absolute;
   left: 50%;
   transform: translate(-50%, 0%);
+  cursor: pointer;
 }
 
 .icon-add-profile {

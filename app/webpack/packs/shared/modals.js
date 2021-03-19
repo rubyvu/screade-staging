@@ -120,6 +120,23 @@ $( document ).on('turbolinks:load', function() {
     readProfileURL(this);
   });
   
+  // Edit profile
+  $('#edit-banner-image-mask').on('click', function() {
+     $("#update_profile_user_banner_picture").click();
+  })
+  
+  $("#update_profile_user_banner_picture").change(function() {
+    readBannerURL(this);
+  });
+  
+  $('#edit-profile-image-mask').on('click', function() {
+     $("#update_profile_user_profile_picture").click();
+  })
+  
+  $("#update_profile_user_profile_picture").change(function() {
+    readProfileURL(this);
+  });
+  
   function readBannerURL(input) {
     if (input.files && input.files[0]) {
       var reader = new FileReader();

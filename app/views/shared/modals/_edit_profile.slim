@@ -2,7 +2,7 @@
   .modal-dialog.modal-dialog-centered.modal-lg
     .modal-content
       .modal-header
-        h4.modal-title Sign Up
+        h4.modal-title Edit profile
         button.close aria-label="Close" data-dismiss="modal" type="button"
           = image_pack_tag('media/images/icons/ic_close.png')
         
@@ -10,16 +10,16 @@
         .global-errors
         = form_for current_user, url: current_user_index_path(), namespace: 'update_profile', method: :put do |f|
           
-          //= f.file_field :banner_picture, accept: 'image/png, image/jpeg', class: 'sign-up-user-image'
+          = f.file_field :banner_picture, accept: 'image/png, image/jpeg', class: 'sign-up-user-image'
           
-          //.banner-image-mask#banner-image-mask
-            img#banner-image.user-banner-image src=''
+          .banner-image-mask#edit-banner-image-mask
+            img#banner-image.user-banner-image src=""
             = image_pack_tag 'media/images/icons/ic_add_banner.png', class: 'icon-add-banner', id: 'icon-add-banner'
               
-          //.profile-wrapper
+          .profile-wrapper
             = f.file_field :profile_picture, accept: 'image/png, image/jpeg', class: 'sign-up-user-image'
             
-            .profile-image-mask#profile-image-mask
+            .profile-image-mask#edit-profile-image-mask
               img#profile-image.user-profile-image src=''
               = image_pack_tag 'media/images/icons/btn_add_photo.png', class: 'icon-add-profile', id: 'icon-add-profile'
             
@@ -54,11 +54,11 @@
             = f.hidden_field :birthday
             .row
               .col
-                = select_tag :user_profile_birthday_month, options_for_select(Date::MONTHNAMES.compact.map.with_index { |day, index| [day, index] }, current_user.birthday.month-1), class: 'form-control datepicker'
+                = select_tag :user_profile_birthday_month, options_for_select(Date::MONTHNAMES.compact.map.with_index { |day, index| [day, index] }, current_user.birthday ? current_user.birthday&.month-1 : 0), class: 'form-control datepicker'
               .col
-                = select_tag :user_profile_birthday_day, options_for_select((1..31), current_user.birthday.day), class: 'form-control datepicker'
+                = select_tag :user_profile_birthday_day, options_for_select((1..31), current_user.birthday&.day), class: 'form-control datepicker'
               .col
-                = select_tag :user_profile_birthday_year, options_for_select((Date.current.year-100..Date.current.year).to_a.reverse, current_user.birthday.year), class: 'form-control datepicker'
+                = select_tag :user_profile_birthday_year, options_for_select((Date.current.year-100..Date.current.year).to_a.reverse, current_user.birthday&.year), class: 'form-control datepicker'
             
           .actions
             = f.submit 'Save', class: 'btn btn-primary w-100'
