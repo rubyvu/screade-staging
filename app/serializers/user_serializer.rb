@@ -17,13 +17,20 @@ class UserSerializer < ActiveModel::Serializer
   
   attribute :email
   attribute :first_name
-  def images_exists
-    user.user_images.present?
-  end
   
   attribute :is_confirmed
   def is_confirmed
     object&.confirmed? || false
+  end
+  
+  attribute :is_images
+  def is_images
+    object.setting.is_images
+  end
+  
+  attribute :is_videos
+  def is_videos
+    object.setting.is_videos
   end
   
   attribute :last_name
@@ -43,11 +50,6 @@ class UserSerializer < ActiveModel::Serializer
   attribute :profile_picture
   def profile_picture
     object.profile_picture.square_320.url
-  end
-  
-  attribute :videos_exists
-  def videos_exists
-    user.user_videos.present?
   end
   
   attribute :views_count
