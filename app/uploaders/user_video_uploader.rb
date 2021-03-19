@@ -20,7 +20,7 @@ class UserVideoUploader < CarrierWave::Uploader::Base
   end
   
   def default_url
-    ActionMailer::Base.asset_host + ActionController::Base.helpers.asset_pack_path('media/images/placeholders/placeholder-news.png')
+    ActionController::Base.helpers.asset_pack_path('media/images/placeholders/placeholder-news.png')
   end
   
   version :thumb do
