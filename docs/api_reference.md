@@ -70,4 +70,4 @@
 - [Update user Settings](api/v1/settings/update.md)
 
 ### User
-- [Get User Profile](api/v1/users/index.md)
+- [Get User Profile](api/v1/users/show.md)
