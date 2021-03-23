@@ -14,7 +14,7 @@ POST
 ### Request body
 ```
 {
-  "user_videos": {
+  "user_video": {
     "ids": [1, 2, 3]                                                            (array of objects)
   }
 }

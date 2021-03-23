@@ -1,5 +1,5 @@
 class Api::V1::ForgotPasswordController < Api::V1::ApiController
-  skip_before_action :authenticate, only: [:create]
+  skip_before_action :authenticate, only: [:security_question, :create]
   
   # GET /api/v1/forgot_password/security_question
   def security_question
