@@ -167,6 +167,7 @@ Rails.application.routes.draw do
         end
       end
       resources :user_security_questions, only: [:index]
+      resources :users, only: [:show], params: :username
     end
   end
 end
