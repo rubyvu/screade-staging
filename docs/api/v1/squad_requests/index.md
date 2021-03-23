@@ -13,7 +13,9 @@ GET
 
 ### Request body
 ```
-{}
+{
+  "page": 1                                                                     (integer, required)
+}
 ```
 
 ### Response
