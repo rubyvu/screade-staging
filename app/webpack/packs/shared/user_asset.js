@@ -53,7 +53,8 @@ $( document ).on('turbolinks:load', function() {
           if (type === 'image') {
             objToUpdate[0].src = item.rectangle_160_160_url
           } else if (type === 'video') {
-              objToUpdate[0].src = item.file_thumbnail
+            objToUpdate[0].src = item.file_thumbnail
+            objToUpdate.attr('data-video-url', item.file_url)
           }
         });
       }
