@@ -82,3 +82,19 @@
     }
   }
 }
+
+@media (max-width: map-get($grid-breakpoints, "lg")) {
+  .user-profile-wrapper .user-profile-header .user-profile-squad-buttons .btn { padding: 10px 40px; }
+}
+
+@media (max-width: map-get($grid-breakpoints, "md")) {
+  .user-profile-wrapper .user-profile-header .user-profile-squad-buttons {
+    position: relative;
+    top: 80px;
+    bottom: 0px;
+    left: 0px;
+  }
+  
+  .user-profile-wrapper .user-profile-header .user-profile-squad-buttons .btn { margin-top: 10px; width: 100%; }
+  .user-profile-wrapper .user-profile-header { margin-bottom: 140px; }
+}

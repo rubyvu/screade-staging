@@ -54,7 +54,7 @@ $( document ).on('turbolinks:load', function() {
         responseObjects.forEach((item, i) => {
           objToUpdate = $('img[data-' + type + '-loaded="false"][data-' + type + '-id="' + item.id + '"]')
           if (type === 'image') {
-            objToUpdate[0].src = item.rectangle_160_160_url
+            objToUpdate[0].src = item.rectangle_1024_768_url
           } else if (type === 'video') {
             objToUpdate[0].src = item.file_thumbnail
             objToUpdate.attr('data-video-url', item.file_url)

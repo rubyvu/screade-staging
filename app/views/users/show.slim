@@ -61,8 +61,8 @@
         
         .user-profile-assets
           - @videos.each do |user_video|
-            .image-wrapper
-              = image_tag(user_video.file.thumb.url, class: 'user-asset', data: { 'video-url': user_video.file.url })
+            .image-wrapper.video
+              = image_tag(user_video.file.thumb.url, class: 'user-asset', data: { 'video-id': user_video.id, 'video-url': user_video.file.url })
       - elsif @user == current_user
         .new-assets
           = link_to 'Your video library is empty', videos_user_video_path(@user.username)

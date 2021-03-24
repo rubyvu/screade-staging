@@ -67,6 +67,16 @@
     background: linear-gradient(180deg, rgba(0, 0, 0, 0.31) 0%, rgba(0, 0, 0, 0) 44.22%);
   }
   
+  .image-wrapper {
+     &.video:after {
+      content: url('../images/icons/ic_play.png');
+      position: absolute;
+      width: 100%;
+      vertical-align: -50%;
+      text-align: center;
+    }
+  }
+  
   img.user-asset {
     width: 100%;
     height: 100%;
