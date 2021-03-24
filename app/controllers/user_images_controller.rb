@@ -3,7 +3,8 @@ class UserImagesController < ApplicationController
   
   # GET /user_images/:username
   def images
-    @images = @user.user_images.order(updated_at: :desc).page(params[:page]).per(24)
+    @images = []
+    @images = @user.user_images.order(updated_at: :desc).page(params[:page]).per(24) if @user.setting.is_images
     
     if @user == current_user
       @image_uploader = UserImage.new.file

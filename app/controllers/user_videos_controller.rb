@@ -3,7 +3,8 @@ class UserVideosController < ApplicationController
   
   # GET /user_videos/:username/videos
   def videos
-    @videos = @user.user_videos.order(updated_at: :desc).page(params[:page]).per(24)
+    @videos = []
+    @videos = @user.user_videos.order(updated_at: :desc).page(params[:page]).per(24) if @user.setting.is_videos
     
     if @user == current_user
       @video_uploader = UserVideo.new.file
