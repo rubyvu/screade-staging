@@ -61,7 +61,7 @@
                 = select_tag :user_profile_birthday_year, options_for_select((Date.current.year-100..Date.current.year).to_a.reverse, current_user.birthday&.year), class: 'form-control datepicker'
             
           .actions
-            = f.submit 'Save', class: 'btn btn-primary w-100'
+            = f.submit 'Save', name: 'edit_profile', value: 'Save', class: 'btn btn-primary w-100'
               
       .modal-footer
             

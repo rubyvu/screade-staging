@@ -9,7 +9,7 @@ class SettingsController < ApplicationController
     end
     
     if settings.update(settings_params)
-      redirect_to root_path
+      redirect_to user_path(username: current_user.username)
     else
       redirect_back fallback_location: root_path
     end
