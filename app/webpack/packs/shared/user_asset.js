@@ -9,6 +9,9 @@ $( document ).on('turbolinks:load', function() {
     }
     
     this.form.submit();
+    
+    // Show spiner
+    $('body').append('<div class="spiner-loading"></div>')
   });
   
   // Check for valid Url
