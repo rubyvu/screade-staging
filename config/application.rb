@@ -42,5 +42,8 @@ module ScreadeRails
       g.javascripts false
       g.helper false
     end
+    
+    # Autoloaded path
+    config.autoload_paths += ["#{config.root}/app/lib/"]
   end
 end
