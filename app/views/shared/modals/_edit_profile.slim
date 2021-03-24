@@ -13,15 +13,23 @@
           = f.file_field :banner_picture, accept: 'image/png, image/jpeg', class: 'sign-up-user-image'
           
           .banner-image-mask#edit-banner-image-mask
-            img#banner-image.user-banner-image src=""
-            = image_pack_tag 'media/images/icons/ic_add_banner.png', class: 'icon-add-banner', id: 'icon-add-banner'
+            - if current_user.banner_picture.present?
+              img#banner-image.user-banner-image style= "display: inline;" src="#{current_user.banner_picture.url}"
+              = image_pack_tag 'media/images/icons/ic_add_banner.png', class: 'icon-add-banner', id: 'icon-add-banner', style: 'display:none;'
+            - else
+              img#banner-image.user-banner-image src=""
+              = image_pack_tag 'media/images/icons/ic_add_banner.png', class: 'icon-add-banner', id: 'icon-add-banner'
               
           .profile-wrapper
             = f.file_field :profile_picture, accept: 'image/png, image/jpeg', class: 'sign-up-user-image'
             
             .profile-image-mask#edit-profile-image-mask
-              img#profile-image.user-profile-image src=''
-              = image_pack_tag 'media/images/icons/btn_add_photo.png', class: 'icon-add-profile', id: 'icon-add-profile'
+              - if current_user.profile_picture.present?
+                img#profile-image.user-profile-image style= "display: inline;" src="#{current_user.profile_picture.square_320.url}"
+                = image_pack_tag 'media/images/icons/btn_add_photo.png', class: 'icon-add-profile', id: 'icon-add-profile', style: 'display:none;'
+              - else
+                img#profile-image.user-profile-image src=''
+                = image_pack_tag 'media/images/icons/btn_add_photo.png', class: 'icon-add-profile', id: 'icon-add-profile'
             
           .row
             .col
