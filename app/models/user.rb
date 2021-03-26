@@ -23,13 +23,13 @@ class User < ApplicationRecord
   has_many :squad_requests_as_receiver, foreign_key: :receiver_id, class_name: 'SquadRequest', dependent: :destroy
   has_many :squad_requests_as_requestor, foreign_key: :requestor_id, class_name: 'SquadRequest', dependent: :destroy
   ## Comments
-  has_many :comments
+  has_many :comments, dependent: :destroy
   has_many :commented_news_articles, through: :comments, source: :source, source_type: 'NewsArticle'
   ## Lits
-  has_many :lits
+  has_many :lits, dependent: :destroy
   has_many :lited_news_articles, through: :lits, source: :source, source_type: 'NewsArticle'
   ## Views
-  has_many :views
+  has_many :views, dependent: :destroy
   has_many :viewed_news_articles, through: :views, source: :source, source_type: 'NewsArticle'
   ## Images and Videos
   has_many :user_images, dependent: :destroy

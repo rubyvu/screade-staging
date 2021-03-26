@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Country, type: :model do
   it 'should have a valid factory' do
+    Country.destroy_all
     expect(FactoryBot.build(:country)).to be_valid
   end
   
   context 'associations' do
-    it { should have_many(:breaking_news).class_name('BreakingNews') }
     it { should have_many(:news_articles).class_name('NewsArticle') }
   end
   

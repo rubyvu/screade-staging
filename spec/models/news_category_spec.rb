@@ -6,7 +6,7 @@ RSpec.describe NewsCategory, type: :model do
   end
   
   context 'associations' do
-    it { should have_many(:news_articles).class_name('NewsArticle') }
+    it { should have_and_belong_to_many(:news_articles)}
   end
   
   context 'validations' do

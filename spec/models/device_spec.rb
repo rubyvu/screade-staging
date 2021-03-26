@@ -2,7 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Device, type: :model do
   before :all do
-    @owner = FactoryBot.create(:user)
+    country = Country.find_by(code: 'US') || FactoryBot.create(:country)
+    user_security_question = FactoryBot.create(:user_security_question)
+    @owner = FactoryBot.create(:user, country: country, user_security_question: user_security_question)
   end
   
   after :all do

@@ -25,7 +25,7 @@ RSpec.describe View, type: :model do
     
     context 'fields' do
       it { should validate_presence_of(:source_id) }
-      it { should validate_uniqueness_of(:source_id).scoped_to(:source_type) }
+      it { should validate_uniqueness_of(:source_id).scoped_to([:source_type, :user_id]) }
       it { should validate_presence_of(:source_type) }
     end
   end
