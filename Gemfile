@@ -13,7 +13,7 @@ gem 'rails'
 gem 'pg', '1.2.3'
 
 # Use Puma as the app server
-gem 'puma', '5.1.1'
+gem 'puma', '5.2.2'
 
 # Admin panel
 gem 'activeadmin'
