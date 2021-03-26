@@ -2,14 +2,27 @@ class NewsCategory < ApplicationRecord
   # Constants
   DEFAULT_CATEGORIES = %w(business entertainment general health science sports technology)
   
+  # Upploaders
+  mount_uploader :image, GroupIconUploader
+  
+  # Callback
+  before_destroy :skip_default_categories, prepend: true do
+    throw(:abort) if errors.present?
+  end
+  
   # Associations
   has_and_belongs_to_many :news_articles
   
   # Fields validations
-  validates :title, uniqueness: true, presence: true, inclusion: { in: NewsCategory::DEFAULT_CATEGORIES, message: "New category should exists in default categories list" }
+  validates :title, uniqueness: true, presence: true
   
   # Normalization
   def title=(value)
     super(value&.downcase&.strip)
   end
+  
+  private
+    def skip_default_categories
+      errors.add(:base, 'The default category cannot be destroyed') if NewsCategory::DEFAULT_CATEGORIES.include?(self.title)
+    end
 end

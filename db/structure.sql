@@ -564,7 +564,8 @@ CREATE TABLE public.news_categories (
     id bigint NOT NULL,
     title character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    image character varying
 );
 
 
@@ -1548,6 +1549,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210304090402'),
 ('20210309133445'),
 ('20210309133453'),
-('20210312094345');
+('20210312094345'),
+('20210326135145');
 
 
