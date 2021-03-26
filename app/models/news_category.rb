@@ -12,6 +12,7 @@ class NewsCategory < ApplicationRecord
   
   # Associations
   has_and_belongs_to_many :news_articles
+  has_many :topics, as: :parent, dependent: :destroy
   
   # Fields validations
   validates :title, uniqueness: true, presence: true
