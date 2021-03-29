@@ -46,7 +46,7 @@ class NewsArticlesController < ApplicationController
   
   private
     def get_article
-      @news_article = NewsArticle.find_by!(id: params[:id])
+      @news_article = NewsArticle.find(params[:id])
     end
     
     def comment_params
