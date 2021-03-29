@@ -21,9 +21,9 @@ GET
 ```
 HTTP code 200 :ok
 {
-  "settings": "Settings"                                                        (object, required)
+  "setting": "Setting"                                                          (object, required)
 }
 ```
 
 ### References
-- [User JSON object](../../../json_objects/settings.md)
+- [Setting JSON object](../../../json_objects/settings.md)

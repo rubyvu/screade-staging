@@ -2,7 +2,7 @@ class Api::V1::SquadRequestsController < Api::V1::ApiController
   before_action :set_squad_request, only: [:accept, :decline]
   # GET /api/v1/squad_requests
   def index
-    squad_requests_as_receiver = current_user.squad_requests_as_receiver.where(accepted_at: nil, declined_at: nil)
+    squad_requests_as_receiver = current_user.squad_requests_as_receiver.where(accepted_at: nil, declined_at: nil).page(params[:page]).per(30)
     squad_requests_json = ActiveModel::Serializer::CollectionSerializer.new(squad_requests_as_receiver, serializer: SquadRequestSerializer).as_json
     render json: { squad_requests: squad_requests_json }, status: :ok
   end

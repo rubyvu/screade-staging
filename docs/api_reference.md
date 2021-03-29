@@ -68,3 +68,6 @@
 ### User Settings
 - [Get user Settings](api/v1/settings/index.md)
 - [Update user Settings](api/v1/settings/update.md)
+
+### User
+- [Get User Profile](api/v1/users/show.md)

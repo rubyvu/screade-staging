@@ -37,3 +37,67 @@
   font-weight: 300;
   font-style: normal;
 }
+
+// Time New Roman normal
+@font-face {
+  font-family: "times-new-roman";
+  src: url('../fonts/times_new_roman/Times-new-roman.ttf');
+  font-weight: 500;
+  font-style: normal;
+}
+
+// Time New Roman bold
+@font-face {
+  font-family: "times-new-roman";
+  src: url('../fonts/times_new_roman/Times-new-roman-bold.ttf');
+  font-weight: 700;
+  font-style: normal;
+}
+
+// Time New Roman bold
+@font-face {
+  font-family: "times-new-roman";
+  src: url('../fonts/times_new_roman/Times-new-roman-italic.ttf');
+  font-weight: 500;
+  font-style: italic;
+}
+
+// Broadway normal
+@font-face {
+  font-family: "broadway";
+  src: url('../fonts/broadway/Broadway-regular.ttf');
+  font-weight: 500;
+  font-style: normal;
+}
+
+// Broadway bold
+@font-face {
+  font-family: "broadway";
+  src: url('../fonts/broadway/Broadway-bold.ttf');
+  font-weight: 700;
+  font-style: normal;
+}
+
+// Broadway italic
+@font-face {
+  font-family: "broadway";
+  src: url('../fonts/broadway/Broadway-italic.ttf');
+  font-weight: 500;
+  font-style: italic;
+}
+
+// Vivaldi normal
+@font-face {
+  font-family: "vivaldi";
+  src: url('../fonts/vivaldi/Vivaldi.ttf');
+  font-weight: 500;
+  font-style: normal;
+}
+
+// Vivaldi italic
+@font-face {
+  font-family: "vivaldi";
+  src: url('../fonts/vivaldi/Vivaldi-italic.ttf');
+  font-weight: 500;
+  font-style: italic;
+}

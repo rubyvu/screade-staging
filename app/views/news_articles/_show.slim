@@ -7,7 +7,7 @@
   - if news_article.img_url.present?
     = image_tag(news_article.img_url, class: 'url-full-image')
   - else
-    = image_pack_tag('media/images/bg-picture-authentication.png', class: 'url-full-image')
+    = image_pack_tag('media/images/placeholders/placeholder-news.png', class: 'url-full-image')
     
   .news-info-panel value="#{news_article.id}"
     .info-panel

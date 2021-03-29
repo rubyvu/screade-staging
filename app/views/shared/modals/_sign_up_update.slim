@@ -55,9 +55,9 @@
             = f.hidden_field :birthday
             .row
               .col
-                = select_tag :birthday_day, options_for_select(Date::MONTHNAMES.compact.map.with_index { |day, index| [day, index] }), class: 'form-control datepicker'
+                = select_tag :birthday_month, options_for_select(Date::MONTHNAMES.compact.map.with_index { |day, index| [day, index] }), class: 'form-control datepicker'
               .col
-                = select_tag :birthday_month, options_for_select((1..31)), class: 'form-control datepicker'
+                = select_tag :birthday_day, options_for_select((1..31)), class: 'form-control datepicker'
               .col
                 = select_tag :birthday_year, options_for_select((Date.current.year-100..Date.current.year).to_a.reverse), class: 'form-control datepicker'
             

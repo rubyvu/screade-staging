@@ -8,9 +8,12 @@
 ### HTTP method
 PUT/PATCH
 
+### API endpoint
+`/api/v1/settings`
+
 ```
 {
-  "settings": {
+  "setting": {
     "font_family": "Roboto"                                                     (string, optional)
     "font_style": "normal"                                                      (string, optional)
     "is_notification": "true"                                                   (boolean, optional)
@@ -26,7 +29,7 @@ PUT/PATCH
 ```
 HTTP code 200 :ok
 {
-  "settings": "Settings"                                                        (object, required)
+  "setting": "Setting"                                                         (object, required)
 }
 ```
 
@@ -40,4 +43,4 @@ HTTP code 422 ::unprocessable_entity
 ```
 
 ### References
-- [User JSON object](../../../json_objects/settings.md)
+- [Setting JSON object](../../../json_objects/settings.md)

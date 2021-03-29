@@ -30,11 +30,15 @@ $grid-breakpoints: (
 @import 'kaminari';
 @import 'main-elements';
 @import 'notification';
+@import 'spiner';
 @import 'toggle-switcher';
 @import './comments/index';
+@import './font_customaizer/index';
 @import './modals/index';
 @import './home/index';
 @import './news_articles/index';
+@import './user_profile/index';
+@import './video_player/index';
 
 /**************************************
 * Import stylesheets from node modules:

@@ -16,6 +16,7 @@ POST
 {
   "confirmation": {
     "key": "upload/dh6g-fdgh5h-45fg/test.png"                                   (string, required)
+    "uploader_id: "1"                                                           (integer, required)
   }
 }
 ```
@@ -25,7 +26,7 @@ POST
 ```
 HTTP code 200 :ok
 {
-  "success: "true"                                                              (string, required)
+  "success: "true"                                                              (boolean, required)
 }
 ```
 

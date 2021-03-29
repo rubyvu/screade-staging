@@ -16,6 +16,7 @@
   height: 194px;
   background: $color-light-blue;
   position: relative;
+  cursor: pointer;
 }
 .icon-add-banner {
   position: absolute;
@@ -28,6 +29,7 @@
 .user-profile-image {
   height: 72px;
   width: 72px;
+  object-fit: cover;
   border-radius: 100px;
   margin: auto;
   position: absolute;
@@ -50,6 +52,7 @@
   position: absolute;
   left: 50%;
   transform: translate(-50%, 0%);
+  cursor: pointer;
 }
 
 .icon-add-profile {

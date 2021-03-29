@@ -1,0 +1,15 @@
+.user-profile-assets-wrapper
+  .user-profile-assets.full-list
+    - @images.each do |user_image|
+      .image-wrapper.custom-size
+        = image_tag(user_image.file.url, class: 'user-asset', data: { 'enlargeable': true, 'image-loaded': user_image.file.present?, 'image-id': user_image.id })
+        
+        - if user_image.user == current_user
+          = link_to user_images_path(id: user_image.id), class: 'destroy-asset', method: :delete, data: { confirm: 'Do you really want to delete this Image?' } do
+            = image_pack_tag('media/images/icons/ic_delete_object.png')
+        
+.mt-4.d-flex.justify-content-end
+    = render 'form', image_uploader: @image_uploader unless @image_uploader.nil?
+            
+.mt-4.d-flex.justify-content-center
+  = paginate @images

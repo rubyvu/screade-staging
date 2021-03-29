@@ -9,6 +9,7 @@
 ```
 {
   "accepted_at": "2021-02-04 14:22:14 +0000",                                   (string, optional)
+  "id": "1",                                                                    (integer, required)
   "declined_at": "2021-02-04 14:22:14 +0000",                                   (string, optional)
   "receiver": "User"                                                            (object, required)
   "requestor": "User"                                                           (object, required)
@@ -17,4 +18,4 @@
 
 
 ### References
-- [User JSON object](../../../json_objects/user.md)
+- [UserProfile JSON object](../../../json_objects/user_profile.md)

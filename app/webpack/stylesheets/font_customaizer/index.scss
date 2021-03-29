@@ -1,0 +1,45 @@
+.font-customizer-wrapper {
+  max-width: 376px;
+  margin: auto;
+  margin-top: 5%;
+  
+  .alphabet {
+    text-align: center;
+    height: 120px;
+    font-size: 24px;
+    color: $color-blue;
+    margin-top: 16px;
+    margin-bottom: 44px;
+  }
+}
+
+.fonts-styling {
+  &.roboto {
+    font-family: 'Roboto';
+  }
+
+  &.vivaldi {
+    font-family: 'Vivaldi';
+  }
+
+  &.times-new-roman {
+    font-family: 'Times New Roman';
+  }
+
+  &.broadway {
+    font-family: 'Broadway';
+  }
+
+  &.normal {
+    font-style: normal;
+  }
+
+  &.bold {
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  &.italic {
+    font-style: italic;
+  }
+}

@@ -11,4 +11,7 @@ CarrierWave.configure do |config|
   # # Set URL expiration to 24 hours(in seconds)
   # config.fog_authenticated_url_expiration = 86400
   config.cache_dir      = Rails.root.join('tmp', 'uploads')
+  config.max_file_size             = 100.megabytes
+  config.min_file_size             = 1.byte
+  config.upload_expiration         = 1.hour
 end

@@ -1,0 +1,20 @@
+.user-profile-assets-wrapper
+  .user-profile-assets.full-list
+    - @videos.each do |user_video|
+      .image-wrapper.custom-size.video
+        - if user_video.file.present?
+          = image_tag(user_video.file.thumb.url, class: 'user-asset video', data: { 'video-url': user_video.file.url, 'video-loaded': user_video.file.present?, 'video-id': user_video.id })
+        - else
+          = image_tag(user_video.file.url, class: 'user-asset video', data: { 'video-loaded': user_video.file.present?, 'video-id': user_video.id })
+        
+        - if user_video.user == current_user
+          = link_to user_videos_path(id: user_video.id), class: 'destroy-asset', method: :delete, data: { confirm: 'Do you really want to delete this Video?' }  do
+            = image_pack_tag('media/images/icons/ic_delete_object.png')
+        
+.mt-4.d-flex.justify-content-end
+    = render 'form', image_uploader: @video_uploader unless @video_uploader.nil?
+            
+.mt-4.d-flex.justify-content-center
+  = paginate @videos
+  
+= render './shared/video_player/player', video_player_id: 'user-assets-video-palyer'

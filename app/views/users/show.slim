@@ -1,0 +1,75 @@
+.user-profile-wrapper
+  .user-profile-header
+    .user-profile-banner-wrapper
+      - if @user.banner_picture.url.present?
+        = image_tag(@user.banner_picture.url, class: 'user-profile-banner')
+      - else
+        = image_pack_tag('media/images/placeholders/placeholder-banner-profile.png', class: 'user-profile-banner')
+      
+      - if @user == current_user
+        = link_to '', data: { toggle: "modal", target: "#modal-edit-profile" } do
+          = image_pack_tag('media/images/icons/ic_edit.png', class: 'user-profile-edit')
+        
+    .user-profile-avatar-wrapper
+      - if @user.profile_picture.url
+        = image_tag(@user.profile_picture.square_320.url)
+      - else
+        = image_pack_tag('media/images/placeholders/placeholder-user-profile.png')
+    
+    .user-profile-name.fonts-styling class="#{@user.setting.font_family} #{@user.setting.font_style}"
+      h5 #{@user.full_name.present? ? @user.full_name : @user.username.capitalize}
+    .info-panel
+      .info-panel-value-wrapper.pointer-disable
+        i.ic.lit
+        span.info-panel-value #{@user.lits.count}
+        
+      .info-panel-value-wrapper.pointer-disable
+        i.ic.comment
+        span.info-panel-value #{@user.comments.count}
+        
+      .info-panel-value-wrapper.pointer-disable
+        i.ic.view
+        span.info-panel-value 0
+        
+    .user-profile-squad-buttons
+      = link_to "Requests", '', class: "btn btn-primary mx-2 fonts-styling #{@user.setting.font_family} #{@user.setting.font_style}"
+      = link_to "Squad", '', class: "btn btn-outline-primary mx-2 fonts-styling #{@user.setting.font_family} #{@user.setting.font_style}"
+  
+  - if @user.setting.is_images || @user == current_user
+    .user-profile-assets-wrapper
+      h4 Images
+      - if @images.present?
+        = link_to 'See all', images_user_image_path(@user.username), class: 'see-all-assets'
+        
+        .user-profile-assets
+          - @images.each do |user_image|
+            .image-wrapper
+              = image_tag(user_image.file.url, class: 'user-asset', data: { 'enlargeable': true })
+      - elsif @user == current_user
+        .new-assets
+          = link_to 'Your image library is empty', images_user_image_path(@user.username)
+          
+      - else
+        .new-assets
+          h6 No Images
+          
+  - if @user.setting.is_videos || @user == current_user
+    .user-profile-assets-wrapper
+      h4 Videos
+      - if @videos.present?
+        = link_to 'See all', videos_user_video_path(@user.username), class: 'see-all-assets'
+        
+        .user-profile-assets
+          - @videos.each do |user_video|
+            .image-wrapper.video
+              = image_tag(user_video.file.thumb.url, class: 'user-asset', data: { 'video-id': user_video.id, 'video-url': user_video.file.url })
+      - elsif @user == current_user
+        .new-assets
+          = link_to 'Your video library is empty', videos_user_video_path(@user.username)
+          
+      - else
+        .new-assets
+          h6 No Videos
+          
+= render './shared/video_player/player', video_player_id: 'user-assets-video-palyer'
+= render 'shared/modals/edit_profile'

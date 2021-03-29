@@ -5,12 +5,21 @@ class UserImageUploader < CarrierWave::Uploader::Base
   # Callbacks
   before :cache, :reset_secure_token
   
+  def initialize(*)
+    super
+    self.allowed_content_types = %w(image/jpeg image/jpg image/png)
+  end
+  
   def filename
     "#{secure_token(8)}-image.#{file.extension}" if original_filename
   end
   
-  def extension_white_list
-    %w(jpg jpeg png)
+  def extension_allowlist
+    UserImage::IMAGE_RESOLUTIONS
+  end
+  
+  def default_url
+    ActionController::Base.helpers.asset_pack_path('media/images/placeholders/placeholder-news.png')
   end
   
   version :rectangle_160_160 do

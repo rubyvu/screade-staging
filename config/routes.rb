@@ -13,6 +13,13 @@ Rails.application.routes.draw do
   end
   
   # Web routes
+  devise_for :users, controllers: {
+    confirmations: 'users/confirmations',
+    sessions: 'users/sessions',
+    registrations: 'users/registrations',
+    passwords: 'users/passwords'
+  }
+  
   resources :comments, only: [] do
     member do
       post :lit
@@ -27,13 +34,11 @@ Rails.application.routes.draw do
     end
   end
   
-  devise_for :users, controllers: {
-    confirmations: 'users/confirmations',
-    sessions: 'users/sessions',
-    registrations: 'users/registrations',
-    passwords: 'users/passwords'
-   }
-   
+  resources :fonts, only: [] do
+    collection do
+      get :customize
+    end
+  end
   resources :home, only: [:index]
   resources :news_articles, only: [] do
     member do
@@ -52,17 +57,32 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :user_images, only: [:new] do
-    collection do
+  resources :settings, only: [:update]
+  resources :user_images, only: [], param: :username do
+    member do
+      get :images
       get :webhook
+    end
+    
+    collection do
+      delete :destroy
+      get :processed_urls
     end
   end
   
-  resources :user_videos, only: [:new] do
-    collection do
+  resources :user_videos, only: [], param: :username do
+    member do
+      get :videos
       get :webhook
     end
+    
+    collection do
+      delete :destroy
+      get :processed_urls
+    end
   end
+  
+  resources :users, only: [:show], param: :username
   
   # API routes
   namespace :api, defaults: { format: 'json' } do
@@ -121,7 +141,11 @@ Rails.application.routes.draw do
         end
       end
       
-      resources :settings, only: [:index, :update]
+      resources :settings, only: [:index] do
+        collection do
+          put :update
+        end
+      end
       resources :squad_requsts, only: [:index, :create] do
         member do
           post :accept
@@ -143,6 +167,7 @@ Rails.application.routes.draw do
         end
       end
       resources :user_security_questions, only: [:index]
+      resources :users, only: [:show], param: :username
     end
   end
 end

@@ -1,7 +1,7 @@
 class Setting < ApplicationRecord
   # Constants
-  FONT_FAMILIES = %w(Roboto)
-  FONT_STYLE = %w(normal)
+  FONT_FAMILIES = ['roboto', 'vivaldi', 'times-new-roman', 'broadway']
+  FONT_STYLE = ['normal', 'bold', 'italic']
   
   # Association
   belongs_to :user
@@ -21,7 +21,7 @@ class Setting < ApplicationRecord
     setting = Setting.find_by(user: user)
     if setting.nil?
       params = {
-        font_family: 'Roboto',
+        font_family: 'roboto',
         font_style: 'normal',
         is_notification: true,
         is_images: true,

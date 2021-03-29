@@ -66,6 +66,40 @@ input[type=number] {
   -moz-appearance: textfield; /* Firefox */
 }
 
+// Custom Radiobox
+input[type=radio] {
+  margin-right: 6px;
+}
+
+input[type='radio']:after {
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  top: -2px;
+  left: -1px;
+  position: relative;
+  background-color: $color-white;
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  border: 2px solid $color-blue;
+}
+
+input[type='radio']:checked:after {
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  top: -2px;
+  left: -1px;
+  position: relative;
+  background-color: $color-blue;
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  border: 3px solid $color-white;
+  box-shadow: 0 0 0 2px $color-blue;
+}
+
 // Checkbox
 .form-check label {
   color: $color-black;
@@ -88,9 +122,23 @@ select {
 }
 
 // Buttons
-// # Submit button
+//// Submit button
 input[type="submit"].send-message-button {
   background-image: url('../images/icons/ic_send_message.png');
   background-repeat: no-repeat;
   padding: 0rem 0.75rem;
+}
+
+//// Floating action button +
+input[type="file"].upload-user-asset {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+label.upload-user-asset-button {
+  cursor: pointer;
 }

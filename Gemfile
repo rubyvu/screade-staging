@@ -13,7 +13,7 @@ gem 'rails'
 gem 'pg', '1.2.3'
 
 # Use Puma as the app server
-gem 'puma', '5.1.1'
+gem 'puma'
 
 # Admin panel
 gem 'activeadmin'
@@ -60,6 +60,7 @@ gem 'aws-sdk-s3'
 # File uploading
 gem 'carrierwave'
 gem 'carrierwave_direct'
+gem 'carrierwave-video-thumbnailer'
 gem 'mimemagic', '0.3.7'
 
 # Image processor for uploaded images with Carrierwave

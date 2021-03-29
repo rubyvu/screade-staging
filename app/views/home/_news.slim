@@ -18,7 +18,7 @@
           - if news_article.img_url
             = image_tag(news_article.img_url, class: 'news-image')
           - else
-            = image_pack_tag('media/images/bg-picture-authentication.png', class: 'news-image')
+            = image_pack_tag('media/images/placeholders/placeholder-news.png', class: 'news-image')
             
           .info-panel
             .div class="#{ current_user ? 'info-panel-value-wrapper' : 'info-panel-value-wrapper pointer-disable' }"

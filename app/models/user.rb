@@ -64,6 +64,15 @@ class User < ApplicationRecord
     super(value&.downcase&.strip)
   end
   
+  # Calculations
+  def lits_count
+    Lit.where(source_type: 'Comment', source_id: self.comments.ids).count
+  end
+  
+  def comments_count
+    self.comments.count
+  end
+  
   def full_name
     "#{first_name} #{last_name}".strip
   end

@@ -11,8 +11,11 @@
   "id": "1"                                                                     (integer, required)
   "message": "Comment text example"                                             (string, required)
   "created_at": "2021-02-04 14:22:14 +0000",                                    (string, required, represents date in format "%Y-%m-%d %H:%M:%S %z")
-  "commentator": "User"                                                         (object, required)
+  "commentator": "UserProfile"                                                  (object, required)
   "is_lited": "true"                                                            (boolean, required)
   "lits_count": "10"                                                            (integer, required)
 }
 ```
+
+### References
+- [UserProfile JSON object](../../../json_objects/user_profile.md)

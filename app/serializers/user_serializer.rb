@@ -10,8 +10,14 @@ class UserSerializer < ActiveModel::Serializer
     object&.birthday&.strftime('%Y-%m-%d')
   end
   
+  attribute :comments_count
+  def comments_count
+    object&.comments_count
+  end
+  
   attribute :email
   attribute :first_name
+  
   attribute :is_confirmed
   def is_confirmed
     object&.confirmed? || false
@@ -23,6 +29,11 @@ class UserSerializer < ActiveModel::Serializer
     ActiveModel::Serializer::CollectionSerializer.new(object.languages, serializer: LanguageSerializer).as_json
   end
   
+  attribute :lits_count
+  def lits_count
+    object&.lits_count
+  end
+  
   attribute :middle_name
   attribute :phone_number
   
@@ -30,5 +41,12 @@ class UserSerializer < ActiveModel::Serializer
   def profile_picture
     object.profile_picture.square_320.url
   end
+  
+  attribute :views_count
+  def views_count
+    # How many User posts viewd by another Users
+    0
+  end
+  
   attribute :username
 end

@@ -9,8 +9,12 @@ import "select2";
 import "webticker/jquery.webticker.min.js";
 
 // Import internal scripts
+import './shared/font_customizer';
+import './shared/image_viewer';
 import './shared/modals';
 import './shared/news_articles';
+import './shared/user_asset';
+import './shared/video_player';
 
 // Import entry stylesheets for pack - IMPORTANT!
 import 'stylesheets/application';

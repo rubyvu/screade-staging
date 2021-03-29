@@ -3,13 +3,24 @@ import "flag-icon-css/css/flag-icon.css"
 
 $( document ).on('turbolinks:load', function() {
   // Update user birthday date
-  $("#birthday_day, #birthday_month, #birthday_year").on('change', function () {
-    let year = $('#birthday_year').val()
-    let month = $('#birthday_month').val()
-    let day = $('#birthday_day').val()
+  $("[id$='birthday_day'], [id$='birthday_month'], [id$='birthday_year']").on('change', function (e) {
+    // For User Update form
+    let prefix = ''
+    if (e.target.id.includes('user_profile')) {
+      prefix = 'user_profile_'
+    }
     
-    let date = moment(new Date(year, day, month)).format('YYYY-MM-DD')
-    $('#sign_up_update_user_birthday').val(date)
+    let year = $('#' + prefix + 'birthday_year').val()
+    let month = $('#' + prefix + 'birthday_month').val()
+    let day = $('#' + prefix + 'birthday_day').val()
+    
+    
+    let date = moment(new Date(year, month, day)).format('YYYY-MM-DD')
+    if (prefix == 'user_profile_') {
+      $('#update_profile_user_birthday').val(date)
+    } else {
+      $('#sign_up_update_user_birthday').val(date)
+    }
   })
   
   // Show modal User password input
@@ -31,6 +42,8 @@ $( document ).on('turbolinks:load', function() {
   
   // Clear fields/errors on modal hide
   $('.modal').on('hide.bs.modal', function (e) {
+    if ( e.target.id == 'modal-edit-profile') { return }
+    
     $('.modal :input').not(':button, :submit, :reset, :hidden, .datepicker').val('').prop('checked', false).prop('selected', false);
     $('.modal .global-errors').html('')
     $('.modal .local-errors').remove()
@@ -60,6 +73,13 @@ $( document ).on('turbolinks:load', function() {
   };
   
   // Language field
+  // for Profile
+  $('#update_profile_user_language_ids').select2({
+    dropdownParent: $('#modal-edit-profile'),
+    multiple: true
+  });
+  
+  // for new User
   $('#sign_up_update_user_language_ids').prepend('<option selected></option>')  // Empty placeholder for multiple elements step 1
   $('#sign_up_update_user_language_ids').select2({
     dropdownParent: $('#modal-sign-up-update'),
@@ -97,6 +117,23 @@ $( document ).on('turbolinks:load', function() {
   });
   
   $("#sign_up_update_user_profile_picture").change(function() {
+    readProfileURL(this);
+  });
+  
+  // Edit profile
+  $('#edit-banner-image-mask').on('click', function() {
+     $("#update_profile_user_banner_picture").click();
+  })
+  
+  $("#update_profile_user_banner_picture").change(function() {
+    readBannerURL(this);
+  });
+  
+  $('#edit-profile-image-mask').on('click', function() {
+     $("#update_profile_user_profile_picture").click();
+  })
+  
+  $("#update_profile_user_profile_picture").change(function() {
     readProfileURL(this);
   });
   

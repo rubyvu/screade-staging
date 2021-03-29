@@ -25,6 +25,7 @@ HTTP code 200 :ok
 {
   "url: "http://s3.example-development"                                         (string, required)
   "key: "upload/dh6g-fdgh5h-45fg/test.png"                                      (string, required)
+  "uploader_id: "1"                                                             (integer, required)
 }
 ```
 
