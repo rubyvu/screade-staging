@@ -60,6 +60,7 @@ gem 'aws-sdk-s3'
 # File uploading
 gem 'carrierwave'
 gem 'carrierwave_direct'
+gem 'mimemagic', '0.3.7'
 
 # Image processor for uploaded images with Carrierwave
 gem 'mini_magick'
