@@ -43,7 +43,7 @@ class User < ApplicationRecord
   validates :email, uniqueness: true, presence: true, length: { maximum: 100 }, format: { with: User::EMAIL_FORMAT }
   validates :password, presence: true, length: { minimum: 8 }, format: { with: User::PASSWORD_FORMAT, message: 'must contain at least eight characters and one number or symbol' }, if: -> { self.password.present? }
   validates :security_question_answer, presence: true
-  validates :username, presence: true, uniqueness: true, format: { with: User::USERNAME_FORMAT, message: 'must contain from 6 to 18 characters, dots and underscores are allowed' }, if: -> { self.username.present? }
+  validates :username, presence: true, uniqueness: true, format: { with: User::USERNAME_FORMAT, message: 'must contain from 6 to 18 characters, dots and underscores are allowed' }, if: -> { self.new_record? }
   validates :user_security_question_id, presence: true
   
   # Virtual attributes
