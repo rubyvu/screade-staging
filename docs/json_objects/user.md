@@ -10,6 +10,7 @@
 {
   "banner_picture": "http://site.com/small.png",                                (string, optional)
   "birthday": "2018-05-23",                                                     (string, optional)
+  "country_code": "UA",                                                         (string, required)
   "comments_count": "1",                                                        (integer, required) represents date in format "%Y-%m-%d")
   "email": "example@gmail.com",                                                 (string, required)
   "first_name": "John",                                                         (string, optional)

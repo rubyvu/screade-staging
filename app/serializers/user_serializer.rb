@@ -10,6 +10,11 @@ class UserSerializer < ActiveModel::Serializer
     object&.birthday&.strftime('%Y-%m-%d')
   end
   
+  attribute :country_code
+  def country_code
+    object&.country.code
+  end
+  
   attribute :comments_count
   def comments_count
     object&.comments_count
