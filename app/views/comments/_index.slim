@@ -33,10 +33,10 @@
           .comment-text
             = comment.message
           .comment-date
-            = comment.created_at.strftime('%m/%d/%Y-%I:%M%p')
+            = local_time(comment.created_at, '%m/%d/%Y-%I:%M%p')
             
             .div class="#{ current_user ? 'comment-lit' : 'comment-lit pointer-disable' }"
-              span.info-panel-value.color-black #{comment.lits.count}
+              span.info-panel-value.color-black #{comment.lits.size}
               i class=(comment.is_lited(current_user) ? "ic lit active reverse" : "ic lit reverse")
       
       - if (index+1)%5 == 0 && Rails.env.production?

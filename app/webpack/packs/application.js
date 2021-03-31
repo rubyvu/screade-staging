@@ -4,6 +4,7 @@ import jQuery from 'jquery';
 import Rails from "@rails/ujs";
 import Turbolinks from "turbolinks";
 import * as ActiveStorage from "@rails/activestorage";
+import LocalTime from "local-time"
 import "channels";
 import "select2";
 import "webticker/jquery.webticker.min.js";
@@ -24,6 +25,7 @@ Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 window.$ = window.jQuery = jQuery;
+LocalTime.start()
 
 const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)

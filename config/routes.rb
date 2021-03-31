@@ -58,7 +58,7 @@ Rails.application.routes.draw do
   end
   
   resources :settings, only: [:update]
-  resources :user_images, only: [], param: :username do
+  resources :user_images, only: [], param: :username, username: User::USERNAME_ROUTE_FORMAT do
     member do
       get :images
       get :webhook
@@ -70,7 +70,7 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :user_videos, only: [], param: :username do
+  resources :user_videos, only: [], param: :username, username: User::USERNAME_ROUTE_FORMAT do
     member do
       get :videos
       get :webhook
@@ -82,7 +82,7 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :users, only: [:show], param: :username
+  resources :users, only: [:show], param: :username, username: User::USERNAME_ROUTE_FORMAT
   
   # API routes
   namespace :api, defaults: { format: 'json' } do
@@ -153,7 +153,7 @@ Rails.application.routes.draw do
         end
       end
       
-      resources :user_assets, only: [:images],  param: :username do
+      resources :user_assets, only: [:images],  param: :username, username: User::USERNAME_ROUTE_FORMAT do
         collection do
           get :upload_url
           post :confirmation
@@ -167,7 +167,7 @@ Rails.application.routes.draw do
         end
       end
       resources :user_security_questions, only: [:index]
-      resources :users, only: [:show], param: :username
+      resources :users, only: [:show], param: :username, username: User::USERNAME_ROUTE_FORMAT
     end
   end
 end

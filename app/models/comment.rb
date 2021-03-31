@@ -3,7 +3,7 @@ class Comment < ApplicationRecord
   
   # Associations
   belongs_to :user
-  belongs_to :source, polymorphic: true
+  belongs_to :source, polymorphic: true, counter_cache: :comments_count
   ## Lits
   has_many :lits, as: :source, dependent: :destroy
   has_many :liting_users, through: :lits, source: :user

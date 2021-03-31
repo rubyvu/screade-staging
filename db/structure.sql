@@ -335,7 +335,8 @@ CREATE TABLE public.comments (
     source_id integer NOT NULL,
     source_type character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    lits_count integer DEFAULT 0 NOT NULL
 );
 
 
@@ -523,7 +524,10 @@ CREATE TABLE public.news_articles (
     img_url character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    news_source_id integer
+    news_source_id integer,
+    comments_count integer DEFAULT 0 NOT NULL,
+    lits_count integer DEFAULT 0 NOT NULL,
+    views_count integer DEFAULT 0 NOT NULL
 );
 
 
@@ -1548,6 +1552,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210304090402'),
 ('20210309133445'),
 ('20210309133453'),
-('20210312094345');
+('20210312094345'),
+('20210331123843'),
+('20210331133229');
 
 
