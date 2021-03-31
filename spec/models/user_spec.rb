@@ -18,14 +18,30 @@ RSpec.describe User, type: :model do
     subject { FactoryBot.build(:user, country: @country, user_security_question: @user_security_question) }
     
     context 'associations' do
+      it { should belong_to(:country) }
+      it { should belong_to(:user_security_question) }
+      it { should have_one(:setting).dependent(:destroy) }
+      it { should have_many(:devices).dependent(:destroy) }
+      it { should have_many(:squad_requests_as_receiver).dependent(:destroy) }
+      it { should have_many(:squad_requests_as_requestor).dependent(:destroy) }
+      it { should have_many(:comments).dependent(:destroy) }
+      it { should have_many(:commented_news_articles) }
+      it { should have_many(:lits).dependent(:destroy) }
+      it { should have_many(:lited_news_articles) }
+      it { should have_many(:views).dependent(:destroy) }
+      it { should have_many(:viewed_news_articles) }
+      it { should have_many(:user_images).dependent(:destroy) }
+      it { should have_many(:user_videos).dependent(:destroy) }
+      it { should have_and_belong_to_many(:languages) }
     end
     
     context 'fields' do
       it { should validate_uniqueness_of(:email).case_insensitive }
       it { should validate_presence_of(:email) }
-      it { should validate_presence_of(:first_name) }
-      it { should validate_presence_of(:last_name) }
       it { should validate_presence_of(:password) }
+      it { should validate_presence_of(:security_question_answer) }
+      it { should validate_presence_of(:username) }
+      it { should validate_presence_of(:user_security_question_id) }
     end
   end
   
