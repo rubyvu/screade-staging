@@ -22,6 +22,7 @@ class Api::V1::NewsCategoriesController < Api::V1::ApiController
     if params[:is_national]
       # Get News Sources
       news_source = NewsSource.where(language: languages, country: country)
+      news_source = NewsSource.joins(:language).where(languages: { code: 'EN' }) if news_source.blank?
       
       news = NewsArticle.joins(:news_categories)
        .where(news_articles: { country: country }, news_categories: { id: news_category.id })

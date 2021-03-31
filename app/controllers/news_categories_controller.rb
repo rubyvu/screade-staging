@@ -20,6 +20,7 @@ class NewsCategoriesController < ApplicationController
     if @category[:is_national]
       # Get News Sources
       news_source = NewsSource.where(language: languages, country: country)
+      news_source = NewsSource.joins(:language).where(languages: { code: 'EN' }) if news_source.blank?
       
       @category[:news_articles] = NewsArticle.joins(:news_categories)
        .where(news_articles: { country: country }, news_categories: { id: news_category.id })
