@@ -14,7 +14,7 @@ class Api::V1::NewsCategoriesController < Api::V1::ApiController
     news_category = NewsCategory.find(params[:id])
     
     # Get Country
-    country = current_user&.country || Country.find_by(code: current_location) || Country.find_by(code: 'US')
+    country = current_user&.country || Country.find_by(code: params[:location_code]) || Country.find_by(code: 'US')
     
     # Get Languages
     current_user ? languages = current_user.languages + country.languages : languages = country.languages
