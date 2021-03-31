@@ -22,12 +22,11 @@ class Api::V1::NewsCategoriesController < Api::V1::ApiController
     if params[:is_national]
       # Get News Sources
       news_source = NewsSource.where(language: languages, country: country)
-      news_source = NewsSource.joins(:language).where(languages: { code: 'EN' }) if news_source.blank?
-      
       news = NewsArticle.joins(:news_categories)
        .where(news_articles: { country: country }, news_categories: { id: news_category.id })
        .or(NewsArticle.joins(:news_categories).where(news_articles: { news_source: news_source }, news_categories: { id: news_category.id }))
        .order(published_at: :desc).page(params[:page]).per(30)
+      news = NewsArticle.where(country: Country.find_by(code: 'US')).page(params[:page]).per(16) if news.blank?
     else
       # Get News Sources
       news_source = NewsSource.where(language: languages).where.not(country: country)

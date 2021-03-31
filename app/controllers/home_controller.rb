@@ -29,10 +29,10 @@ class HomeController < ApplicationController
     if @home[:is_national]
       # Get News Sources
       news_source = NewsSource.where(language: languages, country: country)
-      news_source = NewsSource.joins(:language).where(languages: { code: 'EN' }) if news_source.blank?
       @home[:news_articles] = NewsArticle.where(country: country)
         .or(NewsArticle.where(news_source: news_source))
         .order(published_at: :desc).page(params[:page]).per(16)
+      @home[:news_articles] = NewsArticle.where(country: Country.find_by(code: 'US')).page(params[:page]).per(16) if @home[:news_articles].blank?
     else
       # Get News Sources
       news_source = NewsSource.where(language: languages).where.not(country: country)
