@@ -20,7 +20,7 @@ RSpec.describe Topic, type: :model do
   end
   
   context 'associations' do
-    it { should have_many(:sub_topics).as(:parent).dependent(:destroy) }
+    it { should have_many(:sub_topics).dependent(:destroy) }
   end
   
   context 'validations' do

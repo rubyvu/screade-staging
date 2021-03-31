@@ -568,7 +568,8 @@ CREATE TABLE public.news_categories (
     id bigint NOT NULL,
     title character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    image character varying
 );
 
 
@@ -781,6 +782,41 @@ CREATE SEQUENCE public.squad_requests_id_seq
 --
 
 ALTER SEQUENCE public.squad_requests_id_seq OWNED BY public.squad_requests.id;
+
+
+--
+-- Name: topics; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.topics (
+    id bigint NOT NULL,
+    parent_id integer NOT NULL,
+    parent_type character varying NOT NULL,
+    title character varying NOT NULL,
+    is_approved boolean DEFAULT false,
+    nesting_position integer NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: topics_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.topics_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: topics_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.topics_id_seq OWNED BY public.topics.id;
 
 
 --
@@ -1058,6 +1094,13 @@ ALTER TABLE ONLY public.squad_requests ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: topics id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.topics ALTER COLUMN id SET DEFAULT nextval('public.topics_id_seq'::regclass);
+
+
+--
 -- Name: user_images id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1237,6 +1280,14 @@ ALTER TABLE ONLY public.squad_requests
 
 
 --
+-- Name: topics topics_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.topics
+    ADD CONSTRAINT topics_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: user_images user_images_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1393,6 +1444,13 @@ CREATE INDEX index_settings_on_user_id ON public.settings USING btree (user_id);
 --
 
 CREATE INDEX index_squad_requests_on_receiver_id_and_requestor_id ON public.squad_requests USING btree (receiver_id, requestor_id);
+
+
+--
+-- Name: index_topics_on_parent_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_topics_on_parent_id ON public.topics USING btree (parent_id);
 
 
 --
@@ -1553,6 +1611,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210309133445'),
 ('20210309133453'),
 ('20210312094345'),
+('20210326135145'),
+('20210326142648'),
 ('20210331123843'),
 ('20210331133229');
 
