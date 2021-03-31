@@ -23,16 +23,16 @@
           .info-panel
             .div class="#{ current_user ? 'info-panel-value-wrapper' : 'info-panel-value-wrapper pointer-disable' }"
               i class=(news_article.is_lited(current_user) ? "ic lit active" : "ic lit")
-              span.info-panel-value #{news_article.lits.count}
+              span.info-panel-value #{news_article.lits.size}
               
             .info-panel-value-wrapper
               = link_to comments_news_article_path(news_article), class: 'comment-link-icon' do
                 i class=(news_article.is_commented(current_user) ? "ic comment active" : "ic comment")
-              span.info-panel-value #{news_article.comments.count}
+              span.info-panel-value #{news_article.comments.size}
               
             .info-panel-value-wrapper.pointer-disable
               i class=(news_article.is_viewed(current_user) ? "ic view active" : "ic view")
-              span.info-panel-value #{news_article.views.count}
+              span.info-panel-value #{news_article.views.size}
               
         = link_to news_article.url, class: 'news-article-link', target: '_blank' do
           p.news-title
