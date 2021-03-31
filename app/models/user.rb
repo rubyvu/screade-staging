@@ -5,7 +5,9 @@ class User < ApplicationRecord
   
   # Constants
   EMAIL_FORMAT = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
-  PASSWORD_FORMAT = /\A(?=.*[^a-zA-Z])/x  # Must contain at least one number or symbol
+  PASSWORD_FORMAT = /\A(?=.*[^a-zA-Z])/i  # Must contain at least one number or symbol
+  USERNAME_FORMAT = /\A[a-zA-Z0-9](_(?!(\.|_))|\.(?!(_|\.))|[a-zA-Z0-9]){4,16}[a-zA-Z0-9]/i  #  Can contain characters from 6 to 18 symbols, allowed _(underscore) and .(dot) symbols
+  USERNAME_ROUTE_FORMAT = /[^\/]+/  # Alow .(dot) in username for URL
   
   # File Uploader
   mount_uploader :profile_picture, AvatarUploader
@@ -39,9 +41,9 @@ class User < ApplicationRecord
   
   # Fields validations
   validates :email, uniqueness: true, presence: true, length: { maximum: 100 }, format: { with: User::EMAIL_FORMAT }
-  validates :password, presence: true, length: { minimum: 8 }, format: { with: PASSWORD_FORMAT, message: 'must contain at least eight characters and one number or symbol' }, if: -> { self.password.present? }
+  validates :password, presence: true, length: { minimum: 8 }, format: { with: User::PASSWORD_FORMAT, message: 'must contain at least eight characters and one number or symbol' }, if: -> { self.password.present? }
   validates :security_question_answer, presence: true
-  validates :username, presence: true, uniqueness: true
+  validates :username, presence: true, uniqueness: true, format: { with: User::USERNAME_FORMAT, message: 'must contain from 6 to 18 characters, dots and underscores are allowed' }, if: -> { self.new_record? }
   validates :user_security_question_id, presence: true
   
   # Virtual attributes

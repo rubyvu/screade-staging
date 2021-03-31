@@ -4,21 +4,29 @@ class Api::V1::HomeController < Api::V1::ApiController
   
   # GET /api/v1/home/news
   def news
-    default_language = Language.find_by(code: 'EN')
-    default_country = Country.find_by(code: params[:location_code])
+    # Get Country
+    country = current_user&.country || Country.find_by(code: params[:location_code]) || Country.find_by(code: 'US')
+    
+    # Get Languages
+    current_user ? languages = current_user.languages + country.languages : languages = country.languages
     
     if params[:is_national]
-      news_articles = current_user&.country&.news_articles
-      news_articles = default_country&.news_articles if news_articles.blank?
-      news_articles = NewsArticle.where(news_source: default_language.news_sources) if news_articles.blank?
+      # Get News Sources
+      news_source = NewsSource.where(language: languages, country: country)
+      news = NewsArticle.where(country: country)
+        .or(NewsArticle.where(news_source: news_source))
+        .order(published_at: :desc).page(params[:page]).per(30)
+      
     else
-      news_articles = NewsArticle.joins(:news_source).where(news_sources: { language: current_user&.languages })
-      news_articles = NewsArticle.joins(:news_source).where(news_sources: { language: current_user&.country&.languages }) if news_articles.blank?
-      news_articles = NewsArticle.joins(:news_source).where(news_sources: { language: default_country&.languages }) if news_articles.blank?
-      news_articles = NewsArticle.all if news_articles.blank?
+      # Get News Sources
+      news_source = NewsSource.where(language: languages).where.not(country: country)
+      
+      # Set Default News Sources if default World News is empty
+      news_source = NewsSource.joins(:language).where(languages: { code: 'EN' }).where.not(news_sources: { country: country }) if news_source.blank?
+      
+      news = NewsArticle.where(news_source: news_source).order(published_at: :desc).page(params[:page]).per(30)
     end
     
-    news = news_articles.order(published_at: :desc).page(params[:page]).per(30)
     news_json = ActiveModel::Serializer::CollectionSerializer.new(news, serializer: NewsArticleSerializer, current_user: current_user).as_json
     render json: { news: news_json }, status: :ok
   end

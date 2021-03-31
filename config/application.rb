@@ -44,6 +44,6 @@ module ScreadeRails
     end
     
     # Autoloaded path
-    config.autoload_paths += ["#{config.root}/app/lib/"]
+    config.autoload_paths << Rails.root.join('lib', 'devise')
   end
 end

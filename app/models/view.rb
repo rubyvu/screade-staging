@@ -4,7 +4,7 @@ class View < ApplicationRecord
   
   # Associations
   belongs_to :user
-  belongs_to :source, polymorphic: true
+  belongs_to :source, polymorphic: true, counter_cache: :views_count
   
   # Field validations
   validates :source_id, presence: true, uniqueness: { scope: [:source_type, :user_id] }

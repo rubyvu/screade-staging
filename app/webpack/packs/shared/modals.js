@@ -55,6 +55,15 @@ $( document ).on('turbolinks:load', function() {
   })
   
   // County field
+  // for Profile
+  $('#update_profile_user_country_id').select2({
+    dropdownParent: $('#modal-edit-profile'),
+    placeholder: "",
+    templateResult: formatCountry,
+    templateSelection: formatCountry
+  });
+  
+  // for NewUser
   $('#sign_up_user_country_id').prepend('<option selected></option>')
   $('#sign_up_user_country_id').select2({
     dropdownParent: $('#modal-sign-up'),
