@@ -14,6 +14,7 @@ class Topic < ApplicationRecord
   validates :nesting_position, presence: true, numericality: { less_than_or_equal_to: 2,  only_integer: true }
   validates :parent_id, presence: true
   validates :parent_type, presence: true, inclusion: { in: Topic::PARENT_TYPES }
+  validates :title, presence: true, uniqueness: { scope: :parent_id }
   validate :assigned_to_itself
   
   private

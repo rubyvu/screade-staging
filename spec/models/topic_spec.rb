@@ -34,6 +34,8 @@ RSpec.describe Topic, type: :model do
       it { should validate_presence_of(:parent_id) }
       it { should validate_presence_of(:parent_type) }
       it { should validate_inclusion_of(:parent_type).in_array(Topic::PARENT_TYPES) }
+      it { should validate_presence_of(:title) }
+      it { should validate_uniqueness_of(:title).scoped_to(:parent_id)  }
     end
     
     context 'custom' do
