@@ -184,7 +184,9 @@ $( document ).on('turbolinks:load', function() {
       let responseJson = JSON.parse(eventResponse.response)
       $('#forgot_password_user_email').val(responseJson.email)
       $('#forgot_password_user_user_security_question_id').val(responseJson.security_question.id)
-      $('#modal-forgot-password .material-field').prepend('<h5>' + responseJson.security_question.title + '</h5>')
+      if (!$('#security-question-title').length > 0) {
+        $('#modal-forgot-password .material-field').prepend('<h5 id="security-question-title">' + responseJson.security_question.title + '</h5>')
+      }
     }
   })
 })
