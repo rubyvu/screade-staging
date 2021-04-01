@@ -183,7 +183,7 @@ $( document ).on('turbolinks:load', function() {
       
       let responseJson = JSON.parse(eventResponse.response)
       $('#forgot_password_user_email').val(responseJson.email)
-      $('#forgot_password_user_user_security_question_id').val(responseJson.security_question.question_identifier)
+      $('#forgot_password_user_user_security_question_id').val(responseJson.security_question.id)
       $('#modal-forgot-password .material-field').prepend('<h5>' + responseJson.security_question.title + '</h5>')
     }
   })

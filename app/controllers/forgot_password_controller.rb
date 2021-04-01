@@ -15,7 +15,7 @@ class ForgotPasswordController < ApplicationController
       return
     end
     
-    security_question_json = UserSecurityQuestionSerializer.new(user_security_question).as_json
+    security_question_json = { title: user_security_question.title, id: user_security_question.id }
     render json: { security_question: security_question_json, email: user.email }, status: :ok
   end
   
