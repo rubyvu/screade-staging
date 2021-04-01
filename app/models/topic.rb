@@ -7,8 +7,8 @@ class Topic < ApplicationRecord
   before_validation :set_nesting_position
   
   # Associations
-  has_many :sub_topics, as: :parent, dependent: :destroy
-  belongs_to :parent, polymorphic: true
+  has_many :sub_topics, class_name: 'Topic', foreign_key: :parent_id, dependent: :destroy
+  belongs_to :parent, class_name: 'Topic', foreign_key: :parent_id, polymorphic: true
   
   # Field validations
   validates :nesting_position, presence: true, numericality: { less_than_or_equal_to: 2,  only_integer: true }
@@ -22,6 +22,7 @@ class Topic < ApplicationRecord
     end
     
     def set_nesting_position
+      return unless parent_id
       if self.parent_type == 'NewsCategory'
         self.nesting_position = 0
       else
