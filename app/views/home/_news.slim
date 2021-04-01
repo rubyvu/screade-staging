@@ -16,7 +16,7 @@
       .news-card value="#{news_article.id}"
         .news-image-wrapper
           - if news_article.img_url
-            = image_tag(news_article.img_url, class: 'news-image')
+            = image_tag(news_article.img_url, class: 'news-image', onerror: "this.error=null;this.src='#{asset_pack_path('media/images/placeholders/placeholder-news.png')}'")
           - else
             = image_pack_tag('media/images/placeholders/placeholder-news.png', class: 'news-image')
             
