@@ -1,10 +1,10 @@
 module Tasks
-  class CashCounter
+  class CacheCounter
     def self.run
       # Recount all exists cash counters
-      Tasks::CashCounter.update_lits
-      Tasks::CashCounter.update_comments
-      Tasks::CashCounter.update_views
+      Tasks::CacheCounter.update_lits
+      Tasks::CacheCounter.update_comments
+      Tasks::CacheCounter.update_views
     end
     
     def self.update_lits
