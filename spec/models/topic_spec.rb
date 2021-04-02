@@ -86,5 +86,39 @@ RSpec.describe Topic, type: :model do
       expect(Topic.find_by(id: sub_topic.id).nil?).to eq(true)
       expect(Topic.find_by(id: sub_sub_topic.id).nil?).to eq(true)
     end
+    
+    it 'should NOT approve SubTopic with unapproved Topic' do
+      topic = FactoryBot.create(:topic, parent: @news_category)
+      sub_topic = FactoryBot.create(:topic, parent: topic, is_approved: false)
+      sub_sub_topic = FactoryBot.create(:topic, parent: sub_topic, is_approved: false)
+      
+      sub_sub_topic.update(is_approved: true)
+      expect(sub_sub_topic.reload.is_approved).to eq(false)
+      expect(sub_sub_topic.errors.full_messages.count).to eq(1)
+      expect(sub_sub_topic.errors.full_messages.first).to eq('Is approved cannot be change untill Parent is not approved')
+    end
+    
+    it 'should unaproved all SubTopics if Topic is_approved changed to false' do
+      topic = FactoryBot.create(:topic, parent: @news_category, is_approved: true)
+      sub_topic_1 = FactoryBot.create(:topic, parent: topic, is_approved: true)
+      sub_sub_topic_1 = FactoryBot.create(:topic, parent: sub_topic_1, is_approved: true)
+      
+      sub_topic_2 = FactoryBot.create(:topic, parent: topic, is_approved: true)
+      sub_sub_topic_2 = FactoryBot.create(:topic, parent: sub_topic_2, is_approved: true)
+      
+      expect(topic.is_approved).to eq(true)
+      expect(sub_topic_1.is_approved).to eq(true)
+      expect(sub_sub_topic_1.is_approved).to eq(true)
+      expect(sub_topic_2.is_approved).to eq(true)
+      expect(sub_sub_topic_2.is_approved).to eq(true)
+      
+      topic.update(is_approved: false)
+      
+      expect(topic.is_approved).to eq(false)
+      expect(sub_topic_1.reload.is_approved).to eq(false)
+      expect(sub_sub_topic_1.reload.is_approved).to eq(false)
+      expect(sub_topic_2.reload.is_approved).to eq(false)
+      expect(sub_sub_topic_2.reload.is_approved).to eq(false)
+    end
   end
 end
