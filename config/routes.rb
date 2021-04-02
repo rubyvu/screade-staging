@@ -109,6 +109,8 @@ Rails.application.routes.draw do
           patch :update
           post :resend_email_confirmation
         end
+        
+        resources :user_topic_subscriptions, only: [:create, :destroy]
       end
       
       resources :forgot_password, only: [:create] do
@@ -117,6 +119,7 @@ Rails.application.routes.draw do
         end
       end
       
+      resources :groups, only: [:index]
       resources :home, only: [] do
         collection do
           get :news
@@ -132,6 +135,11 @@ Rails.application.routes.draw do
           post :lit
           post :view
           delete :unlit
+        end
+      end
+      
+      resources :news_articles, only: [] do
+        resources :news_article_subscriptions, only: [:create] do
         end
       end
       
@@ -153,6 +161,7 @@ Rails.application.routes.draw do
         end
       end
       
+      resources :topics, only: [:index, :show, :create]
       resources :user_assets, only: [:images],  param: :username, username: User::USERNAME_ROUTE_FORMAT do
         collection do
           get :upload_url
