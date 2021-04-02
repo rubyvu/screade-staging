@@ -19,6 +19,9 @@ RSpec.describe NewsArticle, type: :model do
     it { should have_many(:liting_users) }
     it { should have_many(:views).dependent(:destroy) }
     it { should have_many(:viewing_users) }
+    it { should have_many(:news_article_subscriptions).dependent(:destroy) }
+    it { should have_many(:subscripted_news_categories) }
+    it { should have_many(:subscripted_topics) }
   end
   
   context 'validations' do

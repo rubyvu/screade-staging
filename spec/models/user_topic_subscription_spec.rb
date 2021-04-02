@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe NewsSubscription, type: :model do
+RSpec.describe UserTopicSubscription, type: :model do
   before :all do
     @country = Country.find_by(code: 'US') || FactoryBot.create(:country, code: 'US')
     @user_security_question = FactoryBot.create(:user_security_question)
@@ -10,8 +10,8 @@ RSpec.describe NewsSubscription, type: :model do
   end
   
   it 'should have a valid factory' do
-    expect(FactoryBot.build(:news_subscription, user: @user, source: @news_category)).to be_valid
-    expect(FactoryBot.build(:news_subscription, user: @user, source:@topic)).to be_valid
+    expect(FactoryBot.build(:user_topic_subscription, user: @user, source: @news_category)).to be_valid
+    expect(FactoryBot.build(:user_topic_subscription, user: @user, source:@topic)).to be_valid
   end
   
   context 'associations' do
@@ -21,7 +21,7 @@ RSpec.describe NewsSubscription, type: :model do
   
   context 'validations' do
     context 'NewsCategory' do
-      subject { FactoryBot.build(:news_subscription, user: @user, source: @news_category) }
+      subject { FactoryBot.build(:user_topic_subscription, user: @user, source: @news_category) }
       
       context 'fields' do
         it { should validate_presence_of(:source_id) }
@@ -33,7 +33,7 @@ RSpec.describe NewsSubscription, type: :model do
     end
     
     context 'Topic' do
-      subject { FactoryBot.build(:news_subscription, user: @user, source: @topic) }
+      subject { FactoryBot.build(:user_topic_subscription, user: @user, source: @topic) }
       
       context 'fields' do
         it { should validate_presence_of(:source_id) }

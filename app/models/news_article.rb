@@ -13,6 +13,10 @@ class NewsArticle < ApplicationRecord
   ## Views
   has_many :views, as: :source, dependent: :destroy
   has_many :viewing_users, through: :views, source: :user
+  ## NewsArticleSubscriptions
+  has_many :news_article_subscriptions, dependent: :destroy
+  has_many :subscripted_news_categories, through: :news_article_subscriptions, source: :source, source_type: 'NewsCategory'
+  has_many :subscripted_topics, through: :news_article_subscriptions, source: :source, source_type: 'Topic'
   
   # Association validation
   validates :country, presence: true

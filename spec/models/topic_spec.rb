@@ -21,6 +21,10 @@ RSpec.describe Topic, type: :model do
   
   context 'associations' do
     it { should have_many(:sub_topics).class_name('Topic').with_foreign_key(:parent_id).dependent(:destroy) }
+    it { should have_many(:user_topic_subscriptions).dependent(:destroy) }
+    it { should have_many(:subscripted_users) }
+    it { should have_many(:news_article_subscriptions).dependent(:destroy) }
+    it { should have_many(:subscripted_news_articles) }
     it { should belong_to(:parent) }
   end
   

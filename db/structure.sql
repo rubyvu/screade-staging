@@ -510,6 +510,39 @@ ALTER SEQUENCE public.lits_id_seq OWNED BY public.lits.id;
 
 
 --
+-- Name: news_article_subscriptions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.news_article_subscriptions (
+    id bigint NOT NULL,
+    news_article_id integer NOT NULL,
+    source_id integer NOT NULL,
+    source_type character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: news_article_subscriptions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.news_article_subscriptions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: news_article_subscriptions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.news_article_subscriptions_id_seq OWNED BY public.news_article_subscriptions.id;
+
+
+--
 -- Name: news_articles; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -624,39 +657,6 @@ CREATE SEQUENCE public.news_sources_id_seq
 --
 
 ALTER SEQUENCE public.news_sources_id_seq OWNED BY public.news_sources.id;
-
-
---
--- Name: news_subscriptions; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.news_subscriptions (
-    id bigint NOT NULL,
-    user_id integer NOT NULL,
-    source_id integer NOT NULL,
-    source_type character varying NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: news_subscriptions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.news_subscriptions_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: news_subscriptions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.news_subscriptions_id_seq OWNED BY public.news_subscriptions.id;
 
 
 --
@@ -916,6 +916,39 @@ ALTER SEQUENCE public.user_security_questions_id_seq OWNED BY public.user_securi
 
 
 --
+-- Name: user_topic_subscriptions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.user_topic_subscriptions (
+    id bigint NOT NULL,
+    user_id integer NOT NULL,
+    source_id integer NOT NULL,
+    source_type character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: user_topic_subscriptions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.user_topic_subscriptions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: user_topic_subscriptions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.user_topic_subscriptions_id_seq OWNED BY public.user_topic_subscriptions.id;
+
+
+--
 -- Name: user_videos; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1085,6 +1118,13 @@ ALTER TABLE ONLY public.lits ALTER COLUMN id SET DEFAULT nextval('public.lits_id
 
 
 --
+-- Name: news_article_subscriptions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.news_article_subscriptions ALTER COLUMN id SET DEFAULT nextval('public.news_article_subscriptions_id_seq'::regclass);
+
+
+--
 -- Name: news_articles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1103,13 +1143,6 @@ ALTER TABLE ONLY public.news_categories ALTER COLUMN id SET DEFAULT nextval('pub
 --
 
 ALTER TABLE ONLY public.news_sources ALTER COLUMN id SET DEFAULT nextval('public.news_sources_id_seq'::regclass);
-
-
---
--- Name: news_subscriptions id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.news_subscriptions ALTER COLUMN id SET DEFAULT nextval('public.news_subscriptions_id_seq'::regclass);
 
 
 --
@@ -1152,6 +1185,13 @@ ALTER TABLE ONLY public.user_images ALTER COLUMN id SET DEFAULT nextval('public.
 --
 
 ALTER TABLE ONLY public.user_security_questions ALTER COLUMN id SET DEFAULT nextval('public.user_security_questions_id_seq'::regclass);
+
+
+--
+-- Name: user_topic_subscriptions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_topic_subscriptions ALTER COLUMN id SET DEFAULT nextval('public.user_topic_subscriptions_id_seq'::regclass);
 
 
 --
@@ -1240,6 +1280,14 @@ ALTER TABLE ONLY public.lits
 
 
 --
+-- Name: news_article_subscriptions news_article_subscriptions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.news_article_subscriptions
+    ADD CONSTRAINT news_article_subscriptions_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: news_articles news_articles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1261,14 +1309,6 @@ ALTER TABLE ONLY public.news_categories
 
 ALTER TABLE ONLY public.news_sources
     ADD CONSTRAINT news_sources_pkey PRIMARY KEY (id);
-
-
---
--- Name: news_subscriptions news_subscriptions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.news_subscriptions
-    ADD CONSTRAINT news_subscriptions_pkey PRIMARY KEY (id);
 
 
 --
@@ -1349,6 +1389,14 @@ ALTER TABLE ONLY public.user_images
 
 ALTER TABLE ONLY public.user_security_questions
     ADD CONSTRAINT user_security_questions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_topic_subscriptions user_topic_subscriptions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_topic_subscriptions
+    ADD CONSTRAINT user_topic_subscriptions_pkey PRIMARY KEY (id);
 
 
 --
@@ -1446,6 +1494,13 @@ CREATE UNIQUE INDEX index_lits_on_source_id_and_source_type_and_user_id ON publi
 
 
 --
+-- Name: index_news_article_subscriptions_on_news_article_and_source; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_news_article_subscriptions_on_news_article_and_source ON public.news_article_subscriptions USING btree (news_article_id, source_id, source_type);
+
+
+--
 -- Name: index_news_articles_categories_on_ids; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1481,13 +1536,6 @@ CREATE UNIQUE INDEX index_news_sources_on_source_identifier ON public.news_sourc
 
 
 --
--- Name: index_news_subscriptions_on_user_and_source; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_news_subscriptions_on_user_and_source ON public.news_subscriptions USING btree (user_id, source_id, source_type);
-
-
---
 -- Name: index_settings_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1513,6 +1561,13 @@ CREATE INDEX index_topics_on_parent_id ON public.topics USING btree (parent_id);
 --
 
 CREATE UNIQUE INDEX index_user_security_questions_on_question_identifier ON public.user_security_questions USING btree (question_identifier);
+
+
+--
+-- Name: index_user_topic_subscriptions_on_user_and_source; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_user_topic_subscriptions_on_user_and_source ON public.user_topic_subscriptions USING btree (user_id, source_id, source_type);
 
 
 --
@@ -1670,6 +1725,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210326142648'),
 ('20210331123843'),
 ('20210331133229'),
-('20210402085047');
+('20210402085047'),
+('20210402124829');
 
 
