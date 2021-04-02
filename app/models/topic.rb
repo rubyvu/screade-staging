@@ -9,6 +9,10 @@ class Topic < ApplicationRecord
   
   # Associations
   has_many :sub_topics, class_name: 'Topic', foreign_key: :parent_id, dependent: :destroy
+  # News Subscriptions
+  has_many :news_subscriptions, as: :source, dependent: :destroy
+  has_many :news_subscriptions_users, through: :news_subscriptions, source: :user
+  
   belongs_to :parent, class_name: 'Topic', foreign_key: :parent_id, polymorphic: true
   
   # Field validations

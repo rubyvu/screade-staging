@@ -627,6 +627,39 @@ ALTER SEQUENCE public.news_sources_id_seq OWNED BY public.news_sources.id;
 
 
 --
+-- Name: news_subscriptions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.news_subscriptions (
+    id bigint NOT NULL,
+    user_id integer NOT NULL,
+    source_id integer NOT NULL,
+    source_type character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: news_subscriptions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.news_subscriptions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: news_subscriptions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.news_subscriptions_id_seq OWNED BY public.news_subscriptions.id;
+
+
+--
 -- Name: que_jobs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -1073,6 +1106,13 @@ ALTER TABLE ONLY public.news_sources ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: news_subscriptions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.news_subscriptions ALTER COLUMN id SET DEFAULT nextval('public.news_subscriptions_id_seq'::regclass);
+
+
+--
 -- Name: que_jobs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1221,6 +1261,14 @@ ALTER TABLE ONLY public.news_categories
 
 ALTER TABLE ONLY public.news_sources
     ADD CONSTRAINT news_sources_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: news_subscriptions news_subscriptions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.news_subscriptions
+    ADD CONSTRAINT news_subscriptions_pkey PRIMARY KEY (id);
 
 
 --
@@ -1433,6 +1481,13 @@ CREATE UNIQUE INDEX index_news_sources_on_source_identifier ON public.news_sourc
 
 
 --
+-- Name: index_news_subscriptions_on_user_and_source; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_news_subscriptions_on_user_and_source ON public.news_subscriptions USING btree (user_id, source_id, source_type);
+
+
+--
 -- Name: index_settings_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1614,6 +1669,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210326135145'),
 ('20210326142648'),
 ('20210331123843'),
-('20210331133229');
+('20210331133229'),
+('20210402085047');
 
 

@@ -36,6 +36,10 @@ class User < ApplicationRecord
   ## Images and Videos
   has_many :user_images, dependent: :destroy
   has_many :user_videos, dependent: :destroy
+  ## NewsSubscriptions
+  has_many :news_subscriptions, dependent: :destroy
+  has_many :news_categories, through: :news_subscriptions, source: :source, source_type: 'NewsCategory'
+  has_many :news_topics, through: :news_subscriptions, source: :source, source_type: 'Topic'
   # Languages
   has_and_belongs_to_many :languages
   
