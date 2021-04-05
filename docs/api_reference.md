@@ -60,8 +60,8 @@
 ### Topic
 - [Create new Topic](api/v1/topics/create.md)
 - [Show Topic](api/v1/topics/show.md)
-- [Create new Topic](api/v1/user_topic_subscriptions/create.md)
-- [Destroy Topic](api/v1/user_topic_subscriptions/destroy.md)
+- [Subscribe User to Topic](api/v1/user_topic_subscriptions/create.md)
+- [Unsubscribe User from Topic](api/v1/user_topic_subscriptions/destroy.md)
 
 ### User Assets
 - [Get Images](api/v1/user_assets/images.md)
