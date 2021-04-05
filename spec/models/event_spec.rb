@@ -25,7 +25,7 @@ RSpec.describe Event, type: :model do
     context 'fields' do
       it { should validate_presence_of(:date) }
       it { should validate_presence_of(:end_date) }
-      it { should validate_presence_of(:start_time) }
+      it { should validate_presence_of(:start_date) }
       it { should validate_presence_of(:title) }
     end
   end

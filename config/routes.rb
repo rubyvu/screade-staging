@@ -113,6 +113,7 @@ Rails.application.routes.draw do
         resources :user_topic_subscriptions, only: [:create, :destroy]
       end
       
+      resources :events, only: [:index, :create, :update, :destroy]
       resources :forgot_password, only: [:create] do
         collection do
           get :security_question

@@ -441,7 +441,7 @@ ALTER SEQUENCE public.devices_id_seq OWNED BY public.devices.id;
 CREATE TABLE public.events (
     id bigint NOT NULL,
     date date NOT NULL,
-    start_time timestamp without time zone NOT NULL,
+    start_date timestamp without time zone NOT NULL,
     end_date timestamp without time zone NOT NULL,
     title character varying NOT NULL,
     description text,

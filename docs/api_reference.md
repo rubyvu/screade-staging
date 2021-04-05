@@ -29,6 +29,12 @@
 - [Update current user](api/v1/current_user/update.md)
 - [Resend email confirmation to current user](api/v1/current_user/resend_email_confirmation.md)
 
+### Events
+- [View all Events by Date](api/v1/events/index.md)
+- [Create new Event](api/v1/events/create.md)
+- [Update Event](api/v1/events/update.md)
+- [Delete Event](api/v1/events/destroy.md)
+
 ### Forgot password
 - [Get security question for User](api/v1/forgot_password/security_question.md)
 - [Get new password instructions](api/v1/forgot_password/create.md)

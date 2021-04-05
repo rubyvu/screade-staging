@@ -9,6 +9,6 @@ class Event < ApplicationRecord
   # Field validations
   validates :date, presence: true
   validates :end_date, presence: true
-  validates :start_time, presence: true
+  validates :start_date, presence: true
   validates :title, presence: true
 end
