@@ -22,6 +22,7 @@ RSpec.describe User, type: :model do
       it { should belong_to(:user_security_question) }
       it { should have_one(:setting).dependent(:destroy) }
       it { should have_many(:devices).dependent(:destroy) }
+      it { should have_many(:events).dependent(:destroy) }
       it { should have_many(:squad_requests_as_receiver).dependent(:destroy) }
       it { should have_many(:squad_requests_as_requestor).dependent(:destroy) }
       it { should have_many(:comments).dependent(:destroy) }

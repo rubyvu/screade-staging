@@ -435,6 +435,42 @@ ALTER SEQUENCE public.devices_id_seq OWNED BY public.devices.id;
 
 
 --
+-- Name: events; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.events (
+    id bigint NOT NULL,
+    date date NOT NULL,
+    start_time timestamp without time zone NOT NULL,
+    end_date timestamp without time zone NOT NULL,
+    title character varying NOT NULL,
+    description text,
+    user_id integer NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: events_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.events_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: events_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.events_id_seq OWNED BY public.events.id;
+
+
+--
 -- Name: languages; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1104,6 +1140,13 @@ ALTER TABLE ONLY public.devices ALTER COLUMN id SET DEFAULT nextval('public.devi
 
 
 --
+-- Name: events id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.events ALTER COLUMN id SET DEFAULT nextval('public.events_id_seq'::regclass);
+
+
+--
 -- Name: languages id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1261,6 +1304,14 @@ ALTER TABLE ONLY public.countries
 
 ALTER TABLE ONLY public.devices
     ADD CONSTRAINT devices_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: events events_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.events
+    ADD CONSTRAINT events_pkey PRIMARY KEY (id);
 
 
 --
@@ -1470,6 +1521,13 @@ CREATE UNIQUE INDEX index_devices_on_access_token ON public.devices USING btree 
 --
 
 CREATE INDEX index_devices_on_owner_id ON public.devices USING btree (owner_id);
+
+
+--
+-- Name: index_events_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_events_on_user_id ON public.events USING btree (user_id);
 
 
 --
@@ -1726,6 +1784,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210331123843'),
 ('20210331133229'),
 ('20210402085047'),
-('20210402124829');
+('20210402124829'),
+('20210405115841');
 
 
