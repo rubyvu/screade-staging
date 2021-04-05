@@ -101,6 +101,8 @@ Rails.application.routes.draw do
           delete :unlit
         end
       end
+      
+      resources :contacts, only: [:create]
       resources :countries, only: [:index]
       resources :current_user, only: [] do
         collection do

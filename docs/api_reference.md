@@ -21,6 +21,9 @@
 - [Lit Comment](api/v1/comments/lit.md)
 - [Unlit Comment](api/v1/comments/unlit.md)
 
+### Contact Us
+- [Create new request](api/v1/contacts/create.md)
+
 ### Countries
 - [Get Countries list](api/v1/countries/index.md)
 
