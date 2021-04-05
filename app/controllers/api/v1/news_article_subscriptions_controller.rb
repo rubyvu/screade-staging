@@ -11,6 +11,11 @@ class Api::V1::NewsArticleSubscriptionsController < Api::V1::ApiController
       render json: { errors: ['Source type should be present.'] }, status: :unprocessable_entity
       return
     end
+      
+    unless UserTopicSubscription.exists?(user: current_user, source: source)
+      render json: { errors: ["User should be subscribed to this #{source.source_type}"] }, status: :unprocessable_entity
+      return
+    end
     
     news_article_subscription = NewsArticleSubscription.new(news_article: news_article)
     news_article_subscription.source = source

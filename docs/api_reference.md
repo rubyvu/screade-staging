@@ -33,6 +33,9 @@
 - [Get security question for User](api/v1/forgot_password/security_question.md)
 - [Get new password instructions](api/v1/forgot_password/create.md)
 
+### Groups (working on)
+- [Show Tree of NewsCategories and Topics](api/v1/groups/index.md)
+
 ### Home
 - [Get News list](api/v1/home/news.md)
 - [Get BreakingNews ](api/v1/home/breaking_news.md)
@@ -46,6 +49,7 @@
 - [Lit Article](api/v1/news_articles/lit.md)
 - [Unlit Article](api/v1/news_articles/unlit.md)
 - [View Article](api/v1/news_articles/view.md)
+- [Subscribe NewsArticle to NewsCategory or Topic](api/v1/news_article_subscriptions/create.md)
 
 ### Squad Requst
 - [Accept request](api/v1/squad_requests/accept.md)
@@ -53,6 +57,11 @@
 - [Decline request](api/v1/squad_requests/decline.md)
 - [Get requsts list](api/v1/squad_requests/index.md)
 
+### Topic
+- [Create new Topic](api/v1/topics/create.md)
+- [Show Topic](api/v1/topics/show.md)
+- [Create new Topic](api/v1/user_topic_subscriptions/create.md)
+- [Destroy Topic](api/v1/user_topic_subscriptions/destroy.md)
 
 ### User Assets
 - [Get Images](api/v1/user_assets/images.md)
