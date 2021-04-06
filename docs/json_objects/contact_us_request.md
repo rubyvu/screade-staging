@@ -1,4 +1,4 @@
-## Contact JSON object
+## ContactUsRequest JSON object
 
 ### Navigation
 [README](../../README.md)

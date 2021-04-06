@@ -102,7 +102,7 @@ Rails.application.routes.draw do
         end
       end
       
-      resources :contacts, only: [:create]
+      resources :contact_us_requests, only: [:create]
       resources :countries, only: [:index]
       resources :current_user, only: [] do
         collection do

@@ -1,4 +1,4 @@
-class ContactSerializer < ActiveModel::Serializer
+class ContactUsRequestSerializer < ActiveModel::Serializer
   attribute :email
   attribute :first_name
   attribute :last_name

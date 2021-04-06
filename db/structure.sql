@@ -360,10 +360,10 @@ ALTER SEQUENCE public.comments_id_seq OWNED BY public.comments.id;
 
 
 --
--- Name: contacts; Type: TABLE; Schema: public; Owner: -
+-- Name: contact_us_requests; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.contacts (
+CREATE TABLE public.contact_us_requests (
     id bigint NOT NULL,
     first_name character varying NOT NULL,
     last_name character varying NOT NULL,
@@ -377,10 +377,10 @@ CREATE TABLE public.contacts (
 
 
 --
--- Name: contacts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: contact_us_requests_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.contacts_id_seq
+CREATE SEQUENCE public.contact_us_requests_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -389,10 +389,10 @@ CREATE SEQUENCE public.contacts_id_seq
 
 
 --
--- Name: contacts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: contact_us_requests_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.contacts_id_seq OWNED BY public.contacts.id;
+ALTER SEQUENCE public.contact_us_requests_id_seq OWNED BY public.contact_us_requests.id;
 
 
 --
@@ -1162,10 +1162,10 @@ ALTER TABLE ONLY public.comments ALTER COLUMN id SET DEFAULT nextval('public.com
 
 
 --
--- Name: contacts id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: contact_us_requests id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.contacts ALTER COLUMN id SET DEFAULT nextval('public.contacts_id_seq'::regclass);
+ALTER TABLE ONLY public.contact_us_requests ALTER COLUMN id SET DEFAULT nextval('public.contact_us_requests_id_seq'::regclass);
 
 
 --
@@ -1334,11 +1334,11 @@ ALTER TABLE ONLY public.comments
 
 
 --
--- Name: contacts contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: contact_us_requests contact_us_requests_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.contacts
-    ADD CONSTRAINT contacts_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.contact_us_requests
+    ADD CONSTRAINT contact_us_requests_pkey PRIMARY KEY (id);
 
 
 --
@@ -1837,6 +1837,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210402085047'),
 ('20210402124829'),
 ('20210405115841'),
-('20210405142157');
+('20210405142157'),
+('20210406085532');
 
 

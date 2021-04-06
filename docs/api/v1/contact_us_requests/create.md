@@ -1,4 +1,4 @@
-## Create Contact - API endpoint
+## Create ContactUsRequest - API endpoint
 
 ### Navigation
 [README](../../../../README.md)
@@ -9,12 +9,12 @@
 POST
 
 ### API endpoint
-`/api/v1/contacts`
+`/api/v1/contact_us_requests`
 
 ### Request body
 ```
 {
-  "contact": {
+  "contact_us_requests": {
     "email": 'email@user.com'                                                   (string, required)
     "first_name": 'John'                                                        (string, required)
     "last_name": 'Doe'                                                          (string, required)
@@ -30,7 +30,7 @@ POST
 ```
 HTTP code 200 :ok
 {
-  "contact: Contact                                                             (object, required)
+  "contact_us_requests: ContactUsRequest                                        (object, required)
 }
 ```
 
@@ -44,4 +44,4 @@ HTTP code 422 :unprocessable_entity
 ```
 
 ### References
-- [Contact JSON object](../../../json_objects/contact.md)
+- [ContactUsRequest JSON object](../../../json_objects/contact_us_request.md)

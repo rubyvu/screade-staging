@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe Contact, type: :model do
+RSpec.describe ContactUsRequest, type: :model do
   it 'should have a valid factory' do
-    expect(FactoryBot.build(:contact)).to be_valid
+    expect(FactoryBot.build(:contact_us_request)).to be_valid
   end
   
   context 'validations' do
-    subject { FactoryBot.build(:contact) }
+    subject { FactoryBot.build(:contact_us_request) }
     
     context 'fields' do
       it { should validate_presence_of(:email) }

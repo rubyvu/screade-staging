@@ -1,4 +1,4 @@
-class Contact < ApplicationRecord
+class ContactUsRequest < ApplicationRecord
   after_create :send_email_to_admins
   
   # Fields Validation
@@ -11,6 +11,6 @@ class Contact < ApplicationRecord
   
   private
     def send_email_to_admins
-      ContactUsJob.perform_later(self.id)
+      ContactUsRequestJob.perform_later(self.id)
     end
 end
