@@ -17,6 +17,7 @@ PUT/PATCH
     "font_family": "Roboto"                                                     (string, optional)
     "font_style": "normal"                                                      (string, optional)
     "is_notification": "true"                                                   (boolean, optional)
+    "is_email": "true"                                                          (boolean, optional)
     "is_images": "true"                                                         (boolean, optional)
     "is_videos": "true"                                                         (boolean, optional)
     "is_posts": "true"                                                          (boolean, optional)

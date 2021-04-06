@@ -832,7 +832,8 @@ CREATE TABLE public.settings (
     is_images boolean DEFAULT true,
     is_videos boolean DEFAULT true,
     is_posts boolean DEFAULT true,
-    user_id integer NOT NULL
+    user_id integer NOT NULL,
+    is_email boolean
 );
 
 
@@ -1838,6 +1839,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210402124829'),
 ('20210405115841'),
 ('20210405142157'),
-('20210406085532');
+('20210406085532'),
+('20210406091258');
 
 

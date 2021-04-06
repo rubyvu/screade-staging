@@ -20,6 +20,6 @@ class Api::V1::SettingsController < Api::V1::ApiController
   
   private
     def setting_params
-      params.require(:setting).permit(:font_family, :font_style, :is_notification, :is_images, :is_videos, :is_posts)
+      params.require(:setting).permit(:font_family, :font_style, :is_notification, :is_email, :is_images, :is_videos, :is_posts)
     end
 end

@@ -12,6 +12,7 @@ class Setting < ApplicationRecord
   # Validations
   validates :font_family, presence: true, inclusion: { in: Setting::FONT_FAMILIES }
   validates :font_style, presence: true, inclusion: { in: Setting::FONT_STYLE }
+  validates :is_email, presence: true
   validates :is_images, presence: true
   validates :is_notification, presence: true
   validates :is_posts, presence: true
@@ -24,6 +25,7 @@ class Setting < ApplicationRecord
         font_family: 'roboto',
         font_style: 'normal',
         is_notification: true,
+        is_email: true,
         is_images: true,
         is_videos: true,
         is_posts: true,
