@@ -1,4 +1,5 @@
 class Contact < ApplicationRecord
+  after_create :send_email_to_admins
   
   # Fields Validation
   validates :email, presence: true, length: { maximum: 100 }, format: { with: User::EMAIL_FORMAT }
@@ -7,4 +8,9 @@ class Contact < ApplicationRecord
   validates :message, presence: true
   validates :subject, presence: true
   validates :username, presence: true, format: { with: User::USERNAME_FORMAT, message: 'must contain from 6 to 18 characters, dots and underscores are allowed' }
+  
+  private
+    def send_email_to_admins
+      ContactUsJob.perform_later(self.id)
+    end
 end
