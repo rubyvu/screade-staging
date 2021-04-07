@@ -480,7 +480,7 @@ CREATE TABLE public.events (
     start_date timestamp without time zone NOT NULL,
     end_date timestamp without time zone NOT NULL,
     title character varying NOT NULL,
-    description text,
+    description text NOT NULL,
     user_id integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
@@ -1840,6 +1840,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210405115841'),
 ('20210405142157'),
 ('20210406085532'),
-('20210406091258');
+('20210406091258'),
+('20210407093731');
 
 

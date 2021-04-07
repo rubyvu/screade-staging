@@ -1,0 +1,24 @@
+.events-wrapper
+  - events .each do |event|
+    .event-card
+      .body
+        .event-title
+          p #{event.title}
+        .event-description
+          p #{event.description}
+      
+      .footer
+        .date
+          = image_pack_tag 'media/images/icons/ic_calendar.png'
+          span #{event.date.strftime("%m.%d.%Y")}
+          
+        .time
+          = image_pack_tag 'media/images/icons/ic_clock.png'
+          
+          = local_time(event.start_date, '%H:%m')
+          | -
+          = local_time(event.end_date, '%H:%m')
+
+= link_to '', class: 'btn btn-primary floating my-2 my-sm-0', data: { toggle: "modal", target: "#modal-new-event" } do
+  = image_pack_tag 'media/images/icons/ic_plus.png'
+  span.ml-2 Add Event

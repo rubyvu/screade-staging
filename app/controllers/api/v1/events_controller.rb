@@ -1,8 +1,14 @@
-class Api::V1::TopicsController < Api::V1::ApiController
+class Api::V1::EventsController < Api::V1::ApiController
   
   # GET /api/v1/events
   def index
-    events_json = ActiveModel::Serializer::CollectionSerializer.new(current_user.events.where(date: params[:date]).order(date: :desc), serializer: EventSerializer).as_json
+    begin
+      date = params[:date].to_date
+    rescue
+      date = Date.current
+    end
+    
+    events_json = ActiveModel::Serializer::CollectionSerializer.new(current_user.events.where('date >= ? AND date <= ?', date.beginning_of_month, date.end_of_month).order(date: :desc), serializer: EventSerializer).as_json
     render json: { events: events_json }, status: :ok
   end
   
@@ -32,7 +38,7 @@ class Api::V1::TopicsController < Api::V1::ApiController
   
   # PUT/PATCH /api/v1/events/:id
   def update
-    event = current_user.event.find(params[:id])
+    event = current_user.events.find(params[:id])
     if event.update(event_params)
       event_json = EventSerializer.new(event).as_json
       render json: { event: event_json }, status: :ok
@@ -43,7 +49,7 @@ class Api::V1::TopicsController < Api::V1::ApiController
   
   # DELETE /api/v1/events/:id
   def destroy
-    event = current_user.event.find(params[:id])
+    event = current_user.events.find(params[:id])
     event.destroy
     render json: { success: true }, status: :ok
   end

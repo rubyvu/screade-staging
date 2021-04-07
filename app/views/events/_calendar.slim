@@ -1,0 +1,22 @@
+.calendar
+  .month
+    = link_to events_path(date: date[:current_date].prev_month), class: 'nav' do
+      = image_pack_tag 'media/images/icons/ic_arrow_left.png'
+    = link_to events_path do
+      | #{date[:month]}
+      span.year #{date[:year]}
+    = link_to events_path(date: date[:current_date].next_month), class: 'nav' do
+      = image_pack_tag 'media/images/icons/ic_arrow_right.png'
+      
+  .days
+    span M
+    span T
+    span W
+    span T
+    span F
+    span S
+    span S
+  .dates
+    - date[:days].each do |day|
+      button class="#{ Date.current.day == day && date[:is_current_month] ? 'today' : '' }"
+        time #{day}

@@ -1,0 +1,5 @@
+= render 'shared/modals/new_event/', event: @event
+
+.calendar-events-wrapper
+  = render 'calendar', date: @date
+  = render 'events', events: @events

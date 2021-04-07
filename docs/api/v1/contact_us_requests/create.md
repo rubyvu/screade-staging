@@ -14,7 +14,7 @@ POST
 ### Request body
 ```
 {
-  "contact_us_requests": {
+  "contact_us_request": {
     "email": 'email@user.com'                                                   (string, required)
     "first_name": 'John'                                                        (string, required)
     "last_name": 'Doe'                                                          (string, required)
@@ -30,7 +30,7 @@ POST
 ```
 HTTP code 200 :ok
 {
-  "contact_us_requests: ContactUsRequest                                        (object, required)
+  "contact_us_request: ContactUsRequest                                        (object, required)
 }
 ```
 

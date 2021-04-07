@@ -142,3 +142,10 @@ input[type="file"].upload-user-asset {
 label.upload-user-asset-button {
   cursor: pointer;
 }
+
+a.btn {
+  &.floating {
+    padding: 16px 24px;
+    border-radius: 28px;
+  }
+}

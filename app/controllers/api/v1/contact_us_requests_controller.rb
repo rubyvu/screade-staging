@@ -12,7 +12,7 @@ class Api::V1::ContactUsRequestsController < Api::V1::ApiController
   end
   
   private
-    def change_password_params
+    def contact_us_request_params
       params.require(:contact_us_request).permit(:email, :first_name, :last_name, :message, :subject, :username)
     end
 end

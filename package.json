@@ -1,6 +1,9 @@
 {
   "name": "screade-rails",
   "private": true,
+  "resolutions": {
+    "jquery": "3.5.1"
+  },
   "dependencies": {
     "@activeadmin/activeadmin": "^2.9.0",
     "@rails/actioncable": "^6.0.0",
@@ -9,8 +12,10 @@
     "@rails/webpacker": "5.2.1",
     "babel-plugin-module-resolver": "^4.1.0",
     "bootstrap": "^4.5.3",
+    "bootstrap-datepicker": "^1.9.0",
     "flag-icon-css": "^3.5.0",
     "jquery": "^3.5.1",
+    "jquery-timepicker": "^1.3.3",
     "jquery-ui": "^1.12.1",
     "jquery-ujs": "^1.2.2",
     "local-time": "^2.1.0",
