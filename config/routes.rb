@@ -158,7 +158,7 @@ Rails.application.routes.draw do
           put :update
         end
       end
-      resources :squad_requsts, only: [:index, :create] do
+      resources :squad_requests, only: [:index, :create] do
         member do
           post :accept
           post :decline

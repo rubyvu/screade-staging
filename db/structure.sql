@@ -476,7 +476,6 @@ ALTER SEQUENCE public.devices_id_seq OWNED BY public.devices.id;
 
 CREATE TABLE public.events (
     id bigint NOT NULL,
-    date date NOT NULL,
     start_date timestamp without time zone NOT NULL,
     end_date timestamp without time zone NOT NULL,
     title character varying NOT NULL,
@@ -1841,6 +1840,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210405142157'),
 ('20210406085532'),
 ('20210406091258'),
-('20210407093731');
+('20210407093731'),
+('20210408093426');
 
 

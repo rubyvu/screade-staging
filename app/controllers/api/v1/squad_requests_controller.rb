@@ -9,14 +9,14 @@ class Api::V1::SquadRequestsController < Api::V1::ApiController
   
   # POST /api/v1/squad_requests
   def create
-    receiver = User.find_by!(username: receiver_username)
-    exists_squad_request = SquadRequest.where(receiver: receiver, requestor: current_user).or(receiver: current_user, requestor: receiver).first
+    receiver = User.find_by!(username: squad_request_params[:receiver_username])
+    exists_squad_request = SquadRequest.where(receiver: receiver, requestor: current_user).or(SquadRequest.where(receiver: current_user, requestor: receiver)).first
     
     if exists_squad_request.present?
       squad_request = exists_squad_request
       
       # Change roles in existing Squad requests
-      if curent_user == squad_request.receiver
+      if current_user == squad_request.receiver
         squad_request.reciver = receiver
         squad_request.requestor = current_user
       end
@@ -24,7 +24,7 @@ class Api::V1::SquadRequestsController < Api::V1::ApiController
       squad_request.accepted_at = nil
       squad_request.declined_at = nil
     else
-      squad_request = SquadRequst.new(requestor: current_user, receiver: receiver)
+      squad_request = SquadRequest.new(requestor: current_user, receiver: receiver)
     end
     
     if squad_request.save

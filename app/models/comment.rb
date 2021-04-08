@@ -12,7 +12,7 @@ class Comment < ApplicationRecord
   validates :message, presence: true
   validates :source_id, presence: true
   validates :source_type, presence: true, inclusion: { in: Comment::SOURCE_TYPES }
-  validates :user_id, presence: true, uniqueness: { scope: [:source_type, :source_id] }
+  validates :user_id, presence: true
   
   def is_lited(user)
     user.present? && self.liting_users.include?(user)

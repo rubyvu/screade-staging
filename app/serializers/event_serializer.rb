@@ -2,7 +2,7 @@ class EventSerializer < ActiveModel::Serializer
   attribute :id
   attribute :date
   def date
-    object.created_at.strftime('%Y-%m-%d')
+    object.start_date.strftime('%Y-%m-%d')
   end
   
   attribute :description

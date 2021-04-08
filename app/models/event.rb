@@ -7,7 +7,6 @@ class Event < ApplicationRecord
   validates :user, presence: true
   
   # Field validations
-  validates :date, presence: true
   validates :description, presence: true
   validates :end_date, presence: true
   validates :start_date, presence: true

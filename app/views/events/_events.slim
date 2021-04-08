@@ -10,14 +10,14 @@
       .footer
         .date
           = image_pack_tag 'media/images/icons/ic_calendar.png'
-          span #{event.date.strftime("%m.%d.%Y")}
+          span #{month_with_date(event.start_date)}
           
         .time
           = image_pack_tag 'media/images/icons/ic_clock.png'
           
-          = local_time(event.start_date, '%H:%m')
+          = hours_seconds(event.start_date)
           | -
-          = local_time(event.end_date, '%H:%m')
+          = hours_seconds(event.end_date)
 
 = link_to '', class: 'btn btn-primary floating my-2 my-sm-0', data: { toggle: "modal", target: "#modal-new-event" } do
   = image_pack_tag 'media/images/icons/ic_plus.png'

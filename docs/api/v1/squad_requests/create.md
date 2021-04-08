@@ -9,7 +9,7 @@
 POST
 
 ### API endpoint
-`/api/v1/squad_requests/:id/accept`
+`/api/v1/squad_requests`
 
 ### Request body
 ```

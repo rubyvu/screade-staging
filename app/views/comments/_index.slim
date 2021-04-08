@@ -33,7 +33,7 @@
           .comment-text
             = comment.message
           .comment-date
-            = local_time(comment.created_at, '%m/%d/%Y-%I:%M%p')
+            = comment_timestamp(comment.created_at)
             
             .div class="#{ current_user ? 'comment-lit' : 'comment-lit pointer-disable' }"
               span.info-panel-value.color-black #{comment.lits.size}

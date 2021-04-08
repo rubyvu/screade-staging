@@ -215,7 +215,6 @@ GEM
     listen (3.4.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    local_time (2.1.0)
     loofah (2.9.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -403,7 +402,6 @@ DEPENDENCIES
   kaminari
   letter_opener
   listen (~> 3.3)
-  local_time
   mimemagic (= 0.3.7)
   mini_magick
   news-api

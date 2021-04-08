@@ -4,7 +4,6 @@ import jQuery from 'jquery';
 import Rails from "@rails/ujs";
 import Turbolinks from "turbolinks";
 import * as ActiveStorage from "@rails/activestorage";
-import LocalTime from "local-time"
 import "channels";
 import "select2";
 import "webticker/jquery.webticker.min.js";
@@ -14,6 +13,7 @@ import 'timepicker/jquery.timepicker.js';
 // Import internal scripts
 import './shared/font_customizer';
 import './shared/image_viewer';
+import './shared/local_date';
 import './shared/modals';
 import './shared/news_articles';
 import './shared/user_asset';
@@ -27,7 +27,6 @@ Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 window.$ = window.jQuery = jQuery;
-LocalTime.start()
 
 const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
@@ -55,7 +54,7 @@ $(document).on('turbolinks:load', function () {
     todayHighlight: false,
     autoclose: true,
     orientation: 'top'
-  }).on('show', function(e) {
+  }).on('show hide', function(e) {
     e.stopPropagation();
   });
 

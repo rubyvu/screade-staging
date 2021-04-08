@@ -8,7 +8,7 @@
           
       .modal-body
         .global-errors
-        = form_for event, url: events_path, method: :post do |f|
+        = form_for Event.new, url: events_path, method: :post do |f|
         
           .input-group.mb-3
            = f.text_field :title, autocomplete: 'off', class: 'form-control', placeholder: 'Title'
@@ -21,7 +21,7 @@
               .input-group-text
                 = image_pack_tag('media/images/icons/ic_calendar.png', class: 'img-responsive')
               
-            = f.text_field :date, autocomplete: 'off', class: 'form-control datepicker', placeholder: 'Date'
+            = text_field_tag 'event[date]', '', class: 'form-control datepicker', placeholder: 'Date', autocomplete: 'off'
             
           .input-group.mb-3
             .input-group-prepend
@@ -35,7 +35,7 @@
               .input-group-text
                 = image_pack_tag('media/images/icons/ic_clock.png', class: 'img-responsive')
               
-            = f.text_field :end_date, autocomplete: 'off', class: 'form-control timepicker', placeholder: 'End Date'
+            = f.text_field :end_date, autocomplete: 'off', class: 'form-control timepicker', placeholder: 'End Time'
             
           .actions
             = f.submit 'Add', class: 'btn btn-primary w-100'
