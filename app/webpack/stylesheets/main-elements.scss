@@ -42,17 +42,6 @@
 }
 
 // Timepicker
-.ui-timepicker-standard {
-  border: none;
-  border-radius: 8px;
-  
-  .ui-state-hover {
-    background-color: $color-blue;
-    border: 1px solid $color-grey;
-    color: $color-white;
-  }
-  
-  a:hover {
-    text-decoration: none
-  }
+.ui-timepicker-wrapper {
+  text-align: center;
 }
