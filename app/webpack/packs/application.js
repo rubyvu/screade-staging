@@ -47,7 +47,7 @@ window.App = new function () {
 
 $(document).on('turbolinks:load', function () {
   // Datepicker
-  $('.datepicker').datepicker({
+  $('.datepicker-event').datepicker({
     container: '#modal-new-event',
     format: 'dd-mm-yyyy',
     showWeekDays: false,

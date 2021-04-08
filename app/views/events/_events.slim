@@ -19,6 +19,7 @@
           | -
           = hours_seconds(event.end_date)
 
-= link_to '', class: 'btn btn-primary floating my-2 my-sm-0', data: { toggle: "modal", target: "#modal-new-event" } do
-  = image_pack_tag 'media/images/icons/ic_plus.png'
-  span.ml-2 Add Event
+  .floating-button-wrapper
+    = link_to '', class: 'btn btn-primary floating my-2 my-sm-0', data: { toggle: "modal", target: "#modal-new-event" } do
+      = image_pack_tag 'media/images/icons/ic_plus.png'
+      span.ml-2 Add Event

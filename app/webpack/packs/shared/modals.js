@@ -189,4 +189,10 @@ $( document ).on('turbolinks:load', function() {
       }
     }
   })
+  
+  // New Event
+  $("#new_event").on('ajax:error', function(event) {
+    let eventResponse = event.detail[0];
+    $("#modal-new-event .global-errors").html(eventResponse.errors[0])
+  })
 })

@@ -143,9 +143,10 @@ label.upload-user-asset-button {
   cursor: pointer;
 }
 
-a.btn {
-  &.floating {
-    padding: 12px 24px;
-    border-radius: 28px;
-  }
+a.btn.floating {
+  right: 0;
+  bottom: 3%;
+  position: absolute;
+  padding: 12px 24px;
+  border-radius: 28px;
 }

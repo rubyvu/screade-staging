@@ -36,7 +36,7 @@ class EventsController < ApplicationController
     event.end_date = get_datetime(event_params[:date], event_params[:end_date])
     
     if event.save
-      redirect_to events_path
+      render js: "window.location = '#{events_path}'"
     else
       render json: { errors: event.errors.full_messages }, status: :unprocessable_entity
     end
