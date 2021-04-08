@@ -111,6 +111,7 @@ Rails.application.routes.draw do
           put :update
           patch :update
           post :resend_email_confirmation
+          post :change_password
         end
         
         resources :user_topic_subscriptions, only: [:create, :destroy]
