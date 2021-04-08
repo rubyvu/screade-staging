@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  # before_action :get_event
+  before_action :get_event, only: [:destroy]
   
   # GET /events/
   def index
@@ -40,6 +40,12 @@ class EventsController < ApplicationController
     else
       render json: { errors: event.errors.full_messages }, status: :unprocessable_entity
     end
+  end
+  
+  # DELETE /events/:id
+  def destroy
+    @event.destroy
+    redirect_to events_path
   end
   
   private

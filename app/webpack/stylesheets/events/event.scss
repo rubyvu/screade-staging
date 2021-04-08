@@ -18,6 +18,7 @@
     border-radius: 4px;
     
     .body {
+      position: relative;
       padding: 16px 20px 0px 20px;
       height: 120px;
       
@@ -38,6 +39,14 @@
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
+      }
+      
+      .destroy-event {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        // Change filter to real image
+        filter: invert(53%) sepia(69%) saturate(1428%) hue-rotate(210deg) brightness(91%) contrast(87%);
       }
     }
     

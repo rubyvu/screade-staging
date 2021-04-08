@@ -6,7 +6,10 @@
           p #{event.title}
         .event-description
           p #{event.description}
-      
+          
+        = link_to event_path(id: event.id), class: 'destroy-event', method: :delete, data: { confirm: 'Do you really want to delete this Event?' } do
+          = image_pack_tag('media/images/icons/ic_delete_object.png')
+          
       .footer
         .date
           = image_pack_tag 'media/images/icons/ic_calendar.png'
