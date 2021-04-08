@@ -1,4 +1,4 @@
-class Api::V1::TopicsController < Api::V1::ApiController
+class Api::V1::GroupsController < Api::V1::ApiController
   
   # GET /api/v1/groups
   def index
