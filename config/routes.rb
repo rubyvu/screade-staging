@@ -182,7 +182,7 @@ Rails.application.routes.draw do
       end
       resources :user_security_questions, only: [:index]
       resources :users, only: [:show], param: :username, username: User::USERNAME_ROUTE_FORMAT do
-        resources :squads, only: [:index]
+        resources :squad_members, only: [:index]
       end
     end
   end

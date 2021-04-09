@@ -1,4 +1,4 @@
-## Get User Squad by username - API endpoint
+## Get User Squad by Username - API endpoint
 
 ### Navigation
 [README](../../../../README.md)
@@ -9,7 +9,7 @@
 GET
 
 ### API endpoint
-`/api/v1/user/:username/squads`
+`/api/v1/user/:username/squad_members`
 
 ### Request body
 ```
@@ -23,7 +23,7 @@ GET
 ```
 HTTP code 200 :ok
 {
-  "accepted_squad_requests": "[SquadRequest]"                                   (array of objects, required)
+  "squad_members_requests": "[SquadRequest]"                                    (array of objects, required)
 }
 ```
 
