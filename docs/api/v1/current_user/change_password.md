@@ -17,7 +17,7 @@ POST
   "user": {
     "old_password": '123123123'                                                 (string, required)
     "password": '321321321'                                                     (string, required)
-    "old_password": '321321321'                                                 (string, required)
+    "password_confirmation": '321321321'                                                 (string, required)
   }
 }
 ```
