@@ -4,9 +4,9 @@ class EventsController < ApplicationController
   # GET /events/
   def index
     begin
-      current_datetime = Time.parse(params[:date])
+      current_datetime = Time.zone.parse(params[:date]).getutc
     rescue
-      current_datetime = Time.now
+      current_datetime = Time.zone.now
     end
     
     # Get events
@@ -65,7 +65,7 @@ class EventsController < ApplicationController
       
       begin
         # Get Datetime in UTC
-        Time.parse("#{date} #{time}")
+        Time.zone.parse("#{date} #{time}").getutc
       rescue
         nil
       end
