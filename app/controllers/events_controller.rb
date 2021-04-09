@@ -6,7 +6,7 @@ class EventsController < ApplicationController
     begin
       current_datetime = Time.parse(params[:date])
     rescue
-      current_datetime = DateTime.now
+      current_datetime = DateTime.current
     end
     
     beginning_of_month = current_datetime.beginning_of_month
@@ -32,8 +32,8 @@ class EventsController < ApplicationController
   def create
     event = Event.new(event_params.except(:date))
     event.user = current_user
-    event.start_date = get_datetime(event_params[:date], event_params[:start_date])
-    event.end_date = get_datetime(event_params[:date], event_params[:end_date])
+    event.start_date = get_utc_datetime(event_params[:date], event_params[:start_date])
+    event.end_date = get_utc_datetime(event_params[:date], event_params[:end_date])
     
     if event.save
       render js: "window.location = '#{events_path}'"
@@ -53,11 +53,13 @@ class EventsController < ApplicationController
       @event = Event.find(params[:id])
     end
     
-    def get_datetime(date, time)
+    def get_utc_datetime(date, time)
       return nil if date.blank? || time.blank?
       
       begin
-        Time.parse("#{date} #{time}").getutc
+        # Get Datetime in UTC
+        time_zone_cookies = cookies[:time_zone].to_i
+        ActiveSupport::TimeZone[-time_zone_cookies.minutes].parse("#{date} #{time}").getutc
       rescue
         nil
       end

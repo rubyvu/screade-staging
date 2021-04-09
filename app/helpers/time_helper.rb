@@ -1,29 +1,29 @@
 module TimeHelper
-  def format_time(time, format = "yyyy-MM-dd'T'HH:mm:ss.SSSxxx")
-    content_tag(
-      :span,
-      time,
-      data: { "time-format": format, "time-value": time.to_json }
-    )
-  end
-
-  def relative_time(time)
-    format_time(time, :relative)
-  end
 
   def year(time)
-    format_time(time, "yyyy")
+    format_time(time, "%Y")
   end
   
   def month_with_date(time)
-    format_time(time, "MM.dd.yyyy")
+    format_time(time, "%m.%d.%Y")
   end
   
   def hours_seconds(time)
-    format_time(time, "HH:mm")
+    format_time(time, "%H:%M")
   end
   
   def comment_timestamp(time)
-    format_time(time, "MM/dd/yyyy-HH:mm")
+    format_time(time, "%m/%d/%Y-%H:%M")
   end
+  
+  private
+    def format_time(date_time, time_format)
+      begin
+        time_zone_cookies = cookies[:time_zone].to_i
+        timezone = ActiveSupport::TimeZone[-time_zone_cookies.minutes]
+        date_time.in_time_zone(timezone).strftime(time_format)
+      rescue
+        date_time.strftime(time_format)
+      end
+    end
 end
