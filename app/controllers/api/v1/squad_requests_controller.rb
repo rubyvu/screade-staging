@@ -1,5 +1,6 @@
 class Api::V1::SquadRequestsController < Api::V1::ApiController
   before_action :set_squad_request, only: [:accept, :decline]
+  
   # GET /api/v1/squad_requests
   def index
     squad_requests_as_receiver = current_user.squad_requests_as_receiver.where(accepted_at: nil, declined_at: nil).page(params[:page]).per(30)
@@ -55,6 +56,6 @@ class Api::V1::SquadRequestsController < Api::V1::ApiController
     end
     
     def set_squad_request
-      @squad_request = SquadRequst.find(params[:id])
+      @squad_request = SquadRequest.find(params[:id])
     end
 end

@@ -66,6 +66,7 @@
 - [Create new request](api/v1/squad_requests/create.md)
 - [Decline request](api/v1/squad_requests/decline.md)
 - [Get requsts list](api/v1/squad_requests/index.md)
+- [Get User Squads](api/v1/squads/index.md)
 
 ### Topic
 - [Create new Topic](api/v1/topics/create.md)
