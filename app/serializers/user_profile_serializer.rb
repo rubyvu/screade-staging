@@ -64,6 +64,12 @@ class UserProfileSerializer < ActiveModel::Serializer
     end
   end
   
+  attribute :squad_request_id
+  def squad_request_id
+    current_user = instance_options[:current_user]
+    SquadRequest.where(receiver: current_user, requestor: object).or(SquadRequest.where(receiver: object, requestor: current_user)).first&.id
+  end
+  
   attribute :views_count
   def views_count
     # How many User posts viewd by another Users
