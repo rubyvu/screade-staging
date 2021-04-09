@@ -27,4 +27,4 @@
 ```
 
 ### References
-- [Language JSON object](../../../json_objects/language.md)
+- [Language JSON object](./language.md)

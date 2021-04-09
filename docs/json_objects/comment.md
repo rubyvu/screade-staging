@@ -18,4 +18,4 @@
 ```
 
 ### References
-- [UserProfile JSON object](../../../json_objects/user_profile.md)
+- [UserProfile JSON object](./user_profile.md)

@@ -45,7 +45,7 @@ class Api::V1::SquadRequestsController < Api::V1::ApiController
   
   # POST /api/v1/squad_requests/:id/decline
   def decline
-    @squad_request.update_columns(declined_at: DateTime.current)
+    @squad_request.update_columns(accepted_at: nil, declined_at: DateTime.current)
     squad_request_json = SquadRequestSerializer.new(@squad_request, current_user: current_user).as_json
     render json: { squad_request: squad_request_json }, status: :ok
   end
