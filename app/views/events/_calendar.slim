@@ -18,5 +18,5 @@
     span S
   .dates
     - date[:days].each do |day|
-      button class="#{ Date.current.day == day && date[:is_current_month] ? 'today' : '' }"
+      button class="#{ Date.current.day == day && date[:is_current_month] ? 'today' : '' }" class="#{ date[:event_days].include?(day) ? 'active' : ''}"
         time #{day}

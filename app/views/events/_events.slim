@@ -11,16 +11,15 @@
           = image_pack_tag('media/images/icons/ic_delete_object.png')
           
       .footer
-        .date
-          = image_pack_tag 'media/images/icons/ic_calendar.png'
-          span #{month_with_date(event.start_date)}
-          
-        .time
-          = image_pack_tag 'media/images/icons/ic_clock.png'
-          
-          = hours_seconds(event.start_date)
-          | -
-          = hours_seconds(event.end_date)
+        .footer-content
+          .date
+            = image_pack_tag 'media/images/icons/ic_calendar.png'
+            span #{month_with_date(event.start_date)}
+            
+          .time
+            = image_pack_tag 'media/images/icons/ic_clock.png'
+            
+            span #{hours_seconds(event.start_date)} - #{hours_seconds(event.end_date)}
 
   .floating-button-wrapper
     = link_to '', class: 'btn btn-primary floating my-2 my-sm-0', data: { toggle: "modal", target: "#modal-new-event" } do

@@ -1,4 +1,6 @@
 .calendar {
+  flex: 1 auto;
+  width: 200px;
   display: inline-grid;
   justify-content: center;
   align-items: center;
@@ -25,9 +27,9 @@
       justify-content: center;
       align-items: center;
       text-decoration: none;
-      width: 36px;
-      height: 36px;
-      border-radius: 36px;
+      width: 30px;
+      height: 30px;
+      border-radius: 30px;
       transition-duration: .2s;
       position: relative;
       
@@ -46,7 +48,7 @@
     margin-bottom: 15px;
     
     span {
-      width: 36px;
+      width: 30px;
       justify-self: center;
       align-self: center;
       text-align: center;
@@ -58,6 +60,7 @@
     grid-template-columns: repeat(7, 1fr);
     
     button{
+      position: relative;
       cursor: auto;
       outline: 0;
       border: 0;
@@ -65,14 +68,26 @@
       font-size: 16px;
       justify-self: center;
       align-self: center;
-      width: 36px;
-      height: 36px;
+      width: 30px;
+      height: 30px;
       border-radius: 50px;
       margin: 2px;
       transition-duration: .2s;
       
       &.today {
         background-color: $color-light-blue;
+      }
+      
+      &.active:before {
+        position: absolute;
+        content: "";
+        height: 5px;
+        width: 5px;
+        border-radius: 50%;
+        background-color: $color-blue;
+        bottom: 0;
+        left: 50%;
+        margin-left: -2.5px;
       }
       
       &:first-child {
@@ -84,4 +99,8 @@
       }
     }
   }
+}
+
+@media (max-width: map-get($grid-breakpoints, "lg")) {
+  .calendar { width: 100%; }
 }

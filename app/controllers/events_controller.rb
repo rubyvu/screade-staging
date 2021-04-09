@@ -6,25 +6,32 @@ class EventsController < ApplicationController
     begin
       current_datetime = Time.parse(params[:date])
     rescue
-      current_datetime = DateTime.current
+      current_datetime = Time.now
     end
     
+    # Get events
     beginning_of_month = current_datetime.beginning_of_month
     end_of_month =  current_datetime.end_of_month
     @events = current_user.events.where('start_date >= ? AND start_date <= ?', beginning_of_month, end_of_month).order(start_date: :asc)
     
+    # Get month days for Calendar
     begining_of_the_week = current_datetime.at_beginning_of_month.wday
     empty_days = Array.new(begining_of_the_week > 0 ? begining_of_the_week-1 : 0) { nil }
     
     days_in_the_month = current_datetime.end_of_month.day
     calendar_days = Array.new(days_in_the_month) {|i| i+1 }
     
+    # Get days of events for Calendar
+    event_days = []
+    @events.map { |event| event_days << event.start_date.day }
+    
     @date = {
       year: current_datetime.year,
       month: current_datetime.strftime("%B"),
       current_date: current_datetime,
       days: empty_days + calendar_days,
-      is_current_month: DateTime.now >= beginning_of_month &&  DateTime.now <= end_of_month
+      is_current_month: DateTime.now >= beginning_of_month &&  DateTime.now <= end_of_month,
+      event_days: event_days.uniq
     }
   end
   
@@ -58,8 +65,7 @@ class EventsController < ApplicationController
       
       begin
         # Get Datetime in UTC
-        time_zone_cookies = cookies[:time_zone].to_i
-        ActiveSupport::TimeZone[-time_zone_cookies.minutes].parse("#{date} #{time}").getutc
+        Time.parse("#{date} #{time}")
       rescue
         nil
       end

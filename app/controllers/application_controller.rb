@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_location
+  before_action :set_time_zone
   
   # Helpers for custom Devise modal views
   helper_method :resource_name, :resource, :devise_mapping, :resource_class
@@ -46,6 +47,15 @@ class ApplicationController < ActionController::Base
         cookies[:current_location] = result.country_code&.upcase
       rescue
         puts "[WARNING]: Location request limit reached"
+      end
+    end
+    
+    def set_time_zone
+      begin
+        time_zone_cookies = cookies[:time_zone].to_i
+        Time.zone = ActiveSupport::TimeZone[-time_zone_cookies.minutes]
+      rescue
+        Time.zone = 'UTC'
       end
     end
 end
