@@ -51,6 +51,19 @@ class UserProfileSerializer < ActiveModel::Serializer
     object.profile_picture.square_320.url
   end
   
+  attribute :squad_request_state
+  def squad_request_state
+    current_user = instance_options[:current_user]
+    suqad_request = SquadRequest.where(receiver: current_user, requestor: object).or(SquadRequest.where(receiver: object, requestor: current_user)).first
+    if suqad_request&.accepted_at.present?
+      'request_confirmed'
+    elsif suqad_request.present? && suqad_request&.accepted_at.blank? && suqad_request&.declined_at.blank?
+      'request_sent'
+    else
+      'none'
+    end
+  end
+  
   attribute :views_count
   def views_count
     # How many User posts viewd by another Users

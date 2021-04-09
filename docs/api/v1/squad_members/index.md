@@ -9,7 +9,7 @@
 GET
 
 ### API endpoint
-`/api/v1/user/:username/squad_members`
+`/api/v1/users/:user_username/squad_members`
 
 ### Request body
 ```

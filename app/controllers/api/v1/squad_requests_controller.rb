@@ -4,7 +4,7 @@ class Api::V1::SquadRequestsController < Api::V1::ApiController
   # GET /api/v1/squad_requests
   def index
     squad_requests_as_receiver = current_user.squad_requests_as_receiver.where(accepted_at: nil, declined_at: nil).page(params[:page]).per(30)
-    squad_requests_json = ActiveModel::Serializer::CollectionSerializer.new(squad_requests_as_receiver, serializer: SquadRequestSerializer).as_json
+    squad_requests_json = ActiveModel::Serializer::CollectionSerializer.new(squad_requests_as_receiver, serializer: SquadRequestSerializer, current_user: current_user).as_json
     render json: { squad_requests: squad_requests_json }, status: :ok
   end
   
@@ -29,7 +29,7 @@ class Api::V1::SquadRequestsController < Api::V1::ApiController
     end
     
     if squad_request.save
-      squad_request_json = SquadRequestSerializer.new(squad_request).as_json
+      squad_request_json = SquadRequestSerializer.new(squad_request, current_user: current_user).as_json
       render json: { squad_request: squad_request_json }, status: :ok
     else
       render json: { errors: squad_request.errors.full_messages }, status: :unprocessable_entity
@@ -39,14 +39,14 @@ class Api::V1::SquadRequestsController < Api::V1::ApiController
   # POST /api/v1/squad_requests/:id/accept
   def accept
     @squad_request.update_columns(accepted_at: DateTime.current, declined_at: nil)
-    squad_request_json = SquadRequestSerializer.new(@squad_request).as_json
+    squad_request_json = SquadRequestSerializer.new(@squad_request, current_user: current_user).as_json
     render json: { squad_request: squad_request_json }, status: :ok
   end
   
   # POST /api/v1/squad_requests/:id/decline
   def decline
     @squad_request.update_columns(declined_at: DateTime.current)
-    squad_request_json = SquadRequestSerializer.new(@squad_request).as_json
+    squad_request_json = SquadRequestSerializer.new(@squad_request, current_user: current_user).as_json
     render json: { squad_request: squad_request_json }, status: :ok
   end
   

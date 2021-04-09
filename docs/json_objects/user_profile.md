@@ -21,6 +21,7 @@
   "lits_count": "0",                                                            (integer, required)
   "middle_name": "Michael",                                                     (string, optional)
   "profile_picture": "http://site.com/small.png",                               (string, optional)
+  "squad_request_state": 'request_confirmed||request_sent||none'                (string, required)
   "views_count": "2"                                                            (integer, required)
   "username": "john"                                                            (string, required)
 }

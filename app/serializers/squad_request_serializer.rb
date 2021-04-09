@@ -4,11 +4,11 @@ class SquadRequestSerializer < ActiveModel::Serializer
   attribute :id
   attribute :receiver
   def receiver
-    UserProfileSerializer.new(object.receiver).as_json
+    UserProfileSerializer.new(object.receiver, current_user: instance_options[:current_user]).as_json
   end
   
   attribute :requestor
   def requestor
-    UserProfileSerializer.new(object.requestor).as_json
+    UserProfileSerializer.new(object.requestor, current_user: instance_options[:current_user]).as_json
   end
 end

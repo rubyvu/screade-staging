@@ -8,7 +8,8 @@ class CommentSerializer < ActiveModel::Serializer
   
   attribute :commentator
   def commentator
-    UserProfileSerializer.new(object.user).as_json
+    current_user = instance_options[:current_user]
+    UserProfileSerializer.new(object.user, current_user: current_user).as_json
   end
   
   attribute :is_lited
