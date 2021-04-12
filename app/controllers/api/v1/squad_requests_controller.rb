@@ -18,7 +18,7 @@ class Api::V1::SquadRequestsController < Api::V1::ApiController
       
       # Change roles in existing Squad requests
       if current_user == squad_request.receiver
-        squad_request.reciver = receiver
+        squad_request.receiver = receiver
         squad_request.requestor = current_user
       end
       

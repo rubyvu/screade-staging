@@ -60,7 +60,9 @@ $( document ).on('turbolinks:load', function() {
       }).done(function( data ) {
         if ( data.success ) {
           iconObject.children('.ic').removeClass('active')
-          iconObject.children('span').text(litCounter-1)
+          if ( litCounter <= 999 ) {
+            iconObject.children('span').text(litCounter-1)
+          }
          }
       });
     } else {
@@ -70,7 +72,9 @@ $( document ).on('turbolinks:load', function() {
       }).done(function( data ) {
         if ( data.success ) {
           iconObject.children('.ic').addClass('active')
-          iconObject.children('span').text(litCounter+1)
+          if ( litCounter < 999 ) {
+            iconObject.children('span').text(litCounter+1)
+          }
         }
       });
     }
@@ -98,7 +102,9 @@ $( document ).on('turbolinks:load', function() {
       }).done(function( data ) {
         if ( data.success ) {
           iconObject.children('.ic').removeClass('active')
-          iconObject.children('span').text(litCounter-1)
+          if ( litCounter <= 999 ) {
+            iconObject.children('span').text(litCounter-1)
+          }
          }
       });
     } else {
@@ -108,7 +114,9 @@ $( document ).on('turbolinks:load', function() {
       }).done(function( data ) {
         if ( data.success ) {
           iconObject.children('.ic').addClass('active')
-          iconObject.children('span').text(litCounter+1)
+          if ( litCounter < 999 ) {
+            iconObject.children('span').text(litCounter+1)
+          }
         }
       });
     }
@@ -127,7 +135,9 @@ $( document ).on('turbolinks:load', function() {
       }).done(function( data ) {
         if ( data.success ) {
           iconObject.addClass('active')
-          iconObject.parent().children('span').text(viewCounter+1)
+          if ( litCounter < 999 ) {
+            iconObject.parent().children('span').text(viewCounter+1)
+          }
         }
       });
     }

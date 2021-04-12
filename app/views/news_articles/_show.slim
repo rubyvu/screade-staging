@@ -13,11 +13,11 @@
     .info-panel
       .div class="#{ current_user ? 'info-panel-value-wrapper' : 'info-panel-value-wrapper pointer-disable' }"
         i class=(news_article.is_lited(current_user) ? "ic lit active reverse" : "ic lit reverse")
-        span.info-panel-value.color-black #{news_article.lits.count}
+        span.info-panel-value.color-black #{counter_measurement(news_article.lits.count)}
         
       .info-panel-value-wrapper.pointer-disable
         i class=(news_article.is_commented(current_user) ? "ic comment reverse active" : "ic comment reverse")
-        span.info-panel-value.color-black #{news_article.comments.count}
+        span.info-panel-value.color-black #{counter_measurement(news_article.comments.count)}
     
   .news-article-text
     .news-article-title
