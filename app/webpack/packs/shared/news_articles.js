@@ -135,7 +135,7 @@ $( document ).on('turbolinks:load', function() {
       }).done(function( data ) {
         if ( data.success ) {
           iconObject.addClass('active')
-          if ( litCounter < 999 ) {
+          if ( viewCounter < 999 ) {
             iconObject.parent().children('span').text(viewCounter+1)
           }
         }
