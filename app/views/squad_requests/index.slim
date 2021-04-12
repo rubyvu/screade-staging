@@ -1,0 +1,21 @@
+.squad-request-switcher
+  = link_to "Requests", squad_requests_path, class: "btn btn-outline-primary"
+  = link_to "Squad", user_squad_members_path(current_user.username), class: "btn btn-link"
+  
+.squad-request-wrapper
+  - @squad_requests_as_receiver.each do |squad_request|
+    .squad-request-card
+        .photo
+          = link_to user_path(squad_request.requestor.username) do
+            - if squad_request.requestor.profile_picture.url
+              = image_tag(squad_request.requestor.profile_picture.square_320.url, class: 'profile-image md')
+            - else
+              = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image md')
+            
+        .body
+          .title
+            span #{squad_request.requestor.full_name.present? ? squad_request.requestor.full_name : squad_request.requestor.username.capitalize}
+        
+          .action
+            = link_to "Send Squad Request", squad_requests_path, class: "btn btn-primary"
+            //= link_to "Remove From Squad", squad_requests_path, class: "btn btn-outline-primary"

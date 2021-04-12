@@ -59,6 +59,13 @@ Rails.application.routes.draw do
   end
   
   resources :settings, only: [:update]
+  resources :squad_requests, only: [:index, :create] do
+    member do
+      post :accept
+      post :decline
+    end
+  end
+  
   resources :user_images, only: [], param: :username, username: User::USERNAME_ROUTE_FORMAT do
     member do
       get :images
@@ -83,7 +90,9 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :users, only: [:show], param: :username, username: User::USERNAME_ROUTE_FORMAT
+  resources :users, only: [:show], param: :username, username: User::USERNAME_ROUTE_FORMAT do
+    resources :squad_members, only: [:index]
+  end
   
   # API routes
   namespace :api, defaults: { format: 'json' } do

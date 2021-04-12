@@ -1,0 +1,51 @@
+.squad-request-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  
+  .squad-request-card {
+    display: flex;
+    width: 33%;
+    align-items: center;
+    margin: 12px 0;
+    padding: 0 12px;
+    
+    .photo {}
+    
+    .body {
+      position: relative;
+      width: 100%;
+      max-width: 331px;
+      padding: 24px 0px;
+      margin-left: 16px;
+      display: inline-grid;
+      grid-template-columns: 50% 50%;
+      align-items: center;
+      border-bottom: 1px solid $color-light-grey;
+      
+      .title {
+        span {
+          font-size: 16px;
+          line-height: 24px;
+          letter-spacing: 0.15px;
+          max-width: 118px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+      
+      .action {
+        text-align: right;
+        
+        a.btn {
+          padding: 10px 18px;
+          font-size: 10px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: map-get($grid-breakpoints, "lg")) {
+  .squad-request-wrapper .squad-request-card { width: 100%; }
+  .squad-request-wrapper .squad-request-card .body { max-width: 100%; }
+}

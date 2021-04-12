@@ -5,6 +5,11 @@
   border-radius: 50%;
   background-color: $color-light-grey;
   object-fit: cover;
+  
+  &.md {
+    height: 56px;
+    width: 56px;
+  }
 }
 
 // Full Article, Post image
