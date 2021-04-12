@@ -26,26 +26,30 @@ class SquadRequestsController < ApplicationController
       squad_request = SquadRequest.new(requestor: current_user, receiver: receiver)
     end
     
-    if squad_request.save
-      squad_request_json = SquadRequestSerializer.new(squad_request, current_user: current_user).as_json
-      render json: { squad_request: squad_request_json }, status: :ok
+    squad_request.save!
+    if params[:is_curent_user] == 'true'
+      redirect_to user_path(receiver.username)
     else
-      render json: { errors: squad_request.errors.full_messages }, status: :unprocessable_entity
+      redirect_to squad_requests_path
     end
   end
   
   # POST /api/v1/squad_requests/:id/accept
   def accept
     @squad_request.update_columns(accepted_at: DateTime.current, declined_at: nil)
-    squad_request_json = SquadRequestSerializer.new(@squad_request, current_user: current_user).as_json
-    render json: { squad_request: squad_request_json }, status: :ok
+    redirect_to user_squad_members_path(current_user.username)
   end
   
   # POST /api/v1/squad_requests/:id/decline
   def decline
     @squad_request.update_columns(accepted_at: nil, declined_at: DateTime.current)
-    squad_request_json = SquadRequestSerializer.new(@squad_request, current_user: current_user).as_json
-    render json: { squad_request: squad_request_json }, status: :ok
+    
+    if params[:is_curent_user] == 'true'
+      @squad_request.requestor == current_user ? user = @squad_request.receiver : user = @squad_request.requestor
+      redirect_to user_path(user.username)
+    else
+      redirect_to user_squad_members_path(current_user.username)
+    end
   end
   
   private

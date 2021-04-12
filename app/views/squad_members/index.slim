@@ -1,23 +1,26 @@
-.squad-request-switcher
-  = link_to "Requests", squad_requests_path, class: "btn btn-link"
-  = link_to "Squad", user_squad_members_path(current_user.username), class: "btn btn-outline-primary"
+- if current_user == @user
+  .squad-request-switcher
+    = link_to "Requests", squad_requests_path, class: "btn btn-link"
+    = link_to "Squad", user_squad_members_path(current_user.username), class: "btn btn-outline-primary"
 
 .squad-request-wrapper
   - @squad_members_requests.each do |squad_request|
     .squad-request-card
         .photo
-          = link_to user_path(squad_request.requestor.username) do
-            - if squad_request.requestor.profile_picture.url
-              = image_tag(squad_request.requestor.profile_picture.square_320.url, class: 'profile-image md')
+          - squad_request.requestor == @user ? user = squad_request.receiver : user = squad_request.requestor
+          = link_to user_path(user.username) do
+            - if user.profile_picture.url
+              = image_tag(user.profile_picture.square_320.url, class: 'profile-image md')
             - else
               = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image md')
             
         .body
           .title
-            span #{squad_request.requestor.full_name.present? ? squad_request.requestor.full_name : squad_request.requestor.username.capitalize}
-        
-          .action
-            = link_to squad_requests_path, class: 'mr-3' do
-              = image_pack_tag('media/images/icons/ic_confirm.png')
-            = link_to squad_requests_path do
-              = image_pack_tag('media/images/icons/ic_cancel.png')
+            span #{user.full_name.present? ? user.full_name : user.username.capitalize}
+          
+          - if current_user == @user
+            .action
+              - if current_user == @user
+                = link_to "Remove From Squad", decline_squad_request_path(squad_request), class: "btn btn-outline-primary", method: :post
+              - else
+                = link_to "Send Squad Request", accept_squad_request_path(squad_request), class: "btn btn-primary", method: :post

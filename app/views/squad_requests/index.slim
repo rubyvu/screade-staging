@@ -1,6 +1,6 @@
 .squad-request-switcher
-  = link_to "Requests", squad_requests_path, class: "btn btn-outline-primary"
-  = link_to "Squad", user_squad_members_path(current_user.username), class: "btn btn-link"
+    = link_to "Requests", squad_requests_path, class: "btn btn-outline-primary"
+    = link_to "Squad", user_squad_members_path(current_user.username), class: "btn btn-link"
   
 .squad-request-wrapper
   - @squad_requests_as_receiver.each do |squad_request|
@@ -15,7 +15,9 @@
         .body
           .title
             span #{squad_request.requestor.full_name.present? ? squad_request.requestor.full_name : squad_request.requestor.username.capitalize}
-        
+            
           .action
-            = link_to "Send Squad Request", squad_requests_path, class: "btn btn-primary"
-            //= link_to "Remove From Squad", squad_requests_path, class: "btn btn-outline-primary"
+            = link_to accept_squad_request_path(squad_request), class: 'mr-3', method: :post do
+              = image_pack_tag('media/images/icons/ic_confirm.png')
+            = link_to decline_squad_request_path(squad_request), method: :post do
+              = image_pack_tag('media/images/icons/ic_cancel.png')
