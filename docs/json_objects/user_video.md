@@ -12,5 +12,6 @@
   "file_thumbnail": "http://site.com/small.png"                                 (string, optional)
   "file_url": "http://site.com/small.png"                                       (string, required)
   "id": "123"                                                                   (integer, required)
+  "is_private": true                                                            (boolean, required)
 }
 ```

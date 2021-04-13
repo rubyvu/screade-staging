@@ -77,6 +77,8 @@
 ### User Assets
 - [Get Images](api/v1/user_assets/images.md)
 - [Get Videos](api/v1/user_assets/videos.md)
+- [Update Image](api/v1/user_images/update.md)
+- [Update Video](api/v1/user_videos/update.md)
 - [Destroy Images](api/v1/user_assets/destroy_images.md)
 - [Destroy Videos](api/v1/user_assets/destroy_videos.md)
 - [Get URL for File upload](api/v1/user_assets/upload_url.md)

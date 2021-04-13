@@ -15,6 +15,7 @@ GET
 ```
 {
   "filename": "test.png"                                                        (string, required)
+  "is_private": true                                                            (boolean, required)
 }
 ```
 

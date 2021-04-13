@@ -189,7 +189,10 @@ Rails.application.routes.draw do
           get :videos
         end
       end
+      
+      resources :user_images, only: [:update]
       resources :user_security_questions, only: [:index]
+      resources :user_videos, only: [:update]
       resources :users, only: [:show], param: :username, username: User::USERNAME_ROUTE_FORMAT do
         resources :squad_members, only: [:index]
       end

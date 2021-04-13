@@ -3,13 +3,19 @@ class Api::V1::UserAssetsController < Api::V1::ApiController
   
   # GET /api/v1/user_assets/:username/images
   def images
-    images_json = ActiveModel::Serializer::CollectionSerializer.new(@user.user_images.order(updated_at: :desc).page(params[:page]).per(30), serializer: UserImageSerializer).as_json
+    options = {}
+    options[:is_private] = false if @user != current_user
+    
+    images_json = ActiveModel::Serializer::CollectionSerializer.new(@user.user_images.where(options).order(updated_at: :desc).page(params[:page]).per(30), serializer: UserImageSerializer).as_json
     render json: { images: images_json }, status: :ok
   end
   
   # GET /api/v1/user_assets/:username/videos
   def videos
-    videos_json = ActiveModel::Serializer::CollectionSerializer.new(@user.user_videos.order(updated_at: :desc).page(params[:page]).per(30), serializer: UserVideoSerializer).as_json
+    options = {}
+    options[:is_private] = false if @user != current_user
+    
+    videos_json = ActiveModel::Serializer::CollectionSerializer.new(@user.user_videos.where(options).order(updated_at: :desc).page(params[:page]).per(30), serializer: UserVideoSerializer).as_json
     render json: { videos: videos_json }, status: :ok
   end
   
@@ -24,9 +30,9 @@ class Api::V1::UserAssetsController < Api::V1::ApiController
     store_path = "uploads/#{SecureRandom.uuid}/#{filename}"
     asset_type = store_path.split('.').last
     if UserImage::IMAGE_RESOLUTIONS.include?(asset_type)
-      uploader = UserImage.new(user: current_user)
+      uploader = UserImage.new(user: current_user, is_private: params[:is_private])
     elsif UserVideo::VIDEO_RESOLUTIONS.include?(asset_type)
-      uploader = UserVideo.new(user: current_user)
+      uploader = UserVideo.new(user: current_user, is_private: params[:is_private])
     else
       render json: { errors: ['Wrong file format.']}, status: :unprocessable_entity
       return

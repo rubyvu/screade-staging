@@ -12,4 +12,5 @@ class UserVideoSerializer < ActiveModel::Serializer
   end
   
   attribute :id
+  attribute :is_private
 end

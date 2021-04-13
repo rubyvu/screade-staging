@@ -935,7 +935,8 @@ CREATE TABLE public.user_images (
     file_hex character varying,
     user_id integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    is_private boolean DEFAULT true
 );
 
 
@@ -1031,7 +1032,8 @@ CREATE TABLE public.user_videos (
     file_hex character varying,
     user_id integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    is_private boolean DEFAULT true
 );
 
 
@@ -1843,6 +1845,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210406091258'),
 ('20210407093731'),
 ('20210408093426'),
-('20210413075147');
+('20210413075147'),
+('20210413090630');
 
 
