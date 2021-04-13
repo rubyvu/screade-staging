@@ -32,7 +32,7 @@ class NewsArticlesController < ApplicationController
   # GET /news_articles/:id/comments
   def comments
     @new_comment = Comment.new()
-    @comments = Comment.where(source: @news_article).order(created_at: :desc)
+    @comments = Comment.where(source: @news_article, comment_id: nil).order(created_at: :desc)
   end
   
   # POST /news_articles/:id/create_comment
@@ -41,7 +41,11 @@ class NewsArticlesController < ApplicationController
     new_comment.source = @news_article
     new_comment.user = current_user
     new_comment.save
-    redirect_to comments_news_article_path(@news_article)
+    if new_comment.comment.present?
+      redirect_to news_article_comment_reply_comments_path(news_article_id: @news_article.id, comment_id: new_comment.comment.id )
+    else
+      redirect_to comments_news_article_path(@news_article)
+    end
   end
   
   private
@@ -50,6 +54,6 @@ class NewsArticlesController < ApplicationController
     end
     
     def comment_params
-      params.require(:comment).permit(:message)
+      params.require(:comment).permit(:comment_id, :message)
     end
 end

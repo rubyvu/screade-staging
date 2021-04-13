@@ -17,6 +17,7 @@
 
 ### Comments
 - [List of Article Comments](api/v1/news_articles/index_comment.md)
+- [List of ReplyComments for Comment](api/v1/comments/reply_comments.md)
 - [Add Comment to Article](api/v1/news_articles/create_comment.md)
 - [Lit Comment](api/v1/comments/lit.md)
 - [Unlit Comment](api/v1/comments/unlit.md)

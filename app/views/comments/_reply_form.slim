@@ -1,0 +1,9 @@
+= form_for(new_comment, url: create_comment_news_article_path(id: news_article.id), html: { method: :post }) do |f|
+  = f.hidden_field :comment_id, value: new_comment.comment.id
+  
+  .input-group.mb-3
+    = f.text_field :message, autofocus: false, autocomplete: 'off', placeholder: "Write a comment", class: 'form-control'
+    
+    .input-group-append
+      .input-group-text.submit-button
+        = f.submit '', class: 'btn btn-link send-message-button'

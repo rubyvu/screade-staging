@@ -1,4 +1,4 @@
-## Comment Lit - API endpoint
+## ReplyComments list for Comment - API endpoint
 
 ### Navigation
 [README](../../../../README.md)
@@ -6,14 +6,16 @@
 [API reference](../../../api_reference.md)
 
 ### HTTP method
-POST
+GET
 
 ### API endpoint
-`/api/v1/comments/:id/lit`
+`/api/v1/comments/:id/reply_comments`
 
 ### Request body
 ```
-{}
+{
+  "page": 1                                                                     (integer, required)
+}
 ```
 
 ### Response
@@ -31,14 +33,6 @@ HTTP code 200 :ok
 HTTP code 404 :not_found
 {
   "errors": ['Record not found.']                                               (array of strings, required)
-}
-```
-
-- when Lit params is not valid
-```
-HTTP code 422 :unprocessable_entity
-{
-  "errors": ["Source is required"]                                              (array of strings, required)
 }
 ```
 

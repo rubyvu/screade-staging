@@ -42,6 +42,10 @@ Rails.application.routes.draw do
   end
   resources :home, only: [:index]
   resources :news_articles, only: [] do
+    resources :comments, only: [] do
+      get :reply_comments
+    end
+    
     member do
       get :comments
       post :lit
@@ -107,6 +111,7 @@ Rails.application.routes.draw do
       
       resources :comments, only: [] do
         member do
+          get :reply_comments
           post :lit
           delete :unlit
         end

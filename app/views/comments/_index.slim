@@ -2,42 +2,18 @@
   h5 Comments
   
   - if current_user
-    = form_for(@new_comment, url: create_comment_news_article_path, html: { method: :post }) do |f|
+    - if @new_comment.comment.present?
+      // Replied comment
+      .comments-scroll
+        = render 'comments/reply_comment', comment: @new_comment.comment, index: 0
         
-      .input-group.mb-3
-        = f.text_field :message, autofocus: false, autocomplete: 'off', placeholder: "Write a comment", class: 'form-control'
-        
-        .input-group-append
-          .input-group-text.submit-button
-            = f.submit '', class: 'btn btn-link send-message-button'
-            
+      = render 'comments/reply_form', new_comment: @new_comment, news_article: @news_article
+    - else
+      = render 'comments/form', new_comment: @new_comment
+      
   .comments-scroll
     - comments.each_with_index do |comment, index|
-      .comment-wrapper
-        .comment-image-wrapper
-          - if current_user
-            = link_to user_path(comment.user.username) do
-              - if comment.user.profile_picture.url
-                = image_tag(comment.user.profile_picture.square_320.url, class: 'profile-image')
-              - else
-                = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
-          - else
-            - if comment.user.profile_picture.url
-              = image_tag(comment.user.profile_picture.square_320.url, class: 'profile-image')
-            - else
-              = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
-          
-        .comment-content-wrapper value="#{comment.id}"
-          .comment-user-name
-            = comment.user.full_name.present? ? comment.user.full_name : comment.user.username
-          .comment-text
-            = comment.message
-          .comment-date
-            = comment_timestamp(comment.created_at)
-            
-            .div class="#{ current_user ? 'comment-lit' : 'comment-lit pointer-disable' }"
-              span.info-panel-value.color-black #{counter_measurement(comment.lits.size)}
-              i class=(comment.is_lited(current_user) ? "ic lit active reverse" : "ic lit reverse")
+      = render 'comments/comment', comment: comment, index: index
       
       - if (index+1)%5 == 0 && Rails.env.production?
         //= render './shared/ads/home_banner'
