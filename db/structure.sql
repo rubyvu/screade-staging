@@ -336,7 +336,8 @@ CREATE TABLE public.comments (
     source_type character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    lits_count integer DEFAULT 0 NOT NULL
+    lits_count integer DEFAULT 0 NOT NULL,
+    comment_id integer
 );
 
 
@@ -1841,6 +1842,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210406085532'),
 ('20210406091258'),
 ('20210407093731'),
-('20210408093426');
+('20210408093426'),
+('20210413075147');
 
 

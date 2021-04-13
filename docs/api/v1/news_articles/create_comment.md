@@ -16,6 +16,7 @@ POST
 {
   "comment": {
     "message": 'New message example'                                            (string, required)
+    "comment_id": 'New message example'                                         (string, optional)
   }
 }
 ```

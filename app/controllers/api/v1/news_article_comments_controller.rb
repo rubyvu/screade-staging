@@ -28,6 +28,6 @@ class Api::V1::NewsArticleCommentsController < Api::V1::ApiController
     end
     
     def comment_params
-      params.require(:comment).permit(:message)
+      params.require(:comment).permit(:message, :comment_id)
     end
 end

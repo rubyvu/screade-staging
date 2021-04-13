@@ -13,8 +13,10 @@ RSpec.describe Comment, type: :model do
   end
   
   context 'associations' do
+    it { should have_many(:replied_comments).class_name('Comment').with_foreign_key(:comment_id).dependent(:destroy) }
     it { should belong_to(:user) }
     it { should belong_to(:source) }
+    it { should belong_to(:comment).optional }
   end
   
   context 'validations' do
@@ -77,5 +79,50 @@ RSpec.describe Comment, type: :model do
       expect(news_article.comments.count).to eq(0)
       expect(news_article.commenting_users.count).to eq(0)
     end
+  end
+  
+  context 'reply' do
+    before :all do
+      @country = Country.find_by(code: 'US') || FactoryBot.create(:country, code: 'US')
+      @user_security_question = FactoryBot.create(:user_security_question)
+    end
+    
+    it 'should set child Comment' do
+      user = FactoryBot.create(:user, country: @country, user_security_question: @user_security_question)
+      news_article = FactoryBot.create(:news_article, country: @country)
+      
+      # Check that there no comments for new objects
+      expect(user.comments.count).to eq(0)
+      expect(user.commented_news_articles.count).to eq(0)
+      expect(news_article.comments.count).to eq(0)
+      expect(news_article.commenting_users.count).to eq(0)
+      
+      comment_for_article = FactoryBot.create(:comment, user: user, source: news_article)
+      reply_comment = FactoryBot.create(:comment, user: user, source: news_article, comment_id: comment_for_article.id)
+      
+      expect(user.comments.count).to eq(2)
+      expect(user.commented_news_articles.count).to eq(2)
+      expect(news_article.comments.count).to eq(2)
+      expect(news_article.commenting_users.uniq.count).to eq(1)
+    end
+    
+    it 'should NOT set child Comment for replied comment' do
+      user = FactoryBot.create(:user, country: @country, user_security_question: @user_security_question)
+      news_article = FactoryBot.create(:news_article, country: @country)
+      
+      # Check that there no comments for new objects
+      expect(user.comments.count).to eq(0)
+      expect(user.commented_news_articles.count).to eq(0)
+      expect(news_article.comments.count).to eq(0)
+      expect(news_article.commenting_users.count).to eq(0)
+      
+      comment_for_article = FactoryBot.create(:comment, user: user, source: news_article)
+      reply_comment = FactoryBot.create(:comment, user: user, source: news_article, comment: comment_for_article)
+      invalid_comment = FactoryBot.build(:comment, user: user, source: news_article, comment: reply_comment)
+      
+      expect(invalid_comment.valid?).to eq(false)
+      expect(invalid_comment.errors.full_messages.first).to eq('You can create reply only from parent comment.')
+    end
+    
   end
 end
