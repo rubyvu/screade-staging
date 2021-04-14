@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     end
   end
   
+  resources :contact_us_requests, only: [:new, :create]
   resources :current_user, only: [] do
     collection do
       put :update

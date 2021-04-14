@@ -1,0 +1,33 @@
+.w-75.my-5.mx-auto
+  h4.mb-5 Contact Us
+  = form_for @contact_us_request do |f|
+    - if flash[:error].present?
+      - flash[:error].each do |value|
+        .flash.global-errors #{value}
+        
+    .material-field
+      = f.label 'Email'
+      = f.email_field :email, class: 'form-control', required: true
+      
+    .material-field
+      = f.label 'Username'
+      = f.text_field :username, class: 'form-control', required: true
+      
+    .material-field
+      = f.label 'First name'
+      = f.text_field :first_name, class: 'form-control', required: true
+      
+    .material-field
+      = f.label 'Last name'
+      = f.text_field :last_name, class: 'form-control', required: true
+      
+    .material-field
+      = f.label 'Subject'
+      = f.text_field :subject, class: 'form-control', required: true
+      
+    .material-field
+      = f.label 'Message'
+      = f.text_field :message, class: 'form-control', required: true
+      
+    .actions
+      = f.submit 'Submit', class: 'btn btn-primary w-100'
