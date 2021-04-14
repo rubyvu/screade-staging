@@ -20,8 +20,9 @@
             = image_pack_tag 'media/images/icons/ic_clock.png'
             
             span #{hours_seconds(event.start_date)} - #{hours_seconds(event.end_date)}
-
-  .floating-button-wrapper
-    = link_to '', class: 'btn btn-primary floating my-2 my-sm-0', data: { toggle: "modal", target: "#modal-new-event" } do
-      = image_pack_tag 'media/images/icons/ic_plus.png'
-      span.ml-2 Add Event
+  
+#container-floating-wrapper
+  #container-floating
+    = link_to '', id: 'floating-button', data: { toggle: "modal", target: "#modal-new-event" } do
+      p.plus #{image_pack_tag('media/images/icons/ic_plus.png')} Add Event
+  
