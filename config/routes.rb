@@ -70,7 +70,7 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :user_images, only: [], param: :username, username: User::USERNAME_ROUTE_FORMAT do
+  resources :user_images, only: [:update], param: :username, username: User::USERNAME_ROUTE_FORMAT do
     member do
       get :images
       get :webhook
@@ -82,7 +82,7 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :user_videos, only: [], param: :username, username: User::USERNAME_ROUTE_FORMAT do
+  resources :user_videos, only: [:update], param: :username, username: User::USERNAME_ROUTE_FORMAT do
     member do
       get :videos
       get :webhook

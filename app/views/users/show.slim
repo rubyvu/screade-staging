@@ -48,41 +48,39 @@
       - else
         = link_to "Squad", user_squad_members_path(@user.username), class: "btn btn-outline-primary mx-2 fonts-styling #{@user.setting.font_family} #{@user.setting.font_style}"
   
-  - if @user.setting.is_images || @user == current_user
-    .user-profile-assets-wrapper
-      h4 Images
-      - if @images.present?
-        = link_to 'See all', images_user_image_path(@user.username), class: 'see-all-assets'
+  .user-profile-assets-wrapper
+    h4 Images
+    - if @images.present?
+      = link_to 'See all', images_user_image_path(@user.username), class: 'see-all-assets'
+      
+      .user-profile-assets
+        - @images.each do |user_image|
+          .image-wrapper
+            = image_tag(user_image.file.url, class: 'user-asset', data: { 'enlargeable': true })
+    - elsif @user == current_user
+      .new-assets
+        = link_to 'Your image library is empty', images_user_image_path(@user.username)
         
-        .user-profile-assets
-          - @images.each do |user_image|
-            .image-wrapper
-              = image_tag(user_image.file.url, class: 'user-asset', data: { 'enlargeable': true })
-      - elsif @user == current_user
-        .new-assets
-          = link_to 'Your image library is empty', images_user_image_path(@user.username)
+    - else
+      .new-assets
+        h6 No Images
           
-      - else
-        .new-assets
-          h6 No Images
-          
-  - if @user.setting.is_videos || @user == current_user
-    .user-profile-assets-wrapper
-      h4 Videos
-      - if @videos.present?
-        = link_to 'See all', videos_user_video_path(@user.username), class: 'see-all-assets'
+  .user-profile-assets-wrapper
+    h4 Videos
+    - if @videos.present?
+      = link_to 'See all', videos_user_video_path(@user.username), class: 'see-all-assets'
+      
+      .user-profile-assets
+        - @videos.each do |user_video|
+          .image-wrapper.video
+            = image_tag(user_video.file.thumb.url, class: 'user-asset', data: { 'video-id': user_video.id, 'video-url': user_video.file.url })
+    - elsif @user == current_user
+      .new-assets
+        = link_to 'Your video library is empty', videos_user_video_path(@user.username)
         
-        .user-profile-assets
-          - @videos.each do |user_video|
-            .image-wrapper.video
-              = image_tag(user_video.file.thumb.url, class: 'user-asset', data: { 'video-id': user_video.id, 'video-url': user_video.file.url })
-      - elsif @user == current_user
-        .new-assets
-          = link_to 'Your video library is empty', videos_user_video_path(@user.username)
-          
-      - else
-        .new-assets
-          h6 No Videos
+    - else
+      .new-assets
+        h6 No Videos
           
 = render './shared/video_player/player', video_player_id: 'user-assets-video-palyer'
 = render 'shared/modals/edit_profile'

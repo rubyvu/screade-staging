@@ -1,6 +1,7 @@
 /**************************************
 * Variables:
 **************************************/
+// Colors
 $color-blue: #3F51B5;
 $color-light-blue: #D4D7ED;
 $color-black: #000000;
@@ -8,6 +9,9 @@ $color-red: #DA100B;
 $color-grey: #9C9C9C;
 $color-light-grey: #EBF0F3;
 $color-white: #FFFFFF;
+
+// Sizes
+$max-body-width: 1440px;
 
 /**************************************
 * Custom bootstrab elements:
@@ -26,12 +30,13 @@ $grid-breakpoints: (
 
 @import 'icons';
 @import 'custom_fields';
+@import 'floating_action_button';
 @import 'navigation_bar';
 @import 'kaminari';
 @import 'main-elements';
 @import 'notification';
 @import 'spiner';
-@import 'toggle-switcher';
+@import 'toggle_switcher';
 @import './comments/index';
 @import './font_customaizer/index';
 @import './modals/index';
@@ -58,7 +63,7 @@ $grid-breakpoints: (
 * Internal styles:
 **************************************/
 html, body {
-  max-width: 1440px;
+  max-width: $max-body-width;
   margin: 0 auto;
   padding: 8px 50px;
   //border: 1px solid green;

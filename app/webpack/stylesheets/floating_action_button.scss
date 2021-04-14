@@ -1,0 +1,128 @@
+#container-floating-wrapper {
+  position: sticky;
+  bottom: 100px;
+  height: 48px;
+  width: 100%;
+}
+
+#container-floating {
+  position: absolute;
+  width: 140px;
+  height: 48px;
+  bottom: 0px;
+  right: 0px;
+}
+
+#container-floating:hover {
+  height: 48px;
+  width: 272px;
+}
+
+#container-floating:hover .plus {
+  animation: plus-in 0.15s linear;
+  animation-fill-mode: forwards;
+}
+
+#floating-button {
+  position: absolute;
+  width: 140px;
+  height: 48px;
+  border-radius: 28px;
+  background: $color-blue;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+  box-shadow: 0px 2px 5px #666;
+}
+
+.plus {
+  color: white;
+  position: absolute;
+  top: 0;
+  display: block;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  line-height: 50px;
+  font-size: 16px;
+  animation: plus-out 0.3s;
+  transition: all 0.3s;
+  
+  img {
+    margin-right: 4px;
+  }
+}
+
+.nds {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  position: absolute;
+  z-index: 300;
+  transform:  scale(0);
+  cursor: pointer;
+}
+
+.nd1 {
+  background: $color-light-blue;
+  right: 160px;
+  bottom: 4px;
+  animation-delay: 0.2s;
+  animation: bounce-out-nds 0.3s linear;
+  animation-fill-mode:  forwards;
+}
+
+.nd2 {
+  background: $color-grey;
+  right: 220px;
+  bottom: 4px;
+  animation-delay: 0.15s;
+  animation: bounce-out-nds 0.15s linear;
+  animation-fill-mode:  forwards;
+}
+
+@keyframes bounce-nds {
+  from {opacity: 0;}
+  to {opacity: 1; transform: scale(1);}
+}
+
+@keyframes bounce-out-nds {
+  from {opacity: 1; transform: scale(1);}
+  to {opacity: 0; transform: scale(0);}
+}
+
+#container-floating:hover .nds{
+  animation: bounce-nds 0.1s linear;
+  animation-fill-mode:  forwards;
+}
+
+#container-floating:hover .nd2 {
+  animation-delay: 0.08s;
+}
+
+.letter {
+  font-size: 23px;
+  color: white;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0;
+  top: 0;
+  bottom: 0;
+  text-align: center;
+  line-height: 40px;
+}
+
+.reminder {
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  line-height: 40px;
+}

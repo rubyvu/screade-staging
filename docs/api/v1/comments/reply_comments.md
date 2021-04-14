@@ -23,7 +23,7 @@ GET
 ```
 HTTP code 200 :ok
 {
-  "comment: "Comment"                                                           (object, required)
+  "comments: [Comment]                                                          (array of objects, required)
 }
 ```
 

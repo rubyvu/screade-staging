@@ -2,7 +2,7 @@ $( document ).on('turbolinks:load', function() {
   // VideoPlayer
   $('img[data-video-id]').parent().click(function(e){
     // Prevent Video play if clicked on delete icon
-    if($(e.target).closest(".destroy-asset").length > 0) {
+    if($(e.target).closest(".destroy-asset").length > 0 || $(e.target).closest(".update-asset").length > 0) {
       return
     }
     
