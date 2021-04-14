@@ -41,7 +41,14 @@ Rails.application.routes.draw do
       get :customize
     end
   end
+  
   resources :home, only: [:index]
+  resources :legal_documents, only: [] do
+    collection do
+      get :terms_and_services
+    end
+  end
+  
   resources :news_articles, only: [] do
     resources :comments, only: [] do
       get :reply_comments
