@@ -68,7 +68,7 @@ html
                 = link_to 'Change Password', edit_user_path(current_user.username), class: 'dropdown-item'
                 = link_to 'Contact Us', new_contact_us_request_path, class: 'dropdown-item'
                 a.dropdown-item href="#" Privacy Policy & Terms of Use
-                a.dropdown-item href="#" About Us
+                = link_to "About Us", '', class: 'dropdown-item', data: { toggle: "modal", target: "#modal-about-us" }
                 = link_to "Sign Out", destroy_user_session_path, method: :delete, class: 'dropdown-item no-border text-danger'
                 
             .d-inline-flex.ml-1
@@ -89,3 +89,4 @@ html
     = render 'shared/modals/sign_up_update'
     = render 'shared/modals/forgot_password/security_question'
     = render 'shared/modals/forgot_password/restore'
+    = render 'shared/modals/about_us'
