@@ -26,7 +26,12 @@ class CommentSerializer < ActiveModel::Serializer
   
   attribute :replied_comments_count
   def replied_comments_count
-    object.comment_id.present? ? object.replied_comments.count : 0
+    object.comment_id.blank? ? object.replied_comments.count : 0
+  end
+  
+  attribute :source_title
+  def source_title
+    object.source.title
   end
   
   attribute :source_type

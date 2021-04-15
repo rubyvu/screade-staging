@@ -4,6 +4,7 @@
 // Colors
 $color-blue: #3F51B5;
 $color-light-blue: #D4D7ED;
+$color-cadet-blue: #EAF1FF;
 $color-black: #000000;
 $color-red: #DA100B;
 $color-grey: #9C9C9C;
@@ -46,6 +47,7 @@ $grid-breakpoints: (
 @import './video_player/index';
 @import './events/index';
 @import './squad_requests/index';
+@import './groups/index';
 
 /**************************************
 * Import stylesheets from node modules:

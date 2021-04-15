@@ -16,6 +16,7 @@
   "is_lited": "true"                                                            (boolean, required)
   "lits_count": "10"                                                            (integer, required)
   "replied_comments_count": 20                                                  (integer, required)
+  "source_title": 'News Article title'                                          (string, required)
   "source_type": 'NewsArticle'                                                  (string, required)
   "source_id": 1                                                                (integer, required)
 }

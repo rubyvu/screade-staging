@@ -42,6 +42,7 @@ Rails.application.routes.draw do
     end
   end
   
+  resources :groups, only: [:index]
   resources :home, only: [:index]
   resources :legal_documents, only: [] do
     collection do

@@ -1,0 +1,65 @@
+.content-subscription-wrapper {
+  width: 50%;
+  height: 100%;
+  display: inline-block;
+  // border: solid 1px grey;
+
+  .subscriptions-scroll {
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+    
+    .subscription-wrapper {
+      display: block;
+      width: 100%;
+      margin-top: 16px;
+      border-bottom: 1px solid $color-light-grey;
+      
+      // News/Post name
+      .subscription-source-wrapper {
+        width: 100%;
+        margin-bottom: 10px;
+        a { font-size: 12px; font-weight: normal; }
+      }
+      
+      // Main content wrapper
+      .subscription-content-wrapper {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        
+        .subscription-content {
+          margin-left: 16px;
+          width: 100%;
+          
+          .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            
+            .title {
+              span { font-size: 16px; font-weight: normal; }
+            }
+            
+            .timestamp {
+              span { font-size: 12px; font-weight: normal; }
+            }
+          }
+            
+          .body {
+            .message {
+              span { font-size: 14px; font-weight: normal; }
+            }
+          }
+        }
+      }
+      
+      .subscription-reply-wrapper {
+        text-align: right;
+        width: 100%;
+        margin-bottom: 12px;
+        a { font-size: 12px; font-weight: normal; }
+      }
+    }
+  }
+}
