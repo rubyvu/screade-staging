@@ -24,9 +24,11 @@ class CommentSerializer < ActiveModel::Serializer
     object.lits.count
   end
   
-  attribute :replied_comments
-  def replied_comments
-    current_user = instance_options[:current_user]
-    ActiveModel::Serializer::CollectionSerializer.new(object.replied_comments.order(created_at: :desc), serializer: CommentSerializer, current_user: current_user).as_json
+  attribute :replied_comments_count
+  def replied_comments_count
+    object.comment_id.present? ? object.replied_comments.count : 0
   end
+  
+  attribute :source_type
+  attribute :source_id
 end
