@@ -70,7 +70,7 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :settings, only: [:update]
+  resources :settings, only: [:edit, :update]
   resources :squad_requests, only: [:index, :create] do
     member do
       post :accept

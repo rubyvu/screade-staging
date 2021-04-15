@@ -65,6 +65,7 @@ html
                 = image_pack_tag('media/images/icons/ic_settings.png')
               .dropdown-menu.dropdown-menu-right aria-labelledby="dropdownMenuButton"
                 = link_to 'Customize', customize_fonts_path, class: 'dropdown-item'
+                = link_to 'Notifications Settings', edit_setting_path(current_user.setting), class: 'dropdown-item'
                 = link_to 'Change Password', edit_user_path(current_user.username), class: 'dropdown-item'
                 = link_to 'Contact Us', new_contact_us_request_path, class: 'dropdown-item'
                 = link_to 'Privacy Policy & Terms of Use', terms_and_services_legal_documents_path, class: 'dropdown-item'

@@ -31,14 +31,16 @@ label.switch {
   left: 0;
   right: 0;
   bottom: 0;
-  // background-color: $color-grey;
   background-color: $color-blue;
   -webkit-transition: .4s;
   transition: .4s;
+  
+  &.default {
+    background-color: $color-grey;
+  }
 }
 
 .slider:before {
-  // border: 3px solid $color-grey;
   border: 3px solid $color-blue;
   position: absolute;
   content: "";
@@ -49,6 +51,10 @@ label.switch {
   background-color: white;
   -webkit-transition: .4s;
   transition: .4s;
+}
+
+.slider.default:before {
+  border: 3px solid $color-grey;
 }
 
 input:checked + .slider {
