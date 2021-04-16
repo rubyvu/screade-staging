@@ -1,6 +1,36 @@
 .content-group-wrapper
   .group-scroll
-    - 100.times do
+    ul.tree
+      - groups.each do |group|
+        li.group-wrapper
+          .main-content class="#{current_user.is_group_subscription(group) ? 'active' : ''}"
+            .title-wrapper
+              = image_tag group.image.url, class: 'main'
+              p #{group.title.capitalize}
+            
+            .counter-dropdown-wrapper
+              span.counter #{current_user.group_subscription_counts(group)}
+              - if group.topics.present?
+                label for="news-category-#{group.id}"
+            
+          - if group.topics.present?
+            - group.topics.each do |topic|
+              input type="checkbox" id="news-category-#{group.id}"
+              ul
+                li.group-wrapper
+                  .main-content
+                    .title-wrapper
+                      p #{topic.title.capitalize}
+                    
+                    .counter-dropdown-wrapper
+                      - if topic.sub_topics.present?
+                        label for="topic-#{topic.id}"
+                        
+                  - if topic.sub_topics.present?
+                    = render 'groups/topic', topics: topic.sub_topics
+      
+            
+    //- 100.times do
       .group-wrapper
         = image_pack_tag 'media/images/icons/ic_clock.png', class: 'main'
         

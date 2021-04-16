@@ -42,7 +42,12 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :groups, only: [:index]
+  resources :groups, only: [:index] do
+    member do
+      post :subscribe
+      post :unsubscribe
+    end
+  end
   resources :home, only: [:index]
   resources :legal_documents, only: [] do
     collection do

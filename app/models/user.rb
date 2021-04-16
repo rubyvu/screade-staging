@@ -71,6 +71,21 @@ class User < ApplicationRecord
     super(value&.downcase&.strip)
   end
   
+  def is_group_subscription(group)
+    case group.class.name
+    when 'NewsCategory'
+      self.subscripted_news_categories.include?(group)
+    when 'Topic'
+      self.subscripted_topics.include?(group)
+    else
+      false
+    end
+  end
+  
+  def group_subscription_counts(group)
+    self.subscripted_news_categories.where(id: group.id).count + self.subscripted_topics.where(id: group.approved_nested_topics_ids).count
+  end
+  
   # Calculations
   def lits_count
     Lit.where(source_type: 'Comment', source_id: self.comments.ids).count

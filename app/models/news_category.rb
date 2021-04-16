@@ -28,8 +28,20 @@ class NewsCategory < ApplicationRecord
     super(value&.downcase&.strip)
   end
   
+  # Get All Approved Topics for NewsCategory
+  def approved_nested_topics_ids
+    get_children_topics_ids(self.topics.ids, 0)
+  end
+  
   private
     def skip_default_categories
       errors.add(:base, 'The default category cannot be destroyed') if NewsCategory::DEFAULT_CATEGORIES.include?(self.title)
+    end
+    
+    def get_children_topics_ids(topic_ids, nesting_position)
+      ids = Topic.where(parent_id: topic_ids, is_approved: true, nesting_position: nesting_position).ids
+      
+      return ids+topic_ids if nesting_position == 2
+      get_children_topics_ids(ids+topic_ids, nesting_position+1)
     end
 end

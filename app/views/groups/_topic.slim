@@ -1,0 +1,14 @@
+- topics.each do |topic|
+  input type="checkbox" id="topic-#{topic.parent_id}"
+  ul
+    li.group-wrapper
+      .main-content
+        .title-wrapper
+          p #{topic.title.capitalize}
+        
+        .counter-dropdown-wrapper
+          - if topic.sub_topics.present?
+            label for="topic-#{topic.id}"
+            
+      - if topic.sub_topics.present?
+        = render 'groups/topic', topics: topic.sub_topics
