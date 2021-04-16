@@ -11,7 +11,7 @@
             .counter-dropdown-wrapper
               span.counter #{current_user.group_subscription_counts(group)}
               - if group.topics.present?
-                label for="news-category-#{group.id}"
+                label type="label" for="news-category-#{group.id}"
             
           - if group.topics.present?
             - group.topics.each do |topic|
@@ -24,7 +24,7 @@
                     
                     .counter-dropdown-wrapper
                       - if topic.sub_topics.present?
-                        label for="topic-#{topic.id}"
+                        label type="label" for="topic-#{topic.id}"
                         
                   - if topic.sub_topics.present?
                     = render 'groups/topic', topics: topic.sub_topics
