@@ -2,8 +2,8 @@
   .group-scroll
     ul.tree
       - groups.each do |group|
-        li.group-wrapper
-          .main-content class="#{current_user.is_group_subscription(group) ? 'active' : ''}"
+        li.group-wrapper.root-level
+          .main-content class="#{current_user.is_group_subscription(group) ? 'active' : ''}" data-type="NewsCategory" id="#{group.id}"
             .title-wrapper
               = image_tag group.image.url, class: 'main'
               p #{group.title.capitalize}
@@ -18,7 +18,7 @@
               input type="checkbox" id="news-category-#{group.id}"
               ul
                 li.group-wrapper
-                  .main-content
+                  .main-content class="#{current_user.is_group_subscription(topic) ? 'active' : ''}" data-type="Topic" id="#{topic.id}"
                     .title-wrapper
                       p #{topic.title.capitalize}
                     

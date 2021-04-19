@@ -2,7 +2,7 @@
   input type="checkbox" id="topic-#{topic.parent_id}"
   ul
     li.group-wrapper
-      .main-content
+      .main-content class="#{current_user.is_group_subscription(topic) ? 'active' : ''}" data-type="Topic" id="#{topic.id}"
         .title-wrapper
           p #{topic.title.capitalize}
         

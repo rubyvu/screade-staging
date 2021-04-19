@@ -43,9 +43,9 @@ Rails.application.routes.draw do
   end
   
   resources :groups, only: [:index] do
-    member do
+    collection do
       post :subscribe
-      post :unsubscribe
+      delete :unsubscribe
     end
   end
   resources :home, only: [:index]

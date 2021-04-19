@@ -8,7 +8,7 @@ class GroupsController < ApplicationController
     
   end
   
-  # POST /groups/:id/subscribe
+  # POST /groups/subscribe
   def subscribe
     subscription = UserTopicSubscription.new(source: @group, user: current_user)
     if subscription.save
@@ -18,7 +18,7 @@ class GroupsController < ApplicationController
     end
   end
   
-  # POST /groups/:id/unsubscribe
+  # DELETE /groups/unsubscribe
   def unsubscribe
     subscription = UserTopicSubscription.find_by!(source: @group, user: current_user)
     subscription.destroy
@@ -27,6 +27,13 @@ class GroupsController < ApplicationController
   
   private
     def set_group
-      @group = Group.find(params[:id])
+      case params[:type]
+      when 'NewsCategory'
+        @group = NewsCategory.find_by(id: params[:id])
+      when 'Topic'
+        @group = Topic.find_by(id: params[:id])
+      else
+        @group = nil
+      end
     end
 end
