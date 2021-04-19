@@ -1,4 +1,4 @@
-- topics.each do |topic|
+- topics.where(is_approved: true).each do |topic|
   input type="checkbox" id="topic-#{topic.parent_id}"
   ul
     li.group-wrapper
@@ -9,6 +9,29 @@
         .counter-dropdown-wrapper
           - if topic.sub_topics.present?
             label type="label" for="topic-#{topic.id}"
+          - elsif topic.nesting_position < 2
+            label type="label" for="topic-#{topic.title}"
             
       - if topic.sub_topics.present?
         = render 'groups/topic', topics: topic.sub_topics
+  
+      - if topic.nesting_position < 2 && topic.sub_topics.present?
+        ul
+          li.group-wrapper
+            .main-content
+              .title-wrapper
+                = image_pack_tag 'media/images/icons/ic_clock.png', class: 'main'
+                
+                div data-action="create-topic" data-href="/topics/new" data-type="Topic" data-id="#{topic.id}"
+                  a.new-element href="#" Add Topic
+                
+      - elsif topic.nesting_position < 2
+        input type="checkbox" id="topic-#{topic.title}"
+        ul
+          li.group-wrapper
+            .main-content
+              .title-wrapper
+                = image_pack_tag 'media/images/icons/ic_clock.png', class: 'main'
+                
+                div data-action="create-topic" data-href="/topics/new" data-type="Topic" data-id="#{topic.id}"
+                  a.new-element href="#" Add Topic

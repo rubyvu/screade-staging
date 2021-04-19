@@ -1,5 +1,6 @@
 $( document ).on('turbolinks:load', function() {
   
+  // Subscription
   $('.group-wrapper').on('click', function(e) {
     // Prevent calling click event on all parent ul,li elements
     e.stopPropagation()
@@ -43,5 +44,20 @@ $( document ).on('turbolinks:load', function() {
         }
       });
     }
+  })
+  
+  
+  // Hack to make remote nested links in html works
+  $('div').find('[data-action="create-topic"]').on('click', function() {
+    var link = $(this).data('href');
+    
+    let groupType = $(this).data('type')
+    let groupId = $(this).data('id')
+    
+    $.ajax({
+      type: "GET",
+      url: window.location.origin + link,
+      data: {type: groupType, id: groupId}
+    })
   })
 })

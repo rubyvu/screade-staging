@@ -84,6 +84,7 @@ Rails.application.routes.draw do
     end
   end
   
+  resources :topics, only: [:new, :create]
   resources :user_images, only: [:update], param: :username, username: User::USERNAME_ROUTE_FORMAT do
     member do
       get :images

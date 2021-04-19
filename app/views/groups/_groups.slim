@@ -12,9 +12,11 @@
               span.counter #{current_user.group_subscription_counts(group)}
               - if group.topics.present?
                 label type="label" for="news-category-#{group.id}"
+              - else
+                label type="label" for="news-category-#{group.title}"
             
           - if group.topics.present?
-            - group.topics.each do |topic|
+            - group.topics.where(is_approved: true).each do |topic|
               input type="checkbox" id="news-category-#{group.id}"
               ul
                 li.group-wrapper
@@ -28,58 +30,44 @@
                         
                   - if topic.sub_topics.present?
                     = render 'groups/topic', topics: topic.sub_topics
-      
-            
-    //- 100.times do
-      .group-wrapper
-        = image_pack_tag 'media/images/icons/ic_clock.png', class: 'main'
-        
-        .main-content
-          .title-wrapper
-            p Finance
-          
-          .counter-dropdown-wrapper
-            span.counter 9849
-            = image_pack_tag 'media/images/icons/ic_dropdown_arrow.png', class: 'dropdown'
-            
-      .group-wrapper.n1.active
-        .main-content
-          .title-wrapper
-            p.active Finance
-          
-          .counter-dropdown-wrapper
-            = image_pack_tag 'media/images/icons/ic_dropdown_arrow.png', class: 'dropdown'
-                
-      .group-wrapper.n2
-        .main-content
-          .title-wrapper
-            p Finance
-          
-          .counter-dropdown-wrapper
-            = image_pack_tag 'media/images/icons/ic_dropdown_arrow.png', class: 'dropdown'
-                
-      .group-wrapper.n3
-        .main-content
-          .title-wrapper
-            p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit.
-          
-          .counter-dropdown-wrapper
-            = image_pack_tag 'media/images/icons/ic_dropdown_arrow.png', class: 'dropdown'
-            
-      .group-wrapper.n3
-        .main-content
-          .title-wrapper
-            p Finance
-          
-          .counter-dropdown-wrapper
-            = image_pack_tag 'media/images/icons/ic_dropdown_arrow.png', class: 'dropdown'
-            
-      .group-wrapper.n3
-        .main-content
-          .title-wrapper
-            = image_pack_tag 'media/images/icons/ic_clock.png', class: 'main'
-            a.new-element Add Topic
-          
-          .counter-dropdown-wrapper
-            = image_pack_tag 'media/images/icons/ic_dropdown_arrow.png', class: 'dropdown'
-                
+                    
+                  - if topic.sub_topics.present?
+                    ul
+                      li.group-wrapper
+                        .main-content
+                          .title-wrapper
+                            = image_pack_tag 'media/images/icons/ic_clock.png', class: 'main'
+                            
+                            div data-action="create-topic" data-href="/topics/new" data-type="Topic" data-id="#{topic.id}"
+                              a.new-element href="#" Add Topic
+                            
+                  - else
+                    input type="checkbox" id="topic-#{topic.title}"
+                    ul
+                      li.group-wrapper
+                        .main-content
+                          .title-wrapper
+                            = image_pack_tag 'media/images/icons/ic_clock.png', class: 'main'
+                            
+                            div data-action="create-topic" data-href="/topics/new" data-type="Topic" data-id="#{topic.id}"
+                              a.new-element href="#" Add Topic
+                              
+            ul
+              li.group-wrapper
+                .main-content
+                  .title-wrapper
+                    = image_pack_tag 'media/images/icons/ic_clock.png', class: 'main'
+                    
+                    div data-action="create-topic" data-href="/topics/new" data-type="NewsCategory" data-id="#{group.id}"
+                      a.new-element href="#" Add Topic
+                    
+          - else
+            input type="checkbox" id="news-category-#{group.title}"
+            ul
+              li.group-wrapper
+                .main-content
+                  .title-wrapper
+                    = image_pack_tag 'media/images/icons/ic_clock.png', class: 'main'
+                    
+                    div data-action="create-topic" data-href="/topics/new" data-type="NewsCategory" data-id="#{group.id}"
+                      a.new-element href="#" Add Topic

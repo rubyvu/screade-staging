@@ -33,7 +33,7 @@ class Api::V1::GroupsController < Api::V1::ApiController
       }
     end
     
-    render json: { group: groups }, status: :ok
+    render json: { groups: groups }, status: :ok
   end
   
   # POST /api/v1/groups/subscribe

@@ -1,0 +1,17 @@
+= form_for(@topic, remote: true) do |f|
+  - if flash[:error].present?
+    - flash[:error].each do |value|
+      .flash.global-errors #{value}
+  
+  h6 Add new topic to:
+  h5 = topic_full_title(@topic.parent)
+    
+  = f.hidden_field :parent_id, value:  @topic.parent_id
+  = f.hidden_field :parent_type, value:  @topic.parent_type
+  
+  .material-field
+    = f.label 'Title'
+    = f.text_field :title, class: 'form-control', required: true
+    
+  .actions
+    = f.submit 'Submit', class: 'btn btn-primary w-100'
