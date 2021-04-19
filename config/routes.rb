@@ -145,8 +145,6 @@ Rails.application.routes.draw do
           post :resend_email_confirmation
           post :change_password
         end
-        
-        resources :user_topic_subscriptions, only: [:create, :destroy]
       end
       
       resources :events, only: [:index, :create, :update, :destroy]
@@ -156,7 +154,13 @@ Rails.application.routes.draw do
         end
       end
       
-      resources :groups, only: [:index]
+      resources :groups, only: [:index] do
+        collection do
+          post :subscribe
+          delete :unsubscribe
+        end
+      end
+      
       resources :home, only: [] do
         collection do
           get :news

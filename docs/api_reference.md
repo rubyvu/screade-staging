@@ -44,8 +44,10 @@
 - [Get security question for User](api/v1/forgot_password/security_question.md)
 - [Get new password instructions](api/v1/forgot_password/create.md)
 
-### Groups (working on)
+### Groups
 - [Show Tree of NewsCategories and Topics](api/v1/groups/index.md)
+- [Subscribe User to Group](api/v1/groups/subscribe.md)
+- [Unsubscribe User from Group](api/v1/groups/unsubscribe.md)
 
 ### Home
 - [Get News list](api/v1/home/news.md)
@@ -72,8 +74,6 @@
 ### Topic
 - [Create new Topic](api/v1/topics/create.md)
 - [Show Topic](api/v1/topics/show.md)
-- [Subscribe User to Topic](api/v1/user_topic_subscriptions/create.md)
-- [Unsubscribe User from Topic](api/v1/user_topic_subscriptions/destroy.md)
 
 ### User Assets
 - [Get Images](api/v1/user_assets/images.md)

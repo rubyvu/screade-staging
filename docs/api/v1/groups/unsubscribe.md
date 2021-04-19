@@ -9,11 +9,16 @@
 DELETE
 
 ### API endpoint
-`/api/v1/current_user/:current_user_id/user_topic_subscriptions/:id`
+`/api/v1/groups/unsubscribe`
 
 ### Request body
 ```
-{}
+{
+  "user_topic_subscription": {
+    "source_id": 1                                                              (integer, required)
+    "source_type": 'NewsCategory' || 'Topic'                                    (string, required)
+  }
+}
 ```
 
 ### Response

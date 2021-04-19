@@ -1,4 +1,4 @@
-## Create Subscription on Topic or Group - API endpoint
+## Create User Subscription for Group - API endpoint
 
 ### Navigation
 [README](../../../../README.md)
@@ -9,7 +9,7 @@
 POST
 
 ### API endpoint
-`/api/v1/current_user/:current_user_id/user_topic_subscriptions`
+`/api/v1/groups/subscribe`
 
 ### Request body
 ```

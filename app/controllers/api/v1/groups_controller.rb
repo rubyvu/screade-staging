@@ -1,4 +1,5 @@
 class Api::V1::GroupsController < Api::V1::ApiController
+  before_action :set_source, only: [:subscribe, :unsubscribe]
   
   # GET /api/v1/groups
   def index
@@ -34,4 +35,38 @@ class Api::V1::GroupsController < Api::V1::ApiController
     
     render json: { group: groups }, status: :ok
   end
+  
+  # POST /api/v1/groups/subscribe
+  def subscribe
+    user_topic_subscription = UserTopicSubscription.new(user: current_user)
+    user_topic_subscription.source = @source
+    if user_topic_subscription.save
+      render json: { success: true }, status: :ok
+    else
+      render json: { errors: user_topic_subscription.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+  
+  # DELETE /api/v1/groups/unsubscribe
+  def unsubscribe
+    user_topic_subscription = current_user.user_topic_subscriptions.find_by(source: @source)
+    user_topic_subscription.delete
+    render json: { success: true }, status: :ok
+  end
+  
+  private
+    def set_source
+      if subscription_params[:source_type] == 'NewsCategory'
+        @source = NewsCategory.find_by!(subscription_params)
+      elsif subscription_params[:source_type] == 'Topic'
+        @source = Topic.find_by!(subscription_params)
+      else
+        render json: { errors: ['Source type should be present.'] }, status: :unprocessable_entity
+        return
+      end
+    end
+    
+    def subscription_params
+      params.require(:user_topic_subscription).permit(:source_id, :source_type)
+    end
 end
