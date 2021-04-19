@@ -13,9 +13,7 @@ GET
 
 ### Request body
 ```
-{
-  "": true                                                           (boolen, optional)
-}
+{}
 ```
 
 ### Response
@@ -23,7 +21,7 @@ GET
 ```
 HTTP code 200 :ok
 {
-  "groups: "[Group]"                                                        (array of objects, required)
+  "groups: "[Group]"                                                            (array of objects, required)
 }
 ```
 
