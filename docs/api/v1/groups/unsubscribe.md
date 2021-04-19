@@ -1,4 +1,4 @@
-## Remove Subscription on Topic or Group - API endpoint
+## Remove User Subscription on Group - API endpoint
 
 ### Navigation
 [README](../../../../README.md)
