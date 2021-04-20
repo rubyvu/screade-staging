@@ -7,31 +7,13 @@
           p #{topic.title.capitalize}
         
         .counter-dropdown-wrapper
-          - if topic.sub_topics.present?
+          - if topic.sub_topics.present? || topic.nesting_position < 2
             label type="label" for="topic-#{topic.id}"
-          - elsif topic.nesting_position < 2
-            label type="label" for="topic-#{topic.title}"
             
-      - if topic.sub_topics.present?
-        = render 'groups/topic', topics: topic.sub_topics
-  
       - if topic.nesting_position < 2 && topic.sub_topics.present?
-        ul
-          li.group-wrapper
-            .main-content
-              .title-wrapper
-                = image_pack_tag 'media/images/icons/ic_clock.png', class: 'main'
-                
-                div data-action="create-topic" data-href="/topics/new" data-type="Topic" data-id="#{topic.id}"
-                  a.new-element href="#" Add Topic
-                
+        = render 'groups/topic', topics: topic.sub_topics
+        
       - elsif topic.nesting_position < 2
-        input type="checkbox" id="topic-#{topic.title}"
-        ul
-          li.group-wrapper
-            .main-content
-              .title-wrapper
-                = image_pack_tag 'media/images/icons/ic_clock.png', class: 'main'
-                
-                div data-action="create-topic" data-href="/topics/new" data-type="Topic" data-id="#{topic.id}"
-                  a.new-element href="#" Add Topic
+        input type="checkbox" id="topic-#{topic.id}"
+        
+      = render 'groups/add_topic', data_type: 'Topic', data_id: topic.id

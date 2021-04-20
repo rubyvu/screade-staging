@@ -8,7 +8,8 @@ class Topic < ApplicationRecord
   after_update :unapprove_topic
   
   # Associations
-  has_many :sub_topics, class_name: 'Topic', foreign_key: :parent_id, dependent: :destroy
+  has_many :sub_topics, -> (topic) { where(parent_type: 'Topic') }, class_name: 'Topic', foreign_key: :parent_id, dependent: :destroy
+  
   # User Subscripted for Topic
   has_many :user_topic_subscriptions, as: :source, dependent: :destroy
   has_many :subscripted_users, through: :user_topic_subscriptions, source: :user
