@@ -30,7 +30,7 @@ class NewsCategory < ApplicationRecord
   
   # Get All Approved Topics for NewsCategory
   def approved_nested_topics_ids
-    get_children_topics_ids(self.topics.ids, 0)
+    get_children_topics_ids(self.topics.ids, 1)
   end
   
   private
