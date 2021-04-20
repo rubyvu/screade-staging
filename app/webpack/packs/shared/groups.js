@@ -46,7 +46,6 @@ $( document ).on('turbolinks:load', function() {
     }
   })
   
-  
   // Hack to make remote nested links in html works
   $('div').find('[data-action="create-topic"]').on('click', function() {
     var link = $(this).data('href');
@@ -59,5 +58,16 @@ $( document ).on('turbolinks:load', function() {
       url: window.location.origin + link,
       data: {type: groupType, id: groupId}
     })
+  })
+  
+  // Show when Tree dropdown is opened/closed
+  $('.group-wrapper input').change(function(e) {
+    let dropdownLabel = $(this).parent('.group-wrapper').find('.counter-dropdown-wrapper label').first()
+    
+    if ( $(this).is(":checked") ) {
+      dropdownLabel.toggleClass('flip');
+    } else {
+      dropdownLabel.toggleClass('flip');
+    }
   })
 })

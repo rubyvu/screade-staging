@@ -16,5 +16,6 @@
   "subscriptions_count": 0                                                      (integer, optional)
   "parent_type": "NewsCategory || Topic"                                        (string, optional)
   "parent_id": 1                                                                (integer, optional)
+  "nesting_position": 0                                                         (integer, required)
 }
 ```

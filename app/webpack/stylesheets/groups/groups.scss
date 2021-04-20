@@ -74,6 +74,10 @@
             width: 12px;
             height: auto;
             margin: 0 18px 0 0;
+            
+            &.flip {
+              transform: rotate(-180deg);
+            }
           }
         }
       }

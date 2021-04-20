@@ -16,6 +16,7 @@ class Api::V1::GroupsController < Api::V1::ApiController
         subscriptions_count: current_user.group_subscription_counts(news_category),
         parent_type: nil,
         parent_id: nil,
+        nesting_position: 0
       }
     end
     
@@ -30,6 +31,7 @@ class Api::V1::GroupsController < Api::V1::ApiController
         subscriptions_count: nil,
         parent_type: topic.parent_type,
         parent_id: topic.parent_id,
+        nesting_position: topic.nesting_position+1
       }
     end
     
