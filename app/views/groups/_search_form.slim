@@ -1,0 +1,9 @@
+h2 Filter
+input id="group-search-input" type="text" placeholder="Search.."
+
+#group-search-list
+  - @groups_for_search.each do |group|
+    .search-element-wrapper
+      span #{topic_full_title(group)}
+      p #{group.title}
+      hr

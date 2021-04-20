@@ -1,11 +1,23 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: [:subscribe, :unsubscribe]
+  protect_from_forgery except: [:search]
   
   # GET /groups
   def index
     @subscriptions = nil
     @groups = NewsCategory.order(title: :asc)
+  end
+  
+  #GET /groups/search
+  def search
+    @groups_for_search = []
+    (NewsCategory.all + Topic.where(is_approved: true)).each do |group|
+      @groups_for_search << group
+    end
     
+    respond_to do |format|
+      format.js { render 'search', layout: false }
+    end
   end
   
   # POST /groups/subscribe

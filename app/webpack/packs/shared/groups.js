@@ -70,4 +70,12 @@ $( document ).on('turbolinks:load', function() {
       dropdownLabel.toggleClass('flip');
     }
   })
+  
+  // Search
+  $('#modal-group-search').on('keyup', '#group-search-input', function() {
+    var value = $(this).val().toLowerCase();
+    $("#group-search-list *").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
 })
