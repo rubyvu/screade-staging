@@ -8,7 +8,7 @@ class GroupsController < ApplicationController
     @groups = NewsCategory.order(title: :asc)
   end
   
-  #GET /groups/search
+  # GET /groups/search
   def search
     @groups_for_search = []
     (NewsCategory.all + Topic.where(is_approved: true)).each do |group|

@@ -1,6 +1,6 @@
 class NewsArticlesController < ApplicationController
   skip_before_action :authenticate_user!, only: [:comments]
-  before_action :get_article, only: [:comments, :create_comment, :lit, :view, :unlit]
+  before_action :get_article, only: [:comments, :create_comment, :lit, :search, :view, :unlit]
   
   # POST /news_articles/:id/lit
   def lit
@@ -45,6 +45,18 @@ class NewsArticlesController < ApplicationController
       redirect_to news_article_comment_reply_comments_path(news_article_id: @news_article.id, comment_id: new_comment.comment.id )
     else
       redirect_to comments_news_article_path(@news_article)
+    end
+  end
+  
+  # GET /news_articles/:id/search
+  def search
+    @groups_for_search = []
+    (NewsCategory.all + Topic.where(is_approved: true)).each do |group|
+      @groups_for_search << group
+    end
+    
+    respond_to do |format|
+      format.js { render 'search', layout: false }
     end
   end
   

@@ -142,4 +142,12 @@ $( document ).on('turbolinks:load', function() {
       });
     }
   })
+  
+  // Subscription in search
+  $("#modal-news-article-group-search").on('ajax:complete', function(event) {
+    let button = $(event.target)
+    if (button.hasClass('btn-primary')) {
+      button.replaceWith('<p>Already subscribed</p>')
+    }
+  })
 });

@@ -20,13 +20,20 @@
 
 // Title element with bg
 .title-main-wrapper {
-  background-color: $color-blue;
+  border: 1px solid $color-blue;
   border-radius: 16px;
   padding: 8px 12px;
   font-size: 14px;
   font-weight: 400px;
-  color: $color-white;
+  color: $color-blue;
   margin-right: 8px;
+  
+  &.new {
+    border: none;
+    background-color: $color-blue;
+    
+    a { color: $color-white; }
+  }
 }
 
 // Datepicker

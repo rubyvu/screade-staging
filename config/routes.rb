@@ -57,12 +57,14 @@ Rails.application.routes.draw do
   end
   
   resources :news_articles, only: [] do
+    resources :news_article_subscriptions, only: [:create]
     resources :comments, only: [] do
       get :reply_comments
     end
     
     member do
       get :comments
+      get :search
       post :lit
       post :create_comment
       post :view
@@ -174,6 +176,7 @@ Rails.application.routes.draw do
       resources :languages, only: [:index]
       resources :news_articles, only: [:show] do
         resources :news_article_comments, only: [:index, :create]
+        
         member do
           post :lit
           post :view

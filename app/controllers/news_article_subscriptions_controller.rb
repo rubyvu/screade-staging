@@ -1,6 +1,6 @@
-class Api::V1::NewsArticleSubscriptionsController < Api::V1::ApiController
+class NewsArticleSubscriptionsController < ApplicationController
   
-  # POST /api/v1/news_articles/:news_article_id/news_article_subscriptions
+  # POST /news_articles/:news_article_id/news_article_subscriptions
   def create
     news_article = NewsArticle.find(params[:news_article_id])
     if news_article_subscription_params[:source_type] == 'NewsCategory'
@@ -11,11 +11,6 @@ class Api::V1::NewsArticleSubscriptionsController < Api::V1::ApiController
       render json: { errors: ['Source type should be present.'] }, status: :unprocessable_entity
       return
     end
-      
-    # unless UserTopicSubscription.exists?(user: current_user, source: source)
-    #   render json: { errors: ["User should be subscribed to this #{source.title}"] }, status: :unprocessable_entity
-    #   return
-    # end
     
     news_article_subscription = NewsArticleSubscription.new(news_article: news_article)
     news_article_subscription.source = source
