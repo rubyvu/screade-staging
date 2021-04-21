@@ -1,7 +1,7 @@
 class Api::V1::NewsArticlesController < Api::V1::ApiController
   skip_before_action :authenticate, only: [:show]
   before_action :authenticate, only: [:show, :lit, :view, :unlit], if: :is_device_token?
-  before_action :get_article, only: [:lit, :show, :view, :unlit]
+  before_action :get_article, only: [:groups, :lit, :show, :view, :unlit]
   
   # GET /api/v1/news_articles/:id
   def show
@@ -36,6 +36,43 @@ class Api::V1::NewsArticlesController < Api::V1::ApiController
     lit.destroy
     news_article_json = NewsArticleSerializer.new(@news_article, current_user: current_user).as_json
     render json: { news_article: news_article_json }, status: :ok
+  end
+  
+  # GET /api/v1/news_articles/:id/groups
+  def groups
+    groups = []
+    
+    # All NewsCategories(tree root elements)
+    NewsCategory.all.each do |news_category|
+      groups << {
+        type: 'NewsCategory',
+        id: news_category.id,
+        title: news_category.title,
+        image: news_category.image.url,
+        is_subscription: @news_article.is_group_subscription(news_category),
+        subscriptions_count: @news_article.group_subscription_counts(news_category),
+        parent_type: nil,
+        parent_id: nil,
+        nesting_position: 0
+      }
+    end
+    
+    # All approved Topics
+    Topic.where(is_approved: true).each do |topic|
+      groups << {
+        type: 'Topic',
+        id: topic.id,
+        title: topic.title,
+        image: nil,
+        is_subscription: @news_article.is_group_subscription(topic),
+        subscriptions_count: nil,
+        parent_type: topic.parent_type,
+        parent_id: topic.parent_id,
+        nesting_position: topic.nesting_position+1
+      }
+    end
+    
+    render json: { groups: groups }, status: :ok
   end
   
   private

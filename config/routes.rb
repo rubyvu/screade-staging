@@ -182,7 +182,9 @@ Rails.application.routes.draw do
       end
       
       resources :news_articles, only: [] do
-        resources :news_article_subscriptions, only: [:create] do
+        resources :news_article_subscriptions, only: [:create]
+        member do
+          get :groups
         end
       end
       

@@ -41,4 +41,19 @@ class NewsArticle < ApplicationRecord
   def is_viewed(user)
     user.present? && self.viewing_users.include?(user)
   end
+  
+  def is_group_subscription(group)
+    case group.class.name
+    when 'NewsCategory'
+      self.subscripted_news_categories.include?(group)
+    when 'Topic'
+      self.subscripted_topics.include?(group)
+    else
+      false
+    end
+  end
+  
+  def group_subscription_counts(group)
+    self.subscripted_news_categories.where(id: group.id).count + self.subscripted_topics.where(id: group.approved_nested_topics_ids).count
+  end
 end
