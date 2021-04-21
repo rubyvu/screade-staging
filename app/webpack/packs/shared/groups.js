@@ -46,6 +46,24 @@ $( document ).on('turbolinks:load', function() {
     }
   })
   
+  // Subscription in search
+  $("#modal-group-search").on('ajax:complete', function(event) {
+    let button = $(event.target)
+    if (button.hasClass('btn-primary')) {
+      button.removeClass('btn-primary')
+      button.addClass('btn-outline-primary')
+      button.attr('href', button.attr('href').replace('subscribe', 'unsubscribe'))
+      button.attr('data-method', 'delete')
+      button.text('Unsubscribe')
+    } else if (button.hasClass('btn-outline-primary')) {
+      button.removeClass('btn-outline-primary')
+      button.addClass('btn-primary')
+      button.attr('href', button.attr('href').replace('unsubscribe', 'subscribe'))
+      button.attr('data-method', 'post')
+      button.text('Subscribe')
+    }
+  })
+  
   // Hack to make remote nested links in html works
   $('div').find('[data-action="create-topic"]').on('click', function() {
     var link = $(this).data('href');

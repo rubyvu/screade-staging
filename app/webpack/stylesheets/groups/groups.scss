@@ -2,7 +2,14 @@
   padding-left: 10%;
   width: 50%;
   height: 100%;
-  // border: solid 1px green;
+  
+  .group-search {
+    width: 100%;
+    text-align: end;
+    padding-right: 18px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
   
   .group-scroll {
     overflow: auto;

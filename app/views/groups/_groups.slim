@@ -1,6 +1,7 @@
 .content-group-wrapper
-  = link_to search_groups_path, remote: true do
-    = image_pack_tag('media/images/icons/ic_search.png', id: 'groups-search-icon')
+  .group-search
+    = link_to search_groups_path, remote: true do
+      = image_pack_tag('media/images/icons/ic_search.png', id: 'groups-search-icon')
     
   .group-scroll
     ul.tree

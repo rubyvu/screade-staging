@@ -9,3 +9,9 @@ form.search-wrapper
           .text-content
             h5 #{topic_short_title(group)}
             span #{group.title.capitalize}
+          
+          .action-content
+            - if current_user.is_group_subscription(group)
+              = link_to "Unsubscribe", unsubscribe_groups_path(type: group.class.name, id: group.id), class: "btn btn-outline-primary", remote: true, method: :delete, data: { type: group.class.name, id: group.id }
+            - else
+              = link_to "Subscribe", subscribe_groups_path(type: group.class.name, id: group.id), class: "btn btn-primary", remote: true, method: :post, data: { type: group.class.name, id: group.id }
