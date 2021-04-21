@@ -58,10 +58,10 @@ class Api::V1::GroupsController < Api::V1::ApiController
   
   private
     def set_source
-      if subscription_params[:source_type] == 'NewsCategory'
-        @source = NewsCategory.find_by!(subscription_params)
-      elsif subscription_params[:source_type] == 'Topic'
-        @source = Topic.find_by!(subscription_params)
+      if subscription_params[:parent_type] == 'NewsCategory'
+        @source = NewsCategory.find_by!(id: subscription_params[:parent_id])
+      elsif subscription_params[:parent_type] == 'Topic'
+        @source = Topic.find_by!(id: subscription_params[:parent_id])
       else
         render json: { errors: ['Source type should be present.'] }, status: :unprocessable_entity
         return
@@ -69,6 +69,6 @@ class Api::V1::GroupsController < Api::V1::ApiController
     end
     
     def subscription_params
-      params.require(:user_topic_subscription).permit(:source_id, :source_type)
+      params.require(:user_topic_subscription).permit(:parent_id, :parent_type)
     end
 end

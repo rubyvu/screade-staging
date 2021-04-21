@@ -73,9 +73,30 @@ $( document ).on('turbolinks:load', function() {
   
   // Search
   $('#modal-group-search').on('keyup', '#group-search-input', function() {
-    var value = $(this).val().toLowerCase();
-    $("#group-search-list *").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    // Typed letters
+    var value = $(this).val()
+    
+    $("#group-search-list span").each(function( i,e ) {
+      // String to search in
+      let defaultTitle = $(this).closest('[data-title]').attr('data-title')
+      let currentValue = value
+      
+      // Updade Search list element before key press
+      $(this).html(defaultTitle)
+      if (value.length > 0) {
+        
+        // Style for first(Upcase) letter
+        if (defaultTitle.toLowerCase().indexOf(value) == 0 ) {
+          currentValue = value.charAt(0).toUpperCase() + value.slice(1)
+        }
+        
+        $(this).html($(this).html().replace(currentValue, '<strong style="text-decoration: underline">' + currentValue + '</strong>'))
+      }
+    })
+    
+    // Main filter
+    $("#group-search-list [data-title]").filter(function() {
+      $(this).toggle($(this).find('span').text().toLowerCase().indexOf(value.toLowerCase()) > -1)
     });
   });
 })

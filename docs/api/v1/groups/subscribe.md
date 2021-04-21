@@ -15,8 +15,8 @@ POST
 ```
 {
   "user_topic_subscription": {
-    "source_id": 1                                                              (integer, required)
-    "source_type": 'NewsCategory' || 'Topic'                                    (string, required)
+    "parent_id": 1                                                              (integer, required)
+    "parent_type": 'NewsCategory' || 'Topic'                                    (string, required)
   }
 }
 ```

@@ -14,12 +14,12 @@ class Api::V1::TopicsController < Api::V1::ApiController
       topic_json = TopicSerializer.new(topic).as_json
       render json: { topic: topic_json }, status: :ok
     else
-      render json: { topic: topic.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: topic.errors.full_messages }, status: :unprocessable_entity
     end
   end
   
   private
     def topic_params
-      params.require(:topic).permit(:title, :parent_id)
+      params.require(:topic).permit(:title, :parent_id, :parent_type)
     end
 end

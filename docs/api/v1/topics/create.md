@@ -16,7 +16,8 @@ POST
 {
   "topic": {
     "parent_id": 1                                                              (integer, required)
-    "title": 'Topi title'                                                       (string, required)
+    "parent_type": 'NewsCategory'                                               (string, required)
+    "title": 'Topic title'                                                       (string, required)
   }
 }
 ```
@@ -26,7 +27,7 @@ POST
 ```
 HTTP code 200 :ok
 {
-  "success: true                                                                (boolean, required)
+  "Topic:: Topic                                                                (object, required)
 }
 ```
 
