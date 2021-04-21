@@ -63,6 +63,7 @@
 - [Unlit Article](api/v1/news_articles/unlit.md)
 - [View Article](api/v1/news_articles/view.md)
 - [Subscribe NewsArticle to NewsCategory or Topic](api/v1/news_article_subscriptions/create.md)
+- [Get NewsArticle Groups with Subscriptions](api/v1/news_articles/groups.md)
 
 ### Squad Requst
 - [Accept request](api/v1/squad_requests/accept.md)
