@@ -14,7 +14,7 @@
             
         .body
           .title
-            span #{squad_request.requestor.full_name.present? ? squad_request.requestor.full_name : squad_request.requestor.username.capitalize}
+            span #{squad_request.requestor.full_name}
             
           .action
             = link_to accept_squad_request_path(squad_request), class: 'mr-3', method: :post do

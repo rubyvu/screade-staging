@@ -14,7 +14,7 @@
     
   .comment-content-wrapper value="#{comment.id}"
     .comment-user-name
-      = comment.user.full_name.present? ? comment.user.full_name : comment.user.username
+      = comment.user.full_name
     .comment-text
       = comment.message
     .comment-date

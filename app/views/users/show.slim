@@ -17,7 +17,7 @@
         = image_pack_tag('media/images/placeholders/placeholder-user-profile.png')
     
     .user-profile-name.fonts-styling class="#{@user.setting.font_family} #{@user.setting.font_style}"
-      h5 #{@user.full_name.present? ? @user.full_name : @user.username.capitalize}
+      h5 #{@user.full_name}
     .info-panel
       .info-panel-value-wrapper.pointer-disable
         i.ic.lit

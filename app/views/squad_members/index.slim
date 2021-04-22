@@ -16,7 +16,7 @@
             
         .body
           .title
-            span #{user.full_name.present? ? user.full_name : user.username.capitalize}
+            span #{user.full_name}
           
           - if current_user == @user
             .action

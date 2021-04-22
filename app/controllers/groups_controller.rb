@@ -4,7 +4,9 @@ class GroupsController < ApplicationController
   
   # GET /groups
   def index
-    @subscriptions = nil
+    # TODO add Time params to subscribed_news_articles: .where('news_articles.created_at >= ?', 1.week.ago)
+    subscribed_news_articles = NewsArticle.joins(:news_categories).where(news_categories: current_user.subscripted_news_categories) + NewsArticle.joins(:topics).where(topics: current_user.subscripted_topics)
+    @comments = Comment.where(source_type: 'NewsArticle', source: subscribed_news_articles, comment_id: nil).where.not(user: current_user).or(Comment.where(comment_id: current_user.comments.ids).where.not(user: current_user)).order(created_at: :desc).limit(100)
     @groups = NewsCategory.order(title: :asc)
   end
   

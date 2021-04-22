@@ -96,7 +96,11 @@ class User < ApplicationRecord
   end
   
   def full_name
-    "#{first_name} #{last_name}".strip
+    if self.first_name.present? || self.last_name.present?
+      "#{self.first_name} #{self.last_name}".strip
+    else
+      "#{self.username.capitalize}"
+    end
   end
   
   def is_national_news?
