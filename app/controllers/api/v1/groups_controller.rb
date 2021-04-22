@@ -56,6 +56,16 @@ class Api::V1::GroupsController < Api::V1::ApiController
     render json: { success: true }, status: :ok
   end
   
+  # GET /api/v1/groups/comments
+  def comments
+    # Get all comments in NewsArticles that have associations with NewsCategories or Topics + Replyed Comments for Current User Comment
+    subscribed_news_articles = NewsArticle.joins(:news_categories).where(news_categories: current_user.subscripted_news_categories) + NewsArticle.joins(:topics).where(topics: current_user.subscripted_topics)
+    
+    comments = Comment.where(source_type: 'NewsArticle', source: subscribed_news_articles).or(Comment.where(comment_id: current_user.comments.ids).where.not(user: current_user)).page(params[:page]).per(30)
+    comments_json = ActiveModel::Serializer::CollectionSerializer.new(comments, current_user: current_user).as_json
+    render json: { comments: comments_json }, status: :ok
+  end
+  
   private
     def set_source
       if subscription_params[:parent_type] == 'NewsCategory'

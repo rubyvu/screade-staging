@@ -46,6 +46,7 @@
 
 ### Groups
 - [Show Tree of NewsCategories and Topics](api/v1/groups/index.md)
+- [Add Comments list for Groups(Subscriptions)](api/v1/groups/comments.md)
 - [Subscribe User to Group](api/v1/groups/subscribe.md)
 - [Unsubscribe User from Group](api/v1/groups/unsubscribe.md)
 

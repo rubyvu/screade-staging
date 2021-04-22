@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   
   resources :groups, only: [:index] do
     collection do
+      get :comments
       get :search
       post :subscribe
       delete :unsubscribe
@@ -160,6 +161,7 @@ Rails.application.routes.draw do
       
       resources :groups, only: [:index] do
         collection do
+          get :comments
           post :subscribe
           delete :unsubscribe
         end
