@@ -40,7 +40,7 @@
 }
 
 // Dropdown
-.navbar-icon-wrappers .dropdown-toggle::after { display: none; }
+.navbar-icon-wrappers .dropdown-toggle::after { display: none !important; }
 .navbar-icon-wrappers a.dropdown-item {
   border-bottom: solid 1px $color-light-grey;
   padding: 0.5rem 1.5rem;

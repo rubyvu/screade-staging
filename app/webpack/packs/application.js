@@ -16,6 +16,7 @@ import './shared/groups';
 import './shared/image_viewer';
 import './shared/local_date';
 import './shared/modals';
+import './shared/multilevel_dropdown';
 import './shared/news_articles';
 import './shared/user_asset';
 import './shared/video_player';
