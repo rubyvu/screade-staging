@@ -13,15 +13,13 @@ RSpec.describe NewsArticle, type: :model do
     it { should belong_to(:country) }
     it { should belong_to(:news_source).optional }
     it { should have_and_belong_to_many(:news_categories) }
+    it { should have_and_belong_to_many(:topics) }
     it { should have_many(:comments).dependent(:destroy) }
     it { should have_many(:commenting_users) }
     it { should have_many(:lits).dependent(:destroy) }
     it { should have_many(:liting_users) }
     it { should have_many(:views).dependent(:destroy) }
     it { should have_many(:viewing_users) }
-    it { should have_many(:news_article_subscriptions).dependent(:destroy) }
-    it { should have_many(:subscripted_news_categories) }
-    it { should have_many(:subscripted_topics) }
   end
   
   context 'validations' do

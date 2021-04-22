@@ -1,12 +1,15 @@
 .news-article-wrapper
   .groups-subscription-wrapper
-    .subscriptions-list
-      - news_article.news_categories.each do |news_category|
-        span.title-main-wrapper
-          = news_category.title.capitalize
-          
-      span.title-main-wrapper.new
-        = link_to '+ Group', search_news_article_path(news_article), remote: true
+    - news_article.news_categories.each do |news_category|
+      span.title-main-wrapper
+        = news_category.title.capitalize
+        
+    - news_article.topics.each do |topic|
+      span.title-main-wrapper
+        = topic.title.capitalize
+        
+    span.title-main-wrapper.new
+      = link_to '+ Topic', search_news_article_path(news_article), remote: true
   
   - if news_article.img_url.present?
     = image_tag(news_article.img_url, class: 'url-full-image', onerror: "this.error=null;this.src='#{asset_pack_path('media/images/placeholders/placeholder-news.png')}'")

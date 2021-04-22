@@ -10,8 +10,6 @@ RSpec.describe NewsCategory, type: :model do
     it { should have_many(:topics).dependent(:destroy) }
     it { should have_many(:user_topic_subscriptions).dependent(:destroy) }
     it { should have_many(:subscripted_users) }
-    it { should have_many(:news_article_subscriptions).dependent(:destroy) }
-    it { should have_many(:subscripted_news_articles) }
   end
   
   context 'validations' do

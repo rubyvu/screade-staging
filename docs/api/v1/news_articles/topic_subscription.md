@@ -1,4 +1,4 @@
-## Create Subscription for News Article to Group or Toppic - API endpoint
+## Create Subscription between News Article and Toppic - API endpoint
 
 ### Navigation
 [README](../../../../README.md)
@@ -9,14 +9,13 @@
 POST
 
 ### API endpoint
-`/api/v1/news_articles/:news_article_id/news_article_subscriptions`
+`/api/v1/news_articles/:id/topic_subscription`
 
 ### Request body
 ```
 {
   "news_article_subscription": {
-    "source_id": 1                                                              (integer, required)
-    "source_type": 'NewsCategory' || 'Topic'                                    (string, required)
+    "topic_id": 1                                                               (integer, required)
   }
 }
 ```
@@ -39,18 +38,10 @@ HTTP code 404 :not_found
 }
 ```
 
-- when source_type is empty
-```
-HTTP code 422 :unprocessable_entity
-{
-  "errors": ['Source type should be present.']                                  (array of strings, required)
-}
-```
-
 - when object cannot be created
 ```
 HTTP code 422 :unprocessable_entity
 {
-  "errors": ['Source cannot be blank.']                                         (array of strings, required)
+  "errors": ['Topic already subscripted.']                                      (array of strings, required)
 }
 ```

@@ -20,13 +20,15 @@
 
 // Title element with bg
 .title-main-wrapper {
+  display: inline-block;
   border: 1px solid $color-blue;
   border-radius: 16px;
-  padding: 8px 12px;
+  padding: 6px 12px;
   font-size: 14px;
   font-weight: 400px;
   color: $color-blue;
   margin-right: 8px;
+  margin-bottom: 8px;
   
   &.new {
     border: none;

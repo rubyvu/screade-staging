@@ -582,39 +582,6 @@ ALTER SEQUENCE public.lits_id_seq OWNED BY public.lits.id;
 
 
 --
--- Name: news_article_subscriptions; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.news_article_subscriptions (
-    id bigint NOT NULL,
-    news_article_id integer NOT NULL,
-    source_id integer NOT NULL,
-    source_type character varying NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: news_article_subscriptions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.news_article_subscriptions_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: news_article_subscriptions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.news_article_subscriptions_id_seq OWNED BY public.news_article_subscriptions.id;
-
-
---
 -- Name: news_articles; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -663,6 +630,16 @@ CREATE SEQUENCE public.news_articles_id_seq
 --
 
 ALTER SEQUENCE public.news_articles_id_seq OWNED BY public.news_articles.id;
+
+
+--
+-- Name: news_articles_topics; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.news_articles_topics (
+    news_article_id bigint NOT NULL,
+    topic_id bigint NOT NULL
+);
 
 
 --
@@ -1207,13 +1184,6 @@ ALTER TABLE ONLY public.lits ALTER COLUMN id SET DEFAULT nextval('public.lits_id
 
 
 --
--- Name: news_article_subscriptions id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.news_article_subscriptions ALTER COLUMN id SET DEFAULT nextval('public.news_article_subscriptions_id_seq'::regclass);
-
-
---
 -- Name: news_articles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1382,14 +1352,6 @@ ALTER TABLE ONLY public.languages
 
 ALTER TABLE ONLY public.lits
     ADD CONSTRAINT lits_pkey PRIMARY KEY (id);
-
-
---
--- Name: news_article_subscriptions news_article_subscriptions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.news_article_subscriptions
-    ADD CONSTRAINT news_article_subscriptions_pkey PRIMARY KEY (id);
 
 
 --
@@ -1606,13 +1568,6 @@ CREATE UNIQUE INDEX index_lits_on_source_id_and_source_type_and_user_id ON publi
 
 
 --
--- Name: index_news_article_subscriptions_on_news_article_and_source; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_news_article_subscriptions_on_news_article_and_source ON public.news_article_subscriptions USING btree (news_article_id, source_id, source_type);
-
-
---
 -- Name: index_news_articles_categories_on_ids; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1624,6 +1579,13 @@ CREATE INDEX index_news_articles_categories_on_ids ON public.news_articles_categ
 --
 
 CREATE UNIQUE INDEX index_news_articles_on_url ON public.news_articles USING btree (url);
+
+
+--
+-- Name: index_news_articles_topics_on_news_article_id_and_topic_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_news_articles_topics_on_news_article_id_and_topic_id ON public.news_articles_topics USING btree (news_article_id, topic_id);
 
 
 --
@@ -1846,6 +1808,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210407093731'),
 ('20210408093426'),
 ('20210413075147'),
-('20210413090630');
+('20210413090630'),
+('20210422093923'),
+('20210422095808');
 
 

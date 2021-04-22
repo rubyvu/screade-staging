@@ -14,8 +14,7 @@ class Topic < ApplicationRecord
   has_many :user_topic_subscriptions, as: :source, dependent: :destroy
   has_many :subscripted_users, through: :user_topic_subscriptions, source: :user
   # News Article Subscriptions
-  has_many :news_article_subscriptions, as: :source, dependent: :destroy
-  has_many :subscripted_news_articles, through: :news_article_subscriptions, source: :news_article
+  has_and_belongs_to_many :news_articles
   
   belongs_to :parent, class_name: 'Topic', foreign_key: :parent_id, polymorphic: true
   

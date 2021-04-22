@@ -4,6 +4,7 @@ class NewsArticle < ApplicationRecord
   belongs_to :country
   belongs_to :news_source, optional: true
   has_and_belongs_to_many :news_categories
+  has_and_belongs_to_many :topics
   ## Comments
   has_many :comments, as: :source, dependent: :destroy
   has_many :commenting_users, through: :comments, source: :user
@@ -13,10 +14,6 @@ class NewsArticle < ApplicationRecord
   ## Views
   has_many :views, as: :source, dependent: :destroy
   has_many :viewing_users, through: :views, source: :user
-  ## NewsArticleSubscriptions
-  has_many :news_article_subscriptions, dependent: :destroy
-  has_many :subscripted_news_categories, through: :news_article_subscriptions, source: :source, source_type: 'NewsCategory'
-  has_many :subscripted_topics, through: :news_article_subscriptions, source: :source, source_type: 'Topic'
   
   # Association validation
   validates :country, presence: true
@@ -45,15 +42,15 @@ class NewsArticle < ApplicationRecord
   def is_group_subscription(group)
     case group.class.name
     when 'NewsCategory'
-      self.subscripted_news_categories.include?(group)
+      self.news_categories.include?(group)
     when 'Topic'
-      self.subscripted_topics.include?(group)
+      self.topics.include?(group)
     else
       false
     end
   end
   
   def group_subscription_counts(group)
-    self.subscripted_news_categories.where(id: group.id).count + self.subscripted_topics.where(id: group.approved_nested_topics_ids).count
+    self.news_categories.where(id: group.id).count + self.topics.where(id: group.approved_nested_topics_ids).count
   end
 end

@@ -75,8 +75,26 @@ class Api::V1::NewsArticlesController < Api::V1::ApiController
     render json: { groups: groups }, status: :ok
   end
   
+  # POST /api/v1/news_articles/:id/topic_subscription
+  def topic_subscription
+    news_article = NewsArticle.find(params[:id])
+    topic = Topic.find_by!(id: news_article_subscription_params[:topic_id])
+    
+    if news_article.topics.include?(topic)
+      render json: { errors: ['Topic already subscripted.'] }, status: :unprocessable_entity
+      return
+    end
+    
+    news_article.topics << topic
+    render json: { success: true }, status: :ok
+  end
+    
   private
     def get_article
       @news_article = NewsArticle.find(params[:id])
+    end
+    
+    def news_article_subscription_params
+      params.require(:news_article_subscription).permit(:topic_id)
     end
 end

@@ -14,4 +14,4 @@ form.search-wrapper
             - if @news_article.is_group_subscription(group)
               p Already subscribed
             - else
-              = link_to "Subscribe", news_article_news_article_subscriptions_path(news_article_id: @news_article.id, news_article_subscription: { source_type: group.class.name, source_id: group.id }), class: "btn btn-primary", remote: true, method: :post
+              = link_to "Subscribe", topic_subscription_news_article_path(news_article_id: @news_article.id, news_article_subscription: { topic_id: group.id }), class: "btn btn-primary", remote: true, method: :post

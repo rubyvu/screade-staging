@@ -57,7 +57,6 @@ Rails.application.routes.draw do
   end
   
   resources :news_articles, only: [] do
-    resources :news_article_subscriptions, only: [:create]
     resources :comments, only: [] do
       get :reply_comments
     end
@@ -68,6 +67,7 @@ Rails.application.routes.draw do
       post :lit
       post :create_comment
       post :view
+      post :topic_subscription
       delete :unlit
     end
   end
@@ -185,9 +185,9 @@ Rails.application.routes.draw do
       end
       
       resources :news_articles, only: [] do
-        resources :news_article_subscriptions, only: [:create]
         member do
           get :groups
+          post :topic_subscription
         end
       end
       
