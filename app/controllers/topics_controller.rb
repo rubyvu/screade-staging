@@ -12,11 +12,11 @@ class TopicsController < ApplicationController
   end
   
   def create
-    topic = Topic.new(topic_params)
-    if topic.save
+    @topic = Topic.new(topic_params)
+    if @topic.save
       render js: "window.location = '#{groups_path}'"
     else
-      render json: { errors: topic.errors.full_messages }, status: :unprocessable_entity
+      render 'new', layout: false
     end
   end
   

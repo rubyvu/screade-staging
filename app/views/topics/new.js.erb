@@ -1,2 +1,10 @@
-$('#new-topic-form-placeholder').html("<%= j render partial: 'form' %>")
-$('#modal-new-topic').modal('show')
+if ('<%=  @topic.errors.full_messages.first %>'.length > 0) {
+  if ('<%=  @topic.errors.full_messages.first %>' === 'Title has already been taken') {
+    $('#modal-new-topic .global-errors').html('Topic with this title already added. It will appear in the Group list after approvement')
+  } else {
+    $('#modal-new-topic .global-errors').html('<%=  @topic.errors.full_messages.first %>')
+  }
+} else {
+  $('#new-topic-form-placeholder').html("<%= j render partial: 'form' %>")
+  $('#modal-new-topic').modal('show')
+}

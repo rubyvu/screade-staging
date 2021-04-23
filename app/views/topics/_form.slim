@@ -1,7 +1,5 @@
 = form_for(@topic, remote: true) do |f|
-  - if flash[:error].present?
-    - flash[:error].each do |value|
-      .flash.global-errors #{value}
+  .flash.global-errors
   
   h6 Add new topic to:
   h5 = topic_full_title(@topic.parent)
