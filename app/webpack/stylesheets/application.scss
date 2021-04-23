@@ -84,10 +84,21 @@ html, body {
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
+.d-width-wrapper {
+  width: 60%;
+  margin: auto;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
 @media (max-width: 960px) {
   html, body { padding: 8px 50px; }
 }
 
 @media (max-width: 450px) {
   html, body { padding: 8px 10px; }
+}
+
+@media (max-width: map-get($grid-breakpoints, "lg")) {
+  .d-width-wrapper { width: 90%; }
 }
