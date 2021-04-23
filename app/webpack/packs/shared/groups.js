@@ -6,7 +6,7 @@ $( document ).on('turbolinks:load', function() {
     e.stopPropagation()
     
     // Click on Dropdown button do:
-    if( !$(e.target).is('.main-content') ) { return }
+    if( !$(e.target).is('.main-content') && !$(e.target).is('p') ) { return }
     
     // Subscribe elements
     let mainContentEl = $(this).children('.main-content')
