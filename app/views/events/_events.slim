@@ -1,6 +1,6 @@
 .events-wrapper
   - events .each do |event|
-    .event-card
+    .event-card id="#{event.id}"
       .body
         .event-title
           p #{event.title}

@@ -1,0 +1,31 @@
+= form_for @event, url: event_path(@event), method: :put, remote: true do |f|
+
+  .input-group.mb-3
+   = f.text_field :title, autocomplete: 'off', class: 'form-control', placeholder: 'Title', required: true
+    
+  .input-group.mb-3
+    = f.text_field :description, autocomplete: 'off', class: 'form-control', placeholder: 'Event Description', required: true
+  
+  .input-group.mb-3
+    .input-group-prepend
+      .input-group-text
+        = image_pack_tag('media/images/icons/ic_calendar.png', class: 'img-responsive')
+      
+    = text_field_tag 'event[date]', '', class: 'form-control', id: 'datepicker-edit-event', placeholder: 'Date', autocomplete: 'off', required: true
+    
+  .input-group.mb-3
+    .input-group-prepend
+      .input-group-text
+        = image_pack_tag('media/images/icons/ic_clock.png', class: 'img-responsive')
+      
+    = f.text_field :start_date, value: '', autocomplete: 'off', class: 'form-control timepicker', placeholder: 'Start Time', required: true
+    
+  .input-group.mb-3
+    .input-group-prepend
+      .input-group-text
+        = image_pack_tag('media/images/icons/ic_clock.png', class: 'img-responsive')
+      
+    = f.text_field :end_date, value: '', autocomplete: 'off', class: 'form-control timepicker', placeholder: 'End Time', required: true
+    
+  .actions
+    = f.submit 'Update', class: 'btn btn-primary w-100'

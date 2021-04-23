@@ -35,7 +35,7 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :events, only: [:index, :create, :update, :destroy]
+  resources :events, only: [:index, :edit, :create, :update, :destroy]
   resources :fonts, only: [] do
     collection do
       get :customize

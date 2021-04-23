@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :get_event, only: [:destroy]
+  before_action :get_event, only: [:edit, :update, :destroy]
   
   # GET /events/
   def index
@@ -33,6 +33,29 @@ class EventsController < ApplicationController
       is_current_month: DateTime.now >= beginning_of_month &&  DateTime.now <= end_of_month,
       event_days: event_days.uniq
     }
+  end
+  
+  # GET /events/:id
+  def edit
+    respond_to do |format|
+      format.js { render 'edit', layout: false }
+    end
+  end
+  
+  # PUT/PATCH /events/:id
+  def update
+    updated_event_params = {
+      title: event_params[:title],
+      description: event_params[:description],
+      start_date: get_utc_datetime(event_params[:date], event_params[:start_date]),
+      end_date: get_utc_datetime(event_params[:date], event_params[:end_date])
+    }
+    
+    if @event.update(updated_event_params)
+      render js: "window.location = '#{events_path}'"
+    else
+      render 'edit', layout: false
+    end
   end
   
   # POST /events

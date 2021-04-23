@@ -10,7 +10,7 @@ class Api::V1::GroupsController < Api::V1::ApiController
       groups << {
         type: 'NewsCategory',
         id: news_category.id,
-        title: news_category.title,
+        title: news_category.title.capitalize,
         image: news_category.image.url,
         is_subscription: current_user.is_group_subscription(news_category),
         subscriptions_count: current_user.group_subscription_counts(news_category),

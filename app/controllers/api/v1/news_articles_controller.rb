@@ -47,7 +47,7 @@ class Api::V1::NewsArticlesController < Api::V1::ApiController
       groups << {
         type: 'NewsCategory',
         id: news_category.id,
-        title: news_category.title,
+        title: news_category.title.capitalize,
         image: news_category.image.url,
         is_subscription: @news_article.is_group_subscription(news_category),
         subscriptions_count: @news_article.group_subscription_counts(news_category),
