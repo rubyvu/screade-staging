@@ -1,5 +1,5 @@
 /* Absolute Center Spinner */
-.spiner-loading {
+.spinner-loading {
   position: fixed;
   z-index: 999;
   height: 2em;
@@ -13,7 +13,7 @@
 }
 
 /* Transparent Overlay */
-.spiner-loading:before {
+.spinner-loading:before {
   content: '';
   display: block;
   position: fixed;
@@ -26,8 +26,8 @@
 }
 
 /* :not(:required) hides these rules from IE9 and below */
-.spiner-loading:not(:required) {
-  /* hide .spiner-loading..." text */
+.spinner-loading:not(:required) {
+  /* hide .spinner-loading..." text */
   font: 0/0 a;
   color: transparent;
   text-shadow: none;
@@ -35,7 +35,7 @@
   border: 0;
 }
 
-.spiner-loading:not(:required):after {
+.spinner-loading:not(:required):after {
   content: '';
   display: block;
   font-size: 10px;
