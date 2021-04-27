@@ -21,6 +21,7 @@ import './shared/multilevel_dropdown';
 import './shared/news_articles';
 import './shared/user_asset';
 import './shared/video_player';
+import  { isTwelveHoursFormat } from './shared/location';
 
 // Import entry stylesheets for pack - IMPORTANT!
 import 'stylesheets/application';
@@ -62,12 +63,16 @@ $(document).on('turbolinks:load', function () {
   });
 
   // Timepicker
-  $('input.timepicker').timepicker({
-      step: 5,
-      listWidth: 1,
-      timeFormat: 'H:i',
-      show2400: true
-  })
+  let timePickerOptions = {
+    step: 5,
+    listWidth: 1
+  }
+  
+  if (!isTwelveHoursFormat()) {
+    timePickerOptions.timeFormat = 'H:i'
+    timePickerOptions.show2400 = true
+  }
+  $('input.timepicker').timepicker(timePickerOptions)
   
   //Init Ticker for Breaking news on page load
   $('#webticker').webTicker({ height: '36px', duplicate: true, startEmpty: false });

@@ -5,15 +5,27 @@ module TimeHelper
   end
   
   def month_with_date(time)
-    format_time(time, "%m.%d.%Y")
+    if is_twelve_hours_format
+      format_time(time, "%m/%d/%Y")
+    else
+      format_time(time, "%d.%m.%Y")
+    end
   end
   
   def hours_seconds(time)
-    format_time(time, "%H:%M")
+    if is_twelve_hours_format
+      format_time(time, "%I:%M %p")
+    else
+      format_time(time, "%H:%M")
+    end
   end
   
   def comment_timestamp(time)
-    format_time(time, "%m/%d/%Y-%H:%M")
+    if is_twelve_hours_format
+      format_time(time, "%m/%d/%Y-%I:%M %p")
+    else
+      format_time(time, "%d.%m.%Y-%H:%M")
+    end
   end
   
   private
@@ -25,5 +37,13 @@ module TimeHelper
       rescue
         date_time.strftime(time_format)
       end
+    end
+    
+    def is_twelve_hours_format
+      current_location = cookies[:current_location]&.upcase
+      current_location = 'US' if current_location.blank?
+      
+      countries_with_twelve_hours_format = ['AU', 'BD', 'CA', 'CO', 'EG', 'SV', 'HN', 'IN', 'IE', 'JO', 'MY', 'MX', 'NZ', 'NI', 'PK', 'PH', 'SA', 'US']
+      countries_with_twelve_hours_format.include?(current_location)
     end
 end

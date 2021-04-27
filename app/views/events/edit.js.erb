@@ -1,7 +1,7 @@
 $('#edit-event-form-placeholder').html("<%= j render partial: 'form' %>")
 $('#modal-edit-event').modal('show')
 
-
+// Datepicker
 $('#datepicker-edit-event').datepicker({
   container: '#modal-edit-event',
   format: 'dd-mm-yyyy',
@@ -13,9 +13,24 @@ $('#datepicker-edit-event').datepicker({
   e.stopPropagation();
 });
 
-$('input.timepicker').timepicker({
-    step: 5,
-    listWidth: 1,
-    timeFormat: 'H:i',
-    show2400: true
-})
+// Timepicker
+let timePickerOptions = {
+  step: 5,
+  listWidth: 1
+}
+
+if (!isTwelveHoursFormat()) {
+  timePickerOptions.timeFormat = 'H:i'
+  timePickerOptions.show2400 = true
+}
+$('input.timepicker').timepicker(timePickerOptions)
+
+function isTwelveHoursFormat() {
+  const countriesWithTwelveHoursFormat = ['AU', 'BD', 'CA', 'CO', 'EG', 'SV', 'HN', 'IN', 'IE', 'JO', 'MY', 'MX', 'NZ', 'NI', 'PK', 'PH', 'SA', 'US']
+  let currentLocation = 'US'
+  
+  let currentLocationMatch = document.cookie.match(new RegExp('(^| )' + 'current_location' + '=([^;]+)'));
+  if (currentLocationMatch) currentLocation = currentLocationMatch[2]
+  
+  return countriesWithTwelveHoursFormat.includes(currentLocation)
+}
