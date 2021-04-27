@@ -4,7 +4,7 @@ class Api::V1::UserAssetsController < Api::V1::ApiController
   # GET /api/v1/user_assets/:username/images
   def images
     options = {}
-    options[:is_private] = false if @user != current_user
+    options[:is_private] = false if (@user == current_user && params[:is_public].present?) || @user != current_user
     
     images_json = ActiveModel::Serializer::CollectionSerializer.new(@user.user_images.where(options).order(updated_at: :desc).page(params[:page]).per(30), serializer: UserImageSerializer).as_json
     render json: { images: images_json }, status: :ok
@@ -13,7 +13,7 @@ class Api::V1::UserAssetsController < Api::V1::ApiController
   # GET /api/v1/user_assets/:username/videos
   def videos
     options = {}
-    options[:is_private] = false if @user != current_user
+    options[:is_private] = false if (@user == current_user && params[:is_public].present?) || @user != current_user
     
     videos_json = ActiveModel::Serializer::CollectionSerializer.new(@user.user_videos.where(options).order(updated_at: :desc).page(params[:page]).per(30), serializer: UserVideoSerializer).as_json
     render json: { videos: videos_json }, status: :ok

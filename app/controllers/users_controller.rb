@@ -3,12 +3,9 @@ class UsersController < ApplicationController
   
   # GET /users/:username
   def show
-    options = {}
-    options[:is_private] = false if @user != current_user
-    
     @squad_request = @user.squad_requests_as_receiver.where(requestor: current_user, declined_at: nil).or(@user.squad_requests_as_requestor.where(receiver: current_user, declined_at: nil)).first
-    @images = @user.user_images.where(options).order(updated_at: :desc).limit(6)
-    @videos = @user.user_videos.where(options).order(updated_at: :desc).limit(6)
+    @images = @user.user_images.where(is_private: false).order(updated_at: :desc).limit(6)
+    @videos = @user.user_videos.where(is_private: false).order(updated_at: :desc).limit(6)
   end
   
   # GET /users/:username

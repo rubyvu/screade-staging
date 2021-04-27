@@ -1,6 +1,6 @@
 .d-width-wrapper
   h4.mb-5 Contact Us
-  = form_for @contact_us_request do |f|
+  = form_for ContactUsRequest.new do |f|
     - if flash[:error].present?
       - flash[:error].each do |value|
         .flash.global-errors #{value}
@@ -27,7 +27,7 @@
       
     .material-field
       = f.label 'Message'
-      = f.text_field :message, class: 'form-control', required: true
+      = f.text_area :message, class: 'form-control', rows: 3, required: true
       
     .actions
       = f.submit 'Submit', class: 'btn btn-primary w-100'

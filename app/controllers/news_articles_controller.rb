@@ -50,11 +50,7 @@ class NewsArticlesController < ApplicationController
   
   # GET /news_articles/:id/search
   def search
-    @groups_for_search = []
-    Topic.where(is_approved: true).each do |group|
-      @groups_for_search << group
-    end
-    
+    @groups_for_search = Topic.where(is_approved: true).order(nesting_position: :asc, title: :asc)
     respond_to do |format|
       format.js { render 'search', layout: false }
     end
@@ -66,7 +62,7 @@ class NewsArticlesController < ApplicationController
     topic = Topic.find_by!(id: news_article_subscription_params[:topic_id])
     
     if news_article.topics.include?(topic)
-      render json: { errors: ['Topic already subscripted.'] }, status: :unprocessable_entity
+      render json: { errors: ['Topic already subscribed.'] }, status: :unprocessable_entity
       return
     end
     

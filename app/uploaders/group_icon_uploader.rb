@@ -18,6 +18,6 @@ class GroupIconUploader < CarrierWave::Uploader::Base
   end
   
   def default_url
-    ActionController::Base.helpers.asset_pack_path('media/images/placeholders/placeholder-group-category-icon.png')
+    ActionMailer::Base.asset_host + ActionController::Base.helpers.asset_pack_path('media/images/placeholders/placeholder-group-category-icon.png')
   end
 end

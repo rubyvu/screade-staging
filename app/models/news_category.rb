@@ -13,9 +13,9 @@ class NewsCategory < ApplicationRecord
   # Associations
   has_and_belongs_to_many :news_articles
   has_many :topics, as: :parent, dependent: :destroy
-  # User Subscripted for NewsCategory
+  # User Subscribed for NewsCategory
   has_many :user_topic_subscriptions, as: :source, dependent: :destroy
-  has_many :subscripted_users, through: :user_topic_subscriptions, source: :user
+  has_many :subscribed_users, through: :user_topic_subscriptions, source: :user
   
   # Fields validations
   validates :title, uniqueness: true, presence: true
