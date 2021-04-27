@@ -26,7 +26,7 @@
           
           .subscription-reply-wrapper
             - if comment.comment&.user == current_user
-              = link_to 'REPLY', news_article_comment_reply_comments_path(news_article_id: comment.source.id, comment_id: comment.id), class: 'comment-reply'
+              = link_to 'REPLY', news_article_comment_reply_comments_path(news_article_id: comment.source.id, comment_id: comment.comment.id), class: 'comment-reply'
             - else
               = link_to comment.replied_comments.count == 0 ? 'REPLY' : "#{comment.replied_comments.count} REPLIES", news_article_comment_reply_comments_path(news_article_id: comment.source.id, comment_id: comment.id), class: 'comment-reply'
   - else
