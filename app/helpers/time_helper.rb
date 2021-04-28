@@ -28,6 +28,18 @@ module TimeHelper
     end
   end
   
+  def date_picker_timestamp(time)
+    time.strftime("%d-%m-%Y")
+  end
+  
+  def time_picker_timestamp(time)
+    if is_twelve_hours_format
+      time.strftime("%I:%M %p")
+    else
+      time.strftime("%H:%M")
+    end
+  end
+  
   private
     def format_time(date_time, time_format)
       begin
