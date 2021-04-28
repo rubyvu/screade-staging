@@ -33,7 +33,6 @@
       .main-content {
         margin: auto;
         display: flex;
-        padding: 18px 0;
         
         width: 100%;
         justify-content: space-between;
@@ -48,6 +47,7 @@
         
         .title-wrapper {
           display: flex;
+          padding: 18px 0;
           
           img {
             height: 20px;
@@ -71,6 +71,9 @@
         }
         
         .counter-dropdown-wrapper {
+          display: flex;
+          align-items: center;
+          height: 40px;
           span.counter {
             color: $color-grey;
             margin-right: 18px
@@ -79,8 +82,9 @@
           label {
             cursor: pointer;
             content: url("../images/icons/ic_dropdown_arrow.png");
-            width: 12px;
-            height: auto;
+            padding: 16px 6px;
+            height: 40px;
+            width: 24px;
             margin: 0 18px 0 0;
             
             &.flip {

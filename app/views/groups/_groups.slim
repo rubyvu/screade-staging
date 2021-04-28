@@ -18,8 +18,9 @@
               label type="label" for="news-category-#{group.id}"
                 
           // Render Topics for NewsCategory under Dropdown
-          - if group.topics.present?
-            - group.topics.where(is_approved: true).each do |topic|
+          - group_topics = group.topics.where(is_approved: true)
+          - if group_topics.present?
+            - group_topics.each do |topic|
               input type="checkbox" id="news-category-#{group.id}"
               ul
                 li.group-wrapper
