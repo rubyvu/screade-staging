@@ -7,7 +7,7 @@
     ul.tree
       // Render Root of the Group from NewsCategory
       - groups.each do |group|
-        li.group-wrapper.root-level
+        li.group-wrapper.root-level.noselect
           .main-content class="#{current_user.is_group_subscription(group) ? 'active' : ''}" data-type="NewsCategory" id="#{group.id}"
             .title-wrapper
               = image_tag group.image.url, class: 'main'
