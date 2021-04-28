@@ -31,6 +31,7 @@ Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 window.$ = window.jQuery = jQuery;
+window.isTwelveHoursFormat = isTwelveHoursFormat;
 
 const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
