@@ -26,7 +26,7 @@ ActiveAdmin.register ContactUsRequest do
   
   form do |f|
     f.inputs do
-      f.input :resolved_at, as: :string, input_html: { class: 'datepicker' }
+      f.input :resolved_at, as: :string, input_html: { class: 'datepicker', autocomplete: :off }
       f.input :resolved_by
     end
     f.actions
