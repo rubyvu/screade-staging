@@ -7,19 +7,23 @@
         
     .material-field
       = f.label 'Email'
-      = f.email_field :email, value: current_user&.email , class: 'form-control', required: true
+      = f.email_field :email, value: current_user&.email , class: 'form-control', required: true, readonly: true
       
     .material-field
       = f.label 'Username'
-      = f.text_field :username, value: current_user&.username,  class: 'form-control', required: true
+      = f.text_field :username, value: current_user&.username,  class: 'form-control', required: true, readonly: true
       
     .material-field
       = f.label 'First name'
-      = f.text_field :first_name, value: current_user&.first_name, class: 'form-control', required: true
+      = f.text_field :first_name, value: current_user&.first_name, class: 'form-control', required: true, readonly: true
       
     .material-field
       = f.label 'Last name'
-      = f.text_field :last_name, value: current_user&.last_name, class: 'form-control', required: true
+      = f.text_field :last_name, value: current_user&.last_name, class: 'form-control', required: true, readonly: true
+      
+    .material-field
+      = f.label 'Version'
+      = f.text_field :version, value: ENV['APP_VERSION'], class: 'form-control disabled', required: true, readonly: true
       
     .material-field
       = f.label 'Subject'

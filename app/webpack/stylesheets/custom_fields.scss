@@ -66,6 +66,12 @@ input[type=number] {
   -moz-appearance: textfield; /* Firefox */
 }
 
+// Input is disabled
+input.form-control:disabled, input.form-control[readonly] {
+  background-color: $color-white;
+  color: $color-grey
+}
+
 // Custom Radiobox
 input[type=radio] {
   margin-right: 6px;

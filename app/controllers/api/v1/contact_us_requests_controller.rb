@@ -13,6 +13,6 @@ class Api::V1::ContactUsRequestsController < Api::V1::ApiController
   
   private
     def contact_us_request_params
-      params.require(:contact_us_request).permit(:email, :first_name, :last_name, :message, :subject, :username)
+      params.require(:contact_us_request).permit(:email, :first_name, :last_name, :message, :subject, :version, :username)
     end
 end

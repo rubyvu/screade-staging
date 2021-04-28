@@ -21,6 +21,7 @@ POST
     "message": 'New message'                                                    (string, required)
     "subject": 'Subject'                                                        (string, required)
     "username": 'user_1'                                                        (string, required)
+    "version": '1.0'                                                            (string, required)
   }
 }
 ```

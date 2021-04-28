@@ -19,6 +19,7 @@ ActiveAdmin.register ContactUsRequest do
     column :username
     column :subject
     column :message
+    column :version
     column :resolved_at
     column :resolved_by
     actions
