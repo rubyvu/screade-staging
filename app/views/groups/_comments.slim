@@ -1,33 +1,9 @@
 .content-subscription-wrapper
   h5.mt-4.mb-2 Subscriptions
   - if comments.present?
-    .subscriptions-scroll
-      - comments.each do |comment|
-        .subscription-wrapper
-          .subscription-source-wrapper
-            = link_to comment.source.title, comments_news_article_path(comment.source)
-          .subscription-content-wrapper
-            = link_to user_path(comment.user.username) do
-              - if comment.user.profile_picture.url
-                = image_tag(comment.user.profile_picture.square_320.url, class: 'profile-image')
-              - else
-                = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
-                
-            .subscription-content
-              .header
-                .title
-                  span #{comment.user.full_name}
-                  
-                .timestamp
-                  span #{comment_timestamp(comment.created_at)}
-              .body
-                .message
-                  span #{comment.message}
-          
-          .subscription-reply-wrapper
-            - if comment.comment&.user == current_user
-              = link_to 'REPLY', news_article_comment_reply_comments_path(news_article_id: comment.source.id, comment_id: comment.comment.id), class: 'comment-reply'
-            - else
-              = link_to comment.replied_comments.count == 0 ? 'REPLY' : "#{comment.replied_comments.count} REPLIES", news_article_comment_reply_comments_path(news_article_id: comment.source.id, comment_id: comment.id), class: 'comment-reply'
+    .subscriptions-scroll#comments-list-placeholder
+      = render 'groups/comments_list', comments: comments
+      
   - else
-    p.mt-4 You have no acttive subscriptions.
+    .subscriptions-scroll#comments-list-placeholder
+      p.mt-4 You have no acttive subscriptions.

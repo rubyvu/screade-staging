@@ -46,6 +46,7 @@ Rails.application.routes.draw do
     collection do
       get :comments
       get :search
+      get :subscriptions
       post :subscribe
       delete :unsubscribe
     end

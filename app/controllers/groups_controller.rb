@@ -1,14 +1,10 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: [:subscribe, :unsubscribe]
+  before_action :set_subscriptions, only: [:index, :subscriptions]
   protect_from_forgery except: [:search]
   
   # GET /groups
   def index
-    news_categories_sql = NewsArticle.joins(:news_categories).where(news_categories: { id: current_user.subscribed_news_categories.ids }).to_sql
-    topics_sql = NewsArticle.joins(:topics).where(topics: { id: current_user.subscribed_topics.ids }).to_sql
-    source_ids = NewsArticle.from("(#{news_categories_sql} UNION #{topics_sql}) AS news_articles").order(id: :desc).limit(1000).ids
-    @comments = Comment.where(source_type: 'NewsArticle', source_id: source_ids, comment_id: nil).where.not(user: current_user).or(Comment.where(comment_id: current_user.comments.ids).where.not(user: current_user)).order(created_at: :desc).limit(100)
-    
     @groups = NewsCategory.order(title: :asc)
   end
   
@@ -21,6 +17,13 @@ class GroupsController < ApplicationController
     
     respond_to do |format|
       format.js { render 'search', layout: false }
+    end
+  end
+  
+  # GET /groups/subscriptions
+  def subscriptions
+    respond_to do |format|
+      format.js { render 'comments', layout: false }
     end
   end
   
@@ -51,5 +54,12 @@ class GroupsController < ApplicationController
       else
         @group = nil
       end
+    end
+    
+    def set_subscriptions
+      news_categories_sql = NewsArticle.joins(:news_categories).where(news_categories: { id: current_user.subscribed_news_categories.ids }).to_sql
+      topics_sql = NewsArticle.joins(:topics).where(topics: { id: current_user.subscribed_topics.ids }).to_sql
+      source_ids = NewsArticle.from("(#{news_categories_sql} UNION #{topics_sql}) AS news_articles").order(id: :desc).limit(1000).ids
+      @comments = Comment.where(source_type: 'NewsArticle', source_id: source_ids, comment_id: nil).where.not(user: current_user).or(Comment.where(comment_id: current_user.comments.ids).where.not(user: current_user)).order(created_at: :desc).limit(100)
     end
 end

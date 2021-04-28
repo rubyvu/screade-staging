@@ -29,6 +29,9 @@ $( document ).on('turbolinks:load', function() {
           // Update view
           mainContentEl.removeClass('active')
           subscriptionsCount.text(subscriptionCounter-1)
+          
+          // Update Subscriptions list
+          $.ajax({ type: "GET", url: window.location.origin + '/groups/subscriptions'})
          }
       });
       
@@ -42,6 +45,9 @@ $( document ).on('turbolinks:load', function() {
           mainContentEl.addClass('active')
           subscriptionsCount.text(subscriptionCounter+1)
         }
+        
+        // Update Subscriptions list
+        $.ajax({ type: "GET", url: window.location.origin + '/groups/subscriptions'})
       });
     }
   })
