@@ -1,7 +1,7 @@
 $('#edit-event-form-placeholder').html("<%= j render partial: 'form' %>")
 $('#modal-edit-event').modal('show')
 
-
+// Datepicker
 $('#datepicker-edit-event').datepicker({
   container: '#modal-edit-event',
   format: 'dd-mm-yyyy',
@@ -13,9 +13,14 @@ $('#datepicker-edit-event').datepicker({
   e.stopPropagation();
 });
 
-$('input.timepicker').timepicker({
-    step: 5,
-    listWidth: 1,
-    timeFormat: 'H:i',
-    show2400: true
-})
+// Timepicker
+timePickerOptions = {
+  step: 5,
+  listWidth: 1
+}
+
+if (!isTwelveHoursFormat()) {
+  timePickerOptions.timeFormat = 'H:i'
+  timePickerOptions.show2400 = true
+}
+$('input.timepicker').timepicker(timePickerOptions)

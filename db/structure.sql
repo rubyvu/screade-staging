@@ -373,7 +373,10 @@ CREATE TABLE public.contact_us_requests (
     subject character varying NOT NULL,
     message text NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    resolved_at timestamp without time zone,
+    resolved_by character varying,
+    version character varying DEFAULT '0'::character varying
 );
 
 
@@ -1810,6 +1813,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210413075147'),
 ('20210413090630'),
 ('20210422093923'),
-('20210422095808');
+('20210422095808'),
+('20210428081943'),
+('20210428095951');
 
 

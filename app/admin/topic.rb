@@ -9,6 +9,14 @@ ActiveAdmin.register Topic do
   # Params
   permit_params :is_approved, :parent_id, :parent_type, :title
   
+  # DELETE /admin/topics/:id/unlink
+  member_action :unlink, method: :delete do
+    topic = Topic.find(params[:id])
+    news_article = topic.news_articles.find(params[:news_article_id])
+    topic.news_articles.delete(news_article)
+    redirect_to admin_topic_path(topic), notice: "NewsArticle successfully removed!"
+  end
+  
   # Controllers
   index do
     column :id
@@ -38,6 +46,48 @@ ActiveAdmin.register Topic do
     
     column :is_approved
     actions
+  end
+  
+  show do
+    attributes_table do
+      row :id
+      row :title
+      row 'Parrent' do |topic|
+        parent = topic.parent
+        if parent.present?
+          case parent.class.name
+          when 'NewsCategory'
+            link_to(parent.title, admin_topic_path(parent))
+          when 'Topic'
+            link_to(parent.title, admin_topic_path(parent))
+          end
+        else
+          '-'
+        end
+      end
+      row :created_at
+      row :updated_at
+    end
+    
+    panel 'Topic Articles' do
+      table_for topic.news_articles.order(id: :desc) do
+        column 'Id' do |news_article|
+          news_article.id
+        end
+        
+        column 'Title' do |news_article|
+          news_article.title
+        end
+        
+        column 'Created At' do |news_article|
+          news_article.created_at
+        end
+        
+        column 'Actions' do |news_article|
+          span link_to 'Unlink', unlink_admin_topic_path(id: topic.id, news_article_id: news_article.id), method: :delete, data: { confirm: 'Are you really want to unlink this NewsArticle from Topic?' }
+        end
+      end
+    end
   end
   
   form do |f|

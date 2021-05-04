@@ -42,6 +42,6 @@ HTTP code 404 :not_found
 ```
 HTTP code 422 :unprocessable_entity
 {
-  "errors": ['Topic already subscripted.']                                      (array of strings, required)
+  "errors": ['Topic already subscribed.']                                      (array of strings, required)
 }
 ```

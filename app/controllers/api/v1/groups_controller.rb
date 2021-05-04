@@ -3,39 +3,8 @@ class Api::V1::GroupsController < Api::V1::ApiController
   
   # GET /api/v1/groups
   def index
-    groups = []
-    
-    # All NewsCategories(tree root elements)
-    NewsCategory.all.each do |news_category|
-      groups << {
-        type: 'NewsCategory',
-        id: news_category.id,
-        title: news_category.title.capitalize,
-        image: news_category.image.url,
-        is_subscription: current_user.is_group_subscription(news_category),
-        subscriptions_count: current_user.group_subscription_counts(news_category),
-        parent_type: nil,
-        parent_id: nil,
-        nesting_position: 0
-      }
-    end
-    
-    # All approved Topics
-    Topic.where(is_approved: true).each do |topic|
-      groups << {
-        type: 'Topic',
-        id: topic.id,
-        title: topic.title,
-        image: nil,
-        is_subscription: current_user.is_group_subscription(topic),
-        subscriptions_count: nil,
-        parent_type: topic.parent_type,
-        parent_id: topic.parent_id,
-        nesting_position: topic.nesting_position+1
-      }
-    end
-    
-    render json: { groups: groups }, status: :ok
+    groups_json = ActiveModel::Serializer::CollectionSerializer.new(NewsCategory.all + Topic.where(is_approved: true), serializer: GroupSerializer, current_user: current_user, news_article: nil).as_json
+    render json: { groups: groups_json }, status: :ok
   end
   
   # POST /api/v1/groups/subscribe
@@ -59,9 +28,11 @@ class Api::V1::GroupsController < Api::V1::ApiController
   # GET /api/v1/groups/comments
   def comments
     # Get all comments in NewsArticles that have associations with NewsCategories or Topics + Replyed Comments for Current User Comment
-    subscribed_news_articles = NewsArticle.joins(:news_categories).where(news_categories: current_user.subscripted_news_categories) + NewsArticle.joins(:topics).where(topics: current_user.subscripted_topics)
+    news_categories_sql = NewsArticle.joins(:news_categories).where(news_categories: { id: current_user.subscribed_news_categories.ids }).to_sql
+    topics_sql = NewsArticle.joins(:topics).where(topics: { id: current_user.subscribed_topics.ids }).to_sql
+    source_ids = NewsArticle.from("(#{news_categories_sql} UNION #{topics_sql}) AS news_articles").order(id: :desc).limit(1000).ids
+    comments = Comment.where('((source_type = ? AND source_id IN (?) AND comment_id IS NULL) OR (comment_id IN (?))) AND (user_id != ?)', 'NewsArticle', source_ids, current_user.comments.ids, current_user.id).order(id: :desc).page(params[:page]).per(30)
     
-    comments = Comment.where(source_type: 'NewsArticle', source: subscribed_news_articles, comment_id: nil).where.not(user: current_user).or(Comment.where(comment_id: current_user.comments.ids).where.not(user: current_user)).order(created_at: :desc).page(params[:page]).per(30)
     comments_json = ActiveModel::Serializer::CollectionSerializer.new(comments, current_user: current_user).as_json
     render json: { comments: comments_json }, status: :ok
   end

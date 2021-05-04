@@ -7,7 +7,7 @@ class ContactUsRequest < ApplicationRecord
   validates :last_name, presence: true
   validates :message, presence: true
   validates :subject, presence: true
-  validates :username, presence: true, format: { with: User::USERNAME_FORMAT, message: 'must contain from 6 to 18 characters, dots and underscores are allowed' }
+  validates :username, presence: true
   
   private
     def send_email_to_admins

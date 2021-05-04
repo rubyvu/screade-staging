@@ -29,6 +29,9 @@ $( document ).on('turbolinks:load', function() {
           // Update view
           mainContentEl.removeClass('active')
           subscriptionsCount.text(subscriptionCounter-1)
+          
+          // Update Subscriptions list
+          $.ajax({ type: "GET", url: window.location.origin + '/groups/subscriptions'})
          }
       });
       
@@ -42,6 +45,9 @@ $( document ).on('turbolinks:load', function() {
           mainContentEl.addClass('active')
           subscriptionsCount.text(subscriptionCounter+1)
         }
+        
+        // Update Subscriptions list
+        $.ajax({ type: "GET", url: window.location.origin + '/groups/subscriptions'})
       });
     }
   })
@@ -54,13 +60,13 @@ $( document ).on('turbolinks:load', function() {
       button.addClass('btn-outline-primary')
       button.attr('href', button.attr('href').replace('subscribe', 'unsubscribe'))
       button.attr('data-method', 'delete')
-      button.text('Unsubscribe')
+      button.text('Remove')
     } else if (button.hasClass('btn-outline-primary')) {
       button.removeClass('btn-outline-primary')
       button.addClass('btn-primary')
       button.attr('href', button.attr('href').replace('unsubscribe', 'subscribe'))
       button.attr('data-method', 'post')
-      button.text('Subscribe')
+      button.text('Add')
     }
   })
   

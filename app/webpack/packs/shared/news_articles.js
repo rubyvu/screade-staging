@@ -147,7 +147,7 @@ $( document ).on('turbolinks:load', function() {
   $("#modal-news-article-group-search").on('ajax:complete', function(event) {
     let button = $(event.target)
     if (button.hasClass('btn-primary')) {
-      button.replaceWith('<p>Already subscribed</p>')
+      button.replaceWith('<p>Already added</p>')
     }
   })
 });

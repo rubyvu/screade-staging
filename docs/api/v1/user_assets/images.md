@@ -15,6 +15,7 @@ GET
 ```
 {
   "page": "1"                                                                   (integer, required)
+  "is_public": true                                                             (boolean, optional)
 }
 ```
 

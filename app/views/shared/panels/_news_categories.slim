@@ -2,27 +2,30 @@
   - news_categories.each do |news_category|
     .btn-group.category-element class="#{current_page?(news_category_path(news_category)) ? 'active' : ''}"
       = link_to news_category.title.capitalize, [:news_category, id: news_category.id]
-      = image_pack_tag('media/images/icons/ic_dropdown_arrow.png')
-      ul.dropdown-menu aria-labelledby="dropdownMenu" role="menu"
-        - news_category.topics.where(is_approved: true).each do |topic|
-          - if topic.sub_topics.blank?
-            li
-              a.dropdown-item href="#" #{topic.title}
-          - else
-            li.dropdown-submenu
-              a.dropdown-item href="#" tabindex="-1"
-                | #{topic.title}
-              
-              ul.dropdown-menu
-                - topic.sub_topics.where(is_approved: true).each do |sub_topic|
-                  - if sub_topic.sub_topics.blank?
-                    li
-                      a.dropdown-item href="#" #{sub_topic.title}
-                  - else
-                    li.dropdown-submenu
-                      a.dropdown-item href="#"
-                        | #{sub_topic.title}
-                      ul.dropdown-menu
-                        - sub_topic.sub_topics.where(is_approved: true).each do |sub_sub_topic|
-                          li
-                            a.dropdown-item href="#" #{sub_sub_topic.title}
+      // TODO: Dropdown for v2
+      //- news_category_topics = news_category.topics.where(is_approved: true)
+      //- if news_category_topics.present?
+        = image_pack_tag('media/images/icons/ic_dropdown_arrow.png')
+        ul.dropdown-menu aria-labelledby="dropdownMenu" role="menu"
+          - news_category_topics.each do |topic|
+            - if topic.sub_topics.blank?
+              li
+                a.dropdown-item href="#" #{topic.title}
+            - else
+              li.dropdown-submenu
+                a.dropdown-item href="#" tabindex="-1"
+                  | #{topic.title}
+                
+                ul.dropdown-menu
+                  - topic.sub_topics.where(is_approved: true).each do |sub_topic|
+                    - if sub_topic.sub_topics.blank?
+                      li
+                        a.dropdown-item href="#" #{sub_topic.title}
+                    - else
+                      li.dropdown-submenu
+                        a.dropdown-item href="#"
+                          | #{sub_topic.title}
+                        ul.dropdown-menu
+                          - sub_topic.sub_topics.where(is_approved: true).each do |sub_sub_topic|
+                            li
+                              a.dropdown-item href="#" #{sub_sub_topic.title}

@@ -51,6 +51,21 @@ class UserProfileSerializer < ActiveModel::Serializer
     object.profile_picture.square_320.url
   end
   
+  attribute :squad_members_count
+  def squad_members_count
+    object.count_squad_members
+  end
+  
+  attribute :squad_requests_count
+  def squad_requests_count
+    current_user = instance_options[:current_user]
+    if current_user.id == object.id
+      object.count_squad_requests
+    else
+      nil
+    end
+  end
+  
   attribute :squad_request_state
   def squad_request_state
     current_user = instance_options[:current_user]

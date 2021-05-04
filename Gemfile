@@ -109,6 +109,9 @@ group :development do
   
   # Mailer
   gem 'letter_opener'
+  
+  # Generate PDF schema of the database
+  gem 'rails-erd'
 end
 
 group :test do

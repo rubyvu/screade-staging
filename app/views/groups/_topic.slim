@@ -1,4 +1,5 @@
 - topics.where(is_approved: true).each do |topic|
+  - sub_topics = topic.sub_topics.where(is_approved: true)
   input type="checkbox" id="topic-#{topic.parent_id}"
   ul
     li.group-wrapper
@@ -7,11 +8,11 @@
           p #{topic.title.capitalize}
         
         .counter-dropdown-wrapper
-          - if topic.sub_topics.present? || topic.nesting_position < 2
+          - if sub_topics.present? || topic.nesting_position < 2
             label type="label" for="topic-#{topic.id}"
             
-      - if topic.nesting_position < 2 && topic.sub_topics.present?
-        = render 'groups/topic', topics: topic.sub_topics
+      - if topic.nesting_position < 2 && sub_topics.present?
+        = render 'groups/topic', topics: sub_topics
         
       - elsif topic.nesting_position < 2
         input type="checkbox" id="topic-#{topic.id}"

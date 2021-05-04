@@ -39,8 +39,8 @@ class User < ApplicationRecord
   has_many :user_videos, dependent: :destroy
   ## UserTopicSubscriptions
   has_many :user_topic_subscriptions, dependent: :destroy
-  has_many :subscripted_news_categories, through: :user_topic_subscriptions, source: :source, source_type: 'NewsCategory'
-  has_many :subscripted_topics, through: :user_topic_subscriptions, source: :source, source_type: 'Topic'
+  has_many :subscribed_news_categories, through: :user_topic_subscriptions, source: :source, source_type: 'NewsCategory'
+  has_many :subscribed_topics, through: :user_topic_subscriptions, source: :source, source_type: 'Topic'
   # Languages
   has_and_belongs_to_many :languages
   
@@ -74,16 +74,16 @@ class User < ApplicationRecord
   def is_group_subscription(group)
     case group.class.name
     when 'NewsCategory'
-      self.subscripted_news_categories.include?(group)
+      self.subscribed_news_categories.include?(group)
     when 'Topic'
-      self.subscripted_topics.include?(group)
+      self.subscribed_topics.include?(group)
     else
       false
     end
   end
   
   def group_subscription_counts(group)
-    self.subscripted_news_categories.where(id: group.id).count + self.subscripted_topics.where(id: group.approved_nested_topics_ids).count
+    self.subscribed_news_categories.where(id: group.id).count + self.subscribed_topics.where(id: group.approved_nested_topics_ids).count
   end
   
   # Calculations
@@ -128,6 +128,15 @@ class User < ApplicationRecord
     elsif conditions.has_key?(:username) || conditions.has_key?(:email)
       where(conditions.to_h).first
     end
+  end
+  
+  def count_squad_members
+    self.squad_requests_as_receiver.where.not(accepted_at: nil).or(self.squad_requests_as_requestor.where.not(accepted_at: nil)).distinct.count
+  end
+  
+  def count_squad_requests
+    # Count Squad requests for User as receiver
+    self.squad_requests_as_receiver.where(accepted_at: nil, declined_at: nil).count
   end
    
   private
