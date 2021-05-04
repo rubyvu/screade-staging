@@ -129,6 +129,15 @@ class User < ApplicationRecord
       where(conditions.to_h).first
     end
   end
+  
+  def count_squad_members
+    self.squad_requests_as_receiver.where.not(accepted_at: nil).or(self.squad_requests_as_requestor.where.not(accepted_at: nil)).distinct.count
+  end
+  
+  def count_squad_requests
+    # Count Squad requests for User as receiver
+    self.squad_requests_as_receiver.where(accepted_at: nil, declined_at: nil).count
+  end
    
   private
     def set_user_settings

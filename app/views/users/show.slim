@@ -33,7 +33,8 @@
         
     .user-profile-squad-buttons
       - if @user == current_user
-        = link_to "Requests", squad_requests_path, class: "btn btn-primary mx-2 fonts-styling #{@user.setting.font_family} #{@user.setting.font_style}"
+        - squad_requests_counter = @user.count_squad_requests
+        = link_to squad_requests_counter > 0 ? "Requests (#{squad_requests_counter})" : 'Requests', squad_requests_path, class: "btn btn-primary mx-2 fonts-styling #{@user.setting.font_family} #{@user.setting.font_style}"
       
       - if @user != current_user
         - if @squad_request && @squad_request.accepted_at
@@ -44,9 +45,9 @@
           = link_to "Send Squad Request", squad_requests_path(squad_request: { receiver_username: @user.username }, is_curent_user: true), method: :post, class: "btn btn-primary mx-2 fonts-styling #{@user.setting.font_family} #{@user.setting.font_style}"
           
       - if @user == current_user
-        = link_to "Squad", user_squad_members_path(current_user.username), class: "btn btn-outline-primary mx-2 fonts-styling #{@user.setting.font_family} #{@user.setting.font_style}"
+        = link_to "Squad (#{@user.count_squad_members})", user_squad_members_path(current_user.username), class: "btn btn-outline-primary mx-2 fonts-styling #{@user.setting.font_family} #{@user.setting.font_style}"
       - else
-        = link_to "Squad", user_squad_members_path(@user.username), class: "btn btn-outline-primary mx-2 fonts-styling #{@user.setting.font_family} #{@user.setting.font_style}"
+        = link_to "Squad (#{@user.count_squad_members})", user_squad_members_path(@user.username), class: "btn btn-outline-primary mx-2 fonts-styling #{@user.setting.font_family} #{@user.setting.font_style}"
   
   .user-profile-assets-wrapper
     h4 Images
