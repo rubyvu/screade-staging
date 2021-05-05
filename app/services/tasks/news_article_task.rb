@@ -2,7 +2,7 @@ module Tasks
   class NewsArticleTask
     
     def self.detect_language
-      NewsArticle.find_each do |news_article|
+      NewsArticle.where(detected_language: nil).find_each do |news_article|
         detected_language = CLD.detect_language("#{news_article.title}")
         detected_language_code = detected_language[:code]&.upcase
         if detected_language_code.present?
