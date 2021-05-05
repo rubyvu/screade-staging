@@ -42,12 +42,15 @@ module Tasks
         }
         
         # Detect Article language
-        detected_language = CLD.detect_language("#{article_attr[:title]} #{article_attr[:description]}")
+        detected_language = CLD.detect_language("#{article_attr[:title]}")
         detected_language_code = detected_language[:code]&.upcase
         
         if detected_language_code.present?
-          if detected_language_code == 'ZH-TW'
+          case detected_language_code
+          when 'ZH-TW'
             article_attr[:detected_language] = 'ZH'
+          when 'UK'
+            article_attr[:detected_language] = 'UA'
           else
             article_attr[:detected_language] = detected_language[:code].upcase
           end
