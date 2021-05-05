@@ -15,11 +15,17 @@
       
     .material-field
       = f.label 'First name'
-      = f.text_field :first_name, value: current_user&.first_name, class: 'form-control', required: true, readonly: true
+      - if current_user&.first_name.present?
+        = f.text_field :first_name, value: current_user&.first_name, class: 'form-control', required: true, readonly: true
+      - else
+        = f.text_field :first_name, class: 'form-control', required: true
       
     .material-field
       = f.label 'Last name'
-      = f.text_field :last_name, value: current_user&.last_name, class: 'form-control', required: true, readonly: true
+      - if current_user&.last_name.present?
+        = f.text_field :last_name, value: current_user&.last_name, class: 'form-control', required: true, readonly: true
+      - else
+        = f.text_field :last_name, class: 'form-control', required: true
       
     .material-field
       = f.label 'Version'
