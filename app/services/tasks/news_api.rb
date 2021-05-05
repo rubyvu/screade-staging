@@ -41,6 +41,20 @@ module Tasks
           news_source: news_source
         }
         
+        # Detect Article language
+        detected_language = CLD.detect_language("#{article_attr[:title]} #{article_attr[:description]}")
+        detected_language_code = detected_language[:code]&.upcase
+        
+        if detected_language_code.present?
+          if detected_language_code == 'ZH-TW'
+            article_attr[:detected_language] = 'ZH'
+          else
+            article_attr[:detected_language] = detected_language[:code].upcase
+          end
+        else
+          article_attr[:detected_language] = nil
+        end
+        
         article = NewsArticle.find_by(url: article.url)
         unless article
           article = NewsArticle.new(article_attr)
