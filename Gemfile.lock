@@ -123,6 +123,8 @@ GEM
     choice (0.2.0)
     city-state (0.1.0)
       rubyzip (>= 1.1)
+    cld (0.8.0)
+      ffi
     concurrent-ruby (1.1.8)
     crass (1.0.6)
     devise (4.7.3)
@@ -400,6 +402,7 @@ DEPENDENCIES
   carrierwave-video-thumbnailer
   carrierwave_direct
   city-state
+  cld
   devise
   factory_bot_rails
   faker

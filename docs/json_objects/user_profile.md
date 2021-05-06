@@ -22,7 +22,6 @@
   "middle_name": "Michael",                                                     (string, optional)
   "profile_picture": "http://site.com/small.png",                               (string, optional)
   "squad_members_count": '1'                                                    (integer, required)
-  "squad_requests_count": '1'                                                   (integer, optional)
   "squad_request_state": 'request_confirmed||request_sent||none'                (string, required)
   "squad_request_id": 1                                                         (integer, optional)
   "views_count": "2"                                                            (integer, required)

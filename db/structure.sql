@@ -602,7 +602,8 @@ CREATE TABLE public.news_articles (
     news_source_id integer,
     comments_count integer DEFAULT 0 NOT NULL,
     lits_count integer DEFAULT 0 NOT NULL,
-    views_count integer DEFAULT 0 NOT NULL
+    views_count integer DEFAULT 0 NOT NULL,
+    detected_language character varying
 );
 
 
@@ -1578,6 +1579,13 @@ CREATE INDEX index_news_articles_categories_on_ids ON public.news_articles_categ
 
 
 --
+-- Name: index_news_articles_on_detected_language; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_news_articles_on_detected_language ON public.news_articles USING btree (detected_language);
+
+
+--
 -- Name: index_news_articles_on_url; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1815,6 +1823,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210422093923'),
 ('20210422095808'),
 ('20210428081943'),
-('20210428095951');
+('20210428095951'),
+('20210505083950');
 
 

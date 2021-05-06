@@ -21,6 +21,8 @@
   "middle_name": "Michael",                                                     (string, optional)
   "phone_number": "506988478",                                                  (string, optional)
   "profile_picture": "http://site.com/small.png",                               (string, optional)
+  "squad_members_count": '1'                                                    (integer, required)
+  "squad_requests_count": '1'                                                   (integer, required)
   "views_count": "2"                                                            (integer, required)
   "username": "john"                                                            (string, required)
 }

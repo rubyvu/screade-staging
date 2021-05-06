@@ -47,6 +47,16 @@ class UserSerializer < ActiveModel::Serializer
     object.profile_picture.square_320.url
   end
   
+  attribute :squad_members_count
+  def squad_members_count
+    object.count_squad_members
+  end
+  
+  attribute :squad_requests_count
+  def squad_requests_count
+    object.count_squad_requests
+  end
+  
   attribute :views_count
   def views_count
     # How many User posts viewd by another Users

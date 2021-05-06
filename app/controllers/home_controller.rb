@@ -23,24 +23,18 @@ class HomeController < ApplicationController
     # Get Country
     country = current_user&.country || Country.find_by(code: current_location) || Country.find_by(code: 'US')
     
-    # Get Languages
-    current_user ? languages = current_user.languages : languages = country.languages
-    
+    # Get Articles
     if @home[:is_national]
-      # Get News Sources
-      news_source = NewsSource.where(language: languages, country: country)
-      @home[:news_articles] = NewsArticle.where(country: country)
-        .or(NewsArticle.where(news_source: news_source))
-        .order(published_at: :desc).page(params[:page]).per(16)
-      @home[:news_articles] = NewsArticle.where(country: Country.find_by(code: 'US')).page(params[:page]).per(16) if @home[:news_articles].blank?
+      @home[:news_articles] = NewsArticle.where(country: country).order(published_at: :desc).page(params[:page]).per(16)
     else
-      # Get News Sources
-      news_source = NewsSource.where(language: languages).where.not(country: country)
-      
-      # Set Default News Sources if default World News is empty
-      news_source = NewsSource.joins(:language).where(languages: { code: 'EN' }).where.not(news_sources: { country: country }) if news_source.blank?
-      
-      @home[:news_articles] = NewsArticle.where(news_source: news_source).order(published_at: :desc).page(params[:page]).per(16)
+      if current_user
+        languages = Language.where(id: current_user.languages.ids).or(Language.where(id: country.languages.ids)).uniq
+      else
+        languages = Language.where(id: country.languages.ids)
+      end
+      @home[:news_articles] = NewsArticle.where.not(country: country).where(detected_language: languages.pluck(:code)).order(published_at: :desc).page(params[:page]).per(16)
     end
+    
+    @home[:news_articles] = NewsArticle.where(country: Country.find_by(code: 'US')).page(params[:page]).per(16) if @home[:news_articles].blank?
   end
 end
