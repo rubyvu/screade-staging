@@ -15,7 +15,7 @@ class PostsController < ApplicationController
   def edit
   end
   
-  # POST /events
+  # POST /posts
   def create
     post = Post.new(post_params)
     post.user = current_user
@@ -33,7 +33,7 @@ class PostsController < ApplicationController
     end
   end
   
-  # DELETE /events/:id
+  # DELETE /posts/:id
   def destroy
     @post.destroy
     redirect_to posts_path

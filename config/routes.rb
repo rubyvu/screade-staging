@@ -212,6 +212,16 @@ Rails.application.routes.draw do
         end
       end
       
+      resources :posts, only: [:index, :create, :update, :destroy] do
+        resources :post_comments, only: [:index, :create]
+        
+        resources :post_lits, only: [:create] do
+          collection do
+            delete :destroy
+          end
+        end
+      end
+      
       resources :settings, only: [:index] do
         collection do
           put :update

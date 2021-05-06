@@ -1,4 +1,4 @@
-## News Article Lit - API endpoint
+## Lit the Post - API endpoint
 
 ### Navigation
 [README](../../../../README.md)
@@ -9,7 +9,7 @@
 POST
 
 ### API endpoint
-`/api/v1/news_articles/:id/lit`
+`/api/v1/posts/:post_id/post_lits`
 
 ### Request body
 ```
@@ -21,12 +21,12 @@ POST
 ```
 HTTP code 200 :ok
 {
-  "news_article: "NewsArticle"                                                  (object, required)
+  "post: "Post"                                                                 (object, required)
 }
 ```
 
 #### Errors
-- when News Article doesn't exists
+- when Post doesn't exists
 ```
 HTTP code 404 :not_found
 {
@@ -43,4 +43,4 @@ HTTP code 422 :unprocessable_entity
 ```
 
 ### References
-- [NewsArticle JSON object](../../../json_objects/news_article.md)
+- [Post JSON object](../../../json_objects/post.md)

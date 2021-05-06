@@ -73,6 +73,16 @@
 - [Get requsts list](api/v1/squad_requests/index.md)
 - [Get Squad Members by Username](api/v1/squad_members/index.md)
 
+### Post
+- [View all Posts](api/v1/posts/index.md)
+- [Create new Post](api/v1/posts/create.md)
+- [Update Post](api/v1/posts/update.md)
+- [Delete Post](api/v1/posts/destroy.md)
+- [Lit Post](api/v1/post_lits/create.md)
+- [Unlit Post](api/v1/post_lits/destroy.md)
+- [Post Comments List](api/v1/post_comments/index.md)
+- [Create Post Comments](api/v1/post_comments/create.md)
+
 ### Topic
 - [Create new Topic](api/v1/topics/create.md)
 - [Show Topic](api/v1/topics/show.md)

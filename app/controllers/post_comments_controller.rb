@@ -1,5 +1,5 @@
 class PostCommentsController < ApplicationController
-  before_action :get_post, only: [:comments, :create_comment, :lit, :search, :view, :unlit]
+  before_action :get_post, only: [:index, :create]
   
   # GET /posts/:posts_id/post_comments
   def index
