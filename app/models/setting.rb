@@ -12,10 +12,11 @@ class Setting < ApplicationRecord
   # Validations
   validates :font_family, presence: true, inclusion: { in: Setting::FONT_FAMILIES }
   validates :font_style, presence: true, inclusion: { in: Setting::FONT_STYLE }
-  validates :is_images, presence: true
-  validates :is_notification, presence: true
-  validates :is_posts, presence: true
-  validates :is_videos, presence: true
+  validates :is_email, inclusion: { in: [true, false] }
+  validates :is_images, inclusion: { in: [true, false] }
+  validates :is_notification, inclusion: { in: [true, false] }
+  validates :is_posts, inclusion: { in: [true, false] }
+  validates :is_videos, inclusion: { in: [true, false] }
   
   def self.get_setting(user)
     setting = Setting.find_by(user: user)
@@ -24,6 +25,7 @@ class Setting < ApplicationRecord
         font_family: 'roboto',
         font_style: 'normal',
         is_notification: true,
+        is_email: true,
         is_images: true,
         is_videos: true,
         is_posts: true,

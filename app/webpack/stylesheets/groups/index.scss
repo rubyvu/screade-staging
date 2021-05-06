@@ -1,0 +1,9 @@
+@import 'subscriptions';
+@import 'groups';
+
+.content-groups-wrapper {
+  display: inline-flex;
+  width: 100%;
+  height: calc(100vh - 89px;);
+  // border: 1px solid red;
+}

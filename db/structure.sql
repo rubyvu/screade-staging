@@ -336,7 +336,8 @@ CREATE TABLE public.comments (
     source_type character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    lits_count integer DEFAULT 0 NOT NULL
+    lits_count integer DEFAULT 0 NOT NULL,
+    comment_id integer
 );
 
 
@@ -357,6 +358,45 @@ CREATE SEQUENCE public.comments_id_seq
 --
 
 ALTER SEQUENCE public.comments_id_seq OWNED BY public.comments.id;
+
+
+--
+-- Name: contact_us_requests; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.contact_us_requests (
+    id bigint NOT NULL,
+    first_name character varying NOT NULL,
+    last_name character varying NOT NULL,
+    username character varying NOT NULL,
+    email character varying NOT NULL,
+    subject character varying NOT NULL,
+    message text NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    resolved_at timestamp without time zone,
+    resolved_by character varying,
+    version character varying DEFAULT '0'::character varying
+);
+
+
+--
+-- Name: contact_us_requests_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.contact_us_requests_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: contact_us_requests_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.contact_us_requests_id_seq OWNED BY public.contact_us_requests.id;
 
 
 --
@@ -432,6 +472,41 @@ CREATE SEQUENCE public.devices_id_seq
 --
 
 ALTER SEQUENCE public.devices_id_seq OWNED BY public.devices.id;
+
+
+--
+-- Name: events; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.events (
+    id bigint NOT NULL,
+    start_date timestamp without time zone NOT NULL,
+    end_date timestamp without time zone NOT NULL,
+    title character varying NOT NULL,
+    description text NOT NULL,
+    user_id integer NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: events_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.events_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: events_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.events_id_seq OWNED BY public.events.id;
 
 
 --
@@ -527,7 +602,8 @@ CREATE TABLE public.news_articles (
     news_source_id integer,
     comments_count integer DEFAULT 0 NOT NULL,
     lits_count integer DEFAULT 0 NOT NULL,
-    views_count integer DEFAULT 0 NOT NULL
+    views_count integer DEFAULT 0 NOT NULL,
+    detected_language character varying
 );
 
 
@@ -561,6 +637,16 @@ ALTER SEQUENCE public.news_articles_id_seq OWNED BY public.news_articles.id;
 
 
 --
+-- Name: news_articles_topics; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.news_articles_topics (
+    news_article_id bigint NOT NULL,
+    topic_id bigint NOT NULL
+);
+
+
+--
 -- Name: news_categories; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -568,7 +654,8 @@ CREATE TABLE public.news_categories (
     id bigint NOT NULL,
     title character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    image character varying
 );
 
 
@@ -726,7 +813,8 @@ CREATE TABLE public.settings (
     is_images boolean DEFAULT true,
     is_videos boolean DEFAULT true,
     is_posts boolean DEFAULT true,
-    user_id integer NOT NULL
+    user_id integer NOT NULL,
+    is_email boolean
 );
 
 
@@ -784,6 +872,41 @@ ALTER SEQUENCE public.squad_requests_id_seq OWNED BY public.squad_requests.id;
 
 
 --
+-- Name: topics; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.topics (
+    id bigint NOT NULL,
+    parent_id integer NOT NULL,
+    parent_type character varying NOT NULL,
+    title character varying NOT NULL,
+    is_approved boolean DEFAULT false,
+    nesting_position integer NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: topics_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.topics_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: topics_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.topics_id_seq OWNED BY public.topics.id;
+
+
+--
 -- Name: user_images; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -793,7 +916,8 @@ CREATE TABLE public.user_images (
     file_hex character varying,
     user_id integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    is_private boolean DEFAULT true
 );
 
 
@@ -847,6 +971,39 @@ ALTER SEQUENCE public.user_security_questions_id_seq OWNED BY public.user_securi
 
 
 --
+-- Name: user_topic_subscriptions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.user_topic_subscriptions (
+    id bigint NOT NULL,
+    user_id integer NOT NULL,
+    source_id integer NOT NULL,
+    source_type character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: user_topic_subscriptions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.user_topic_subscriptions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: user_topic_subscriptions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.user_topic_subscriptions_id_seq OWNED BY public.user_topic_subscriptions.id;
+
+
+--
 -- Name: user_videos; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -856,7 +1013,8 @@ CREATE TABLE public.user_videos (
     file_hex character varying,
     user_id integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    is_private boolean DEFAULT true
 );
 
 
@@ -988,6 +1146,13 @@ ALTER TABLE ONLY public.comments ALTER COLUMN id SET DEFAULT nextval('public.com
 
 
 --
+-- Name: contact_us_requests id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_us_requests ALTER COLUMN id SET DEFAULT nextval('public.contact_us_requests_id_seq'::regclass);
+
+
+--
 -- Name: countries id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -999,6 +1164,13 @@ ALTER TABLE ONLY public.countries ALTER COLUMN id SET DEFAULT nextval('public.co
 --
 
 ALTER TABLE ONLY public.devices ALTER COLUMN id SET DEFAULT nextval('public.devices_id_seq'::regclass);
+
+
+--
+-- Name: events id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.events ALTER COLUMN id SET DEFAULT nextval('public.events_id_seq'::regclass);
 
 
 --
@@ -1058,6 +1230,13 @@ ALTER TABLE ONLY public.squad_requests ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: topics id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.topics ALTER COLUMN id SET DEFAULT nextval('public.topics_id_seq'::regclass);
+
+
+--
 -- Name: user_images id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1069,6 +1248,13 @@ ALTER TABLE ONLY public.user_images ALTER COLUMN id SET DEFAULT nextval('public.
 --
 
 ALTER TABLE ONLY public.user_security_questions ALTER COLUMN id SET DEFAULT nextval('public.user_security_questions_id_seq'::regclass);
+
+
+--
+-- Name: user_topic_subscriptions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_topic_subscriptions ALTER COLUMN id SET DEFAULT nextval('public.user_topic_subscriptions_id_seq'::regclass);
 
 
 --
@@ -1125,6 +1311,14 @@ ALTER TABLE ONLY public.comments
 
 
 --
+-- Name: contact_us_requests contact_us_requests_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_us_requests
+    ADD CONSTRAINT contact_us_requests_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: countries countries_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1138,6 +1332,14 @@ ALTER TABLE ONLY public.countries
 
 ALTER TABLE ONLY public.devices
     ADD CONSTRAINT devices_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: events events_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.events
+    ADD CONSTRAINT events_pkey PRIMARY KEY (id);
 
 
 --
@@ -1237,6 +1439,14 @@ ALTER TABLE ONLY public.squad_requests
 
 
 --
+-- Name: topics topics_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.topics
+    ADD CONSTRAINT topics_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: user_images user_images_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1250,6 +1460,14 @@ ALTER TABLE ONLY public.user_images
 
 ALTER TABLE ONLY public.user_security_questions
     ADD CONSTRAINT user_security_questions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_topic_subscriptions user_topic_subscriptions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_topic_subscriptions
+    ADD CONSTRAINT user_topic_subscriptions_pkey PRIMARY KEY (id);
 
 
 --
@@ -1326,6 +1544,13 @@ CREATE INDEX index_devices_on_owner_id ON public.devices USING btree (owner_id);
 
 
 --
+-- Name: index_events_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_events_on_user_id ON public.events USING btree (user_id);
+
+
+--
 -- Name: index_languages_on_code; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1354,10 +1579,24 @@ CREATE INDEX index_news_articles_categories_on_ids ON public.news_articles_categ
 
 
 --
+-- Name: index_news_articles_on_detected_language; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_news_articles_on_detected_language ON public.news_articles USING btree (detected_language);
+
+
+--
 -- Name: index_news_articles_on_url; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_news_articles_on_url ON public.news_articles USING btree (url);
+
+
+--
+-- Name: index_news_articles_topics_on_news_article_id_and_topic_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_news_articles_topics_on_news_article_id_and_topic_id ON public.news_articles_topics USING btree (news_article_id, topic_id);
 
 
 --
@@ -1396,10 +1635,24 @@ CREATE INDEX index_squad_requests_on_receiver_id_and_requestor_id ON public.squa
 
 
 --
+-- Name: index_topics_on_parent_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_topics_on_parent_id ON public.topics USING btree (parent_id);
+
+
+--
 -- Name: index_user_security_questions_on_question_identifier; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_user_security_questions_on_question_identifier ON public.user_security_questions USING btree (question_identifier);
+
+
+--
+-- Name: index_user_topic_subscriptions_on_user_and_source; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_user_topic_subscriptions_on_user_and_source ON public.user_topic_subscriptions USING btree (user_id, source_id, source_type);
 
 
 --
@@ -1553,7 +1806,24 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210309133445'),
 ('20210309133453'),
 ('20210312094345'),
+('20210326135145'),
+('20210326142648'),
 ('20210331123843'),
-('20210331133229');
+('20210331133229'),
+('20210402085047'),
+('20210402124829'),
+('20210405115841'),
+('20210405142157'),
+('20210406085532'),
+('20210406091258'),
+('20210407093731'),
+('20210408093426'),
+('20210413075147'),
+('20210413090630'),
+('20210422093923'),
+('20210422095808'),
+('20210428081943'),
+('20210428095951'),
+('20210505083950');
 
 

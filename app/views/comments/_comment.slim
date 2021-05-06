@@ -1,0 +1,30 @@
+.comment-wrapper
+  .comment-image-wrapper
+    - if current_user
+      = link_to user_path(comment.user.username) do
+        - if comment.user.profile_picture.url
+          = image_tag(comment.user.profile_picture.square_320.url, class: 'profile-image')
+        - else
+          = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
+    - else
+      - if comment.user.profile_picture.url
+        = image_tag(comment.user.profile_picture.square_320.url, class: 'profile-image')
+      - else
+        = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
+    
+  .comment-content-wrapper value="#{comment.id}"
+    .comment-user-name
+      = comment.user.full_name
+    .comment-text
+      = comment.message
+    .comment-date
+      = comment_timestamp(comment.created_at)
+      
+      .div class="#{ current_user ? 'comment-lit' : 'comment-lit pointer-disable' }"
+        span.info-panel-value.color-black #{counter_measurement(comment.lits.size)}
+        i class=(comment.is_lited(current_user) ? "ic lit active reverse" : "ic lit reverse")
+        
+    // Reply show/hide
+    - if comment.comment_id.blank?
+      .comment-reply-wrapper
+        = link_to comment.replied_comments.count == 0 ? 'REPLY' : "#{comment.replied_comments.count} REPLIES", news_article_comment_reply_comments_path(news_article_id: comment.source.id, comment_id: comment.id), class: 'comment-reply'

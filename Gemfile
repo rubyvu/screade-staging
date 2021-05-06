@@ -81,8 +81,8 @@ gem 'news-api'
 # Geocoder
 gem 'geocoder'
 
-# Set Browser time
-gem 'local_time'
+# Detect language for NewsArticle
+gem 'cld'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -112,6 +112,9 @@ group :development do
   
   # Mailer
   gem 'letter_opener'
+  
+  # Generate PDF schema of the database
+  gem 'rails-erd'
 end
 
 group :test do

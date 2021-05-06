@@ -1,5 +1,10 @@
 class SettingsController < ApplicationController
   
+  # GET /settings/:id
+  def edit
+    @setting = Setting.get_setting(current_user)
+  end
+  
   # PUT/PATCH /settings
   def update
     settings = current_user.setting
@@ -17,6 +22,6 @@ class SettingsController < ApplicationController
   
   private
     def settings_params
-      params.require(:setting).permit(:font_family, :font_style)
+      params.require(:setting).permit(:font_family, :font_style, :is_notification, :is_email, :is_images, :is_videos, :is_posts)
     end
 end

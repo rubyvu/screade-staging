@@ -50,7 +50,7 @@
             .form-check
               input#term-and-services-agreement.form-check-input type="checkbox" /
               label.form-check-label for="term-and-services-agreement"
-                | I have read and agree to Screade's #{link_to 'Terms and services', '', :target => "_blank" }
+                | I have read and agree to Screade's #{link_to 'Terms and services', terms_and_services_legal_documents_path, :target => "_blank" }
             
           .actions
             = f.submit 'Next', class: 'btn btn-primary w-100', id: 'sign-up-submit-button', disabled: true

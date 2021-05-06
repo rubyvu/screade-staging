@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     end
   end
   
+  resources :contact_us_requests, only: [:new, :create]
   resources :current_user, only: [] do
     collection do
       put :update
@@ -34,18 +35,41 @@ Rails.application.routes.draw do
     end
   end
   
+  resources :events, only: [:index, :edit, :create, :update, :destroy]
   resources :fonts, only: [] do
     collection do
       get :customize
     end
   end
+  
+  resources :groups, only: [:index] do
+    collection do
+      get :comments
+      get :search
+      get :subscriptions
+      post :subscribe
+      delete :unsubscribe
+    end
+  end
   resources :home, only: [:index]
+  resources :legal_documents, only: [] do
+    collection do
+      get :terms_and_services
+    end
+  end
+  
   resources :news_articles, only: [] do
+    resources :comments, only: [] do
+      get :reply_comments
+    end
+    
     member do
       get :comments
+      get :search
       post :lit
       post :create_comment
       post :view
+      post :topic_subscription
       delete :unlit
     end
   end
@@ -57,8 +81,16 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :settings, only: [:update]
-  resources :user_images, only: [], param: :username, username: User::USERNAME_ROUTE_FORMAT do
+  resources :settings, only: [:edit, :update]
+  resources :squad_requests, only: [:index, :create] do
+    member do
+      post :accept
+      post :decline
+    end
+  end
+  
+  resources :topics, only: [:new, :create]
+  resources :user_images, only: [:update], param: :username, username: User::USERNAME_ROUTE_FORMAT do
     member do
       get :images
       get :webhook
@@ -70,7 +102,7 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :user_videos, only: [], param: :username, username: User::USERNAME_ROUTE_FORMAT do
+  resources :user_videos, only: [:update], param: :username, username: User::USERNAME_ROUTE_FORMAT do
     member do
       get :videos
       get :webhook
@@ -82,7 +114,13 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :users, only: [:show], param: :username, username: User::USERNAME_ROUTE_FORMAT
+  resources :users, only: [:show, :edit], param: :username, username: User::USERNAME_ROUTE_FORMAT do
+    collection do
+      patch :change_password
+    end
+  
+    resources :squad_members, only: [:index]
+  end
   
   # API routes
   namespace :api, defaults: { format: 'json' } do
@@ -97,10 +135,13 @@ Rails.application.routes.draw do
       
       resources :comments, only: [] do
         member do
+          get :reply_comments
           post :lit
           delete :unlit
         end
       end
+      
+      resources :contact_us_requests, only: [:create]
       resources :countries, only: [:index]
       resources :current_user, only: [] do
         collection do
@@ -108,12 +149,22 @@ Rails.application.routes.draw do
           put :update
           patch :update
           post :resend_email_confirmation
+          post :change_password
         end
       end
       
+      resources :events, only: [:index, :create, :update, :destroy]
       resources :forgot_password, only: [:create] do
         collection do
           get :security_question
+        end
+      end
+      
+      resources :groups, only: [:index] do
+        collection do
+          get :comments
+          post :subscribe
+          delete :unsubscribe
         end
       end
       
@@ -128,10 +179,18 @@ Rails.application.routes.draw do
       resources :languages, only: [:index]
       resources :news_articles, only: [:show] do
         resources :news_article_comments, only: [:index, :create]
+        
         member do
           post :lit
           post :view
           delete :unlit
+        end
+      end
+      
+      resources :news_articles, only: [] do
+        member do
+          get :groups
+          post :topic_subscription
         end
       end
       
@@ -146,13 +205,14 @@ Rails.application.routes.draw do
           put :update
         end
       end
-      resources :squad_requsts, only: [:index, :create] do
+      resources :squad_requests, only: [:index, :create] do
         member do
           post :accept
           post :decline
         end
       end
       
+      resources :topics, only: [:index, :show, :create]
       resources :user_assets, only: [:images],  param: :username, username: User::USERNAME_ROUTE_FORMAT do
         collection do
           get :upload_url
@@ -166,8 +226,13 @@ Rails.application.routes.draw do
           get :videos
         end
       end
+      
+      resources :user_images, only: [:update]
       resources :user_security_questions, only: [:index]
-      resources :users, only: [:show], param: :username, username: User::USERNAME_ROUTE_FORMAT
+      resources :user_videos, only: [:update]
+      resources :users, only: [:show], param: :username, username: User::USERNAME_ROUTE_FORMAT do
+        resources :squad_members, only: [:index]
+      end
     end
   end
 end

@@ -9,6 +9,7 @@
 ```
 {
   "id": "1"                                                                     (integer, required)
+  "image": "http://icon.png"                                                    (string, required)
   "title": "business"                                                           (string, required)
 }
 ```

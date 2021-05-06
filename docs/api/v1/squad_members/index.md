@@ -1,0 +1,31 @@
+## Get User Squad by Username - API endpoint
+
+### Navigation
+[README](../../../../README.md)
+<
+[API reference](../../../api_reference.md)
+
+### HTTP method
+GET
+
+### API endpoint
+`/api/v1/users/:user_username/squad_members`
+
+### Request body
+```
+{
+  "page": 1                                                                     (integer, required)
+}
+```
+
+### Response
+#### Success
+```
+HTTP code 200 :ok
+{
+  "squad_members_requests": "[SquadRequest]"                                    (array of objects, required)
+}
+```
+
+### References
+- [Squad Request JSON object](../../../json_objects/squad_request.md)

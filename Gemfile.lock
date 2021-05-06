@@ -120,8 +120,11 @@ GEM
       fog-aws
     case_transform (0.2)
       activesupport
+    choice (0.2.0)
     city-state (0.1.0)
       rubyzip (>= 1.1)
+    cld (0.8.0)
+      ffi
     concurrent-ruby (1.1.8)
     crass (1.0.6)
     devise (4.7.3)
@@ -215,7 +218,6 @@ GEM
     listen (3.4.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    local_time (2.1.0)
     loofah (2.9.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -290,6 +292,11 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
+    rails-erd (1.6.1)
+      activerecord (>= 4.2)
+      activesupport (>= 4.2)
+      choice (~> 0.2.0)
+      ruby-graphviz (~> 1.2)
     rails-html-sanitizer (1.3.0)
       loofah (~> 2.3)
     railties (6.1.3.1)
@@ -310,6 +317,7 @@ GEM
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
+    rexml (3.2.5)
     rspec-core (3.10.1)
       rspec-support (~> 3.10.0)
     rspec-expectations (3.10.1)
@@ -327,6 +335,8 @@ GEM
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
     rspec-support (3.10.1)
+    ruby-graphviz (1.2.5)
+      rexml
     ruby-vips (2.1.0)
       ffi (~> 1.12)
     ruby2_keywords (0.0.4)
@@ -392,6 +402,7 @@ DEPENDENCIES
   carrierwave-video-thumbnailer
   carrierwave_direct
   city-state
+  cld
   devise
   factory_bot_rails
   faker
@@ -403,7 +414,6 @@ DEPENDENCIES
   kaminari
   letter_opener
   listen (~> 3.3)
-  local_time
   mimemagic (= 0.3.7)
   mini_magick
   news-api
@@ -416,6 +426,7 @@ DEPENDENCIES
   rack-mini-profiler (~> 2.0)
   rails
   rails-controller-testing
+  rails-erd
   rspec-rails
   shoulda-matchers
   slim-rails

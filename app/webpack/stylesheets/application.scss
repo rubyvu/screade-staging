@@ -1,13 +1,18 @@
 /**************************************
 * Variables:
 **************************************/
+// Colors
 $color-blue: #3F51B5;
 $color-light-blue: #D4D7ED;
+$color-cadet-blue: #EAF1FF;
 $color-black: #000000;
 $color-red: #DA100B;
 $color-grey: #9C9C9C;
 $color-light-grey: #EBF0F3;
 $color-white: #FFFFFF;
+
+// Sizes
+$max-body-width: 1440px;
 
 /**************************************
 * Custom bootstrab elements:
@@ -26,12 +31,13 @@ $grid-breakpoints: (
 
 @import 'icons';
 @import 'custom_fields';
+@import 'floating_action_button';
 @import 'navigation_bar';
 @import 'kaminari';
 @import 'main-elements';
 @import 'notification';
-@import 'spiner';
-@import 'toggle-switcher';
+@import 'spinner';
+@import 'toggle_switcher';
 @import './comments/index';
 @import './font_customaizer/index';
 @import './modals/index';
@@ -39,11 +45,16 @@ $grid-breakpoints: (
 @import './news_articles/index';
 @import './user_profile/index';
 @import './video_player/index';
+@import './events/index';
+@import './squad_requests/index';
+@import './groups/index';
 
 /**************************************
 * Import stylesheets from node modules:
 **************************************/
 @import '~bootstrap/scss/bootstrap'; // Custom bootstrap variables must be set or imported *before* bootstrap.
+@import 'bootstrap-datepicker/dist/css/bootstrap-datepicker.css';
+@import 'timepicker/jquery.timepicker.css';
 
 /**************************************
 * Internal fonts:
@@ -54,7 +65,7 @@ $grid-breakpoints: (
 * Internal styles:
 **************************************/
 html, body {
-  max-width: 1440px;
+  max-width: $max-body-width;
   margin: 0 auto;
   padding: 8px 50px;
   //border: 1px solid green;
@@ -73,10 +84,21 @@ html, body {
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
+.d-width-wrapper {
+  width: 60%;
+  margin: auto;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
 @media (max-width: 960px) {
   html, body { padding: 8px 50px; }
 }
 
 @media (max-width: 450px) {
   html, body { padding: 8px 10px; }
+}
+
+@media (max-width: map-get($grid-breakpoints, "lg")) {
+  .d-width-wrapper { width: 90%; }
 }

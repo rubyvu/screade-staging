@@ -7,6 +7,9 @@ RSpec.describe NewsCategory, type: :model do
   
   context 'associations' do
     it { should have_and_belong_to_many(:news_articles)}
+    it { should have_many(:topics).dependent(:destroy) }
+    it { should have_many(:user_topic_subscriptions).dependent(:destroy) }
+    it { should have_many(:subscribed_users) }
   end
   
   context 'validations' do

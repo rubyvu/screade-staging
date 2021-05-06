@@ -1,0 +1,26 @@
+$('#edit-event-form-placeholder').html("<%= j render partial: 'form' %>")
+$('#modal-edit-event').modal('show')
+
+// Datepicker
+$('#datepicker-edit-event').datepicker({
+  container: '#modal-edit-event',
+  format: 'dd-mm-yyyy',
+  showWeekDays: false,
+  todayHighlight: false,
+  autoclose: true,
+  orientation: 'top'
+}).on('show hide', function(e) {
+  e.stopPropagation();
+});
+
+// Timepicker
+timePickerOptions = {
+  step: 5,
+  listWidth: 1
+}
+
+if (!isTwelveHoursFormat()) {
+  timePickerOptions.timeFormat = 'H:i'
+  timePickerOptions.show2400 = true
+}
+$('input.timepicker').timepicker(timePickerOptions)

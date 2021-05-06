@@ -1,0 +1,9 @@
+.content-subscription-wrapper
+  h5.mt-4.mb-2 Subscriptions
+  - if comments.present?
+    .subscriptions-scroll#comments-list-placeholder
+      = render 'groups/comments_list', comments: comments
+      
+  - else
+    .subscriptions-scroll#comments-list-placeholder
+      p.mt-4 You have no active subscriptions.

@@ -8,9 +8,11 @@ class CommentSerializer < ActiveModel::Serializer
   
   attribute :commentator
   def commentator
-    UserProfileSerializer.new(object.user).as_json
+    current_user = instance_options[:current_user]
+    UserProfileSerializer.new(object.user, current_user: current_user).as_json
   end
   
+  attribute :comment_id
   attribute :is_lited
   def is_lited
     current_user = instance_options[:current_user]
@@ -21,4 +23,17 @@ class CommentSerializer < ActiveModel::Serializer
   def lits_count
     object.lits.count
   end
+  
+  attribute :replied_comments_count
+  def replied_comments_count
+    object.comment_id.blank? ? object.replied_comments.count : 0
+  end
+  
+  attribute :source_title
+  def source_title
+    object.source.title
+  end
+  
+  attribute :source_type
+  attribute :source_id
 end

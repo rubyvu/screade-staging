@@ -26,9 +26,9 @@ html
             = link_to 'Home', root_path, class: 'nav-link'
           - if current_user
             li.nav-item
-              = link_to 'Groups', root_path, class: 'nav-link'
+              = link_to 'Groups', groups_path, class: 'nav-link'
             li.nav-item
-              = link_to 'Calendar', root_path, class: 'nav-link'
+              = link_to 'Events', events_path, class: 'nav-link'
             li.nav-item
               = link_to 'Images', images_user_image_path(current_user.username), class: 'nav-link'
             li.nav-item
@@ -41,7 +41,7 @@ html
             li.nav-item
               = link_to 'Groups', '#', class: 'nav-link', data: { toggle: "modal", target: "#modal-sign-in-or-sign-up" }
             li.nav-item
-              = link_to 'Calendar', '#', class: 'nav-link', data: { toggle: "modal", target: "#modal-sign-in-or-sign-up" }
+              = link_to 'Events', '#', class: 'nav-link', data: { toggle: "modal", target: "#modal-sign-in-or-sign-up" }
             li.nav-item
               = link_to 'Images', '#', class: 'nav-link', data: { toggle: "modal", target: "#modal-sign-in-or-sign-up" }
             li.nav-item
@@ -53,8 +53,6 @@ html
             
         - if current_user
           .div.d-flex.align-items-center
-            .navbar-icon-wrappers.search-icon
-              = image_pack_tag('media/images/icons/ic_search.png', id: 'search-icon')
             .navbar-icon-wrappers
               = image_pack_tag('media/images/icons/ic_dialog.png')
             .navbar-icon-wrappers
@@ -65,9 +63,11 @@ html
                 = image_pack_tag('media/images/icons/ic_settings.png')
               .dropdown-menu.dropdown-menu-right aria-labelledby="dropdownMenuButton"
                 = link_to 'Customize', customize_fonts_path, class: 'dropdown-item'
-                a.dropdown-item href="#" Contact Us
-                a.dropdown-item href="#" Privacy Policy & Terms of Use
-                a.dropdown-item href="#" About Us
+                = link_to 'Notifications Settings', edit_setting_path(current_user.setting), class: 'dropdown-item'
+                = link_to 'Change Password', edit_user_path(current_user.username), class: 'dropdown-item'
+                = link_to 'Contact Us', new_contact_us_request_path, class: 'dropdown-item'
+                = link_to 'Privacy Policy & Terms of Use', terms_and_services_legal_documents_path, class: 'dropdown-item'
+                = link_to "About Us", '', class: 'dropdown-item', data: { toggle: "modal", target: "#modal-about-us" }
                 = link_to "Sign Out", destroy_user_session_path, method: :delete, class: 'dropdown-item no-border text-danger'
                 
             .d-inline-flex.ml-1
@@ -88,3 +88,4 @@ html
     = render 'shared/modals/sign_up_update'
     = render 'shared/modals/forgot_password/security_question'
     = render 'shared/modals/forgot_password/restore'
+    = render 'shared/modals/about_us'

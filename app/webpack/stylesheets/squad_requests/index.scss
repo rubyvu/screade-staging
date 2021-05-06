@@ -1,0 +1,22 @@
+@import 'squad-request-card';
+
+.squad-request-switcher {
+  display: block;
+  a.btn {
+    border-radius: 0;
+    margin: 16px 16px 0 0;
+    margin-right: 16px;
+    padding: 16px 36px;
+    
+    &.btn-link {
+      color: $color-grey;
+    }
+  }
+  
+  a.btn:focus, a.btn:hover {
+    outline: none !important;
+    box-shadow: none !important;
+    background: none !important;
+    color: $color-blue
+  }
+}

@@ -8,6 +8,13 @@
           = image_tag(user_video.file.url, class: 'user-asset video', data: { 'video-loaded': user_video.file.present?, 'video-id': user_video.id })
         
         - if user_video.user == current_user
+          - if user_video.is_private
+            = link_to user_video_path(id: user_video.id, user_video: { is_private: false}), class: 'update-asset', method: :put, data: { confirm: 'Do you really want make this Video Public?' } do
+              = image_pack_tag('media/images/icons/ic_private.png')
+          - else
+            = link_to user_video_path(id: user_video.id, user_video: { is_private: true}), class: 'update-asset', method: :put, data: { confirm: 'Do you really want make this Video Private?' } do
+              = image_pack_tag('media/images/icons/ic_public.png')
+              
           = link_to user_videos_path(id: user_video.id), class: 'destroy-asset', method: :delete, data: { confirm: 'Do you really want to delete this Video?' }  do
             = image_pack_tag('media/images/icons/ic_delete_object.png')
         

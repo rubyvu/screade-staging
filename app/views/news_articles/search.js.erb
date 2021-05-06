@@ -1,0 +1,5 @@
+$('#search-form-placeholder').html("<%= j render partial: 'search_form' %>")
+$('#modal-news-article-group-search').modal('show')
+$('#modal-news-article-group-search').on('hidden.bs.modal', function () {
+   window.location.reload();
+});

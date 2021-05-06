@@ -3,8 +3,9 @@ class UserImagesController < ApplicationController
   
   # GET /user_images/:username
   def images
-    @images = []
-    @images = @user.user_images.order(updated_at: :desc).page(params[:page]).per(24) if @user.setting.is_images
+    options = {}
+    options[:is_private] = false if @user != current_user
+    @images = @user.user_images.where(options).order(updated_at: :desc).page(params[:page]).per(24)
     
     if @user == current_user
       @image_uploader = UserImage.new.file
@@ -26,6 +27,13 @@ class UserImagesController < ApplicationController
     redirect_to images_user_image_path(username: params[:username])
   end
   
+  # PUT/PATCH /user_images/:id
+  def update
+    user_image = UserImage.find(params[:id])
+    user_image.update(user_image_params)
+    redirect_to images_user_image_path(username: current_user.username)
+  end
+  
   # DELETE /user_images/destroy
   def destroy
     user_image = UserImage.find_by!(user: current_user, id: params[:id])
@@ -43,5 +51,9 @@ class UserImagesController < ApplicationController
   private
     def set_user
       @user = User.find_by!(username: params[:username])
+    end
+    
+    def user_image_params
+      params.require(:user_image).permit(:is_private)
     end
 end

@@ -42,8 +42,5 @@ module ScreadeRails
       g.javascripts false
       g.helper false
     end
-    
-    # Autoloaded path
-    config.autoload_paths << Rails.root.join('lib', 'devise')
   end
 end

@@ -1,0 +1,20 @@
+- topics.where(is_approved: true).each do |topic|
+  - sub_topics = topic.sub_topics.where(is_approved: true)
+  input type="checkbox" id="topic-#{topic.parent_id}"
+  ul
+    li.group-wrapper
+      .main-content class="#{current_user.is_group_subscription(topic) ? 'active' : ''}" data-type="Topic" id="#{topic.id}"
+        .title-wrapper
+          p #{topic.title.capitalize}
+        
+        .counter-dropdown-wrapper
+          - if sub_topics.present? || topic.nesting_position < 2
+            label type="label" for="topic-#{topic.id}"
+            
+      - if topic.nesting_position < 2 && sub_topics.present?
+        = render 'groups/topic', topics: sub_topics
+        
+      - elsif topic.nesting_position < 2
+        input type="checkbox" id="topic-#{topic.id}"
+        
+      = render 'groups/add_topic', data_type: 'Topic', data_id: topic.id

@@ -1,0 +1,17 @@
+form.search-wrapper
+  .material-field
+    input id="group-search-input" type="text" placeholder="What do you whant to find?" class='form-control' autocomplete='off'
+  
+  .search-results-wrapper
+    #group-search-list
+      - @groups_for_search.each do |group|
+        .search-element-wrapper data-title="#{group.title.capitalize}"
+          .text-content
+            h5 #{topic_short_title(group)}
+            span #{group.title.capitalize}
+          
+          .action-content
+            - if @news_article.is_group_subscription(group)
+              p Already added
+            - else
+              = link_to "Add", topic_subscription_news_article_path(news_article_id: @news_article.id, news_article_subscription: { topic_id: group.id }), class: "btn btn-primary", remote: true, method: :post

@@ -21,6 +21,7 @@ class User < ApplicationRecord
   belongs_to :user_security_question
   has_one :setting, dependent: :destroy
   has_many :devices, class_name: 'Device', foreign_key: 'owner_id', dependent: :destroy
+  has_many :events, dependent: :destroy
   ## Squad requests
   has_many :squad_requests_as_receiver, foreign_key: :receiver_id, class_name: 'SquadRequest', dependent: :destroy
   has_many :squad_requests_as_requestor, foreign_key: :requestor_id, class_name: 'SquadRequest', dependent: :destroy
@@ -36,6 +37,10 @@ class User < ApplicationRecord
   ## Images and Videos
   has_many :user_images, dependent: :destroy
   has_many :user_videos, dependent: :destroy
+  ## UserTopicSubscriptions
+  has_many :user_topic_subscriptions, dependent: :destroy
+  has_many :subscribed_news_categories, through: :user_topic_subscriptions, source: :source, source_type: 'NewsCategory'
+  has_many :subscribed_topics, through: :user_topic_subscriptions, source: :source, source_type: 'Topic'
   # Languages
   has_and_belongs_to_many :languages
   
@@ -66,6 +71,21 @@ class User < ApplicationRecord
     super(value&.downcase&.strip)
   end
   
+  def is_group_subscription(group)
+    case group.class.name
+    when 'NewsCategory'
+      self.subscribed_news_categories.include?(group)
+    when 'Topic'
+      self.subscribed_topics.include?(group)
+    else
+      false
+    end
+  end
+  
+  def group_subscription_counts(group)
+    self.subscribed_news_categories.where(id: group.id).count + self.subscribed_topics.where(id: group.approved_nested_topics_ids).count
+  end
+  
   # Calculations
   def lits_count
     Lit.where(source_type: 'Comment', source_id: self.comments.ids).count
@@ -76,7 +96,11 @@ class User < ApplicationRecord
   end
   
   def full_name
-    "#{first_name} #{last_name}".strip
+    if self.first_name.present? || self.last_name.present?
+      "#{self.first_name} #{self.last_name}".strip
+    else
+      "#{self.username.capitalize}"
+    end
   end
   
   def is_national_news?
@@ -104,6 +128,15 @@ class User < ApplicationRecord
     elsif conditions.has_key?(:username) || conditions.has_key?(:email)
       where(conditions.to_h).first
     end
+  end
+  
+  def count_squad_members
+    self.squad_requests_as_receiver.where.not(accepted_at: nil).or(self.squad_requests_as_requestor.where.not(accepted_at: nil)).distinct.count
+  end
+  
+  def count_squad_requests
+    # Count Squad requests for User as receiver
+    self.squad_requests_as_receiver.where(accepted_at: nil, declined_at: nil).count
   end
    
   private

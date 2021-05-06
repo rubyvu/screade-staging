@@ -43,4 +43,4 @@ HTTP code 422 :unprocessable_entity
 ```
 
 ### References
-- [User JSON object](../../../json_objects/comment.md)
+- [Comment JSON object](../../../json_objects/comment.md)

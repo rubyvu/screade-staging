@@ -16,27 +16,18 @@ class Api::V1::NewsCategoriesController < Api::V1::ApiController
     # Get Country
     country = current_user&.country || Country.find_by(code: params[:location_code]) || Country.find_by(code: 'US')
     
-    # Get Languages
-    current_user ? languages = current_user.languages + country.languages : languages = country.languages
-    
+    # Get News
     if params[:is_national]
-      # Get News Sources
-      news_source = NewsSource.where(language: languages, country: country)
-      news = NewsArticle.joins(:news_categories)
-       .where(news_articles: { country: country }, news_categories: { id: news_category.id })
-       .or(NewsArticle.joins(:news_categories).where(news_articles: { news_source: news_source }, news_categories: { id: news_category.id }))
-       .order(published_at: :desc).page(params[:page]).per(30)
-      news = NewsArticle.where(country: Country.find_by(code: 'US')).page(params[:page]).per(16) if news.blank?
+      news = NewsArticle.joins(:news_categories).where(news_articles: { country: country }, news_categories: { id: news_category.id }).order(published_at: :desc).page(params[:page]).per(30)
     else
-      # Get News Sources
-      news_source = NewsSource.where(language: languages).where.not(country: country)
-      
-      # Set Default News Sources if default World News is empty
-      news_source = NewsSource.joins(:language).where(languages: { code: 'EN' }).where.not(news_sources: { country: country }) if news_source.blank?
-      
-      news = NewsArticle.joins(:news_categories).where(news_articles: { news_source: news_source }, news_categories: { id: news_category.id })
-        .order(published_at: :desc).page(params[:page]).per(30)
+      if current_user
+        languages = Language.where(id: current_user.languages.ids).or(Language.where(id: country.languages.ids)).uniq
+      else
+        languages = Language.where(id: country.languages.ids)
+      end
+      news = NewsArticle.joins(:news_categories).where.not(news_articles: { country: country }).where(news_articles: { detected_language: languages.pluck(:code) }, news_categories: { id: news_category.id }).order(published_at: :desc).page(params[:page]).per(30)
     end
+    news = NewsArticle.joins(:news_categories).where(news_articles: { country: Country.find_by(code: 'US')}, news_categories: { id: news_category.id } ).page(params[:page]).per(30) if news.blank?
     
     news_json = ActiveModel::Serializer::CollectionSerializer.new(news, serializer: NewsArticleSerializer, current_user: current_user).as_json
     render json: { news: news_json }, status: :ok

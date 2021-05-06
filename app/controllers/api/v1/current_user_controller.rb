@@ -34,6 +34,37 @@ class Api::V1::CurrentUserController < Api::V1::ApiController
     render json: { settings: settings_json }, status: :ok
   end
   
+  # POST /current_user/change_password
+  def change_password
+    old_password = change_password_params[:old_password]
+    password = change_password_params[:password]
+    password_confirmation = change_password_params[:password_confirmation]
+    
+    if old_password.blank? || password.blank? || password_confirmation.blank?
+      render json: { errors: ['Password params is empty.'] }, status: :unprocessable_entity
+      return
+    end
+    
+    unless current_user.valid_password?(old_password)
+      render json: { errors: ['Old password is wrong.'] }, status: :unprocessable_entity
+      return
+    end
+    
+    if password != password_confirmation
+      render json: { errors: ['The password confirmation does not match.'] }, status: :unprocessable_entity
+      return
+    end
+    
+    current_user.password = password
+    current_user.password_confirmation = password_confirmation
+    if current_user.save
+      user_json = UserSerializer.new(current_user).attributes.as_json
+      render json: { user: user_json }, status: :ok
+    else
+      render json: { errors: current_user.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+  
   private
     def user_params
       strong_params = params.require(:user).permit(:banner_picture, :birthday, :country_code, :email, :first_name, :last_name, :middle_name, :phone_number, :profile_picture, language_ids: [])
@@ -47,5 +78,9 @@ class Api::V1::CurrentUserController < Api::V1::ApiController
       end
       
       strong_params
+    end
+    
+    def change_password_params
+      params.require(:user).permit(:old_password, :password, :password_confirmation)
     end
 end

@@ -66,6 +66,12 @@ input[type=number] {
   -moz-appearance: textfield; /* Firefox */
 }
 
+// Input is disabled
+input.form-control:disabled, input.form-control[readonly] {
+  background-color: $color-white;
+  color: $color-grey
+}
+
 // Custom Radiobox
 input[type=radio] {
   margin-right: 6px;
@@ -98,6 +104,32 @@ input[type='radio']:checked:after {
   visibility: visible;
   border: 3px solid $color-white;
   box-shadow: 0 0 0 2px $color-blue;
+}
+
+// Section
+.section-wrapper {
+  h1.section-title {
+    font-size: 14px;
+    font-weight: normal;
+    color: $color-grey;
+    padding: 10px 20px;
+    border-bottom: 1px solid $color-light-grey;
+    margin-bottom: 14px;
+  }
+  
+  .section-element {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0px;
+    margin: 0px 20px;
+    border-bottom: 1px solid $color-light-grey;
+    margin-bottom: 14px;
+    
+    .section-element-lable {
+      font-size: 16px;
+      font-weight: normal;
+    }
+  }
 }
 
 // Checkbox
@@ -141,4 +173,79 @@ input[type="file"].upload-user-asset {
 
 label.upload-user-asset-button {
   cursor: pointer;
+}
+
+a.btn.floating {
+  right: 0;
+  bottom: -10%;
+  position: absolute;
+  padding: 12px 24px;
+  border-radius: 28px;
+}
+
+// Bootstrap Dropdowns
+.dropdown-submenu { position: relative; }
+.dropdown-submenu> a:after {
+  content: url("../images/icons/ic_dropdown_arrow.png");
+  float: right;
+  transform: rotate(270deg);
+}
+.dropdown-submenu>.dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: 0px;
+    margin-left: 0px;
+}
+.dropdown-submenu:hover>.dropdown-menu { display: block; }
+
+// Search
+.search-wrapper {
+  height: 600px;
+  
+  .search-results-wrapper {
+    width: 100%;
+    height: 95%;
+    overflow: auto;
+    
+    .search-element-wrapper {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid $color-light-grey;
+      
+      .text-content {
+        h5 {
+          font-size: 12px;
+          color: $color-grey;
+        }
+        
+        span {
+          font-size: 14px;
+          color: $color-black;
+        }
+      }
+      
+      .action-content {
+        display: flex;
+        align-items: center;
+      }
+      
+      .action-content p { margin: 0 }
+      
+      .action-content .btn {
+        height: 36px;
+        padding: 0.5rem 1.6rem !important;
+        line-height: 1.2;
+      }
+      
+      .action-content .btn.btn-outline-primary {
+        padding: 0.5rem 0.75rem !important;
+      }
+      
+      .action-content .btn:focus {
+        outline:none;
+        box-shadow: none;
+      }
+    }
+  }
 }

@@ -4,6 +4,7 @@ class NewsArticle < ApplicationRecord
   belongs_to :country
   belongs_to :news_source, optional: true
   has_and_belongs_to_many :news_categories
+  has_and_belongs_to_many :topics
   ## Comments
   has_many :comments, as: :source, dependent: :destroy
   has_many :commenting_users, through: :comments, source: :user
@@ -36,5 +37,20 @@ class NewsArticle < ApplicationRecord
   
   def is_viewed(user)
     user.present? && self.viewing_users.include?(user)
+  end
+  
+  def is_group_subscription(group)
+    case group.class.name
+    when 'NewsCategory'
+      self.news_categories.include?(group)
+    when 'Topic'
+      self.topics.include?(group)
+    else
+      false
+    end
+  end
+  
+  def group_subscription_counts(group)
+    self.news_categories.where(id: group.id).count + self.topics.where(id: group.approved_nested_topics_ids).count
   end
 end

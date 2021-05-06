@@ -1,0 +1,17 @@
+form.search-wrapper
+  .material-field
+    input id="group-search-input" type="text" placeholder="What do you whant to find?" class='form-control' autocomplete='off'
+  
+  .search-results-wrapper
+    #group-search-list
+      - @groups_for_search.each do |group|
+        .search-element-wrapper data-title="#{group.title.capitalize}"
+          .text-content
+            h5 #{topic_short_title(group)}
+            span #{group.title.capitalize}
+          
+          .action-content
+            - if current_user.is_group_subscription(group)
+              = link_to "Remove", unsubscribe_groups_path(type: group.class.name, id: group.id), class: "btn btn-outline-primary", remote: true, method: :delete, data: { type: group.class.name, id: group.id }
+            - else
+              = link_to "Add", subscribe_groups_path(type: group.class.name, id: group.id), class: "btn btn-primary", remote: true, method: :post, data: { type: group.class.name, id: group.id }

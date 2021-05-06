@@ -3,8 +3,9 @@ class UserVideosController < ApplicationController
   
   # GET /user_videos/:username/videos
   def videos
-    @videos = []
-    @videos = @user.user_videos.order(updated_at: :desc).page(params[:page]).per(24) if @user.setting.is_videos
+    options = {}
+    options[:is_private] = false if @user != current_user
+    @videos = @user.user_videos.where(options).order(updated_at: :desc).page(params[:page]).per(24)
     
     if @user == current_user
       @video_uploader = UserVideo.new.file
@@ -26,6 +27,13 @@ class UserVideosController < ApplicationController
     redirect_to videos_user_video_path(username: params[:username])
   end
   
+  # PUT/PATCH /user_videos/:id
+  def update
+    user_video = UserVideo.find(params[:id])
+    user_video.update(user_video_params)
+    redirect_to videos_user_video_path(username: current_user.username)
+  end
+  
   # DELETE /user_videos/destroy
   def destroy
     user_video = UserVideo.find_by!(user: current_user, id: params[:id])
@@ -43,5 +51,9 @@ class UserVideosController < ApplicationController
   private
     def set_user
       @user = User.find_by!(username: params[:username])
+    end
+    
+    def user_video_params
+      params.require(:user_video).permit(:is_private)
     end
 end
