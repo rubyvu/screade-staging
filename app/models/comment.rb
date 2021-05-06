@@ -1,5 +1,5 @@
 class Comment < ApplicationRecord
-  SOURCE_TYPES = %w(NewsArticle)
+  SOURCE_TYPES = %w(NewsArticle Post)
   
   # Associations
   has_many :replied_comments, class_name: 'Comment', foreign_key: :comment_id, dependent: :destroy

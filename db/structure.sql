@@ -713,6 +713,45 @@ ALTER SEQUENCE public.news_sources_id_seq OWNED BY public.news_sources.id;
 
 
 --
+-- Name: posts; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.posts (
+    id bigint NOT NULL,
+    user_id integer NOT NULL,
+    news_category_id integer NOT NULL,
+    topic_id integer NOT NULL,
+    title character varying NOT NULL,
+    description character varying NOT NULL,
+    image character varying,
+    image_hex character varying,
+    is_notification boolean DEFAULT true,
+    state character varying DEFAULT 'pending'::character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: posts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.posts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: posts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.posts_id_seq OWNED BY public.posts.id;
+
+
+--
 -- Name: que_jobs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -1210,6 +1249,13 @@ ALTER TABLE ONLY public.news_sources ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: posts id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.posts ALTER COLUMN id SET DEFAULT nextval('public.posts_id_seq'::regclass);
+
+
+--
 -- Name: que_jobs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1381,6 +1427,14 @@ ALTER TABLE ONLY public.news_categories
 
 ALTER TABLE ONLY public.news_sources
     ADD CONSTRAINT news_sources_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: posts posts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.posts
+    ADD CONSTRAINT posts_pkey PRIMARY KEY (id);
 
 
 --
@@ -1826,6 +1880,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210428081943'),
 ('20210428095951'),
 ('20210505083950'),
-('20210506070755');
+('20210506070755'),
+('20210506082408');
 
 
