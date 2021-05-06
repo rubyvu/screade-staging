@@ -81,6 +81,18 @@ Rails.application.routes.draw do
     end
   end
   
+  resources :posts do
+    resources :post_comments, only: [:index, :create] do
+      get :reply_comments
+    end
+    
+    resources :post_lits, only: [:create] do
+      collection do
+        delete :destroy
+      end
+    end
+  end
+  
   resources :settings, only: [:edit, :update]
   resources :squad_requests, only: [:index, :create] do
     member do

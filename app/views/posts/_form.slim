@@ -1,0 +1,16 @@
+= form_with(model: post, url: (post.persisted? ?  post_path(post) : posts_path), local: true) do |f|
+
+  .input-group.mb-3
+   = f.text_field :title, autocomplete: 'off', class: 'form-control', placeholder: 'Title', required: true
+    
+  .input-group.mb-3
+    = f.text_area :description, autocomplete: 'off', class: 'form-control', placeholder: 'Event Description', required: true, rows: 3
+    
+  .input-group.mb-3
+    = f.select :news_category_id, NewsCategory.all.map { |news_category| [news_category.title, news_category.id] }
+    
+  .input-group.mb-3
+    = f.select :topic_id, Topic.all.map { |topic| [topic.title, topic.id] }
+  
+  .actions
+    = f.submit 'Submit', class: 'btn btn-primary w-100'

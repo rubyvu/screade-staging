@@ -728,7 +728,10 @@ CREATE TABLE public.posts (
     is_notification boolean DEFAULT true,
     state character varying DEFAULT 'pending'::character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    comments_count integer DEFAULT 0 NOT NULL,
+    lits_count integer DEFAULT 0 NOT NULL,
+    views_count integer DEFAULT 0 NOT NULL
 );
 
 
@@ -1881,6 +1884,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210428095951'),
 ('20210505083950'),
 ('20210506070755'),
-('20210506082408');
+('20210506082408'),
+('20210506122556');
 
 

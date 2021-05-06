@@ -1,0 +1,22 @@
+- @posts.each do |post|
+  .card
+    = link_to 'Edit', edit_post_path(post)
+    = link_to 'Delete', post_path(post), method: :delete, data: { confirm: 'Do you really want to delete this Post?' }
+    hr
+    - if post.is_lited(current_user)
+      = link_to 'Unlit', post_post_lits_path(post), method: :delete, remote: true
+    - else
+      = link_to 'Lit', post_post_lits_path(post), method: :post, remote: true
+      
+    = link_to 'Comment', post_post_comments_path(post)
+    p Views: #{post.views.size}
+    .card-body
+      h5.card-title #{post.title}
+      
+      p.card-text #{post.description}
+
+#container-floating-wrapper
+  #container-floating
+    = link_to new_post_path do
+      #floating-button
+        p.plus #{image_pack_tag('media/images/icons/ic_plus.png')} Add Post

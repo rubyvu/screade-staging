@@ -34,7 +34,7 @@ class Post < ApplicationRecord
   end
   
   def is_commented(user)
-    user.present? &&  self.commenting_users.include?(user)
+    user.present? && self.commenting_users.include?(user)
   end
   
   def is_viewed(user)
