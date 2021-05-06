@@ -25,6 +25,7 @@ RSpec.describe Topic, type: :model do
     it { should have_many(:user_topic_subscriptions).dependent(:destroy) }
     it { should have_many(:subscribed_users) }
     it { should belong_to(:parent) }
+    it { should belong_to(:suggester).class_name('User').with_foreign_key(:suggester_id).optional }
   end
   
   context 'validations' do

@@ -883,7 +883,8 @@ CREATE TABLE public.topics (
     is_approved boolean DEFAULT false,
     nesting_position integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    suggester_id integer
 );
 
 
@@ -1824,6 +1825,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210422095808'),
 ('20210428081943'),
 ('20210428095951'),
-('20210505083950');
+('20210505083950'),
+('20210506070755');
 
 

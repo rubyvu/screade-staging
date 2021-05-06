@@ -31,6 +31,7 @@ RSpec.describe User, type: :model do
       it { should have_many(:lited_news_articles) }
       it { should have_many(:views).dependent(:destroy) }
       it { should have_many(:viewed_news_articles) }
+      it { should have_many(:suggested_topics).dependent(:nullify) }
       it { should have_many(:user_images).dependent(:destroy) }
       it { should have_many(:user_videos).dependent(:destroy) }
       it { should have_and_belong_to_many(:languages) }

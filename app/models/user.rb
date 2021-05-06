@@ -41,6 +41,8 @@ class User < ApplicationRecord
   has_many :user_topic_subscriptions, dependent: :destroy
   has_many :subscribed_news_categories, through: :user_topic_subscriptions, source: :source, source_type: 'NewsCategory'
   has_many :subscribed_topics, through: :user_topic_subscriptions, source: :source, source_type: 'Topic'
+  # Suggested Topics
+  has_many :suggested_topics, class_name: 'Topic', foreign_key: :suggester_id, dependent: :nullify
   # Languages
   has_and_belongs_to_many :languages
   

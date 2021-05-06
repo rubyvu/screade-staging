@@ -20,8 +20,6 @@ class Post < ApplicationRecord
   # Fields validations
   validates :title, presence: true
   validates :description, presence: true
-  validates :image, presence: true
-  validates :is_notified
   
   def is_lited(user)
     user.present? && self.liting_users.include?(user)

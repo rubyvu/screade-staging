@@ -45,6 +45,7 @@ ActiveAdmin.register Topic do
     end
     
     column :is_approved
+    column :suggester
     actions
   end
   

@@ -17,6 +17,7 @@ class Topic < ApplicationRecord
   has_and_belongs_to_many :news_articles
   
   belongs_to :parent, class_name: 'Topic', foreign_key: :parent_id, polymorphic: true
+  belongs_to :suggester, class_name: 'User', foreign_key: :suggester_id, optional: true
   
   # Field validations
   validates :nesting_position, presence: true, numericality: { less_than_or_equal_to: 2,  only_integer: true }

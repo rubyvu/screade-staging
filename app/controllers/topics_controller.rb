@@ -13,6 +13,7 @@ class TopicsController < ApplicationController
   
   def create
     @topic = Topic.new(topic_params)
+    @topic.suggester = current_user
     if @topic.save
       render js: "window.location = '#{groups_path}'"
     else

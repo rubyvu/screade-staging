@@ -10,6 +10,7 @@ class Api::V1::TopicsController < Api::V1::ApiController
   # POST /api/v1/topics
   def create
     topic = Topic.new(topic_params)
+    topic.suggester = current_user
     if topic.save
       topic_json = TopicSerializer.new(topic).as_json
       render json: { topic: topic_json }, status: :ok
