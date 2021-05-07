@@ -7,17 +7,9 @@ class PostSerializer < ActiveModel::Serializer
   end
   
   attribute :is_notification
-  attribute :news_category
-  def news_category
-    NewsCategorySerializer.new(object.news_category).as_json
-  end
-  
+  attribute :source_id
+  attribute :source_type
   attribute :title
-  attribute :topic
-  def topic
-    TopicSerializer.new(object.topic).as_json
-  end
-  
   attribute :state
   attribute :user
   def user

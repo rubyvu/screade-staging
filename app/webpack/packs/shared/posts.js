@@ -1,5 +1,6 @@
 $( document ).on('turbolinks:load', function() {
   
+  // Image
   $('#post-form-image-mask').on('click', function() {
     $("#post_image").click();
   })
@@ -21,4 +22,13 @@ $( document ).on('turbolinks:load', function() {
       reader.readAsDataURL(input.files[0]);
     }
   }
+  
+  // Groups
+  // $('#post_source').select2({
+  //   dropdownParent: $('#post-select-dropdown-position')
+  // })
+  $('#post_source').select2({
+    data: [{id: 0, text: ''}]
+  });
+  // $('#post_source').select2({id: $('#post_source_id').val(), text: $('#post_source_name').val() });
 })

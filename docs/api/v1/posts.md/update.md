@@ -17,8 +17,8 @@ PUT/PATCH
     "image": Image file                                                         (multipart/form-data, required)
     "title": 'New title description'                                            (string, required)
     "description": 'New post description'                                       (string, required)
-    "news_category_id": 1                                                       (integer, required)
-    "topic_id": 1                                                               (integer, required)
+    "source_id": 1                                                              (integer, required)
+    "source_type": 'NewsCategory'                                               (string, required)
   }
 }
 ```

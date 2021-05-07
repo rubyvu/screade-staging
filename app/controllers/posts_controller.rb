@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :get_post, only: [:edit, :update, :destroy]
+  before_action :get_groups, only: [:new, :edit]
   
   # GET /posts
   def index
@@ -44,7 +45,19 @@ class PostsController < ApplicationController
       @post = Post.find(params[:id])
     end
     
+    def get_groups
+      @groups = NewsCategory.all + Topic.where(is_approved: true).or(Topic.where.not(is_approved: true).where(suggester: current_user))
+    end
+    
     def post_params
-      params.require(:post).permit(:image, :title, :description, :news_category_id, :topic_id)
+      strong_params = params.require(:post).permit(:image, :title, :description, :source)
+      
+      source = strong_params[:source]
+      if source.present?
+        strong_params[:source_type], strong_params[:source_id] = source.split(':')
+        strong_params.delete(:source)
+      end
+      
+      strong_params
     end
 end

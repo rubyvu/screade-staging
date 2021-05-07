@@ -41,6 +41,6 @@ class Api::V1::PostsController < Api::V1::ApiController
     end
     
     def post_params
-      params.require(:post).permit(:image, :title, :description, :news_category_id, :topic_id)
+      params.require(:post).permit(:image, :title, :description, :source_type, :source_id)
     end
 end

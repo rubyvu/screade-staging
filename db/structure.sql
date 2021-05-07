@@ -719,8 +719,6 @@ ALTER SEQUENCE public.news_sources_id_seq OWNED BY public.news_sources.id;
 CREATE TABLE public.posts (
     id bigint NOT NULL,
     user_id integer NOT NULL,
-    news_category_id integer NOT NULL,
-    topic_id integer NOT NULL,
     title character varying NOT NULL,
     description character varying NOT NULL,
     image character varying,
@@ -731,7 +729,9 @@ CREATE TABLE public.posts (
     updated_at timestamp(6) without time zone NOT NULL,
     comments_count integer DEFAULT 0 NOT NULL,
     lits_count integer DEFAULT 0 NOT NULL,
-    views_count integer DEFAULT 0 NOT NULL
+    views_count integer DEFAULT 0 NOT NULL,
+    source_id integer NOT NULL,
+    source_type character varying NOT NULL
 );
 
 
@@ -1885,6 +1885,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210505083950'),
 ('20210506070755'),
 ('20210506082408'),
-('20210506122556');
+('20210506122556'),
+('20210507153931');
 
 

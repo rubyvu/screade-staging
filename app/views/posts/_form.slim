@@ -18,11 +18,11 @@
     .input-group.mb-3
       = f.text_area :description, autocomplete: 'off', class: 'form-control', placeholder: 'Event Description', required: true, rows: 3
       
-    .input-group.mb-3
-      = f.select :news_category_id, NewsCategory.all.map { |news_category| [news_category.title, news_category.id] }
+    .input-group.mb-3#post-select-dropdown-position
+      = f.hidden_field :source_name, value: topic_full_title(f.object.source)
+      = f.hidden_field :source_id, value: "#{f.object.source_type}:#{f.object.source_id}"
       
-    .input-group.mb-3
-      = f.select :topic_id, Topic.all.map { |topic| [topic.title, topic.id] }
+      = f.select :source, groups.map { |group| [topic_full_title(group), "#{group.class.name}:#{group.id}"] }, {}, { style: 'width: 100%;'}
     
     .actions
       = f.submit 'Submit', class: 'btn btn-primary w-100'

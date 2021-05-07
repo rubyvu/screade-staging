@@ -1,13 +1,13 @@
 class Post < ApplicationRecord
   # Constants
   APPROVING_STATES = %w(pending approved)
+  SOURCE_TYPES = %w(NewsCategory Topic)
   
   # File Uploader
   mount_uploader :image, PostImageUploader
   
   # Associations
-  belongs_to :news_category
-  belongs_to :topic
+  belongs_to :source, polymorphic: true
   belongs_to :user
   ## Comments
   has_many :comments, as: :source, dependent: :destroy
@@ -20,14 +20,14 @@ class Post < ApplicationRecord
   has_many :viewing_users, through: :views, source: :user
   
   # Association validations
-  validates :news_category, presence: true
-  validates :topic, presence: true
   validates :user, presence: true
   
   # Fields validations
   validates :title, presence: true
   validates :description, presence: true
   validates :state, presence: true, inclusion: { in: Post::APPROVING_STATES }
+  validates :source_id, presence: true
+  validates :source_type, presence: true, inclusion: { in: Post::SOURCE_TYPES }
   
   def is_lited(user)
     user.present? && self.liting_users.include?(user)

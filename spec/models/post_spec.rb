@@ -10,14 +10,12 @@ RSpec.describe Post, type: :model do
   end
   
   it 'should have a valid factory' do
-    post = FactoryBot.build(:post, news_category: @news_category, topic: @topic, user: @user)
+    post = FactoryBot.build(:post, source: @topic, user: @user)
     expect(post.present?).to eq(true)
   end
   
   context 'associations' do
-    subject { FactoryBot.build(:post, news_category: @news_category, topic: @topic, user: @user) }
-    it { should belong_to(:news_category) }
-    it { should belong_to(:topic) }
+    it { should belong_to(:source) }
     it { should belong_to(:user) }
     it { should have_many(:comments).dependent(:destroy) }
     it { should have_many(:commenting_users) }
@@ -28,11 +26,7 @@ RSpec.describe Post, type: :model do
   end
   
   context 'validations' do
-    subject { FactoryBot.build(:post, news_category: @news_category, topic: @topic, user: @user) }
-    
     context 'associations' do
-      it { should validate_presence_of(:news_category) }
-      it { should validate_presence_of(:topic) }
       it { should validate_presence_of(:user) }
     end
   
@@ -41,6 +35,9 @@ RSpec.describe Post, type: :model do
       it { should validate_presence_of(:description) }
       it { should validate_presence_of(:state) }
       it { should validate_inclusion_of(:state).in_array(Post::APPROVING_STATES) }
+      it { should validate_presence_of(:source_id) }
+      it { should validate_presence_of(:source_type) }
+      it { should validate_inclusion_of(:source_type).in_array(Post::SOURCE_TYPES) }
     end
   end
   
