@@ -30,6 +30,11 @@ module Tasks
           CreateNewsSourcesJob.perform_later if news_source.blank?
         end
         
+        article_image_url = article.urlToImage
+        
+        # Set image for YouTube
+        article_image_url = get_youtube_img(article.url) if article_image_url.blank?
+        
         article_attr = {
           country: country,
           published_at: article.publishedAt,
@@ -37,7 +42,7 @@ module Tasks
           title: article.title,
           description: article.description,
           url: article.url,
-          img_url: article.urlToImage,
+          img_url: article_image_url,
           news_source: news_source
         }
         
@@ -99,6 +104,27 @@ module Tasks
         unless news_source.save
           puts "!!!!!!! ERROR: Cannot save NewsSource with next errors #{news_source.errors.full_messages}"
         end
+      end
+    end
+    
+    def self.get_youtube_img(url)
+      begin
+        # Parse Url
+        url = URI.parse(url)
+        res = Net::HTTP.get_response(url)
+        
+        # Check is link redirect to YouTube
+        youtube_regexp = /^https:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_-]*)/
+        if res.code == '301' && youtube_regexp.match(res['location']).present?
+          youtube_video_id = youtube_regexp.match(res['location'])[1]
+          
+          # Return YouTube image url
+          "https://img.youtube.com/vi/#{youtube_video_id}/0.jpg"
+        else
+          nil
+        end
+      rescue
+        nil
       end
     end
     
