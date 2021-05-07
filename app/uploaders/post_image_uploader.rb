@@ -33,10 +33,10 @@ class PostImageUploader < CarrierWave::Uploader::Base
   
   protected
     def secure_token(length)
-      model.post_image_hex ||= SecureRandom.hex(length)
+      model.image_hex ||= SecureRandom.hex(length)
     end
     
     def reset_secure_token(file)
-      model.post_image_hex = nil
+      model.image_hex = nil
     end
 end
