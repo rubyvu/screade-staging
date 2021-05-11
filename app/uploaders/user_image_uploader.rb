@@ -19,7 +19,7 @@ class UserImageUploader < CarrierWave::Uploader::Base
   end
   
   def default_url
-    ActionController::Base.helpers.asset_pack_path('media/images/placeholders/placeholder-news.png')
+    ActionController::Base.helpers.asset_pack_path('media/images/placeholders/placeholder-main.png')
   end
   
   version :rectangle_160_160 do
