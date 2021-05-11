@@ -11,17 +11,15 @@
        - else
          img#post-image.post-photo-image src=""
          = image_pack_tag 'media/images/icons/ic_add_photo.png', class: 'icon-add-photo', id: 'icon-add-photo'
-    
+         
     .input-group.mb-3
      = f.text_field :title, autocomplete: 'off', class: 'form-control', placeholder: 'Title', required: true
       
-    .input-group.mb-3
-      = f.text_area :description, autocomplete: 'off', class: 'form-control', placeholder: 'Event Description', required: true, rows: 3
-      
-    .input-group.mb-3#post-select-dropdown-position
-      = f.hidden_field :source_name, value: topic_full_title(f.object.source)
-      = f.hidden_field :source_id, value: "#{f.object.source_type}:#{f.object.source_id}"
-      
+    .input-group.mb-4
+      = f.text_area :description, autocomplete: 'off', class: 'form-control', placeholder: 'Event Description', required: true, rows: 2
+    
+    .material-field.dropdown.mb-3#post-select-dropdown-position
+      = f.hidden_field :source_id, value: "#{f.object.source_type}:#{f.object.source_id}" if post.persisted?
       = f.select :source, groups.map { |group| [topic_full_title(group), "#{group.class.name}:#{group.id}"] }, {}, { style: 'width: 100%;'}
     
     .actions

@@ -23,12 +23,15 @@ $( document ).on('turbolinks:load', function() {
     }
   }
   
-  // Groups
-  // $('#post_source').select2({
-  //   dropdownParent: $('#post-select-dropdown-position')
-  // })
-  $('#post_source').select2({
-    data: [{id: 0, text: ''}]
-  });
-  // $('#post_source').select2({id: $('#post_source_id').val(), text: $('#post_source_name').val() });
+  // Posts
+  let groupId= $('#post_source_id').val()
+  let postDropdown = $('#post_source').select2({
+    dropdownParent: $('#post-select-dropdown-position')
+  })
+  
+  // Reload Dropdown for edit
+  if ( groupId ) {
+    postDropdown.val(groupId);
+    $('#post_source').select2({ dropdownParent: $('#post-select-dropdown-position') })
+  }
 })
