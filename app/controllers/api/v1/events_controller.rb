@@ -14,10 +14,8 @@ class Api::V1::EventsController < Api::V1::ApiController
   
   # POST /api/v1/events
   def create
-    event = Event.new(event_params.except(:date))
+    event = Event.new(event_params)
     event.user = current_user
-    event.start_date = get_datetime(event_params[:date], event_params[:start_date])
-    event.end_date = get_datetime(event_params[:date], event_params[:end_date])
     
     if event.save
       event_json = EventSerializer.new(event).as_json
@@ -30,10 +28,8 @@ class Api::V1::EventsController < Api::V1::ApiController
   # PUT/PATCH /api/v1/events/:id
   def update
     event = current_user.events.find(params[:id])
-    event.start_date = get_datetime(event_params[:date], event_params[:start_date])
-    event.end_date = get_datetime(event_params[:date], event_params[:end_date])
     
-    if event.update(event_params.except(:date, :start_date, :end_date))
+    if event.update(event_params)
       event_json = EventSerializer.new(event).as_json
       render json: { event: event_json }, status: :ok
     else
@@ -50,16 +46,6 @@ class Api::V1::EventsController < Api::V1::ApiController
   
   private
     def event_params
-      params.require(:event).permit(:date, :description, :end_date, :start_date, :title)
-    end
-    
-    def get_datetime(date, time)
-      return nil if date.blank? || time.blank?
-      
-      begin
-        Time.parse("#{date} #{time}").getutc
-      rescue
-        nil
-      end
+      params.require(:event).permit(:description, :end_date, :start_date, :title)
     end
 end

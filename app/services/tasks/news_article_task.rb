@@ -17,5 +17,11 @@ module Tasks
         end
       end
     end
+    
+    def self.set_youtube_images
+      NewsArticle.where(img_url: nil).find_each do |news_article|
+        UpdateNewsArticlesYoutubeImagesJob.perform_later(news_article.id)
+      end
+    end
   end
 end
