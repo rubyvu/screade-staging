@@ -18,16 +18,25 @@
   - else
     = image_pack_tag('media/images/placeholders/placeholder-news.png', class: 'url-full-image')
     
-  .news-info-panel value="#{post.id}"
-    .info-panel
-      .div class="#{ current_user ? 'info-panel-value-wrapper' : 'info-panel-value-wrapper pointer-disable' }"
-        i class=(post.is_lited(current_user) ? "ic lit active reverse" : "ic lit reverse")
-        span.info-panel-value.color-black #{counter_measurement(post.lits.count)}
+  .post-info-panel
+    .div class="info-panel-value-wrapper"
+      - if post.is_lited(current_user)
+        = link_to post_post_lits_path(post), method: :delete, remote: true do
+          i.ic.lit.reverse.active
+      - else
+        = link_to post_post_lits_path(post), method: :post, remote: true do
+          i.ic.lit.reverse
+          
+      span.info-panel-value.color-black #{counter_measurement(post.lits.size)}
+      
+    .info-panel-value-wrapper.pointer-disable
+      i class=(post.is_commented(current_user) ? "ic comment reverse active" : "ic comment reverse")
+      span.info-panel-value.color-black #{counter_measurement(post.comments.size)}
+      
+    .info-panel-value-wrapper.pointer-disable
+      i class=(post.is_viewed(current_user) ? "ic view reverse active" : "ic reverse view")
+      span.info-panel-value.color-black #{counter_measurement(post.views.size)}
         
-      .info-panel-value-wrapper.pointer-disable
-        i class=(post.is_commented(current_user) ? "ic comment reverse active" : "ic comment reverse")
-        span.info-panel-value.color-black #{counter_measurement(post.comments.count)}
-    
   .post-text
     .post-title
       = post.title

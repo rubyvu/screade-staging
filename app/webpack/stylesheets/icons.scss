@@ -1,5 +1,5 @@
 // Panel with Lit, View, Comment icons
-.info-panel {
+.info-panel, .post-info-panel {
   display: inline-flex;
   align-items: center;
   position: absolute;
@@ -8,31 +8,31 @@
   right: 0;
   left: 0;
   padding: 0 16px;
-}
-
-.info-panel .info-panel-value-wrapper {
-  cursor: pointer;
-  display: inline-flex;
-  width: auto;
-  margin-right: 16px;
   
-  &.pointer-disable {
-    cursor: default;
+  .info-panel-value-wrapper {
+    cursor: pointer;
+    display: inline-flex;
+    width: auto;
+    margin-right: 16px;
+    
+    &.pointer-disable {
+      cursor: default;
+    }
   }
-}
 
-.info-panel .info-panel-value-wrapper span.info-panel-value {
-  margin-left: 4px;
-  color: $color-white;
-  font-size: 14px;
-  font-weight: 500;
-  
-  &.color-black { color: $color-black; }
-}
+  .info-panel-value-wrapper span.info-panel-value {
+    margin-left: 4px;
+    color: $color-white;
+    font-size: 14px;
+    font-weight: 500;
+    
+    &.color-black { color: $color-black; }
+  }
 
-// Link block for info-panel
-.info-panel .comment-link-icon {
-  line-height: 1;
+  // Link block for info-panel
+  .comment-link-icon {
+    line-height: 1;
+  }
 }
 
 // Icons

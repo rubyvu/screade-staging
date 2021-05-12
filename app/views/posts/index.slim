@@ -23,7 +23,7 @@
           .post-title-panel
             = link_to post.title, post_post_comments_path(post)
           
-          .info-panel
+          .post-info-panel
             .div class="info-panel-value-wrapper"
               - if post.is_lited(current_user)
                 = link_to post_post_lits_path(post), method: :delete, remote: true do
