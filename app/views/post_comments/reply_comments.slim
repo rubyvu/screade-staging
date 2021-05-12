@@ -1,3 +1,6 @@
-.content-comment-wrapper
+.source-path
+  = topic_short_title(@post.source)
+  
+.content-comment-wrapper.content-post
   = render 'posts/show', post: @post
   = render 'comments/index', comments: @comments
