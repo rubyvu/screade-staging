@@ -21,15 +21,15 @@
     .info-panel
       .info-panel-value-wrapper.pointer-disable
         i.ic.lit
-        span.info-panel-value #{counter_measurement(@user.lits.count)}
+        span.info-panel-value #{counter_measurement(@user.lits_count)}
         
       .info-panel-value-wrapper.pointer-disable
         i.ic.comment
-        span.info-panel-value #{counter_measurement(@user.comments.count)}
+        span.info-panel-value #{counter_measurement(@user.comments_count)}
         
       .info-panel-value-wrapper.pointer-disable
         i.ic.view
-        span.info-panel-value 0
+        span.info-panel-value #{counter_measurement(@user.views_count)}
         
     .user-profile-squad-buttons
       - if @user == current_user

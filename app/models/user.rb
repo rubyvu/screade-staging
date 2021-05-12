@@ -98,6 +98,10 @@ class User < ApplicationRecord
     self.comments.count
   end
   
+  def views_count
+    View.where(source_type: 'Post', source_id: self.posts.ids).count
+  end
+  
   def full_name
     if self.first_name.present? || self.last_name.present?
       "#{self.first_name} #{self.last_name}".strip
