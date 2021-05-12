@@ -21,10 +21,10 @@
   .post-info-panel
     .div class="info-panel-value-wrapper"
       - if post.is_lited(current_user)
-        = link_to post_post_lits_path(post), method: :delete, remote: true do
+        = link_to post_post_lits_path(post), method: :delete, remote: true, id: "post-lit-#{post.id}" do
           i.ic.lit.reverse.active
       - else
-        = link_to post_post_lits_path(post), method: :post, remote: true do
+        = link_to post_post_lits_path(post), method: :post, remote: true, id: "post-lit-#{post.id}" do
           i.ic.lit.reverse
           
       span.info-panel-value.color-black #{counter_measurement(post.lits.size)}

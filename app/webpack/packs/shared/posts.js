@@ -34,4 +34,27 @@ $( document ).on('turbolinks:load', function() {
     postDropdown.val(groupId);
     $('#post_source').select2({ dropdownParent: $('#post-select-dropdown-position') })
   }
+  
+  // Lit/Unlit Post
+  $('.post-info-panel .info-panel-value-wrapper a[id^="post-lit-"]').on('ajax:success', function() {
+    let element = $(this).first()
+    
+    if (element.attr('data-method') === 'post') {
+      // Change icon class
+      element.children().addClass('active')
+      // Increase counter
+      let counter = element.parent().find('.info-panel-value')
+      counter.text(+(counter.text()) + 1)
+      // Update link method
+      element.attr('data-method', 'delete')
+    } else if (element.attr('data-method') === 'delete') {
+      // Change icon class
+      element.children().removeClass('active')
+      // Increase counter
+      let counter = element.parent().find('.info-panel-value')
+      counter.text(+(counter.text()) - 1)
+      // Update link method
+      element.attr('data-method', 'post')
+    }
+  })
 })

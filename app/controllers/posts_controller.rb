@@ -4,7 +4,7 @@ class PostsController < ApplicationController
   
   # GET /posts
   def index
-    @posts = current_user.posts
+    @posts = current_user.posts.order(id: :desc)
   end
   
   # GET /posts/new

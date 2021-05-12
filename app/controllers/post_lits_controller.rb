@@ -7,7 +7,7 @@ class PostLitsController < ApplicationController
     if lit.save
       render json: { success: true }, status: :ok
     else
-      render json: { success: false }, status: :ok
+      render json: { success: false }, status: :unprocessable_entity
     end
   end
   
