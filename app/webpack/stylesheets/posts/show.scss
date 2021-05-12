@@ -41,9 +41,17 @@
   }
   
   .post-info-panel {
+    justify-content: space-between;
+    text-align: center;
+    width: 100%;
     margin-top: 16px;
     position: relative;
     height: 48px;
+    
+    .info-actions {
+      display: flex;
+      align-items: end;
+    }
   }
   
   .post-text {

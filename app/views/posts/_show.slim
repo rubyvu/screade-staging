@@ -19,23 +19,32 @@
     = image_pack_tag('media/images/placeholders/placeholder-news.png', class: 'url-full-image')
     
   .post-info-panel
-    .div class="info-panel-value-wrapper"
-      - if post.is_lited(current_user)
-        = link_to post_post_lits_path(post), method: :delete, remote: true, id: "post-lit-#{post.id}" do
-          i.ic.lit.reverse.active
-      - else
-        = link_to post_post_lits_path(post), method: :post, remote: true, id: "post-lit-#{post.id}" do
-          i.ic.lit.reverse
+    .info-actions
+      .div class="info-panel-value-wrapper"
+        - if post.is_lited(current_user)
+          = link_to post_post_lits_path(post), method: :delete, remote: true, id: "post-lit-#{post.id}" do
+            i.ic.lit.reverse.active
+        - else
+          = link_to post_post_lits_path(post), method: :post, remote: true, id: "post-lit-#{post.id}" do
+            i.ic.lit.reverse
+            
+        span.info-panel-value.color-black #{counter_measurement(post.lits.size)}
+        
+      .info-panel-value-wrapper.pointer-disable
+        i class=(post.is_commented(current_user) ? "ic comment reverse active" : "ic comment reverse")
+        span.info-panel-value.color-black #{counter_measurement(post.comments.size)}
+        
+      .info-panel-value-wrapper.pointer-disable
+        i class=(post.is_viewed(current_user) ? "ic view reverse" : "ic view reverse")
+        span.info-panel-value.color-black #{counter_measurement(post.views.size)}
+      
+    .post-notifier-wrapper
+      = form_for @post, url: post_path(@post), method: :patch, remote: :true do |f|
+        label.switch
+          = f.check_box :is_notification
+          span.slider.default.round
           
-      span.info-panel-value.color-black #{counter_measurement(post.lits.size)}
-      
-    .info-panel-value-wrapper.pointer-disable
-      i class=(post.is_commented(current_user) ? "ic comment reverse active" : "ic comment reverse")
-      span.info-panel-value.color-black #{counter_measurement(post.comments.size)}
-      
-    .info-panel-value-wrapper.pointer-disable
-      i class=(post.is_viewed(current_user) ? "ic view reverse" : "ic view reverse")
-      span.info-panel-value.color-black #{counter_measurement(post.views.size)}
+        span.ml-2 Pause Notification
         
   .post-text
     .post-title

@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   before_action :get_post, only: [:edit, :update, :destroy]
   before_action :get_groups, only: [:new, :edit]
+  protect_from_forgery except: [:update]
   
   # GET /posts
   def index
@@ -28,7 +29,11 @@ class PostsController < ApplicationController
   # PUT/PATCH /posts/:id
   def update
     if @post.update(post_params)
-      redirect_to posts_path
+      if @post.saved_changes[:is_notification].present?
+        redirect_to post_post_comments_path(@post)
+      else
+        redirect_to posts_path
+      end
     else
       redirect_back fallback_location: root_path
     end
@@ -50,7 +55,7 @@ class PostsController < ApplicationController
     end
     
     def post_params
-      strong_params = params.require(:post).permit(:image, :title, :description, :source)
+      strong_params = params.require(:post).permit(:image, :is_notification, :title, :description, :source)
       
       source = strong_params[:source]
       if source.present?

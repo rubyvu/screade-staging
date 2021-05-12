@@ -57,4 +57,9 @@ $( document ).on('turbolinks:load', function() {
       element.attr('data-method', 'post')
     }
   })
+  
+  // Pause Notification switcher
+  $('[id^="edit_post_"]').on('change', '[type=checkbox]', function() {
+    $(this).closest('form').submit();
+  })
 })
