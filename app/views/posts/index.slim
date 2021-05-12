@@ -5,7 +5,8 @@
         
         .post-header-panel
           .state
-            p On approve
+            - if post.source_type == 'Topic' && !post.source.is_approved
+              p On approve
             
           .actions
             = link_to edit_post_path(post) do
