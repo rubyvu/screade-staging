@@ -34,7 +34,7 @@
       span.info-panel-value.color-black #{counter_measurement(post.comments.size)}
       
     .info-panel-value-wrapper.pointer-disable
-      i class=(post.is_viewed(current_user) ? "ic view reverse active" : "ic reverse view")
+      i class=(post.is_viewed(current_user) ? "ic view reverse" : "ic view reverse")
       span.info-panel-value.color-black #{counter_measurement(post.views.size)}
         
   .post-text

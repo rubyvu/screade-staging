@@ -3,6 +3,7 @@ class PostCommentsController < ApplicationController
   
   # GET /posts/:post_id/post_comments
   def index
+    View.find_or_create_by(source: @post, user: current_user)
     @new_comment = Comment.new(source: @post, source_type: 'Post')
     @comments = Comment.where(source: @post, comment_id: nil).order(created_at: :desc)
   end
