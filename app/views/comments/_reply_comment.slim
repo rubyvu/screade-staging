@@ -27,4 +27,7 @@
     // Reply show/hide
     - if comment.comment_id.blank?
       .comment-reply-wrapper
-        = link_to 'HIDE', comments_news_article_path(id: comment.source.id), class: 'comment-reply'
+        - if comment.source_type == 'NewsArticle'
+          = link_to 'HIDE', comments_news_article_path(id: comment.source.id), class: 'comment-reply'
+        - elsif comment.source_type == 'Post'
+          = link_to 'HIDE', post_post_comments_path(id: comment.source.id), class: 'comment-reply'

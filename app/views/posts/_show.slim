@@ -1,0 +1,35 @@
+.news-article-wrapper
+  .groups-subscription-wrapper
+    //- post.news_categories.each do |news_category|
+      span.title-main-wrapper
+        = news_category.title.capitalize
+        
+    //- news_article.topics.each do |topic|
+      span.title-main-wrapper
+        = topic.title.capitalize
+    
+    //- if current_user
+      span.title-main-wrapper.new
+        = link_to '+ Topic', search_news_article_path(news_article), remote: true
+  
+  - if post.image.present?
+    = image_tag(post.image.url, class: 'url-full-image', onerror: "this.error=null;this.src='#{asset_pack_path('media/images/placeholders/placeholder-news.png')}'")
+  - else
+    = image_pack_tag('media/images/placeholders/placeholder-news.png', class: 'url-full-image')
+    
+  .news-info-panel value="#{post.id}"
+    .info-panel
+      .div class="#{ current_user ? 'info-panel-value-wrapper' : 'info-panel-value-wrapper pointer-disable' }"
+        i class=(post.is_lited(current_user) ? "ic lit active reverse" : "ic lit reverse")
+        span.info-panel-value.color-black #{counter_measurement(post.lits.count)}
+        
+      .info-panel-value-wrapper.pointer-disable
+        i class=(post.is_commented(current_user) ? "ic comment reverse active" : "ic comment reverse")
+        span.info-panel-value.color-black #{counter_measurement(post.comments.count)}
+    
+  .news-article-text
+    .news-article-title
+      = post.title
+    .news-article-description
+      = post.description
+      

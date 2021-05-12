@@ -5,7 +5,7 @@ class CommentsController < ApplicationController
   # GET /news_articles/:news_article_id/comments/:comment_id/reply_comments
   def reply_comments
     comment = Comment.find(params[:comment_id])
-    @new_comment = Comment.new(comment: comment)
+    @new_comment = Comment.new(source_type: 'NewsArticle', comment: comment)
     @news_article = comment.source
     @comments = comment.replied_comments.order(created_at: :desc)
   end

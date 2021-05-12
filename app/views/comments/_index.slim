@@ -7,7 +7,7 @@
       .comments-scroll
         = render 'comments/reply_comment', comment: @new_comment.comment, index: 0
         
-      = render 'comments/reply_form', new_comment: @new_comment, news_article: @news_article
+      = render 'comments/reply_form', new_comment: @new_comment, comment_source: @new_comment.comment.source
     - else
       = render 'comments/form', new_comment: @new_comment
       

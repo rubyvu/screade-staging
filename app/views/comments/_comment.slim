@@ -27,4 +27,9 @@
     // Reply show/hide
     - if comment.comment_id.blank?
       .comment-reply-wrapper
-        = link_to comment.replied_comments.count == 0 ? 'REPLY' : "#{comment.replied_comments.count} REPLIES", news_article_comment_reply_comments_path(news_article_id: comment.source.id, comment_id: comment.id), class: 'comment-reply'
+        - if comment.source_type == 'NewsArticle'
+          = link_to comment.replied_comments.count == 0 ? 'REPLY' : "#{comment.replied_comments.count} REPLIES", news_article_comment_reply_comments_path(news_article_id: comment.source.id, comment_id: comment.id), class: 'comment-reply'
+          
+        - elsif comment.source_type == 'Post'
+          - url = post_post_comments_path
+          = link_to comment.replied_comments.count == 0 ? 'REPLY' : "#{comment.replied_comments.count} REPLIES", post_post_comment_reply_comments_path(post_id: comment.source.id, post_comment_id: comment.id), class: 'comment-reply'

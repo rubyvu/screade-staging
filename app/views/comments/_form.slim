@@ -1,4 +1,11 @@
-= form_for(new_comment, url: create_comment_news_article_path, html: { method: :post }) do |f|
+- url = nil
+- case new_comment.source_type
+- when 'NewsArticle'
+  - url = create_comment_news_article_path
+- when 'Post'
+  - url = post_post_comments_path
+  
+= form_for(new_comment, url: url, html: { method: :post }) do |f|
   
   .input-group.mb-3
     = f.text_field :message, autofocus: false, autocomplete: 'off', placeholder: "Write a comment", class: 'form-control'

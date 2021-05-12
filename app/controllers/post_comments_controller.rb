@@ -1,30 +1,30 @@
 class PostCommentsController < ApplicationController
   before_action :get_post, only: [:index, :create]
   
-  # GET /posts/:posts_id/post_comments
+  # GET /posts/:post_id/post_comments
   def index
-    @post_comment = Comment.new()
+    @new_comment = Comment.new(source: @post, source_type: 'Post')
     @comments = Comment.where(source: @post, comment_id: nil).order(created_at: :desc)
   end
   
-  # POST /posts/:posts_id/post_comments
+  # POST /posts/:post_id/post_comments
   def create
     new_comment = Comment.new(comment_params)
     new_comment.source = @post
     new_comment.user = current_user
     new_comment.save
     if new_comment.comment.present?
-      redirect_to post_comment_reply_comments_path(post_id: @post.id, comment_id: new_comment.comment.id )
+      redirect_to post_post_comment_reply_comments_path(post_id: @post.id, post_comment_id: new_comment.comment.id )
     else
-      redirect_to comments_news_article_path(@post)
+      redirect_to post_post_comments_path(@post)
     end
   end
   
-  # GET /posts/:posts_id/post_comments/:comment_id/reply_comments
+  # GET /posts/:post_id/post_comments/:post_comment_id/reply_comments
   def reply_comments
-    comment = Comment.find(params[:comment_id])
-    @new_comment = Comment.new(comment: comment)
-    @news_article = comment.source
+    comment = Comment.find(params[:post_comment_id])
+    @new_comment = Comment.new(source_type: 'Post', comment: comment)
+    @post = comment.source
     @comments = comment.replied_comments.order(created_at: :desc)
   end
   

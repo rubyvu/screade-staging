@@ -1,4 +1,11 @@
-= form_for(new_comment, url: create_comment_news_article_path(id: news_article.id), html: { method: :post }) do |f|
+- url = nil
+- case new_comment.source_type
+- when 'NewsArticle'
+  - url = create_comment_news_article_path(id: comment_source.id)
+- when 'Post'
+  - url = post_post_comments_path(id: comment_source.id)
+
+= form_for(new_comment, url: url, html: { method: :post }) do |f|
   = f.hidden_field :comment_id, value: new_comment.comment.id
   
   .input-group.mb-3
