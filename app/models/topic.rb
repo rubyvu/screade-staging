@@ -11,6 +11,7 @@ class Topic < ApplicationRecord
   has_many :sub_topics, -> (topic) { where(parent_type: 'Topic') }, class_name: 'Topic', foreign_key: :parent_id, dependent: :destroy
   #Posts
   has_many :posts, as: :source
+  has_many :post_groups, as: :group
   # User Subscribed for Topic
   has_many :user_topic_subscriptions, as: :source, dependent: :destroy
   has_many :subscribed_users, through: :user_topic_subscriptions, source: :user

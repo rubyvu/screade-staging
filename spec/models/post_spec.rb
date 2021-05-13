@@ -21,6 +21,7 @@ RSpec.describe Post, type: :model do
     it { should have_many(:commenting_users) }
     it { should have_many(:lits).dependent(:destroy) }
     it { should have_many(:liting_users) }
+    it { should have_many(:post_groups) }
     it { should have_many(:views).dependent(:destroy) }
     it { should have_many(:viewing_users) }
   end

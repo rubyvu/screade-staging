@@ -713,6 +713,39 @@ ALTER SEQUENCE public.news_sources_id_seq OWNED BY public.news_sources.id;
 
 
 --
+-- Name: post_groups; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.post_groups (
+    id bigint NOT NULL,
+    group_id integer NOT NULL,
+    group_type character varying NOT NULL,
+    post_id integer NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: post_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.post_groups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: post_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.post_groups_id_seq OWNED BY public.post_groups.id;
+
+
+--
 -- Name: posts; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1252,6 +1285,13 @@ ALTER TABLE ONLY public.news_sources ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: post_groups id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.post_groups ALTER COLUMN id SET DEFAULT nextval('public.post_groups_id_seq'::regclass);
+
+
+--
 -- Name: posts id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1430,6 +1470,14 @@ ALTER TABLE ONLY public.news_categories
 
 ALTER TABLE ONLY public.news_sources
     ADD CONSTRAINT news_sources_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: post_groups post_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.post_groups
+    ADD CONSTRAINT post_groups_pkey PRIMARY KEY (id);
 
 
 --
@@ -1679,6 +1727,13 @@ CREATE UNIQUE INDEX index_news_sources_on_source_identifier ON public.news_sourc
 
 
 --
+-- Name: index_post_groups_on_post_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_post_groups_on_post_id ON public.post_groups USING btree (post_id);
+
+
+--
 -- Name: index_settings_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1886,6 +1941,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210506070755'),
 ('20210506082408'),
 ('20210506122556'),
-('20210507153931');
+('20210507153931'),
+('20210513073904');
 
 

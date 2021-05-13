@@ -3,12 +3,16 @@ class Post < ApplicationRecord
   APPROVING_STATES = %w(pending approved)
   SOURCE_TYPES = %w(NewsCategory Topic)
   
+  # Callbacks
+  after_save :update_associated_groups
+  
   # File Uploader
   mount_uploader :image, PostImageUploader
   
   # Associations
   belongs_to :source, polymorphic: true
   belongs_to :user
+  
   ## Comments
   has_many :comments, as: :source, dependent: :destroy
   has_many :commenting_users, through: :comments, source: :user
@@ -18,6 +22,8 @@ class Post < ApplicationRecord
   ## Views
   has_many :views, as: :source, dependent: :destroy
   has_many :viewing_users, through: :views, source: :user
+  # Extra Group assiciation
+  has_many :post_groups, dependent: :destroy
   
   # Association validations
   validates :user, presence: true
@@ -40,4 +46,20 @@ class Post < ApplicationRecord
   def is_viewed(user)
     user.present? && self.viewing_users.include?(user)
   end
+  
+  private
+    def update_associated_groups
+      return unless saved_change_to_source_id? || saved_change_to_source_type?
+      
+      # Clear old associations
+      self.post_groups.destroy_all
+      
+      # Create new associations
+      associate_topic_with_post(self.source)
+    end
+    
+    def associate_topic_with_post(group)
+      PostGroup.create(group: group, post: self)
+      associate_topic_with_post(group.parent) if group.class.name == 'Topic'
+    end
 end
