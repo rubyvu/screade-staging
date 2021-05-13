@@ -28,8 +28,8 @@ class Api::V1::GroupsController < Api::V1::ApiController
   # GET /api/v1/groups/comments
   def comments
     # Get all comments in NewsArticles that have associations with NewsCategories or Topics + Replyed Comments for Current User Comment
-    news_categories_sql = NewsArticle.joins(:news_categories).where(news_categories: { id: current_user.subscribed_news_categories.ids }).to_sql
-    topics_sql = NewsArticle.joins(:topics).where(topics: { id: current_user.subscribed_topics.ids }).to_sql
+    news_categories_sql = NewsArticle.joins(:news_categories, :comments).where(news_categories: { id: current_user.subscribed_news_categories.ids }).to_sql
+    topics_sql = NewsArticle.joins(:topics, :comments).where(topics: { id: current_user.subscribed_topics.ids }).to_sql
     source_ids = NewsArticle.from("(#{news_categories_sql} UNION #{topics_sql}) AS news_articles").order(id: :desc).limit(1000).ids
     
     # Get Source from Post

@@ -1,7 +1,10 @@
 - @comments.each do |comment|
   .subscription-wrapper
     .subscription-source-wrapper
-      = link_to comment.source.title, comments_news_article_path(comment.source)
+      - if comment.source.class.name == 'NewsArticle'
+        = link_to comment.source.title, comments_news_article_path(comment.source)
+      - elsif comment.source.class.name == 'Post'
+        = link_to comment.source.title, post_post_comments_path(comment.source)
     .subscription-content-wrapper
       = link_to user_path(comment.user.username) do
         - if comment.user.profile_picture.url
@@ -22,6 +25,12 @@
     
     .subscription-reply-wrapper
       - if comment.comment&.user == current_user
-        = link_to 'REPLY', news_article_comment_reply_comments_path(news_article_id: comment.source.id, comment_id: comment.comment.id), class: 'comment-reply'
+        - if comment.source.class.name == 'NewsArticle'
+          = link_to 'REPLY', news_article_comment_reply_comments_path(news_article_id: comment.source.id, comment_id: comment.comment.id), class: 'comment-reply'
+        - elsif comment.source.class.name == 'Post'
+          = link_to 'REPLY', post_post_comment_reply_comments_path(post_id: comment.source.id, post_comment_id: comment.comment.id), class: 'comment-reply'
       - else
-        = link_to comment.replied_comments.count == 0 ? 'REPLY' : "#{comment.replied_comments.count} REPLIES", news_article_comment_reply_comments_path(news_article_id: comment.source.id, comment_id: comment.id), class: 'comment-reply'
+        - if comment.source.class.name == 'NewsArticle'
+          = link_to comment.replied_comments.count == 0 ? 'REPLY' : "#{comment.replied_comments.count} REPLIES", news_article_comment_reply_comments_path(news_article_id: comment.source.id, comment_id: comment.id), class: 'comment-reply'
+        - elsif comment.source.class.name == 'Post'
+          = link_to comment.replied_comments.count == 0 ? 'REPLY' : "#{comment.replied_comments.count} REPLIES", post_post_comment_reply_comments_path(post_id: comment.source.id, post_comment_id: comment.id), class: 'comment-reply'
