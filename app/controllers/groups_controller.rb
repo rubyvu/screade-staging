@@ -57,9 +57,21 @@ class GroupsController < ApplicationController
     end
     
     def set_subscriptions
+      # Get Source from NewsArticles
       news_categories_sql = NewsArticle.joins(:news_categories).where(news_categories: { id: current_user.subscribed_news_categories.ids }).to_sql
       topics_sql = NewsArticle.joins(:topics).where(topics: { id: current_user.subscribed_topics.ids }).to_sql
       source_ids = NewsArticle.from("(#{news_categories_sql} UNION #{topics_sql}) AS news_articles").order(id: :desc).limit(1000).ids
-      @comments = Comment.where(source_type: 'NewsArticle', source_id: source_ids, comment_id: nil).where.not(user: current_user).or(Comment.where(comment_id: current_user.comments.ids).where.not(user: current_user)).order(created_at: :desc).limit(100)
+      
+      # Get Source from Post
+      topic_posts_ids = Topic.joins(:post_groups).where(post_groups: { id: current_user.post_groups.where(group_type: 'Topic').ids }).distinct.ids
+      news_category_posts_ids = NewsCategory.joins(:post_groups).where(post_groups: { id: current_user.post_groups.where(group_type: 'NewsCategory').ids }).distinct.ids
+      post_source_ids = Post.where(source_type: 'Topic', source_id: topic_posts_ids)
+                            .or(Post.where(source_type: 'NewsCategory', source_id: news_category_posts_ids))
+                            .order(id: :desc).limit(1000).ids
+                            
+      @comments = Comment.where(source_type: 'NewsArticle', source_id: source_ids, comment_id: nil).where.not(user: current_user)
+                          .or(Comment.where(source_type: 'Post', source_id: post_source_ids, comment_id: nil).where.not(user: current_user))
+                          .or(Comment.where(comment_id: current_user.comments.ids).where.not(user: current_user))
+                          .order(created_at: :desc).limit(100)
     end
 end

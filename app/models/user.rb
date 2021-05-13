@@ -23,6 +23,7 @@ class User < ApplicationRecord
   has_many :devices, class_name: 'Device', foreign_key: 'owner_id', dependent: :destroy
   has_many :events, dependent: :destroy
   has_many :posts, dependent: :destroy
+  has_many :post_groups, through: :posts
   ## Squad requests
   has_many :squad_requests_as_receiver, foreign_key: :receiver_id, class_name: 'SquadRequest', dependent: :destroy
   has_many :squad_requests_as_requestor, foreign_key: :requestor_id, class_name: 'SquadRequest', dependent: :destroy
