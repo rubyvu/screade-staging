@@ -3,6 +3,9 @@ class User < ApplicationRecord
   # :confirmable, :timeoutable, :trackable and :omniauthable
   devise :confirmable, :database_authenticatable, :lockable, :registerable, :recoverable, :validatable, authentication_keys: [:login]
   
+  # Search
+  searchkick word_middle: [:first_name, :last_name, :username]
+  
   # Constants
   EMAIL_FORMAT = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
   PASSWORD_FORMAT = /\A(?=.*[^a-zA-Z])/i  # Must contain at least one number or symbol

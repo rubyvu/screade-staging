@@ -1,4 +1,7 @@
 class Post < ApplicationRecord
+  # Search
+  searchkick word_middle: [:title]
+  
   # Constants
   APPROVING_STATES = %w(pending approved)
   SOURCE_TYPES = %w(NewsCategory Topic)

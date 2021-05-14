@@ -222,6 +222,7 @@ Rails.application.routes.draw do
         end
       end
       
+      resources :searches, only: [:index]
       resources :settings, only: [:index] do
         collection do
           put :update
