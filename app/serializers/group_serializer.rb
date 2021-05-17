@@ -18,8 +18,10 @@ class GroupSerializer < ActiveModel::Serializer
     news_article = instance_options[:news_article]
     if news_article
       news_article.is_group_subscription(object)
-    else
+    elsif current_user
       current_user.is_group_subscription(object)
+    else
+      false
     end
   end
   
