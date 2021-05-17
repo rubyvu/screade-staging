@@ -30,13 +30,43 @@
   box-shadow: none !important;
 }
 
+.navbar-control-panel {
+  display: flex;
+  align-items: center;
+  
+  #navbar-search-inactive {
+    cursor: pointer;
+    display: block;
+    margin-right: 8px;
+    margin-bottom: 2px;
+  }
+  
+  #navbar-search-active {
+    display: none;
+    cursor: pointer;
+   }
+}
+
 .navbar-icon-wrappers {
-  cursor: pointer;
   justify-content: center;
   height: 20px;
   width: 20px;
   display: inline-flex;
   margin: 0 10px;
+  
+  img { cursor: pointer; }
+  
+  &.devider {
+    height: 26px;
+    margin: 0px;
+    
+    i.vertical-line {
+      cursor: default;
+      height: auto;
+      width: 1px;
+      background-color: $color-light-grey;
+    }
+  }
 }
 
 // Dropdown

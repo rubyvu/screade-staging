@@ -13,6 +13,7 @@ import 'timepicker/jquery.timepicker.js';
 // Import internal scripts
 import './shared/events';
 import './shared/font_customizer';
+import './shared/global-search';
 import './shared/groups';
 import './shared/image_viewer';
 import './shared/local_date';

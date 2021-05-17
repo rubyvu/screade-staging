@@ -20,8 +20,8 @@ html
       = image_pack_tag('media/images/screade-logo-main.png', id: 'navbar-logo')
       button.navbar-toggler aria-controls="navbarSupportedContent" aria-expanded="false" aria-label=("Toggle navigation") data-target="#navbarSupportedContent" data-toggle="collapse" type="button"
         span.navbar-toggler-icon
-      #navbarSupportedContent.collapse.navbar-collapse
-        ul.navbar-nav.mr-auto
+      #navbarSupportedContent.collapse.navbar-collapse.justify-content-between
+        ul.navbar-nav
           li.nav-item
             = link_to 'Home', root_path, class: 'nav-link'
           - if current_user
@@ -37,6 +37,7 @@ html
               = link_to 'Map', root_path, class: 'nav-link'
             li.nav-item
               = link_to 'Videos', videos_user_video_path(current_user.username), class: 'nav-link'
+              
           - else
             li.nav-item
               = link_to 'Groups', '#', class: 'nav-link', data: { toggle: "modal", target: "#modal-sign-in-or-sign-up" }
@@ -52,7 +53,22 @@ html
               = link_to 'Video', '#', class: 'nav-link', data: { toggle: "modal", target: "#modal-sign-in-or-sign-up" }
             
         - if current_user
-          .div.d-flex.align-items-center
+          .navbar-control-panel
+            // Hide search
+            #navbar-search-inactive
+              = image_pack_tag('media/images/icons/ic_search.png')
+            // Show search
+            #navbar-search-active
+              = form_for Event.new do |f|
+                .input-group.search
+                  = f.text_field :title, autofocus: false, autocomplete: 'off', placeholder: "Write a comment", class: 'form-control'
+                  
+                  .input-group-append
+                    .input-group-text
+                      = image_pack_tag('media/images/icons/ic_search.png')
+                    
+            .navbar-icon-wrappers.devider
+              i.vertical-line
             .navbar-icon-wrappers
               = image_pack_tag('media/images/icons/ic_dialog.png')
             .navbar-icon-wrappers
@@ -77,8 +93,9 @@ html
                 - else
                   = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
         - else
-          = link_to "Sign Up", '', class: 'btn btn-link my-2 my-sm-0', data: { toggle: "modal", target: "#modal-sign-up" }
-          = link_to "Sign In", '', class: 'btn btn-primary my-2 my-sm-0', data: { toggle: "modal", target: "#modal-sign-in" }
+          .div
+            = link_to "Sign Up", '', class: 'btn btn-link my-2 my-sm-0', data: { toggle: "modal", target: "#modal-sign-up" }
+            = link_to "Sign In", '', class: 'btn btn-primary my-2 my-sm-0', data: { toggle: "modal", target: "#modal-sign-in" }
               
     = yield
     
