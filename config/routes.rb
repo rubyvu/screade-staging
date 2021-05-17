@@ -93,6 +93,7 @@ Rails.application.routes.draw do
     end
   end
   
+  resources :searches, only: [:index]
   resources :settings, only: [:edit, :update]
   resources :squad_requests, only: [:index, :create] do
     member do
