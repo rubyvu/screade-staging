@@ -66,6 +66,9 @@
 - [Subscribe NewsArticle to Topic](api/v1/news_articles/topic_subscription.md)
 - [Get NewsArticle Groups with Subscriptions](api/v1/news_articles/groups.md)
 
+### Squad Search
+- [Global Search](api/v1/searches/index.md)
+
 ### Squad Requst
 - [Accept request](api/v1/squad_requests/accept.md)
 - [Create new request](api/v1/squad_requests/create.md)
