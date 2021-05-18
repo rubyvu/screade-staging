@@ -78,6 +78,7 @@
 
 ### Post
 - [View all Posts](api/v1/posts/index.md)
+- [View Post](api/v1/posts/show.md)
 - [List of Groups for new Post](api/v1/post_groups/index.md)
 - [Create new Post](api/v1/posts/create.md)
 - [Update Post](api/v1/posts/update.md)

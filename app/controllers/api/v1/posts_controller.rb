@@ -1,10 +1,17 @@
 class Api::V1::PostsController < Api::V1::ApiController
-  before_action :get_post, only: [:update, :destroy]
+  before_action :get_post, only: [:show, :update, :destroy]
   
   # GET /api/v1/posts
   def index
-    posts_json = ActiveModel::Serializer::CollectionSerializer.new(current_user.posts, serializer: PostSerializer).as_json
+    posts_json = ActiveModel::Serializer::CollectionSerializer.new(current_user.posts, serializer: PostSerializer, current_user: current_user).as_json
     render json: { posts: posts_json }, status: :ok
+  end
+  
+  # GET /api/v1/posts/:id
+  def show
+    View.find_or_create_by(source: @post, user: current_user)
+    post_json = PostSerializer.new(@post, current_user: current_user).as_json
+    render json: { post: post_json }, status: :ok
   end
   
   # POST /api/v1/posts

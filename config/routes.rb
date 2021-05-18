@@ -213,7 +213,7 @@ Rails.application.routes.draw do
         end
       end
       
-      resources :posts, only: [:index, :create, :update, :destroy] do
+      resources :posts, only: [:index, :show, :create, :update, :destroy] do
         resources :post_comments, only: [:index, :create]
         
         resources :post_lits, only: [:create] do
