@@ -21,6 +21,6 @@ DELETE
 ```
 HTTP code 200 :ok
 {
-  "success: true                                                                (boolean, required)
+  "success: Post                                                                (object, required)
 }
 ```
