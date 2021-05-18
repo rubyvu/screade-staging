@@ -59,13 +59,13 @@ html
               = image_pack_tag('media/images/icons/ic_search.png')
             // Show search
             #navbar-search-active
-              = form_tag searches_path do
+              = form_tag searches_path, method: :get, id: 'global-search-form' do
                 .input-group.search
-                  = text_field_tag :search_input, nil, autofocus: false, autocomplete: 'off', placeholder: "Search", class: 'form-control'
+                  = text_field_tag :search_input, nil, required: true, minlength: 2, autofocus: false, autocomplete: 'off', placeholder: "Search", class: 'form-control'
                   
                   .input-group-append
                     .input-group-text
-                      = image_pack_tag('media/images/icons/ic_search.png')
+                      = image_pack_tag('media/images/icons/ic_search.png', id: 'search-button-submit')
                     
             .navbar-icon-wrappers.devider
               i.vertical-line

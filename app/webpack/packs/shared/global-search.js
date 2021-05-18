@@ -16,4 +16,13 @@ $( document ).on('turbolinks:load', function() {
     // Clear form input on hide
     $(this).find('#search_input').val('')
   })
+  
+  $('#search-button-submit').on('click', function(e) {
+    var searchInputField = $('#global-search-form').find('#search_input')[0]
+    if ( searchInputField.checkValidity() ) {
+      $('#global-search-form').submit()
+    } else {
+      searchInputField.reportValidity()
+    }
+  });
 })

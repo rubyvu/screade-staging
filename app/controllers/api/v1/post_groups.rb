@@ -1,4 +1,4 @@
-class Api::V1::PostGroupssController < Api::V1::ApiController
+class Api::V1::PostGroupsController < Api::V1::ApiController
   
   # POST /api/v1/post_groups
   def index
