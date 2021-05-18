@@ -22,7 +22,7 @@ class Api::V1::PostsController < Api::V1::ApiController
   # PUT/PATCH /api/v1/posts/:id
   def update
     if @post.update(post_params)
-      post_json = PostSerializer.new(post).as_json
+      post_json = PostSerializer.new(@post).as_json
       render json: { post: post_json }, status: :ok
     else
       render json: { errors: post.errors.full_messages }, status: :unprocessable_entity
