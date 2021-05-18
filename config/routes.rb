@@ -223,6 +223,7 @@ Rails.application.routes.draw do
         end
       end
       
+      resources :post_groups, only: [:index]
       resources :searches, only: [:index]
       resources :settings, only: [:index] do
         collection do
