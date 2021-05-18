@@ -25,4 +25,9 @@ $( document ).on('turbolinks:load', function() {
       searchInputField.reportValidity()
     }
   });
+  
+  // Subscription in search
+  $(".search-result-card .search-element-wrapper").on('ajax:complete', function(event) {
+    location.reload()
+  })
 })

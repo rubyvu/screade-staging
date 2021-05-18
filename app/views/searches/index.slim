@@ -1,0 +1,55 @@
+h5.mt-4.mb-4 Search results
+
+- if @search_result[:is_results]
+  // Users
+  - if @search_result[:users_top].present?
+    .search-section-header Users
+    
+    - @search_result[:users_top].each do |user|
+      .search-result-card
+        = link_to user_path(user.username), class: 'search-title' do
+          - if user.profile_picture.url
+            = image_tag(user.profile_picture.square_320.url, class: 'profile-image')
+          - else
+            = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
+            
+          span.ml-2 #{user.full_name}
+  
+  // Groups
+  - if @search_result[:groups_top].present?
+    .search-section-header Groups
+    
+    - @search_result[:groups_top].each do |group|
+      .search-result-card
+        .search-element-wrapper data-title="#{group.title.capitalize}"
+          .text-content
+            h5 #{topic_short_title(group)}
+            span #{group.title.capitalize}
+          
+          .action-content
+            - if current_user.is_group_subscription(group)
+              = link_to "Remove", unsubscribe_groups_path(type: group.class.name, id: group.id), class: "btn btn-outline-primary", remote: true, method: :delete, data: { type: group.class.name, id: group.id }
+            - else
+              = link_to "Add", subscribe_groups_path(type: group.class.name, id: group.id), class: "btn btn-primary", remote: true, method: :post, data: { type: group.class.name, id: group.id }
+  
+  // NewsArticles
+  - if @search_result[:news_articles_top].present?
+    .search-section-header News Articles
+    
+    - @search_result[:news_articles_top].each do |news_article|
+      .search-result-card
+        = link_to news_article.title, comments_news_article_path(news_article), class: 'search-title'
+        - if news_article.description.present?
+          p #{news_article.description}
+        
+  // Posts
+  - if @search_result[:posts_top].present?
+    .search-section-header Posts
+    
+    - @search_result[:posts_top].each do |post|
+      .search-result-card
+        = link_to post.title, post_post_comments_path(post), class: 'search-title'
+        p #{post.description}
+        
+- else
+  p Cannot find any results for '<strong>#{@search_result[:search_input]}</strong>'

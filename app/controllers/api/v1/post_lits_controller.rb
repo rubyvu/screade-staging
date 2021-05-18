@@ -16,7 +16,8 @@ class Api::V1::PostLitsController < Api::V1::ApiController
   def destroy
     lit = Lit.find_by!(source: @post, user: current_user)
     lit.destroy
-    render json: { success: true }, status: :ok
+    post_json = PostSerializer.new(@post, current_user: current_user).as_json
+    render json: { post: post_json }, status: :ok
   end
   
   private

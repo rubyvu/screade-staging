@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :confirmable, :database_authenticatable, :lockable, :registerable, :recoverable, :validatable, authentication_keys: [:login]
   
   # Search
-  searchkick word_middle: [:first_name, :last_name, :username]
+  searchkick text_middle: [:full_name]
   
   # Constants
   EMAIL_FORMAT = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i

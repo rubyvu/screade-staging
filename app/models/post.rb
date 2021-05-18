@@ -1,6 +1,6 @@
 class Post < ApplicationRecord
   # Search
-  searchkick word_middle: [:title]
+  searchkick text_middle: [:title]
   
   # Constants
   APPROVING_STATES = %w(pending approved)

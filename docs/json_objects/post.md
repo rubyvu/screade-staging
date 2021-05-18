@@ -12,8 +12,7 @@
   "id": 1                                                                       (integer, required)
   "image": 'https://...'                                                        (string, optional)
   "is_notification": true                                                       (boolean, required)
-  "source_id": 'NewsCategory'                                                   (integer, required)
-  "source_type": 'NewsCategory'                                                 (string, required)
+  "source": NewsCategory || Topic                                               (object, required)
   "state": 'pending | approved'                                                 (string, required)
   "title": 'Post title'                                                         (string, required)
   "user": UserProfile                                                           (object, required)
@@ -22,3 +21,5 @@
 
 ### References
 - [UserProfile JSON object](./user_profile.md)
+- [Topic JSON object](./topic.md)
+- [NewsCategory JSON object](./news_category.md)

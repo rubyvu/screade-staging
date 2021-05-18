@@ -7,8 +7,11 @@ class PostSerializer < ActiveModel::Serializer
   end
   
   attribute :is_notification
-  attribute :source_id
-  attribute :source_type
+  attribute :source
+  def source
+    PostGroupSerializer.new(object.source).as_json
+  end
+  
   attribute :title
   attribute :state
   attribute :user

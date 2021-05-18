@@ -1,6 +1,6 @@
 class Topic < ApplicationRecord
   # Search
-  searchkick word_middle: [:title]
+  searchkick text_middle: [:title]
   
   # Constants
   PARENT_TYPES = %w(Topic NewsCategory)

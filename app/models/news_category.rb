@@ -1,6 +1,6 @@
 class NewsCategory < ApplicationRecord
   # Search
-  searchkick word_middle: [:title]
+  searchkick text_middle: [:title]
   
   # Constants
   DEFAULT_CATEGORIES = %w(business entertainment general health science sports technology)
