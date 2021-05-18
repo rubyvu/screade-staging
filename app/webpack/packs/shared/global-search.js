@@ -12,5 +12,8 @@ $( document ).on('turbolinks:load', function() {
     $(this).fadeOut(0, function() {
       $('#navbar-search-inactive').fadeIn(500)
     })
+    
+    // Clear form input on hide
+    $(this).find('#search_input').val('')
   })
 })

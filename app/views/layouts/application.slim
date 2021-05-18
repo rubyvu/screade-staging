@@ -59,9 +59,9 @@ html
               = image_pack_tag('media/images/icons/ic_search.png')
             // Show search
             #navbar-search-active
-              = form_for Event.new do |f|
+              = form_tag searches_path do
                 .input-group.search
-                  = f.text_field :title, autofocus: false, autocomplete: 'off', placeholder: "Write a comment", class: 'form-control'
+                  = text_field_tag :search_input, nil, autofocus: false, autocomplete: 'off', placeholder: "Search", class: 'form-control'
                   
                   .input-group-append
                     .input-group-text
