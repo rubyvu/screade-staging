@@ -1,8 +1,9 @@
+= render 'posts/user_images', user_images: @user_images
 .d-width-wrapper
   = form_with(model: post, url: (post.persisted? ?  post_path(post) : posts_path), local: true) do |f|
     
     .input-group.mb-3
-     = f.file_field :image, accept: 'image/png, image/jpeg', class: 'post-form-image'
+     = f.text_field :image_id, class: 'post-form-image'
      
      .post-form-image-mask#post-form-image-mask
        - if post.image.present?

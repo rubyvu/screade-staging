@@ -91,6 +91,10 @@ Rails.application.routes.draw do
         delete :destroy
       end
     end
+    
+    collection do
+      get :user_images
+    end
   end
   
   resources :searches, only: [:index]

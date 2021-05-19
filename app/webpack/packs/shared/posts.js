@@ -2,25 +2,27 @@ $( document ).on('turbolinks:load', function() {
   
   // Image
   $('#post-form-image-mask').on('click', function() {
-    $("#post_image").click();
+    $.ajax({
+        url: window.location.origin + '/posts/user_images',
+        type: 'GET',
+        dataType: 'jsonp'
+    });
   })
   
-  $("#post_image").change(function() {
-    console.log('1');
-    readProfileURL(this);
-  });
+  $('#user-images-form-placeholder').on('click', '.image-card', function() {
+    let imgUrl = $(this).find('img').data('imageUrl')
+    let imgId = $(this).find('img').data('imageId')
+    
+    readProfileURL(imgUrl, imgId)
+    $('#modal-user-images').modal('hide')
+  })
   
-  function readProfileURL(input) {
-    if (input.files && input.files[0]) {
-      var reader = new FileReader();
-      reader.onload = function(e) {
-        $('#post-image').attr('src', e.target.result);
-        $('#post-image').show();
-        $('#icon-add-photo').hide();
-      }
-      
-      reader.readAsDataURL(input.files[0]);
-    }
+  function readProfileURL(url, id) {
+    $('#post-image').attr('src', url);
+    $('#post_image_id').val(id);
+    
+    $('#post-image').show();
+    $('#icon-add-photo').hide();
   }
   
   // Posts

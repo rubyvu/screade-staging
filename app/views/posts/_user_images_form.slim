@@ -1,0 +1,4 @@
+.post-images-wrapper
+  - @user_images.each do |image|
+    .image-card
+      = image_tag(image.file.rectangle_160_160.url, data: {'image-url': image.file.url, 'image-id': image.id })
