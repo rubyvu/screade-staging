@@ -217,6 +217,8 @@ Rails.application.routes.draw do
         end
       end
       
+      
+      resources :notifications, only: [:index, :update]
       resources :posts, only: [:index, :show, :create, :update, :destroy] do
         resources :post_comments, only: [:index, :create]
         
