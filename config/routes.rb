@@ -81,6 +81,7 @@ Rails.application.routes.draw do
     end
   end
   
+  resources :notifications, only: [:index, :update]
   resources :posts do
     resources :post_comments, only: [:index, :create] do
       get :reply_comments
