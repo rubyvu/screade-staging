@@ -8,7 +8,7 @@ class PostSerializer < ActiveModel::Serializer
   attribute :id
   attribute :image
   def image
-    object.image.rectangle_300_250.url
+    object.image ? UserImageSerializer.new(object.image).as_json : nil
   end
   
   attribute :is_notification
