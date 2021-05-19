@@ -713,6 +713,41 @@ ALTER SEQUENCE public.news_sources_id_seq OWNED BY public.news_sources.id;
 
 
 --
+-- Name: notifications; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.notifications (
+    id bigint NOT NULL,
+    user_id integer NOT NULL,
+    source_id integer NOT NULL,
+    source_type character varying NOT NULL,
+    is_viewed boolean DEFAULT false,
+    message character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: notifications_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.notifications_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: notifications_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.notifications_id_seq OWNED BY public.notifications.id;
+
+
+--
 -- Name: post_groups; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1285,6 +1320,13 @@ ALTER TABLE ONLY public.news_sources ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: notifications id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.notifications ALTER COLUMN id SET DEFAULT nextval('public.notifications_id_seq'::regclass);
+
+
+--
 -- Name: post_groups id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1470,6 +1512,14 @@ ALTER TABLE ONLY public.news_categories
 
 ALTER TABLE ONLY public.news_sources
     ADD CONSTRAINT news_sources_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: notifications notifications_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.notifications
+    ADD CONSTRAINT notifications_pkey PRIMARY KEY (id);
 
 
 --
@@ -1727,6 +1777,13 @@ CREATE UNIQUE INDEX index_news_sources_on_source_identifier ON public.news_sourc
 
 
 --
+-- Name: index_notifications_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_notifications_on_user_id ON public.notifications USING btree (user_id);
+
+
+--
 -- Name: index_post_groups_on_post_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1942,6 +1999,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210506082408'),
 ('20210506122556'),
 ('20210507153931'),
-('20210513073904');
+('20210513073904'),
+('20210519140106');
 
 
