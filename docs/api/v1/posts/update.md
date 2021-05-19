@@ -14,7 +14,7 @@ PUT/PATCH
 ```
 {
   "post": {
-    "image": Image file                                                         (multipart/form-data, required)
+    "image_id": 1                                                               (integer, required)
     "title": 'New title description'                                            (string, required)
     "description": 'New post description'                                       (string, required)
     "source_id": 1                                                              (integer, required)

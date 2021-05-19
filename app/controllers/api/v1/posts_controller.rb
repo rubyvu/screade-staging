@@ -1,5 +1,6 @@
 class Api::V1::PostsController < Api::V1::ApiController
   before_action :get_post, only: [:show, :update, :destroy]
+  before_action :get_user_image, only: [:create, :update]
   
   # GET /api/v1/posts
   def index
@@ -17,6 +18,7 @@ class Api::V1::PostsController < Api::V1::ApiController
   # POST /api/v1/posts
   def create
     post = Post.new(post_params)
+    post.remote_image_url = @user_image&.file&.url
     post.user = current_user
     if post.save
       post_json = PostSerializer.new(post).as_json
@@ -28,6 +30,7 @@ class Api::V1::PostsController < Api::V1::ApiController
   
   # PUT/PATCH /api/v1/posts/:id
   def update
+    @post.remote_image_url = @user_image&.file&.url
     if @post.update(post_params)
       post_json = PostSerializer.new(@post).as_json
       render json: { post: post_json }, status: :ok
@@ -47,7 +50,13 @@ class Api::V1::PostsController < Api::V1::ApiController
       @post = Post.find(params[:id])
     end
     
+    def get_user_image
+      @user_image = current_user.user_images.find_by(id: params[:post][:image_id])
+    end
+    
     def post_params
-      params.require(:post).permit(:image, :title, :description, :source_type, :source_id)
+      strong_params = params.require(:post).permit(:image_id, :title, :description, :source_type, :source_id)
+      strong_params.delete(:image_id)
+      strong_params
     end
 end
