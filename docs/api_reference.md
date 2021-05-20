@@ -66,6 +66,10 @@
 - [Subscribe NewsArticle to Topic](api/v1/news_articles/topic_subscription.md)
 - [Get NewsArticle Groups with Subscriptions](api/v1/news_articles/groups.md)
 
+### Notifications
+- [Get all user Notifications](api/v1/notifications/index.md)
+- [Mark Notification as viewed](api/v1/notifications/update.md)
+
 ### Squad Search
 - [Global Search](api/v1/searches/index.md)
 
