@@ -27,6 +27,7 @@ class User < ApplicationRecord
   has_many :events, dependent: :destroy
   has_many :posts, dependent: :destroy
   has_many :post_groups, through: :posts
+  has_many :received_notifications, class_name: 'Notification', foreign_key: :recipient_id, dependent: :destroy
   ## Squad requests
   has_many :squad_requests_as_receiver, foreign_key: :receiver_id, class_name: 'SquadRequest', dependent: :destroy
   has_many :squad_requests_as_requestor, foreign_key: :requestor_id, class_name: 'SquadRequest', dependent: :destroy

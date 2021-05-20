@@ -718,13 +718,14 @@ ALTER SEQUENCE public.news_sources_id_seq OWNED BY public.news_sources.id;
 
 CREATE TABLE public.notifications (
     id bigint NOT NULL,
-    user_id integer NOT NULL,
+    recipient_id integer NOT NULL,
     source_id integer NOT NULL,
     source_type character varying NOT NULL,
     is_viewed boolean DEFAULT false,
     message character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    sender_id integer
 );
 
 
@@ -1777,10 +1778,10 @@ CREATE UNIQUE INDEX index_news_sources_on_source_identifier ON public.news_sourc
 
 
 --
--- Name: index_notifications_on_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_notifications_on_recipient_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_notifications_on_user_id ON public.notifications USING btree (user_id);
+CREATE INDEX index_notifications_on_recipient_id ON public.notifications USING btree (recipient_id);
 
 
 --
@@ -2000,6 +2001,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210506122556'),
 ('20210507153931'),
 ('20210513073904'),
-('20210519140106');
+('20210519140106'),
+('20210520091515'),
+('20210520092046');
 
 
