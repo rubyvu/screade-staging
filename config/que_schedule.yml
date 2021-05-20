@@ -3,3 +3,10 @@ get_news_articles_job:
   class: Schedule::GetNewsArticlesJob
   queue: schedule
   schedule_type: default
+  
+send_events_notifications_job:
+  cron: "*/10 * * * *" # Run every 10th minutes
+  class: Schedule::SendEventsNotificationsJob
+  queue: schedule
+  schedule_type: default
+  priority: 1

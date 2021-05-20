@@ -8,6 +8,7 @@ class Post < ApplicationRecord
   
   # Callbacks
   after_save :update_associated_groups
+  after_create :add_notification
   
   # File Uploader
   mount_uploader :image, PostImageUploader
@@ -51,6 +52,10 @@ class Post < ApplicationRecord
   end
   
   private
+    def add_notification
+      CreateNewNotificationsJob.perform_later(self.id, self.class.name)
+    end
+  
     def update_associated_groups
       return unless saved_change_to_source_id? || saved_change_to_source_type?
       

@@ -27,7 +27,7 @@ module Tasks
         source_id: event.id,
         source_type: 'Event',
         recipient_id: event.user.id,
-        message: "Starts in 30 minutes"
+        message: "#{event.title} starts very soon"
       }
       
       create_notification(notificatiom_params)
@@ -38,7 +38,7 @@ module Tasks
       return if post.blank?
       
       sender = post.user
-      recipients_ids = sender.squad_requests_as_receiver.where.not(accepted_at: nil).pluck(:requestor_id).or(sender.squad_requests_as_requestor.where.not(accepted_at: nil).pluck(:reciver_id)).uniq
+      recipients_ids = (sender.squad_requests_as_receiver.where.not(accepted_at: nil).pluck(:requestor_id) + sender.squad_requests_as_requestor.where.not(accepted_at: nil).pluck(:receiver_id)).uniq
       
       recipients_ids.each do |recipient_id|
         notificatiom_params = {
@@ -58,7 +58,7 @@ module Tasks
       return if user_image.blank?
       
       sender = user_image.user
-      recipients_ids = sender.squad_requests_as_receiver.where.not(accepted_at: nil).pluck(:requestor_id).or(sender.squad_requests_as_requestor.where.not(accepted_at: nil).pluck(:reciver_id)).uniq
+      recipients_ids = (sender.squad_requests_as_receiver.where.not(accepted_at: nil).pluck(:requestor_id) + sender.squad_requests_as_requestor.where.not(accepted_at: nil).pluck(:receiver_id)).uniq
       
       recipients_ids.each do |recipient_id|
         notificatiom_params = {
@@ -78,7 +78,7 @@ module Tasks
       return if user_video.blank?
       
       sender = user_video.user
-      recipients_ids = sender.squad_requests_as_receiver.where.not(accepted_at: nil).pluck(:requestor_id).or(sender.squad_requests_as_requestor.where.not(accepted_at: nil).pluck(:reciver_id)).uniq
+      recipients_ids = (sender.squad_requests_as_receiver.where.not(accepted_at: nil).pluck(:requestor_id) + sender.squad_requests_as_requestor.where.not(accepted_at: nil).pluck(:receiver_id)).uniq
       
       recipients_ids.each do |recipient_id|
         notificatiom_params = {
@@ -110,9 +110,7 @@ module Tasks
     
     private
       def self.create_notification(notificatiom_params)
-        puts notificatiom_params
-        n = Notification.create(notificatiom_params)
-        puts n.errors.full_messages
+        Notification.create(notificatiom_params)
       end
   end
 end
