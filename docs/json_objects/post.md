@@ -11,7 +11,7 @@
   "comments_count": "1"                                                         (integer, required)
   "description": 'Description string'                                           (string, required)
   "id": 1                                                                       (integer, required)
-  "image": UserImage                                                            (object, optional)
+  "image": 'https://image.png'                                                  (string, optional)
   "is_notification": true                                                       (boolean, required)
   "is_commented": "false"                                                       (boolean, required)
   "is_lited": "false"                                                           (boolean, required)
@@ -29,4 +29,3 @@
 - [UserProfile JSON object](./user_profile.md)
 - [Topic JSON object](./topic.md)
 - [NewsCategory JSON object](./news_category.md)
-- [UserImage JSON object](./user_image.md)
