@@ -157,3 +157,17 @@
     }
   }
 }
+
+i.notification-bage {
+  position: absolute;
+  right: -5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: none;
+  
+  &.active {
+    display: block;
+    background-color: $color-red;
+  }
+}

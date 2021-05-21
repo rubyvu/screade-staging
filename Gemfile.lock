@@ -332,6 +332,7 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     rbtree3 (0.6.0)
+    redis (4.2.5)
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
@@ -449,6 +450,7 @@ DEPENDENCIES
   rails
   rails-controller-testing
   rails-erd
+  redis
   rspec-rails
   searchkick
   shoulda-matchers

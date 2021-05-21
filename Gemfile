@@ -15,6 +15,9 @@ gem 'pg', '1.2.3'
 # Use Puma as the app server
 gem 'puma'
 
+# Redis for ActionCable
+gem 'redis'
+
 # Admin panel
 gem 'activeadmin'
 

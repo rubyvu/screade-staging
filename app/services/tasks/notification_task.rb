@@ -110,7 +110,8 @@ module Tasks
     
     private
       def self.create_notification(notificatiom_params)
-        Notification.create(notificatiom_params)
+        notification = Notification.create(notificatiom_params)
+        NotificationChannel.broadcast_to(notification.recipient, bage_counter: notification.recipient.received_notifications.count)
       end
   end
 end
