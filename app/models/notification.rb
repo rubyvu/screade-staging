@@ -22,6 +22,10 @@ class Notification < ApplicationRecord
   # Scopes
   scope :unviewed, -> { where(is_viewed: false) }
   
+  def is_user_type?
+    ['SquadRequest', 'UserImage', 'UserVideo'].include?(self.source_type)
+  end
+  
   private
     def send_push_notification_to_user_devices
       

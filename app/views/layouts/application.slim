@@ -72,10 +72,10 @@ html
             .navbar-icon-wrappers
               = image_pack_tag('media/images/icons/ic_dialog.png')
             .navbar-icon-wrappers.dropdown
-              a.dropdown-toggle#dropdownNotification data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+              a.dropdown-toggle#dropdown-notification data-toggle="dropdown"
                 = image_pack_tag('media/images/icons/ic_notification.png')
-              - if current_user.received_notifications.unviewed.present?
-                .dropdown-menu.dropdown-menu-right aria-labelledby="dropdownNotification"
+              .dropdown-menu.dropdown-menu-right aria-labelledby="dropdown-notification"
+                #notifications-list-placeholder
             
             .navbar-icon-wrappers.dropdown
               a.dropdown-toggle#dropdownMenuButton data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"

@@ -2,7 +2,11 @@ class NotificationsController < ApplicationController
   
   # GET /notifications
   def index
-    @notifications = NewsCategory.where(is_viewed: false).order(id: :desc)
+    @notifications = current_user.received_notifications.unviewed.order(id: :desc)
+    
+    respond_to do |format|
+      format.js { render 'index', layout: false }
+    end
   end
   
   # PUT/PATCH /notifications/:id

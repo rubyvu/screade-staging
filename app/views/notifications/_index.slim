@@ -1,0 +1,44 @@
+- if @notifications.blank?
+  span.dropdown-item No notifications
+- else
+  - @notifications.each do |notification|
+    = link_to '', class: 'dropdown-item notification' do
+      - if notification.is_user_type?
+        .notification-image
+          - if notification.sender.profile_picture.url
+            = image_tag(notification.sender.profile_picture.square_320.url, class: 'profile-image')
+          - else
+            = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
+      - else
+        .notification-icon
+          - case notification.source_type
+          - when 'Event'
+            = image_pack_tag('media/images/icons/notifications/ic_notification_event.png')
+          - when 'Comment'
+            = image_pack_tag('media/images/icons/notifications/ic_notification_replied_comment.png')
+          - when 'Post'
+            = image_pack_tag('media/images/icons/notifications/ic_notification_new_post.png')
+      
+      .body
+        .header
+          .title
+            - if notification.is_user_type?
+              span
+                = notification.sender.full_name
+            - else
+              = notification.source.title
+            
+          .date
+            = comment_timestamp(notification.created_at)
+          
+        .message
+          - case notification.source_type
+          - when 'UserImage'
+            .icon
+              = image_pack_tag('media/images/icons/notifications/ic_notification_new_image.png')
+          - when 'UserVideo'
+            .icon
+              = image_pack_tag('media/images/icons/notifications/ic_notification_new_video.png')
+          
+          .text
+            = notification.message
