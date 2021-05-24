@@ -12,7 +12,7 @@
   "is_viewed": "false"                                                          (boolean, required)
   "message": "Notification message"                                             (string, required)
   "source": Comment || Event || Post || UserImage || UserVideo || SquadRequest  (object, required)
-  "user": User                                                                  (object, required)
+  "user": UserProfile                                                           (object, optional)
 }
 ```
 
@@ -23,4 +23,4 @@
 - [UserImage JSON object](./user_image.md)
 - [UserVideo JSON object](./user_video.md)
 - [SquadRequest JSON object](./squad_request.md)
-- [User JSON object](./user.md)
+- [UserProfile JSON object](./user_profile.md)

@@ -2,7 +2,7 @@ class Api::V1::NotificationsController < Api::V1::ApiController
   
   # GET /api/v1/notifications
   def index
-    notifications = NewsCategory.order(id: :desc).page(params[:page]).per(30)
+    notifications = Notification.where(recipient: current_user, is_viewed: false).order(created_at: :desc).page(params[:page]).per(30)
     notifications_json = ActiveModel::Serializer::CollectionSerializer.new(notifications, serializer: NotificationSerializer).as_json
     render json: { notifications: notifications_json }, status: :ok
   end

@@ -22,6 +22,6 @@ class NotificationSerializer < ActiveModel::Serializer
   
   attribute :user
   def user
-    UserSerializer.new(object.user).as_json
+    UserProfileSerializer.new(object.sender).as_json
   end
 end
