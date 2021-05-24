@@ -13,6 +13,11 @@ class PostSerializer < ActiveModel::Serializer
   end
   
   attribute :is_notification
+  def is_notification
+    current_user = instance_options[:current_user]
+    current_user == object.user ? object.is_notification : nil
+  end
+  
   attribute :is_commented
   def is_commented
     current_user = instance_options[:current_user]

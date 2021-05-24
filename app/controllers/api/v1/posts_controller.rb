@@ -55,7 +55,7 @@ class Api::V1::PostsController < Api::V1::ApiController
     end
     
     def post_params
-      strong_params = params.require(:post).permit(:image_id, :title, :description, :source_type, :source_id)
+      strong_params = params.require(:post).permit(:image_id, :is_notification, :title, :description, :source_type, :source_id)
       strong_params.delete(:image_id)
       strong_params
     end

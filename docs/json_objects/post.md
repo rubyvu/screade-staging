@@ -12,7 +12,7 @@
   "description": 'Description string'                                           (string, required)
   "id": 1                                                                       (integer, required)
   "image": 'https://image.png'                                                  (string, optional)
-  "is_notification": true                                                       (boolean, required)
+  "is_notification": true                                                       (boolean, optional)
   "is_commented": "false"                                                       (boolean, required)
   "is_lited": "false"                                                           (boolean, required)
   "is_viewed": "true"                                                           (boolean, required)
