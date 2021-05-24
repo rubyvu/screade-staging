@@ -9,6 +9,7 @@
 ```
 {
   "comments_count": "1"                                                         (integer, required)
+  "created_at": "2021-02-04 14:22:14 +0000",                                    (string, required,
   "description": 'Description string'                                           (string, required)
   "id": 1                                                                       (integer, required)
   "image": 'https://image.png'                                                  (string, optional)
