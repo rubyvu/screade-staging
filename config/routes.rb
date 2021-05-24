@@ -219,7 +219,12 @@ Rails.application.routes.draw do
       end
       
       
-      resources :notifications, only: [:index, :update]
+      resources :notifications, only: [:index, :update] do
+        collection do
+          put :view_all
+        end
+      end
+      
       resources :posts, only: [:index, :show, :create, :update, :destroy] do
         resources :post_comments, only: [:index, :create]
         

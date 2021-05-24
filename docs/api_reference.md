@@ -68,6 +68,7 @@
 
 ### Notifications
 - [Get all user Notifications](api/v1/notifications/index.md)
+- [Mark all User Notification as viewed](api/v1/notifications/view_all.md)
 - [Mark Notification as viewed](api/v1/notifications/update.md)
 
 ### Squad Search

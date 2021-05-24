@@ -18,6 +18,14 @@ class Api::V1::NotificationsController < Api::V1::ApiController
     end
   end
   
+  # PUT /api/v1/notifications/view_all
+  def view_all
+    notifications = Notification.where(recipient: current_user)
+    
+    notifications.update_all(is_viewed: true)
+    render json: { success: true }, status: :ok
+  end
+  
   private
     def notification_params
       params.require(:notification).permit(:is_viewed)
