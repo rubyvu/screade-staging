@@ -4,7 +4,14 @@ class Api::V1::PostsController < Api::V1::ApiController
   
   # GET /api/v1/posts
   def index
-    posts_json = ActiveModel::Serializer::CollectionSerializer.new(current_user.posts, serializer: PostSerializer, current_user: current_user).as_json
+    if params[:username].present?
+      user = User.find_by!(username: params[:username])
+      posts = user.posts.where(state: 'approved')
+    else
+      posts = current_user.posts
+    end
+    
+    posts_json = ActiveModel::Serializer::CollectionSerializer.new(posts.order(created_at: :desc).page(params[:page]).per(30), serializer: PostSerializer, current_user: current_user).as_json
     render json: { posts: posts_json }, status: :ok
   end
   

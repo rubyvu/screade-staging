@@ -15,6 +15,7 @@ GET
 ```
 {
   "page": 1                                                                     (integer, required)
+  "username": "user_test"                                                       (string, optional)
 }
 ```
 
