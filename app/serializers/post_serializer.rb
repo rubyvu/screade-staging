@@ -4,6 +4,7 @@ class PostSerializer < ActiveModel::Serializer
     object.comments.count
   end
   
+  attribute :created_at
   attribute :description
   attribute :id
   attribute :image
