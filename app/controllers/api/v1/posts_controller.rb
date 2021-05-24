@@ -21,7 +21,7 @@ class Api::V1::PostsController < Api::V1::ApiController
     post.remote_image_url = @user_image&.file&.url
     post.user = current_user
     if post.save
-      post_json = PostSerializer.new(post).as_json
+      post_json = PostSerializer.new(post, current_user: current_user).as_json
       render json: { post: post_json }, status: :ok
     else
       render json: { errors: post.errors.full_messages }, status: :unprocessable_entity
@@ -32,7 +32,7 @@ class Api::V1::PostsController < Api::V1::ApiController
   def update
     @post.remote_image_url = @user_image&.file&.url
     if @post.update(post_params)
-      post_json = PostSerializer.new(@post).as_json
+      post_json = PostSerializer.new(@post, current_user: current_user).as_json
       render json: { post: post_json }, status: :ok
     else
       render json: { errors: post.errors.full_messages }, status: :unprocessable_entity
