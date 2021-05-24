@@ -6,7 +6,15 @@ class PostsController < ApplicationController
   
   # GET /posts
   def index
-    @posts = current_user.posts.order(id: :desc).page(params[:page]).per(30)
+    if params[:username].present?
+      @user = User.find_by!(username: params[:username])
+      posts = @user.posts.where(state: 'approved')
+    else
+      @user = current_user
+      posts = current_user.posts
+    end
+    
+    @posts = posts.order(id: :desc).page(params[:page]).per(30)
   end
   
   # GET /posts/new
@@ -59,7 +67,7 @@ class PostsController < ApplicationController
   
   private
     def get_post
-      @post = Post.find(params[:id])
+      @post = Post.find_by!(id: params[:id], user: current_user)
     end
     
     def get_groups

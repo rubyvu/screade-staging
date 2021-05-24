@@ -7,6 +7,7 @@ class Post < ApplicationRecord
   SOURCE_TYPES = %w(NewsCategory Topic)
   
   # Callbacks
+  before_validation :set_state, on: :create
   after_save :update_associated_groups
   after_create :add_notification
   
@@ -26,6 +27,8 @@ class Post < ApplicationRecord
   ## Views
   has_many :views, as: :source, dependent: :destroy
   has_many :viewing_users, through: :views, source: :user
+  # Notifications
+  has_many :notifications, as: :source, dependent: :destroy
   # Extra Group assiciation
   has_many :post_groups, dependent: :destroy
   
@@ -55,7 +58,11 @@ class Post < ApplicationRecord
     def add_notification
       CreateNewNotificationsJob.perform_later(self.id, self.class.name)
     end
-  
+    
+    def set_state
+      self.state = 'approved' if self.source_type == 'NewsCategory' || (self.source_type == 'Topic' && self.source&.is_approved)
+    end
+    
     def update_associated_groups
       return unless saved_change_to_source_id? || saved_change_to_source_type?
       

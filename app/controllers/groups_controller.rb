@@ -65,8 +65,8 @@ class GroupsController < ApplicationController
       # Get Source from Post
       topic_posts_ids = Topic.joins(:post_groups).where(post_groups: { id: current_user.post_groups.where(group_type: 'Topic').ids }).distinct.ids
       news_category_posts_ids = NewsCategory.joins(:post_groups).where(post_groups: { id: current_user.post_groups.where(group_type: 'NewsCategory').ids }).distinct.ids
-      post_source_ids = Post.where(source_type: 'Topic', source_id: topic_posts_ids)
-                            .or(Post.where(source_type: 'NewsCategory', source_id: news_category_posts_ids))
+      post_source_ids = Post.where(source_type: 'Topic', source_id: topic_posts_ids, state: 'approved')
+                            .or(Post.where(source_type: 'NewsCategory', source_id: news_category_posts_ids, state: 'approved'))
                             .order(id: :desc).limit(1000).ids
                             
       @comments = Comment.where(source_type: 'NewsArticle', source_id: source_ids, comment_id: nil).where.not(user: current_user)

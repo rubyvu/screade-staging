@@ -3,17 +3,18 @@
     - @posts.each do |post|
       .posts-card value="#{post.id}"
         
-        .post-header-panel
-          .state
-            - if post.source_type == 'Topic' && !post.source.is_approved
-              p On approve
-            
-          .actions
-            = link_to edit_post_path(post) do
-              = image_pack_tag('media/images/icons/ic_edit.png')
-            
-            = link_to post_path(post), method: :delete, data: { confirm: 'Do you really want to delete this Post?' } do
-              = image_pack_tag('media/images/icons/ic_delete_object.png')
+        - if post.user == current_user
+          .post-header-panel
+            .state
+              - if post.source_type == 'Topic' && !post.source.is_approved
+                p On approve
+              
+            .actions
+              = link_to edit_post_path(post) do
+                = image_pack_tag('media/images/icons/ic_edit.png')
+              
+              = link_to post_path(post), method: :delete, data: { confirm: 'Do you really want to delete this Post?' } do
+                = image_pack_tag('media/images/icons/ic_delete_object.png')
               
         .posts-image-wrapper
           - if post.image.present?
@@ -44,11 +45,12 @@
               i class=(post.is_viewed(current_user) ? "ic view active" : "ic view")
               span.info-panel-value #{counter_measurement(post.views.size)}
           
-  //.mt-4.d-flex.justify-content-center
+  .mt-4.d-flex.justify-content-center
     = paginate @posts
     
-#container-floating-wrapper
-  #container-floating
-    = link_to new_post_path do
-      #floating-button
-        p.plus #{image_pack_tag('media/images/icons/ic_plus.png')} Add Post
+- if @user == current_user
+  #container-floating-wrapper
+    #container-floating
+      = link_to new_post_path do
+        #floating-button
+          p.plus #{image_pack_tag('media/images/icons/ic_plus.png')} Add Post

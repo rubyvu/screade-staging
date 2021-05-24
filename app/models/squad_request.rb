@@ -6,6 +6,8 @@ class SquadRequest < ApplicationRecord
   # Associations
   belongs_to :receiver, class_name: 'User', foreign_key: :receiver_id
   belongs_to :requestor, class_name: 'User', foreign_key: :requestor_id
+  # Notifications
+  has_many :notifications, as: :source, dependent: :destroy
   
   # Assosiations validations
   validates :receiver, presence: true, uniqueness: { scope: :requestor_id }

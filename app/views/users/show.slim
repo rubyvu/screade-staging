@@ -50,6 +50,52 @@
         = link_to "Squad (#{@user.count_squad_members})", user_squad_members_path(@user.username), class: "btn btn-outline-primary mx-2 fonts-styling #{@user.setting.font_family} #{@user.setting.font_style}"
   
   .user-profile-assets-wrapper
+    h4 Posts
+    - if @posts.present?
+      = link_to 'See all', current_user == @user ? posts_path : posts_path(username: @user.username), class: 'see-all-assets'
+      
+      .user-profile-assets
+        .posts-cards-wrapper.profile
+          - @posts.each do |post|
+            .posts-card value="#{post.id}"
+              .posts-image-wrapper
+                - if post.image.present?
+                  = image_tag(post.image.url, class: 'post-image', onerror: "this.error=null;this.src='#{asset_pack_path('media/images/placeholders/placeholder-news.png')}'")
+                - else
+                  = image_pack_tag('media/images/placeholders/placeholder-news.png', class: 'post-image')
+                
+                .post-title-panel
+                  = link_to post.title, post_post_comments_path(post)
+                
+                .post-info-panel
+                  .div class="info-panel-value-wrapper"
+                    - if post.is_lited(current_user)
+                      = link_to post_post_lits_path(post), method: :delete, remote: true, id: "post-lit-#{post.id}" do
+                        i.ic.lit.active
+                    - else
+                      = link_to post_post_lits_path(post), method: :post, remote: true, id: "post-lit-#{post.id}" do
+                        i.ic.lit
+                        
+                    span.info-panel-value #{counter_measurement(post.lits.size)}
+                    
+                  .info-panel-value-wrapper
+                    = link_to post_post_comments_path(post), class: 'comment-link-icon' do
+                      i class=(post.is_commented(current_user) ? "ic comment active" : "ic comment")
+                    span.info-panel-value #{counter_measurement(post.comments.size)}
+                    
+                  .info-panel-value-wrapper.pointer-disable
+                    i class=(post.is_viewed(current_user) ? "ic view active" : "ic view")
+                    span.info-panel-value #{counter_measurement(post.views.size)}
+                    
+    - elsif @user == current_user
+      .new-assets
+        = link_to 'You have no posts yet', posts_path
+        
+    - else
+      .new-assets
+        h6 No Posts
+  
+  .user-profile-assets-wrapper
     h4 Images
     - if @images.present?
       = link_to 'See all', images_user_image_path(@user.username), class: 'see-all-assets'

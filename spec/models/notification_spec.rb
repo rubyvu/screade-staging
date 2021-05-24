@@ -9,18 +9,18 @@ RSpec.describe Notification, type: :model do
   end
   
   it 'should have a valid factory' do
-    notification = FactoryBot.build(:notification, source: @source_user, user: @user)
+    notification = FactoryBot.build(:notification, source: @source_user, recipient: @user)
     expect(notification.present?).to eq(true)
   end
   
   context 'associations' do
     it { should belong_to(:source) }
-    it { should belong_to(:user) }
+    it { should belong_to(:recipient) }
   end
   
   context 'validations' do
     context 'associations' do
-      it { should validate_presence_of(:user) }
+      it { should validate_presence_of(:recipient) }
     end
   
     context 'fields' do

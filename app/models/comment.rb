@@ -12,8 +12,7 @@ class Comment < ApplicationRecord
   ## Lits
   has_many :lits, as: :source, dependent: :destroy
   has_many :liting_users, through: :lits, source: :user
-  
-  ## Notifications
+  # Notifications
   has_many :notifications, as: :source, dependent: :destroy
   
   # Field validations

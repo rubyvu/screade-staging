@@ -74,8 +74,8 @@ html
             .navbar-icon-wrappers.dropdown
               a.dropdown-toggle#dropdown-notification data-toggle="dropdown"
                 = image_pack_tag('media/images/icons/ic_notification.png')
-              
-              i.notification-bage#notification-bage class="#{current_user.received_notifications.present? ? 'active' : ''}"
+                
+              i.notification-bage#notification-bage class="#{current_user.received_notifications.unviewed.present? ? 'active' : ''}"
               .dropdown-menu.dropdown-menu-right aria-labelledby="dropdown-notification"
                 #notifications-list-placeholder
                 
