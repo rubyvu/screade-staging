@@ -451,7 +451,8 @@ CREATE TABLE public.devices (
     name character varying,
     operational_system character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    push_token character varying
 );
 
 
@@ -1701,6 +1702,13 @@ CREATE INDEX index_devices_on_owner_id ON public.devices USING btree (owner_id);
 
 
 --
+-- Name: index_devices_on_push_token; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_devices_on_push_token ON public.devices USING btree (push_token);
+
+
+--
 -- Name: index_events_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2003,6 +2011,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210513073904'),
 ('20210519140106'),
 ('20210520091515'),
-('20210520092046');
+('20210520092046'),
+('20210525134028');
 
 
