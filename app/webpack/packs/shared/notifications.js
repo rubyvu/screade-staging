@@ -7,4 +7,14 @@ $( document ).on('turbolinks:load', function() {
         dataType: 'jsonp'
     });
   })
+  
+  // View notification
+  $('[aria-labelledby="dropdown-notification"]').on('click', 'a.dropdown-item.notification', function() {
+    $.ajax({
+      url: window.location.origin + '/notifications/' + $(this).data('id'),
+      type: 'PUT',
+      data: { notification: { is_viewed: true } },
+      dataType: 'json'
+    });
+  })
 })

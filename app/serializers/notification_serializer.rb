@@ -4,7 +4,7 @@ class NotificationSerializer < ActiveModel::Serializer
   attribute :message
   attribute :source
   def source
-    case source_type
+    case object.source_type
     when 'Comment'
       CommentSerializer.new(object.source).as_json
     when 'Event'

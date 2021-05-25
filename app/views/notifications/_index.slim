@@ -2,7 +2,7 @@
   span.dropdown-item No notifications
 - else
   - @notifications.each do |notification|
-    = link_to notification_link_path(notification), class: 'dropdown-item notification' do
+    = link_to notification_link_path(notification), class: 'dropdown-item notification', data: { id: notification.id } do
       - if notification.is_user_type?
         .notification-image
           - if notification.sender.profile_picture.url
