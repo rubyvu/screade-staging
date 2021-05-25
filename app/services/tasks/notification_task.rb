@@ -41,11 +41,14 @@ module Tasks
       recipients_ids = (sender.squad_requests_as_receiver.where.not(accepted_at: nil).pluck(:requestor_id) + sender.squad_requests_as_requestor.where.not(accepted_at: nil).pluck(:receiver_id)).uniq
       
       recipients_ids.each do |recipient_id|
+        recipient = User.find_by(id: recipient_id)
+        next unless recipient.setting.is_posts
+        
         notificatiom_params = {
           source_id: post.id,
           source_type: 'Post',
           sender_id: sender.id,
-          recipient_id: recipient_id,
+          recipient_id: recipient.id,
           message: "#{sender.full_name} has new post"
         }
         
@@ -61,11 +64,14 @@ module Tasks
       recipients_ids = (sender.squad_requests_as_receiver.where.not(accepted_at: nil).pluck(:requestor_id) + sender.squad_requests_as_requestor.where.not(accepted_at: nil).pluck(:receiver_id)).uniq
       
       recipients_ids.each do |recipient_id|
+        recipient = User.find_by(id: recipient_id)
+        next unless recipient.setting.is_images
+        
         notificatiom_params = {
           source_id: user_image.id,
           source_type: 'UserImage',
           sender_id: sender.id,
-          recipient_id: recipient_id,
+          recipient_id: recipient.id,
           message: "#{sender.full_name} has uploaded new Image"
         }
         
@@ -81,11 +87,14 @@ module Tasks
       recipients_ids = (sender.squad_requests_as_receiver.where.not(accepted_at: nil).pluck(:requestor_id) + sender.squad_requests_as_requestor.where.not(accepted_at: nil).pluck(:receiver_id)).uniq
       
       recipients_ids.each do |recipient_id|
+        recipient = User.find_by(id: recipient_id)
+        next unless recipient.setting.is_videos
+        
         notificatiom_params = {
           source_id: user_video.id,
           source_type: 'UserVideo',
           sender_id: sender.id,
-          recipient_id: recipient_id,
+          recipient_id: recipient.id,
           message: "#{sender.full_name} has uploaded new Video"
         }
         

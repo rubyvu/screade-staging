@@ -4,7 +4,8 @@ class Notification < ApplicationRecord
   SOURCE_TYPES = %w(Comment Event Post SquadRequest UserImage UserVideo)
   
   # Callbacks
-  after_create :send_push_notification_to_user_devices
+  after_create :send_email_notification
+  after_create :send_push_notification
   
   # Associations
   belongs_to :source, polymorphic: true
@@ -27,7 +28,15 @@ class Notification < ApplicationRecord
   end
   
   private
-    def send_push_notification_to_user_devices
+    def send_email_notification
+      return unless recipient.setting.is_email
       
+      # TODO :sending method
+    end
+    
+    def send_push_notification
+      return unless recipient.setting.is_notification
+      
+      # TODO :sending method
     end
 end
