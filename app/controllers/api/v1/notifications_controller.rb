@@ -3,7 +3,7 @@ class Api::V1::NotificationsController < Api::V1::ApiController
   # GET /api/v1/notifications
   def index
     notifications = Notification.where(recipient: current_user, is_viewed: false).order(created_at: :desc).page(params[:page]).per(30)
-    notifications_json = ActiveModel::Serializer::CollectionSerializer.new(notifications, serializer: NotificationSerializer).as_json
+    notifications_json = ActiveModel::Serializer::CollectionSerializer.new(notifications, serializer: NotificationSerializer, current_user: current_user).as_json
     render json: { notifications: notifications_json }, status: :ok
   end
   
@@ -11,7 +11,7 @@ class Api::V1::NotificationsController < Api::V1::ApiController
   def update
     notification = Notification.find(params[:id])
     if notification.update(notification_params)
-      notification_json = NotificationSerializer.new(notification).as_json
+      notification_json = NotificationSerializer.new(notification, current_user: current_user).as_json
       render json: { notification: notification_json }, status: :ok
     else
       render json: { errors: notification.errors.full_messages }, status: :unprocessable_entity

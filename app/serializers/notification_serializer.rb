@@ -9,19 +9,20 @@ class NotificationSerializer < ActiveModel::Serializer
   attribute :message
   attribute :source
   def source
+    current_user = instance_options[:current_user]
     case object.source_type
     when 'Comment'
-      CommentSerializer.new(object.source).as_json
+      CommentSerializer.new(object.source, current_user: current_user).as_json
     when 'Event'
       EventSerializer.new(object.source).as_json
     when 'Post'
-      PostSerializer.new(object.source).as_json
+      PostSerializer.new(object.source, current_user: current_user).as_json
     when 'UserImage'
       UserImageSerializer.new(object.source).as_json
     when 'UserVideo'
       UserVideoSerializer.new(object.source).as_json
     when 'SquadRequest'
-      SquadRequestSerializer.new(object.source).as_json
+      SquadRequestSerializer.new(object.source, current_user: current_user).as_json
     end
   end
   
