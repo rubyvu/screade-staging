@@ -2,7 +2,7 @@
   span.dropdown-item No notifications
 - else
   - @notifications.each do |notification|
-    = link_to '', class: 'dropdown-item notification' do
+    = link_to notification_link_path(notification), class: 'dropdown-item notification' do
       - if notification.is_user_type?
         .notification-image
           - if notification.sender.profile_picture.url
@@ -25,6 +25,8 @@
             - if notification.is_user_type?
               span
                 = notification.sender.full_name
+            - elsif notification.source_type == 'Comment'
+              = notification.source.message
             - else
               = notification.source.title
             

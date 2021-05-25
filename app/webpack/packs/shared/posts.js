@@ -35,18 +35,6 @@ $( document ).on('turbolinks:load', function() {
     });
   })
   
-  // Posts
-  // let groupId= $('#post_source_id').val()
-  // let postDropdown = $('#post_source').select2({
-  //   dropdownParent: $('#post-select-dropdown-position')
-  // })
-  //
-  // // Reload Dropdown for edit
-  // if ( groupId ) {
-  //   postDropdown.val(groupId);
-  //   $('#post_source').select2({ dropdownParent: $('#post-select-dropdown-position') })
-  // }
-  
   // Lit/Unlit Post
   $('.post-info-panel .info-panel-value-wrapper a[id^="post-lit-"]').on('ajax:success', function() {
     let element = $(this).first()
