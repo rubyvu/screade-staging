@@ -1,5 +1,17 @@
 $('#search-form-placeholder').html("<%= j render partial: 'search_form' %>")
-$('#modal-group-search').modal('show')
-$('#modal-group-search').on('hidden.bs.modal', function () {
-   window.location.reload();
-});
+
+if ($('#modal-group-search')) {
+  $('#modal-group-search').modal('show')
+  $('#modal-group-search').on('hidden.bs.modal', function () {
+     window.location.reload();
+  });
+}
+
+if ($('#modal-post-group-search')) {
+  $('#modal-post-group-search').modal('show')
+  $("[id^=group_id]").on('click', function() {
+    $('#post_source').val($(this).data('group-id'))
+    $('#post_virtual_source').val($(this).data('group-title'))
+    $('#modal-post-group-search').modal('hide')
+  })
+}

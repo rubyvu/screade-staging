@@ -25,17 +25,27 @@ $( document ).on('turbolinks:load', function() {
     $('#icon-add-photo').hide();
   }
   
-  // Posts
-  let groupId= $('#post_source_id').val()
-  let postDropdown = $('#post_source').select2({
-    dropdownParent: $('#post-select-dropdown-position')
+  // Groups
+  $('#post_virtual_source').on('click', function(){
+    $.ajax({
+        url: window.location.origin + '/groups/search',
+        type: 'GET',
+        data: { search_type: 'post' },
+        dataType: 'jsonp'
+    });
   })
   
-  // Reload Dropdown for edit
-  if ( groupId ) {
-    postDropdown.val(groupId);
-    $('#post_source').select2({ dropdownParent: $('#post-select-dropdown-position') })
-  }
+  // Posts
+  // let groupId= $('#post_source_id').val()
+  // let postDropdown = $('#post_source').select2({
+  //   dropdownParent: $('#post-select-dropdown-position')
+  // })
+  //
+  // // Reload Dropdown for edit
+  // if ( groupId ) {
+  //   postDropdown.val(groupId);
+  //   $('#post_source').select2({ dropdownParent: $('#post-select-dropdown-position') })
+  // }
   
   // Lit/Unlit Post
   $('.post-info-panel .info-panel-value-wrapper a[id^="post-lit-"]').on('ajax:success', function() {

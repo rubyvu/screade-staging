@@ -79,7 +79,7 @@ class PostsController < ApplicationController
     end
     
     def post_params
-      strong_params = params.require(:post).permit(:image_id, :is_notification, :title, :description, :source)
+      strong_params = params.require(:post).permit(:image_id, :is_notification, :title, :description, :source, :virtual_source)
       
       source = strong_params[:source]
       if source.present?
@@ -88,6 +88,7 @@ class PostsController < ApplicationController
       end
       
       strong_params.delete(:image_id)
+      strong_params.delete(:virtual_source)
       strong_params
     end
 end

@@ -10,8 +10,9 @@ class GroupsController < ApplicationController
   
   # GET /groups/search
   def search
+    @search_type = params[:search_type] || 'group'
     @groups_for_search = []
-    (NewsCategory.all + Topic.where(is_approved: true)).each do |group|
+    (NewsCategory.all + Topic.where(is_approved: true).or(Topic.where.not(is_approved: true).where(suggester: current_user))).each do |group|
       @groups_for_search << group
     end
     

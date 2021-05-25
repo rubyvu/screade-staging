@@ -1,4 +1,5 @@
 = render 'posts/user_images', user_images: @user_images
+= render 'groups/search', groups: @groups_for_search, search_id: 'modal-post-group-search'
 .d-width-wrapper
   = form_with(model: post, url: (post.persisted? ?  post_path(post) : posts_path), local: true) do |f|
     
@@ -20,8 +21,13 @@
       = f.text_area :description, autocomplete: 'off', class: 'form-control', placeholder: 'Event Description', required: true, rows: 2
     
     .material-field.dropdown.mb-3#post-select-dropdown-position
-      = f.hidden_field :source_id, value: "#{f.object.source_type}:#{f.object.source_id}" if post.persisted?
-      = f.select :source, groups.map { |group| [topic_full_title(group), "#{group.class.name}:#{group.id}"] }, {}, { style: 'width: 100%;'}
+      - if f.object.persisted?
+        = f.hidden_field :source, as: :text_field, value: "#{f.object&.source_type}:#{f.object&.source_id}", required: true
+        = f.text_field :virtual_source, as: :text_field, value: f.object&.source&.title&.capitalize, class: 'form-control', readonly: true, required: true
+      - else
+        - group = NewsCategory.find_by(title: 'general')
+        = f.hidden_field :source, as: :text_field, value: "NewsCategory:#{group&.id}", required: true
+        = f.text_field :virtual_source, as: :text_field, value: group.title&.capitalize, class: 'form-control', readonly: true, required: true
     
     .actions
       = f.submit 'Submit', class: 'btn btn-primary w-100'
