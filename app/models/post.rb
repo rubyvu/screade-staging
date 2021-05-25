@@ -9,7 +9,7 @@ class Post < ApplicationRecord
   # Callbacks
   before_validation :set_state, on: :create
   after_save :update_associated_groups
-  after_create :add_notification
+  after_save :add_notification
   
   # File Uploader
   mount_uploader :image, PostImageUploader
@@ -56,6 +56,7 @@ class Post < ApplicationRecord
   
   private
     def add_notification
+      return if self.state != 'approved' || Notification.where(source_id: self.id, source_type: 'Post', sender: self.user).present?
       CreateNewNotificationsJob.perform_later(self.id, self.class.name)
     end
     
