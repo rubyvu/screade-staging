@@ -25,6 +25,13 @@ $( document ).on('turbolinks:load', function() {
     $('#icon-add-photo').hide();
   }
   
+  // Close image modal after link click
+  $('#modal-user-images').on('click', 'a', function() {
+    $('#modal-user-images').modal('hide')
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
+  })
+  
   // Groups
   $('#post_virtual_source').on('click', function(){
     $.ajax({
