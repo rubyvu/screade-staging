@@ -15,7 +15,8 @@
       p.post-status On approve
   
   - if post.image.present?
-    = image_tag(post.image.url, class: 'url-full-image', onerror: "this.error=null;this.src='#{asset_pack_path('media/images/placeholders/placeholder-news.png')}'")
+    .full-image-wrapper
+      = image_tag(post.image.url, class: '', onerror: "this.error=null;this.src='#{asset_pack_path('media/images/placeholders/placeholder-news.png')}'")
   - else
     = image_pack_tag('media/images/placeholders/placeholder-news.png', class: 'url-full-image')
     
