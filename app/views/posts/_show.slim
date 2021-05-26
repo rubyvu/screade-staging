@@ -39,14 +39,15 @@
       .info-panel-value-wrapper.pointer-disable
         i class=(post.is_viewed(current_user) ? "ic view reverse" : "ic view reverse")
         span.info-panel-value.color-black #{counter_measurement(post.views.size)}
-      
-    .post-notifier-wrapper
-      = form_for @post, url: post_path(@post), method: :patch, remote: :true do |f|
-        label.switch
-          = f.check_box :is_notification
-          span.slider.default.round
-          
-        span.ml-2 Pause Notification
+    
+    - if @post.user == current_user
+      .post-notifier-wrapper
+        = form_for @post, url: post_path(@post), method: :patch, remote: :true do |f|
+          label.switch
+            = f.check_box :is_notification
+            span.slider.default.round
+            
+          span.ml-2 Pause Notification
         
   .post-text
     .post-title
