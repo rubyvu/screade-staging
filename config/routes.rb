@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     passwords: 'users/passwords'
   }
   
+  resources :chats
   resources :comments, only: [:show] do
     member do
       post :lit
