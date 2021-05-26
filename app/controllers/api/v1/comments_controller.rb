@@ -1,6 +1,12 @@
 class Api::V1::CommentsController < Api::V1::ApiController
   before_action :get_comment
   
+  # GET /api/v1/comments/:id
+  def show
+    comment_json = CommentSerializer.new(@comment, current_user: current_user).as_json
+    render json: { comment: comment_json }, status: :ok
+  end
+  
   # GET /api/v1/comments/:id/reply_comments
   def reply_comments
     comments_json = ActiveModel::Serializer::CollectionSerializer.new(@comment.replied_comments.order(created_at: :desc).page(params[:page]).per(30), serializer: CommentSerializer, current_user: current_user).as_json

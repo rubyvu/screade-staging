@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     passwords: 'users/passwords'
   }
   
-  resources :comments, only: [] do
+  resources :comments, only: [:show] do
     member do
       post :lit
       delete :unlit

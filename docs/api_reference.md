@@ -16,6 +16,7 @@
 - [List of NewsArticles for each Category](api/v1/news_categories/news.md)
 
 ### Comments
+- [Show Article Comment](api/v1/comments/show.md)
 - [List of Article Comments](api/v1/news_articles/index_comment.md)
 - [List of ReplyComments for Comment](api/v1/comments/reply_comments.md)
 - [Add Comment to Article](api/v1/news_articles/create_comment.md)
