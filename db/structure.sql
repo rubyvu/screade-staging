@@ -325,6 +325,72 @@ ALTER SEQUENCE public.breaking_news_id_seq OWNED BY public.breaking_news.id;
 
 
 --
+-- Name: chat_memberships; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.chat_memberships (
+    id bigint NOT NULL,
+    chat_id integer NOT NULL,
+    user_id integer NOT NULL,
+    role character varying DEFAULT 'user'::character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: chat_memberships_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.chat_memberships_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: chat_memberships_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.chat_memberships_id_seq OWNED BY public.chat_memberships.id;
+
+
+--
+-- Name: chats; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.chats (
+    id bigint NOT NULL,
+    name character varying,
+    icon character varying,
+    icon_hex character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: chats_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.chats_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: chats_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.chats_id_seq OWNED BY public.chats.id;
+
+
+--
 -- Name: comments; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1252,6 +1318,20 @@ ALTER TABLE ONLY public.breaking_news ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
+-- Name: chat_memberships id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chat_memberships ALTER COLUMN id SET DEFAULT nextval('public.chat_memberships_id_seq'::regclass);
+
+
+--
+-- Name: chats id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chats ALTER COLUMN id SET DEFAULT nextval('public.chats_id_seq'::regclass);
+
+
+--
 -- Name: comments id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1434,6 +1514,22 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 ALTER TABLE ONLY public.breaking_news
     ADD CONSTRAINT breaking_news_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: chat_memberships chat_memberships_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chat_memberships
+    ADD CONSTRAINT chat_memberships_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: chats chats_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chats
+    ADD CONSTRAINT chats_pkey PRIMARY KEY (id);
 
 
 --
@@ -1664,6 +1760,20 @@ CREATE UNIQUE INDEX index_admin_users_on_email ON public.admin_users USING btree
 --
 
 CREATE UNIQUE INDEX index_admin_users_on_reset_password_token ON public.admin_users USING btree (reset_password_token);
+
+
+--
+-- Name: index_chat_memberships_on_chat_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chat_memberships_on_chat_id ON public.chat_memberships USING btree (chat_id);
+
+
+--
+-- Name: index_chat_memberships_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chat_memberships_on_user_id ON public.chat_memberships USING btree (user_id);
 
 
 --
@@ -2012,6 +2122,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210519140106'),
 ('20210520091515'),
 ('20210520092046'),
-('20210525134028');
+('20210525134028'),
+('20210526091353'),
+('20210526091531');
 
 
