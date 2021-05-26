@@ -70,7 +70,8 @@ html
             .navbar-icon-wrappers.devider
               i.vertical-line
             .navbar-icon-wrappers
-              = image_pack_tag('media/images/icons/ic_dialog.png')
+              = link_to chats_path do
+                = image_pack_tag('media/images/icons/ic_dialog.png')
             .navbar-icon-wrappers.dropdown
               a.dropdown-toggle#dropdown-notification data-toggle="dropdown"
                 = image_pack_tag('media/images/icons/ic_notification.png')

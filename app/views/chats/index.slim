@@ -1,0 +1,9 @@
+.chat-wrapper
+  .chat-objects-wrapper
+    = render 'chats/index', chats: @chats
+    
+  .chat-board-wrapper
+    = render 'chats/chat_board'
+  
+  .add-chat-button
+    = image_pack_tag('media/images/icons/ic_plus.png', class: 'plus-with-border')

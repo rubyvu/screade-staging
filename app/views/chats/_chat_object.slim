@@ -1,0 +1,18 @@
+.chat-element
+  .photo
+    - if chat.owner&.profile_picture&.url
+      = image_tag(chat.owher.profile_picture.square_320.url, class: 'profile-image')
+    - else
+      = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
+      
+  .content
+    .header
+      .title
+        span #{chat.name}
+      .date
+        = month_with_date(chat.updated_at)
+    .body
+      .message
+        //.icon
+        .text
+          span Test message go go go go go go go !!! !!! Test message go go go go go go go !!! !!!
