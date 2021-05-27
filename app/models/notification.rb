@@ -36,8 +36,6 @@ class Notification < ApplicationRecord
     
     def send_push_notification
       return unless recipient.setting.is_notification
-      
-      registration_ids = recipient.devices.where.not(push_token: nil).pluck(:push_token)
-      SendDefaultPushNotificationJob.perform_later(registration_ids, self.message)
+      SendDefaultPushNotificationJob.perform_later(self.id)
     end
 end

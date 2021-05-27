@@ -1,6 +1,6 @@
 class SendDefaultPushNotificationJob < ApplicationJob
   
-  def run(registration_ids, message)
-    Tasks::PushNotificationsTask.send_default_push_notification(registration_ids, message)
+  def run(notification_id)
+    Tasks::PushNotificationsTask.send_default_push_notification(notification_id)
   end
 end
