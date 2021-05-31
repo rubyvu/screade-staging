@@ -6,4 +6,7 @@
     = render 'chats/chat_board'
   
   .add-chat-button
-    = image_pack_tag('media/images/icons/ic_plus.png', class: 'plus-with-border')
+    = link_to new_chat_path, remote: true do
+      = image_pack_tag('media/images/icons/ic_plus.png', class: 'plus-with-border')
+      
+= render 'chats/new_chat_modal'

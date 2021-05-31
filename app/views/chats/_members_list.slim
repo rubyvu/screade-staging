@@ -1,0 +1,16 @@
+.chat-member-wrapper
+  - squad_members.each do |user|
+    .chat-member-card
+      .photo
+        - if user.profile_picture&.url
+          = image_tag(user.profile_picture.square_320.url, class: 'profile-image')
+        - else
+          = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
+          
+      .content
+        .member-name
+          = user.full_name
+        .member-is-checked
+          label class="big-checkbox-lable"
+            input type="checkbox" id="checkbox-memer-#{user.username}" data-username="#{user.username}"
+            .checkmark

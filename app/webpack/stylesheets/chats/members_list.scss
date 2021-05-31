@@ -1,0 +1,41 @@
+.chat-member-wrapper {
+  width: 100%;
+  height: 50vh;
+  overflow: scroll;
+  
+  .chat-member-card {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    
+    .photo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      .profile-image {
+        height: 56px;
+        width: 56px;
+      }
+    }
+    
+    .content {
+      margin-left: 16px;
+      padding: 24px 0px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      border-bottom: 1px solid $color-light-grey;
+      
+      .member-name {
+        font-size: 16px;
+        color: $color-black;
+      }
+      
+      .member-is-checked {
+        height: 18px; // equal to checkbox height
+      }
+    }
+  }
+}

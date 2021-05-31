@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   }
   
   resources :chats
-  resources :comments, only: [:show] do
+  resources :comments, only: [] do
     member do
       post :lit
       delete :unlit
@@ -152,7 +152,7 @@ Rails.application.routes.draw do
         end
       end
       
-      resources :comments, only: [] do
+      resources :comments, only: [:show] do
         member do
           get :reply_comments
           post :lit
