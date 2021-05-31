@@ -15,14 +15,25 @@
       = image_pack_tag('media/images/icons/ic_chat_videocam.png')
     .control-element
       = image_pack_tag('media/images/icons/ic_chat_phone.png')
-    .control-element
+    .control-element#dropdown-control-element
       a.dropdown-toggle#dropdown-chat-more-button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
         = image_pack_tag('media/images/icons/ic_chat_more.png')
       .dropdown-menu.dropdown-menu-right aria-labelledby="#dropdown-chat-more-button"
-        = link_to 'Customize', '', class: 'dropdown-item'
-        = link_to 'Customize', '', class: 'dropdown-item'
-        = link_to 'Customize', '', class: 'dropdown-item'
-        = link_to 'Customize', '', class: 'dropdown-item'
+        = link_to '', class: 'dropdown-item' do
+          = image_pack_tag('media/images/icons/ic_chat_add_member.png')
+          span Add member
+        = link_to '', class: 'dropdown-item' do
+          = image_pack_tag('media/images/icons/ic_chat_members.png')
+          span Members
+        = link_to '', class: 'dropdown-item' do
+          = image_pack_tag('media/images/icons/ic_chat_change_group.png')
+          span Change group
+        = link_to '', class: 'dropdown-item' do
+          = image_pack_tag('media/images/icons/ic_chat_clear_history.png')
+          span Clear history
+        = link_to '', class: 'dropdown-item' do
+          = image_pack_tag('media/images/icons/ic_chat_leave_group.png')
+          span Delete and leave group
       
 .chat-message-board
   

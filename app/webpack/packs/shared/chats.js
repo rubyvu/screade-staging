@@ -17,4 +17,9 @@ $( document ).on('turbolinks:load', function() {
     // Resume defaul form execution
     e.currentTarget.submit();
   })
+  
+  //Open Chat info dropdown with hover
+  $('#dropdown-control-element').hover(function(){
+    $('#dropdown-chat-more-button').trigger('click');
+  });
 })
