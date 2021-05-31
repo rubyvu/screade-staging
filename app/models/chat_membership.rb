@@ -5,6 +5,7 @@ class ChatMembership < ApplicationRecord
   # Callbacks
   before_validation :set_owner_role
   before_destroy :is_membership_can_be_removed?
+  after_destroy :remove_chat
   
   # Associations
   belongs_to :chat
@@ -19,14 +20,17 @@ class ChatMembership < ApplicationRecord
   
   private
     def set_owner_role
-      return if self.chat.blank? || self.chat.chat_memberships.count > 0
-      self.role = 'owner'
+      self.role = 'owner' if self.user == self.chat.owner
     end
     
     def is_membership_can_be_removed?
       if self.role == 'owner' && self.chat.chat_memberships.count > 1
-        errors.add(:base, 'Нou must transfer your role before leaving')
+        errors.add(:base, 'You must transfer your role before leaving')
         throw :abort
       end
+    end
+    
+    def remove_chat
+      self.chat.destroy if self.chat.chat_memberships.count == 0
     end
 end

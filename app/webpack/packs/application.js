@@ -11,6 +11,7 @@ import 'bootstrap-datepicker';
 import 'timepicker/jquery.timepicker.js';
 
 // Import internal scripts
+import './shared/chats';
 import './shared/events';
 import './shared/font_customizer';
 import './shared/global-search';

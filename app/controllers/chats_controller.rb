@@ -23,7 +23,19 @@ class ChatsController < ApplicationController
   
   # POST /chats
   def create
+    # Initialize new Chat
+    chat = Chat.new(owner: current_user)
     
+    # Initialize ChatMembership for Owner
+    chat.chat_memberships.build(user: current_user)
+    
+    # Initialize ChatMembership for other Users
+    User.where(username: memberships_params[:usernames]).each do |user|
+      chat.chat_memberships.build(user: user)
+    end
+    
+    chat.save
+    redirect_to chats_path
   end
   
   # PUT/PATCH /chats/:id
@@ -39,5 +51,9 @@ class ChatsController < ApplicationController
   private
     def get_chat
       @chat = Chat.find(params[:id])
+    end
+    
+    def memberships_params
+      params.require(:chat_membership).permit(usernames: [])
     end
 end
