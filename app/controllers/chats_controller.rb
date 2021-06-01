@@ -3,12 +3,13 @@ class ChatsController < ApplicationController
   # GET /chats
   def index
     @chats = Chat.order(updated_at: :desc)
+    @chat = @chats.first
   end
   
   # GET /chats/:access_token
   def show
     respond_to do |format|
-      format.js { render 'new', layout: false }
+      format.js { render 'show', layout: false }
     end
   end
   
@@ -52,7 +53,7 @@ class ChatsController < ApplicationController
   
   private
     def get_chat
-      @chat = Chat.find(params[:access_token])
+      @chat = Chat.find_by!(access_token: params[:access_token])
     end
     
     def memberships_params

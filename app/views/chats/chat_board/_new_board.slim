@@ -1,14 +1,14 @@
 .chat-info
   .main-info
     .photo
-      - if chat.owner&.profile_picture&.url
-        = image_tag(chat.owner.profile_picture.square_320.url, class: 'profile-image')
+      - if @chat.owner&.profile_picture&.url
+        = image_tag(@chat.owner.profile_picture.square_320.url, class: 'profile-image')
       - else
         = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
         
     .title
-      span #{chat.name}
-  
+      span #{@chat.name}
+      
   .control-info
     .control-element
       = image_pack_tag('media/images/icons/ic_chat_videocam.png')

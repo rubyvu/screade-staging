@@ -1,4 +1,4 @@
-.chat-element
+= link_to chat_path(chat.access_token), class: 'chat-element', remote: true do
   .photo
     - if chat.owner&.profile_picture&.url
       = image_tag(chat.owner.profile_picture.square_320.url, class: 'profile-image')
