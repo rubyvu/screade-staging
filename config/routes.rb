@@ -20,7 +20,14 @@ Rails.application.routes.draw do
     passwords: 'users/passwords'
   }
   
-  resources :chats, param: :access_token
+  resources :chats, param: :access_token do
+    member do
+      put :update_members
+    end
+    
+    resources :chat_members, only: [:index]
+  end
+  
   resources :comments, only: [] do
     member do
       post :lit
