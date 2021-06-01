@@ -1,10 +1,10 @@
 .chat-wrapper
   .chat-objects-wrapper
-    = render 'chats/index', chats: @chats
+    = render 'chats/chats_list/index', chats: @chats
     
-  .chat-board-wrapper
+  .chat-board-wrapper#chat-board-placeholder
     - if @chats.present?
-      = render 'chats/chat_board/new_board', chat: @chats.first
+        = render 'chats/chat_board/new_board', chat: @chats.first
     - else
       = render 'chats/chat_board/no_board'
   
@@ -12,4 +12,4 @@
     = link_to new_chat_path, remote: true do
       = image_pack_tag('media/images/icons/ic_plus.png', class: 'plus-with-border')
       
-= render 'chats/new_chat_modal'
+= render 'chats/chat_modals/new_chat'
