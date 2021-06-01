@@ -3,7 +3,10 @@
     = render 'chats/index', chats: @chats
     
   .chat-board-wrapper
-    = render 'chats/chat_board'
+    - if @chats.present?
+      = render 'chats/chat_board/new_board', chat: @chats.first
+    - else
+      = render 'chats/chat_board/no_board'
   
   .add-chat-button
     = link_to new_chat_path, remote: true do

@@ -1,14 +1,13 @@
 .chat-info
   .main-info
     .photo
-      //- if chat.owner&.profile_picture&.url
-        = image_tag(chat.owher.profile_picture.square_320.url, class: 'profile-image')
-      //- else
+      - if chat.owner&.profile_picture&.url
+        = image_tag(chat.owner.profile_picture.square_320.url, class: 'profile-image')
+      - else
         = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
-      = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
         
     .title
-      span Chat Name !!!
+      span #{chat.name}
   
   .control-info
     .control-element
@@ -44,7 +43,7 @@
         .input-group-text
           = image_pack_tag('media/images/icons/ic_chat_document.png', class: 'img-responsive')
           
-      = f.text_field :name, class: 'form-control', placeholder: 'Write a message', autocomplete: false
+      = f.text_field :name, class: 'form-control', placeholder: 'Write a message', autocomplete: false, disabled: true
       
       .input-group-append
         .input-group-text

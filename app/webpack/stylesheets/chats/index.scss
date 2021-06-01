@@ -91,6 +91,22 @@
     border-left: 1px solid $color-light-grey;
     width: 100%;
     
+    .no-chat-info {
+      height: 100%;
+      display: flex;
+      align-content: center;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      
+      span {
+        text-align: center;
+        height: 20px;
+        color: $color-grey;
+        padding: 0 12px;
+      }
+    }
+    
     .chat-info {
       display: flex;
       align-items: center;
