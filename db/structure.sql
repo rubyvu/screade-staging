@@ -368,7 +368,8 @@ CREATE TABLE public.chats (
     icon_hex character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    owner_id integer NOT NULL
+    owner_id integer NOT NULL,
+    access_token character varying NOT NULL
 );
 
 
@@ -1778,6 +1779,13 @@ CREATE INDEX index_chat_memberships_on_user_id ON public.chat_memberships USING 
 
 
 --
+-- Name: index_chats_on_access_token; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_chats_on_access_token ON public.chats USING btree (access_token);
+
+
+--
 -- Name: index_chats_on_owner_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2133,6 +2141,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210525134028'),
 ('20210526091353'),
 ('20210526091531'),
-('20210531142735');
+('20210531142735'),
+('20210601075607');
 
 

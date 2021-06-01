@@ -4,6 +4,7 @@ class Chat < ApplicationRecord
   mount_uploader :icon, ChatIconUploader
   
   # Callbacks
+  before_validation :generate_access_token, on: :create
   before_validation :set_default_chat_name, on: :create
   
   # Associations
@@ -25,5 +26,10 @@ class Chat < ApplicationRecord
     def update_chat_name
       # Set Chat name according to ChatMembers - Users full_name
       self.name = User.where(id: self.chat_memberships.pluck(:user_id)).map { |user| user.full_name }.join(', ')
+    end
+    
+    def generate_access_token
+      new_token = SecureRandom.hex(16)
+      Chat.exists?(access_token: new_token) ? generate_access_token : self.access_token = new_token
     end
 end

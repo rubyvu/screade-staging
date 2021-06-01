@@ -5,9 +5,11 @@ class ChatsController < ApplicationController
     @chats = Chat.order(updated_at: :desc)
   end
   
-  # GET /chats/:id
+  # GET /chats/:access_token
   def show
-    
+    respond_to do |format|
+      format.js { render 'new', layout: false }
+    end
   end
   
   # GET /chats/new
@@ -38,19 +40,19 @@ class ChatsController < ApplicationController
     redirect_to chats_path
   end
   
-  # PUT/PATCH /chats/:id
+  # PUT/PATCH /chats/:access_token
   def update
     
   end
   
-  # DELETE /chats/:id
+  # DELETE /chats/:access_token
   def destroy
     
   end
   
   private
     def get_chat
-      @chat = Chat.find(params[:id])
+      @chat = Chat.find(params[:access_token])
     end
     
     def memberships_params
