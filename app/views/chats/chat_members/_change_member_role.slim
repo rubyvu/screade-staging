@@ -11,6 +11,10 @@
         .member-name
           = chat_membership.user.full_name
           
-        - if @chat.owner == current_user
-          .member-role-select
+        .member-role-select
+          - if @chat.owner == current_user && chat_membership.role == 'owner'
+            span #{chat_membership.role}
+          - elsif @chat.owner == current_user
             = select chat_membership.id, :role, options_for_select(['owner', 'admin', 'user'], chat_membership.role), {}, { class: 'form-control chat-select' }
+          - else
+            span #{chat_membership.role}

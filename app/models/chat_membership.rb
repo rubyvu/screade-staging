@@ -3,7 +3,8 @@ class ChatMembership < ApplicationRecord
   ROLES_LIST = %w(owner admin user)
   
   # Callbacks
-  before_validation :set_owner_role
+  before_validation :set_owner_role, on: :create
+  after_update :update_owner_role
   before_destroy :is_membership_can_be_removed?
   after_destroy :remove_chat
   
@@ -21,6 +22,14 @@ class ChatMembership < ApplicationRecord
   private
     def set_owner_role
       self.role = 'owner' if self.user == self.chat.owner
+    end
+    
+    def update_owner_role
+      return if !self.saved_change_to_role? || self.role != 'owner'
+      
+      old_chat_owner_membership = self.chat.chat_memberships.find_by(user: self.chat.owner)
+      old_chat_owner_membership.update_columns(role: 'admin')
+      self.chat.update_columns(owner_id: self.user.id)
     end
     
     def is_membership_can_be_removed?
