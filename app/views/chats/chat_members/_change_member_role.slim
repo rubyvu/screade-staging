@@ -10,5 +10,7 @@
       .content
         .member-name
           = chat_membership.user.full_name
-        .member-role-select
-          = select chat_membership.id, :role, options_for_select(['owner', 'admin', 'user'], chat_membership.role), {}, { class: 'form-control chat-select' }
+          
+        - if @chat.owner == current_user
+          .member-role-select
+            = select chat_membership.id, :role, options_for_select(['owner', 'admin', 'user'], chat_membership.role), {}, { class: 'form-control chat-select' }

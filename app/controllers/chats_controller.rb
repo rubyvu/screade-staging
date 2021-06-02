@@ -1,8 +1,10 @@
 class ChatsController < ApplicationController
   before_action :get_chat, only: [:show, :update, :update_members, :destroy]
+  before_action :get_current_user_membership, only: [:show, :update, :update_members, :destroy]
+  
   # GET /chats
   def index
-    @chats = Chat.order(updated_at: :desc)
+    @chats = Chat.joins(:chat_memberships).where(chat_memberships: { user: current_user }).order(updated_at: :desc)
     @chat = @chats.first
   end
   
@@ -75,6 +77,10 @@ class ChatsController < ApplicationController
   private
     def get_chat
       @chat = Chat.find_by!(access_token: params[:access_token])
+    end
+    
+    def get_current_user_membership
+      @current_user_membership = ChatMembership.find_by!(user: current_user, chat: @chat)
     end
     
     def memberships_params
