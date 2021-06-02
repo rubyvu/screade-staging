@@ -14,8 +14,7 @@ module Tasks
       options = {
         priority: 'high',
         data: {
-          source_id: notification.source_id,
-          source_type: notification.source_type
+          notification_id: notification.id
         },
         notification: {
           title: "New #{notification.source_type}".titleize.humanize,
