@@ -1,6 +1,6 @@
 class ChatsController < ApplicationController
-  before_action :get_chat, only: [:show, :update, :update_members, :destroy]
-  before_action :get_current_user_membership, only: [:show, :update, :update_members, :destroy]
+  before_action :get_chat, only: [:show, :edit, :update, :update_members, :destroy]
+  before_action :get_current_user_membership, only: [:show, :edit, :update, :update_members, :destroy]
   
   # GET /chats
   def index
@@ -24,7 +24,13 @@ class ChatsController < ApplicationController
     
     respond_to do |format|
       format.js { render 'new', layout: false }
-      format.js { render 'new', layout: false }
+    end
+  end
+  
+  # GET /chats/edit/:access_token
+  def edit
+    respond_to do |format|
+      format.js { render 'edit', layout: false }
     end
   end
   
@@ -47,7 +53,11 @@ class ChatsController < ApplicationController
   
   # PUT/PATCH /chats/:access_token
   def update
-    
+    if @chat.update(chat_params)
+      render json: { success: true }, status: :ok
+    else
+      render json: { errors: @chat.errors.full_messages }, status: :unprocessable_entity
+    end
   end
   
   # PUT /chats/:access_token/update_members
@@ -81,6 +91,10 @@ class ChatsController < ApplicationController
     
     def get_current_user_membership
       @current_user_membership = ChatMembership.find_by!(user: current_user, chat: @chat)
+    end
+    
+    def chat_params
+      params.require(:chat).permit(:icon, :name)
     end
     
     def memberships_params

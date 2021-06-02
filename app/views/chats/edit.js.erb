@@ -1,0 +1,29 @@
+$('#modal-edit-chat').modal('show')
+$('#edit-chat-placeholder').html("<%= j render partial: 'chats/chat_board/form.slim' %>")
+
+// Edit icon
+$('#modal-edit-chat').on('click', '#edit-icon-mask', function() {
+  $("#chat_icon").click();
+})
+
+$("#chat_icon").change(function() {
+  readBannerURL(this);
+});
+
+function readBannerURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      $('#chat-icon-image').attr('src', e.target.result);
+      $('#chat-icon-image').show();
+      $('#icon-add-image').hide();
+    }
+    
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+// After form submit do:
+$('#modal-edit-chat form[id^=edit_chat_]').bind('ajax:complete', function() {
+  location.reload();
+});
