@@ -1,7 +1,7 @@
-class ChatMembersController < ApplicationController
+class ChatMembershipsController < ApplicationController
   before_action :get_chat, only: [:index]
   
-  # GET /chats/:chat_access_token/chat_members
+  # GET /chats/:chat_access_token/chat_memberships
   def index
     squad_receivers_sql = User.joins(:squad_requests_as_receiver).where(squad_requests_as_receiver: { requestor: current_user }).where.not(squad_requests_as_receiver: { accepted_at: nil }).to_sql
     squad_requestors_sql = User.joins(:squad_requests_as_requestor).where(squad_requests_as_requestor: { receiver: current_user }).where.not(squad_requests_as_requestor: { accepted_at: nil }).to_sql
@@ -17,7 +17,7 @@ class ChatMembersController < ApplicationController
     end
   end
   
-  # PUT/PATCH /chat_members/:id
+  # PUT/PATCH /chat_memberships/:id
   def update
     chat_membership_to_update = ChatMembership.find_by(id: params[:id])
     if chat_membership_to_update.blank?

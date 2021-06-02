@@ -25,10 +25,10 @@ Rails.application.routes.draw do
       put :update_members
     end
     
-    resources :chat_members, only: [:index]
+    resources :chat_memberships, only: [:index]
   end
   
-  resources :chat_members, only: [:update]
+  resources :chat_memberships, only: [:update]
   resources :comments, only: [] do
     member do
       post :lit

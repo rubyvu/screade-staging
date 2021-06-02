@@ -33,13 +33,13 @@ $( document ).on('turbolinks:load', function() {
     $('#modal-add-chat-member').modal('hide')
   })
   
-  // Change ChatMember role (this script duplicated in app/views/chat_members/index_roles.js.erb for partial reload case)
+  // Change ChatMember role (this script duplicated in app/views/chat_memberships/index_roles.js.erb for partial reload case)
   $('#modal-chat-members-roles').on('change', '[id$=_role]', function() {
     console.log($(this));
     let role = $(this).val();
     let chatMembershipId = $(this).attr('id').split('_')[0]
     $.ajax({
-        url: window.location.origin + '/chat_members/' + chatMembershipId,
+        url: window.location.origin + '/chat_memberships/' + chatMembershipId,
         type: 'PUT',
         data: { chat_membership: { role: role }},
         dataType: 'json'
