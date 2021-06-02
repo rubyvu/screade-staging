@@ -19,6 +19,12 @@ form .form-control {
   border-radius: 0;
   border-bottom: 1px solid $color-light-grey;
   padding: 0.375rem 0.7rem;
+  
+  &.chat-select {
+    border: 1px solid $color-light-grey;
+    padding: 0.375rem;
+    border-radius: 4px;
+  }
 }
 
 form select.form-control { padding: 0.375rem 0rem; }

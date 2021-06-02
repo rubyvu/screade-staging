@@ -1,0 +1,14 @@
+.chat-member-wrapper
+  - @chat.chat_memberships.each do |chat_membership|
+    .chat-member-card
+      .photo
+        - if chat_membership.user.profile_picture&.url
+          = image_tag(chat_membership.user.profile_picture.square_320.url, class: 'profile-image')
+        - else
+          = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
+          
+      .content
+        .member-name
+          = chat_membership.user.full_name
+        .member-role-select
+          = select chat_membership.id, :role, options_for_select(['owner', 'admin', 'user'], chat_membership.role), {}, { class: 'form-control chat-select' }

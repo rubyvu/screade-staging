@@ -1,0 +1,15 @@
+$('#modal-chat-members-roles').modal('show')
+$('#chat-members-roles-placeholder').html("<%= j render partial: 'chats/chat_members/change_member_role' %>")
+
+// Change ChatMember role
+$('#modal-chat-members-roles').on('change', '[id$=_role]', function() {
+  console.log($(this));
+  let role = $(this).val();
+  let chatMembershipId = $(this).attr('id').split('_')[0]
+  $.ajax({
+      url: window.location.origin + '/chat_members/' + chatMembershipId,
+      type: 'PUT',
+      data: { chat_membership: { role: role }},
+      dataType: 'json'
+  });
+})

@@ -12,5 +12,7 @@ $('#modal-add-chat-member').on('submit', '[id^=edit_chat]', function(e) {
     })
   }
   
-  $('#modal-add-chat-member').modal('hide')
+  $('#modal-chat-members-roles').on('change', '[id$=_role]', function() {
+    console.log($(this).val());
+  })
 })

@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     resources :chat_members, only: [:index]
   end
   
+  resources :chat_members, only: [:update]
   resources :comments, only: [] do
     member do
       post :lit

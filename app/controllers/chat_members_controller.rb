@@ -8,12 +8,47 @@ class ChatMembersController < ApplicationController
     @squad_members = User.from("(#{squad_receivers_sql} UNION #{squad_requestors_sql}) AS users")
     
     respond_to do |format|
-      format.js { render 'index', layout: false }
+      case params[:response_type]
+      when 'roles'
+        format.js { render 'index_roles', layout: false }
+      else
+        format.js { render 'index', layout: false }
+      end
+    end
+  end
+  
+  # PUT/PATCH /chat_members/:id
+  def update
+    chat_membership_to_update = ChatMembership.find_by(id: params[:id])
+    if chat_membership_to_update.blank?
+      render json: { errors: ['Record not found.'] }, status: :not_found
+      return
+    end
+    
+    current_user_membership = ChatMembership.find_by!(user: current_user, chat: chat_membership_to_update.chat)
+    if current_user_membership.blank?
+      render json: { errors: ['Record not found.'] }, status: :not_found
+      return
+    end
+    
+    if current_user_membership.role != 'owner'
+      render json: { errors: ['Can be changed only by Owner.'] }, status: :unprocessable_entity
+      return
+    end
+    
+    if chat_membership_to_update.update(memberships_params)
+      render json: { success: true }, status: :ok
+    else
+      render json: { errors: chat_membership_to_update.errors.full_messages }, status: :unprocessable_entity
     end
   end
   
   private
     def get_chat
       @chat = Chat.find_by!(access_token: params[:chat_access_token])
+    end
+    
+    def memberships_params
+      params.require(:chat_membership).permit(:role)
     end
 end

@@ -21,7 +21,7 @@
         = link_to chat_chat_members_path(@chat.access_token), class: 'dropdown-item', remote: true do
           = image_pack_tag('media/images/icons/ic_chat_add_member.png')
           span Add member
-        = link_to '', class: 'dropdown-item' do
+        = link_to chat_chat_members_path(@chat.access_token, response_type: 'roles'), class: 'dropdown-item', remote: true do
           = image_pack_tag('media/images/icons/ic_chat_members.png')
           span Members
         = link_to '', class: 'dropdown-item' do
@@ -50,3 +50,4 @@
           = image_pack_tag('media/images/icons/ic_send_message.png', class: 'img-responsive')
   
 = render 'chats/chat_modals/add_chat_member'
+= render 'chats/chat_modals/chat_members_roles'
