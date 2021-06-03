@@ -2,10 +2,11 @@
   - @chat.chat_memberships.each do |chat_membership|
     .chat-member-card
       .photo
-        - if chat_membership.user.profile_picture&.url
-          = image_tag(chat_membership.user.profile_picture.square_320.url, class: 'profile-image')
-        - else
-          = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
+        = link_to user_path(chat_membership.user.username), target: :_blank, data: { type: 'modal-link' } do
+          - if chat_membership.user.profile_picture&.url
+            = image_tag(chat_membership.user.profile_picture.square_320.url, class: 'profile-image')
+          - else
+            = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
           
       .content
         .member-name

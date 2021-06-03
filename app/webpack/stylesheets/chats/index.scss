@@ -49,6 +49,9 @@
             width: 70%;
             font-size: 16px;
             white-space: normal;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
           }
             
           .date {
@@ -121,11 +124,18 @@
       .main-info {
         display: flex;
         align-items: center;
+        height: 100%;
+        
         .photo {
           margin-left: 20px;
         }
         
         .title {
+          display: flex;
+          align-items: center;
+          height: 100%;
+          word-break: break-all;
+          overflow: scroll;
           margin-left: 16px;
           font-size: 16px;
         }

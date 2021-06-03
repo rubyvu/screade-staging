@@ -81,4 +81,11 @@ $(document).on('turbolinks:load', function () {
   
   //Init Ticker for Breaking news on page load
   $('#webticker').webTicker({ height: '36px', duplicate: true, startEmpty: false });
+  
+  // Hide modal after redirect and go back
+  // $('a[data-type="modal-link"]').on('click', function() {
+  //   $('a[data-type="modal-link"]').first().closest('[id^=modal]').modal('hide')
+  //   $('body').removeClass('modal-open');
+  //   $('.modal-backdrop').remove();
+  // })
 })

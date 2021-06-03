@@ -6,7 +6,6 @@
   .chat-member-card {
     display: flex;
     align-items: center;
-    cursor: pointer;
     
     .photo {
       display: flex;
@@ -38,7 +37,10 @@
       }
       
       .member-role-select {
-        
+        width: 80px;
+        text-align: center;
+        text-align-last: center;
+        -moz-text-align-last: center;
       }
     }
   }

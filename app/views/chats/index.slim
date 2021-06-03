@@ -4,7 +4,7 @@
     
   .chat-board-wrapper#chat-board-placeholder
     - if @chats.present?
-        = render 'chats/chat_board/new_board', chat: @chats.first
+      = render 'chats/chat_board/welcome_board'
     - else
       = render 'chats/chat_board/no_board'
   
