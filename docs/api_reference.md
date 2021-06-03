@@ -15,6 +15,16 @@
 - [List of all News Categories](api/v1/news_categories/index.md)
 - [List of NewsArticles for each Category](api/v1/news_categories/news.md)
 
+### Chat
+- [List of all Chats](api/v1/chats/index.md)
+- [View Chat](api/v1/chats/show.md)
+- [Create new Chat](api/v1/chats/create.md)
+- [Update Chat](api/v1/chats/update.md)
+- [Add/Remove Chat Members](api/v1/chats/update_members.md)
+- [List of all ChatMembers in the Chat](api/v1/chat_members/index.md)
+- [Update ChatMember role](api/v1/chat_members/update.md)
+- [Remove ChatMember from the Chat](api/v1/chat_members/destroy.md)
+
 ### Comments
 - [Show Article Comment](api/v1/comments/show.md)
 - [List of Article Comments](api/v1/news_articles/index_comment.md)

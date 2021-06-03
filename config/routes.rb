@@ -160,6 +160,15 @@ Rails.application.routes.draw do
         end
       end
       
+      resources :chats, only: [:index, :show, :create, :update] param: :access_token do
+        member do
+          put :update_members
+        end
+        
+        resources :chat_memberships, only: [:index]
+      end
+      
+      resources :chat_memberships, only: [:update, :destroy]
       resources :comments, only: [:show] do
         member do
           get :reply_comments
