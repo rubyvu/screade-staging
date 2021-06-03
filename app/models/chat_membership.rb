@@ -27,14 +27,14 @@ class ChatMembership < ApplicationRecord
     def update_owner_role
       return if !self.saved_change_to_role? || self.role != 'owner'
       
-      old_chat_owner_membership = self.chat.chat_memberships.find_by(user: self.chat.owner)
+      old_chat_owner_membership = self.chat.get_membership(self.chat.owner)
       old_chat_owner_membership.update_columns(role: 'admin')
       self.chat.update_columns(owner_id: self.user.id)
     end
     
     def is_membership_can_be_removed?
       if self.role == 'owner' && self.chat.chat_memberships.count > 1
-        errors.add(:base, 'You must transfer your role before leaving')
+        errors.add(:base, 'You must assign a new Owner before leaving.')
         throw :abort
       end
     end

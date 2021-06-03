@@ -14,3 +14,14 @@ $('#modal-add-chat-member').on('submit', '[id^=edit_chat]', function(e) {
   
   $('#modal-add-chat-member').modal('hide')
 })
+
+// Delete Uers from Chat
+$('#delete-chat-membership').on('ajax:success', function() {
+  location.reload()
+});
+
+$('#delete-chat-membership').on('ajax:error', function(e) {
+  let error = e.detail[0].errors[0]
+  if (error.length == 0) { return }
+  alert(error)
+});

@@ -1,5 +1,6 @@
 class ChatMembershipsController < ApplicationController
   before_action :get_chat, only: [:index]
+  before_action :get_chat_membership, only: [:update, :destroy]
   
   # GET /chats/:chat_access_token/chat_memberships
   def index
@@ -20,13 +21,7 @@ class ChatMembershipsController < ApplicationController
   
   # PUT/PATCH /chat_memberships/:id
   def update
-    chat_membership_to_update = ChatMembership.find_by(id: params[:id])
-    if chat_membership_to_update.blank?
-      render json: { errors: ['Record not found.'] }, status: :not_found
-      return
-    end
-    
-    current_user_membership = ChatMembership.find_by!(user: current_user, chat: chat_membership_to_update.chat)
+    current_user_membership = ChatMembership.find_by!(user: current_user, chat: @chat_membership.chat)
     if current_user_membership.blank?
       render json: { errors: ['Record not found.'] }, status: :not_found
       return
@@ -37,16 +32,29 @@ class ChatMembershipsController < ApplicationController
       return
     end
     
-    if chat_membership_to_update.update(memberships_params)
+    if @chat_membership.update(memberships_params)
       render json: { success: true }, status: :ok
     else
-      render json: { errors: chat_membership_to_update.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @chat_membership.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+  
+  # DELETE /chat_memberships/:access_token
+  def destroy
+    if @chat_membership.destroy
+      render json: { success: true }, status: :ok
+    else
+      render json: { errors: @chat_membership.errors.full_messages }, status: :unprocessable_entity
     end
   end
   
   private
     def get_chat
       @chat = Chat.find_by!(access_token: params[:chat_access_token])
+    end
+    
+    def get_chat_membership
+      @chat_membership = ChatMembership.find_by!(id: params[:id])
     end
     
     def memberships_params

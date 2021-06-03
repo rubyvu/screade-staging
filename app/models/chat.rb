@@ -18,6 +18,10 @@ class Chat < ApplicationRecord
     User.where(id: self.chat_memberships.where(role: 'admin').pluck(:user_id))
   end
   
+  def get_membership(user)
+    self.chat_memberships.find_by(user: user)
+  end
+  
   private
     def set_default_chat_name
       self.name = owner.full_name if self.name.blank?

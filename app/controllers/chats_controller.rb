@@ -1,6 +1,6 @@
 class ChatsController < ApplicationController
-  before_action :get_chat, only: [:show, :edit, :update, :update_members, :destroy]
-  before_action :get_current_user_membership, only: [:show, :edit, :update, :update_members, :destroy]
+  before_action :get_chat, only: [:show, :edit, :update, :update_members]
+  before_action :get_current_user_membership, only: [:show, :edit, :update, :update_members]
   
   # GET /chats
   def index
@@ -77,11 +77,6 @@ class ChatsController < ApplicationController
     respond_to do |format|
       format.js
     end
-  end
-  
-  # DELETE /chats/:access_token
-  def destroy
-    
   end
   
   private

@@ -28,7 +28,7 @@ Rails.application.routes.draw do
     resources :chat_memberships, only: [:index]
   end
   
-  resources :chat_memberships, only: [:update]
+  resources :chat_memberships, only: [:update, :destroy]
   resources :comments, only: [] do
     member do
       post :lit
