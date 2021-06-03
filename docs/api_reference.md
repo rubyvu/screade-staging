@@ -21,9 +21,9 @@
 - [Create new Chat](api/v1/chats/create.md)
 - [Update Chat](api/v1/chats/update.md)
 - [Add/Remove Chat Members](api/v1/chats/update_members.md)
-- [List of all ChatMembers in the Chat](api/v1/chat_members/index.md)
-- [Update ChatMember role](api/v1/chat_members/update.md)
-- [Remove ChatMember from the Chat](api/v1/chat_members/destroy.md)
+- [List of all ChatMembers in the Chat](api/v1/chat_memberships/index.md)
+- [Update ChatMember role](api/v1/chat_memberships/update.md)
+- [Remove ChatMember from the Chat](api/v1/chat_memberships/destroy.md)
 
 ### Comments
 - [Show Article Comment](api/v1/comments/show.md)
