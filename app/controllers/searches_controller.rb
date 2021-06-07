@@ -6,7 +6,7 @@ class SearchesController < ApplicationController
     
     # Search queries
     users = User.search(search_input, limit: 5, execute: false)
-    news_articles = NewsArticle.search(search_input, where: { detected_language: current_user.country.languages.pluck(:code) + current_user.languages.pluck(:code) }, limit: 5, execute: false)
+    news_articles = NewsArticle.search(search_input, where: { detected_language: current_user.country.languages.pluck(:code) + current_user.languages.pluck(:code), created_at: { gt: 7.days.ago } }, limit: 5, execute: false)
     posts = Post.search(search_input, limit: 5, execute: false)
     news_category = NewsCategory.search(search_input, limit: 5, execute: false)
     topic = Topic.search(search_input, limit: 5, where: {is_approved: true}, execute: false)
