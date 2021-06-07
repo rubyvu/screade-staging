@@ -89,6 +89,7 @@ gem 'cld'
 
 # Global Search
 gem 'searchkick'
+gem 'faraday_middleware-aws-sigv4'
 
 # Firebase Cloud Messaging
 gem 'fcm'
