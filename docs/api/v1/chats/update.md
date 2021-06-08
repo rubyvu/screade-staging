@@ -15,7 +15,7 @@ PUT/PATCH
 {
   "chat": {
     "icon": 'icon'                                                              (multipart form data, optional)
-    "name": 'New chat name'                                                    (string, optional)
+    "name": 'New chat name'                                                     (string, optional)
   }
 }
 ```

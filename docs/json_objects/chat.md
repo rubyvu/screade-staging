@@ -9,7 +9,7 @@
 ```
 {
   "access_token": "fhjsd93dj340fdpqci2"                                         (string, required)
-  "created_at": "fhjsd93dj340fdpqci2"                                           (string, required)
+  "created_at": "2021-02-04 14:22:14 +0000",                                    (string, required, represents date in format "%Y-%m-%d %H:%M:%S %z")
   "icon": "http://site.com/small.png"                                           (string, optional)
   "name": "Chat 1"                                                              (string, optional)
   "owner": "User"                                                               (object, required)
@@ -19,4 +19,4 @@
 
 ### References
 - [UserProfile JSON object](./user_profile.md)
-- [UserProfile JSON object](./chat_membership.md)
+- [ChatMembership JSON object](./chat_membership.md)
