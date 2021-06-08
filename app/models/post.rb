@@ -56,7 +56,7 @@ class Post < ApplicationRecord
   
   private
     def add_notification
-      return if self.state != 'approved' || Notification.where(source_id: self.id, source_type: 'Post', sender: self.user).present?
+      return if self.state != 'approved' || Notification.where(source_id: self.id, source_type: 'Post', sender: self.user).present? || !self.is_notification
       CreateNewNotificationsJob.perform_later(self.id, self.class.name)
     end
     
