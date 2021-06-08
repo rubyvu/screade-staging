@@ -2,6 +2,7 @@
   width: 100%;
   height: 50vh;
   overflow: scroll;
+  &.no-members { height: auto }
   
   .chat-member-card {
     display: flex;
