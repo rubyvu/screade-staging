@@ -12,6 +12,8 @@
       - else
         .notification-icon
           - case notification.source_type
+          - when 'BreakingNews'
+            = image_pack_tag('media/images/icons/notifications/ic_notification_new.png')
           - when 'Event'
             = image_pack_tag('media/images/icons/notifications/ic_notification_event.png')
           - when 'Comment'
@@ -27,6 +29,8 @@
                 = notification.sender.full_name
             - elsif notification.source_type == 'Comment'
               = notification.source.message
+            - elsif notification.source_type == 'BreakingNews'
+              
             - else
               = notification.source.title
             

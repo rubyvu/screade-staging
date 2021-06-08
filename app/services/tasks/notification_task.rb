@@ -1,5 +1,22 @@
 module Tasks
   class NotificationTask
+    
+    def self.new_breaking_news(id)
+      breaking_news = BreakingNews.find_by(id: id)
+      return if breaking_news.blank?
+      
+      User.joins(:setting).where(settings: { is_notification: true }).find_each do |recipient|
+        notificatiom_params = {
+          source_id: breaking_news.id,
+          source_type: 'BreakingNews',
+          recipient_id: recipient.id,
+          message: "Breaking News is changed"
+        }
+        
+        create_notification(notificatiom_params)
+      end
+    end
+    
     def self.new_comment(id)
       
       comment = Comment.find_by(id: id)

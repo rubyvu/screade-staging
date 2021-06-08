@@ -1,7 +1,7 @@
 class Notification < ApplicationRecord
   
   # Constants
-  SOURCE_TYPES = %w(Comment Event Post SquadRequest UserImage UserVideo)
+  SOURCE_TYPES = %w(BreakingNews Comment Event Post SquadRequest UserImage UserVideo)
   
   # Callbacks
   after_create :send_email_notification
@@ -30,8 +30,7 @@ class Notification < ApplicationRecord
   private
     def send_email_notification
       return unless recipient.setting.is_email
-      
-      # TODO :sending method
+      SendNotificationEmailJob.perform_later(self.id)
     end
     
     def send_push_notification

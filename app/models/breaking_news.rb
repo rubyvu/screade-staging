@@ -2,6 +2,7 @@ class BreakingNews < ApplicationRecord
   
   # Callbacks
   before_save :set_active_news
+  after_save :add_notification
   
   # Fields validations
   validates :title, presence: true
@@ -18,5 +19,10 @@ class BreakingNews < ApplicationRecord
       end
       
       breaking_news.update_all(is_active: false)
+    end
+    
+    def add_notification
+      return unless self.saved_change_to_is_active?(from: false, to: true)
+      CreateNewNotificationsJob.perform_later(self.id, self.class.name)
     end
 end

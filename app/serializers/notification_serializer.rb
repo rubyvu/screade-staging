@@ -11,6 +11,8 @@ class NotificationSerializer < ActiveModel::Serializer
   def source
     current_user = instance_options[:current_user]
     case object.source_type
+    when 'BreakingNews'
+      BreakingNewsSerializer.new(object.source).as_json
     when 'Comment'
       CommentSerializer.new(object.source, current_user: current_user).as_json
     when 'Event'

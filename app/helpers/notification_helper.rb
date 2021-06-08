@@ -1,6 +1,8 @@
 module NotificationHelper
   def notification_link_path(object)
     case object.source_type
+    when 'BreakingNews'
+      link = root_path
     when 'Event'
       link = events_path(date: object.source.start_date)
     when 'Comment'
@@ -30,6 +32,8 @@ module NotificationHelper
   
   def notification_absolute_link_path(object)
     case object.source_type
+    when 'BreakingNews'
+      link = root_url
     when 'Event'
       link = events_url(date: object.source.start_date)
     when 'Comment'

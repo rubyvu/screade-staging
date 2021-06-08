@@ -3,6 +3,8 @@ class CreateNewNotificationsJob < ApplicationJob
   def run(source_id, source_type)
     
     case source_type
+    when 'BreakingNews'
+      Tasks::NotificationTask.new_breaking_news(source_id)
     when 'Comment'
       Tasks::NotificationTask.new_comment(source_id)
     when 'Event'
