@@ -358,6 +358,46 @@ ALTER SEQUENCE public.chat_memberships_id_seq OWNED BY public.chat_memberships.i
 
 
 --
+-- Name: chat_messages; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.chat_messages (
+    id bigint NOT NULL,
+    chat_id integer NOT NULL,
+    user_id integer NOT NULL,
+    type character varying NOT NULL,
+    text character varying,
+    image character varying,
+    image_hex character varying,
+    video character varying,
+    video_hex character varying,
+    audio_record character varying,
+    audio_record_hex character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: chat_messages_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.chat_messages_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: chat_messages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.chat_messages_id_seq OWNED BY public.chat_messages.id;
+
+
+--
 -- Name: chats; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1327,6 +1367,13 @@ ALTER TABLE ONLY public.chat_memberships ALTER COLUMN id SET DEFAULT nextval('pu
 
 
 --
+-- Name: chat_messages id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chat_messages ALTER COLUMN id SET DEFAULT nextval('public.chat_messages_id_seq'::regclass);
+
+
+--
 -- Name: chats id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1524,6 +1571,14 @@ ALTER TABLE ONLY public.breaking_news
 
 ALTER TABLE ONLY public.chat_memberships
     ADD CONSTRAINT chat_memberships_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: chat_messages chat_messages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chat_messages
+    ADD CONSTRAINT chat_messages_pkey PRIMARY KEY (id);
 
 
 --
@@ -1776,6 +1831,27 @@ CREATE INDEX index_chat_memberships_on_chat_id ON public.chat_memberships USING 
 --
 
 CREATE INDEX index_chat_memberships_on_user_id ON public.chat_memberships USING btree (user_id);
+
+
+--
+-- Name: index_chat_messages_on_chat_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chat_messages_on_chat_id ON public.chat_messages USING btree (chat_id);
+
+
+--
+-- Name: index_chat_messages_on_type; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chat_messages_on_type ON public.chat_messages USING btree (type);
+
+
+--
+-- Name: index_chat_messages_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chat_messages_on_user_id ON public.chat_messages USING btree (user_id);
 
 
 --
@@ -2142,6 +2218,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210526091353'),
 ('20210526091531'),
 ('20210531142735'),
-('20210601075607');
+('20210601075607'),
+('20210609094303');
 
 

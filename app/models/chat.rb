@@ -11,6 +11,7 @@ class Chat < ApplicationRecord
   # Associations
   has_many :chat_memberships, dependent: :destroy
   belongs_to :owner, class_name: 'User', foreign_key: 'owner_id'
+  has_many :chat_messages, dependent: :destroy
   
   # Association validations
   validates :owner, presence: true
@@ -25,7 +26,7 @@ class Chat < ApplicationRecord
   
   private
     def set_default_chat_name
-      self.name = owner.full_name if self.name.blank?
+      self.name = owner.full_name if self.name.blank? && owner.present?
     end
     
     def update_chat_name

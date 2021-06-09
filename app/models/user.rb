@@ -25,6 +25,7 @@ class User < ApplicationRecord
   has_one :setting, dependent: :destroy
   has_many :chat_memberships, dependent: :destroy
   has_many :own_chats, class_name: 'Chat', foreign_key: :owner_id, dependent: :destroy
+  has_many :chat_messages, dependent: :destroy
   has_many :devices, class_name: 'Device', foreign_key: 'owner_id', dependent: :destroy
   has_many :events, dependent: :destroy
   has_many :posts, dependent: :destroy
