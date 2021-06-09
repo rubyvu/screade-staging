@@ -9,10 +9,10 @@ class ChatMessagesController < ApplicationController
   # POST /chats/:access_token/chat_messages
   def create
     # Initialize new Chat
-    chat_message = ChatMessage.new(chat_message_params)
-    chat_message.chat = @chat
-    chat_message.user = current_user
-    if chat_message.save
+    @chat_message = ChatMessage.new(chat_message_params)
+    @chat_message.chat = @chat
+    @chat_message.user = current_user
+    if @chat_message.save
       respond_to do |format|
         format.js { render 'create', layout: false }
       end

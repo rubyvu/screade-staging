@@ -10,6 +10,7 @@ class ChatsController < ApplicationController
   
   # GET /chats/:access_token
   def show
+    @chat_messages = @chat.chat_messages
     respond_to do |format|
       format.js { render 'show', layout: false }
     end

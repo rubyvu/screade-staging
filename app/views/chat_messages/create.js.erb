@@ -1,1 +1,1 @@
-console.log('ChatMessage created');
+$('#chat-message-placeholder').append("<%= j render partial: 'chat_messages/message', locals: { chat_message: @chat_message } %>")
