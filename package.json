@@ -20,6 +20,7 @@
     "local-time": "^2.1.0",
     "moment": "^2.29.1",
     "popper.js": "^1.16.1",
+    "recorderjs": "https://github.com/mattdiamond/Recorderjs.git",
     "select2": "^4.1.0-rc.0",
     "timepicker": "^1.13.18",
     "turbolinks": "^5.2.0",
