@@ -251,6 +251,11 @@ input[type="submit"].send-message-button {
   background-image: url('../images/icons/ic_send_message.png');
   background-repeat: no-repeat;
   padding: 0rem 0.75rem;
+  
+  &.no-border {
+    height: 16px;
+    border: none;
+  }
 }
 
 //// Floating action button +

@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :chat_message do
-    type { 'text' }
+    message_type { 'text' }
   end
 end

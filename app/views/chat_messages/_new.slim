@@ -1,0 +1,13 @@
+.chat-input
+  = form_for ChatMessage.new, url: chat_chat_messages_path(@chat.access_token), remote: true, authenticity_token: true, html: { method: :post } do |f|
+    = f.hidden_field :message_type, value: 'text'
+    .input-group
+      .input-group-prepend
+        .input-group-text
+          = image_pack_tag('media/images/icons/ic_chat_document.png', class: 'img-responsive')
+          
+      = f.text_field :text, class: 'form-control', placeholder: 'Write a message', autocomplete: false
+      
+      .input-group-append
+        .input-group-text.align-items-center
+          = f.submit '', class: 'btn btn-link send-message-button no-border'

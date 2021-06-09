@@ -38,20 +38,8 @@
           = image_pack_tag('media/images/icons/ic_chat_leave_group.png')
           span Leave group
       
-.chat-message-board
-  
-.chat-input
-  = form_for Chat.new do |f|
-    .input-group
-      .input-group-prepend
-        .input-group-text
-          = image_pack_tag('media/images/icons/ic_chat_document.png', class: 'img-responsive')
-          
-      = f.text_field :name, class: 'form-control', placeholder: 'Write a message', autocomplete: false, disabled: true
-      
-      .input-group-append
-        .input-group-text
-          = image_pack_tag('media/images/icons/ic_send_message.png', class: 'img-responsive')
+= render 'chat_messages/index'
+= render 'chat_messages/new'
   
 = render 'chats/chat_modals/add_chat_member'
 = render 'chats/chat_modals/chat_members_roles'

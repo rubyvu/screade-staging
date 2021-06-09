@@ -19,12 +19,12 @@ class ChatMessage < ApplicationRecord
   validates :user, presence: true
   
   # Fields validations
-  validates :type, presence: true, inclusion: { in: ChatMessage::TYPES_LIST }
+  validates :message_type, presence: true, inclusion: { in: ChatMessage::TYPES_LIST }
   validate :type_content_is_present
   
   private
     def type_content_is_present
-      return if (self.type == 'image' && self.image.present?) || (self.type == 'video' && self.video.present?) || (self.type == 'text' && self.text.present?) || (self.type == 'audio' && self.audio_record.present?)
+      return if (self.message_type == 'image' && self.image.present?) || (self.message_type == 'video' && self.video.present?) || (self.message_type == 'text' && self.text.present?) || (self.message_type == 'audio' && self.audio_record.present?)
       errors.add(:base, 'One of 4 types should be present.')
     end
 end

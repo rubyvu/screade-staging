@@ -3,7 +3,7 @@ class CreateChatMessages < ActiveRecord::Migration[6.1]
     create_table :chat_messages do |t|
       t.integer :chat_id, null: false
       t.integer :user_id, null: false
-      t.string :type, null: false
+      t.string :message_type, null: false
       t.string :text
       t.string :image
       t.string :image_hex
@@ -14,7 +14,7 @@ class CreateChatMessages < ActiveRecord::Migration[6.1]
       t.timestamps
       t.index :user_id
       t.index :chat_id
-      t.index :type
+      t.index :message_type
     end
   end
 end

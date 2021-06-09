@@ -10,7 +10,7 @@ RSpec.describe ChatMessage, type: :model do
   end
   
   it 'should have a valid factory' do
-    expect(FactoryBot.build(:chat_message, user: @user_owner, chat: @chat, type: 'text', text: 'Test message 1')).to be_valid
+    expect(FactoryBot.build(:chat_message, user: @user_owner, chat: @chat, message_type: 'text', text: 'Test message 1')).to be_valid
   end
   
   context 'associations' do
@@ -25,8 +25,8 @@ RSpec.describe ChatMessage, type: :model do
     end
     
     context 'fields' do
-      it { should validate_presence_of(:type) }
-      it { should validate_inclusion_of(:type).in_array(ChatMessage::TYPES_LIST) }
+      it { should validate_presence_of(:message_type) }
+      it { should validate_inclusion_of(:message_type).in_array(ChatMessage::TYPES_LIST) }
     end
   end
 end

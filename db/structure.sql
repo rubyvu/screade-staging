@@ -365,7 +365,7 @@ CREATE TABLE public.chat_messages (
     id bigint NOT NULL,
     chat_id integer NOT NULL,
     user_id integer NOT NULL,
-    type character varying NOT NULL,
+    message_type character varying NOT NULL,
     text character varying,
     image character varying,
     image_hex character varying,
@@ -1841,10 +1841,10 @@ CREATE INDEX index_chat_messages_on_chat_id ON public.chat_messages USING btree 
 
 
 --
--- Name: index_chat_messages_on_type; Type: INDEX; Schema: public; Owner: -
+-- Name: index_chat_messages_on_message_type; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_chat_messages_on_type ON public.chat_messages USING btree (type);
+CREATE INDEX index_chat_messages_on_message_type ON public.chat_messages USING btree (message_type);
 
 
 --

@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   }
   
   resources :chats, param: :access_token do
+    resources :chat_messages, only: [:create]
     member do
       put :update_members
     end
