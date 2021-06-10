@@ -1,10 +1,5 @@
 class ChatMembershipSerializer < ActiveModel::Serializer
-  
-  attribute :chat
-  def chat
-    ChatSerializer.new(object.chat).as_json
-  end
-  
+    
   attribute :id
   attribute :role
   attribute :user
