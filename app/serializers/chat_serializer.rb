@@ -16,6 +16,7 @@ class ChatSerializer < ActiveModel::Serializer
     UserProfileSerializer.new(object.owner).as_json
   end
   
+  attribute :chat_memberships
   def chat_memberships
     ActiveModel::Serializer::CollectionSerializer.new(object.chat_memberships, serializer: ChatMembershipSerializer).as_json
   end
