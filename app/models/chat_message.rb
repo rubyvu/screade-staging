@@ -21,10 +21,17 @@ class ChatMessage < ApplicationRecord
   # Fields validations
   validates :message_type, presence: true, inclusion: { in: ChatMessage::TYPES_LIST }
   validate :type_content_is_present
+  validate :chat_membership
   
   private
+    # Validations
     def type_content_is_present
       return if (self.message_type == 'image' && self.image.present?) || (self.message_type == 'video' && self.video.present?) || (self.message_type == 'text' && self.text.present?) || (self.message_type == 'audio' && self.audio_record.present?)
       errors.add(:base, 'One of 4 types should be present.')
+    end
+    
+    def chat_membership
+      return if ChatMembership.find_by(user: self.user, chat: self.chat)
+      errors.add(:base, 'You are not a member of this Chat')
     end
 end

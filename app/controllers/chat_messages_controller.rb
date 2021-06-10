@@ -13,9 +13,13 @@ class ChatMessagesController < ApplicationController
     @chat_message.chat = @chat
     @chat_message.user = current_user
     if @chat_message.save
-      respond_to do |format|
-        format.js { render 'create', layout: false }
-      end
+      
+      ActionCable.server.broadcast "chat_#{@chat.access_token}_channel", chat_message: render_message(@chat_message)
+      
+      head :ok
+      # respond_to do |format|
+      #   format.js { render 'create', layout: false }
+      # end
     else
       #TODO :error here
     end
@@ -28,5 +32,9 @@ class ChatMessagesController < ApplicationController
     
     def chat_message_params
       params.require(:chat_message).permit(:text, :message_type)
+    end
+    
+    def render_message(chat_message)
+      render partial: 'chat_messages/message', locals: { chat_message: chat_message }
     end
 end
