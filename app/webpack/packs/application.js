@@ -9,9 +9,11 @@ import "select2";
 import "webticker/jquery.webticker.min.js";
 import 'bootstrap-datepicker';
 import 'timepicker/jquery.timepicker.js';
+import 'jquery-ui/ui/widgets/tabs';
 
 // Import internal scripts
-import './shared/chats';
+import './shared/chat/chats';
+import './shared/chat/chat_messages';
 import './shared/events';
 import './shared/font_customizer';
 import './shared/global-search';

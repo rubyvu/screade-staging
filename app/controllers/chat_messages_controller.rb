@@ -6,7 +6,7 @@ class ChatMessagesController < ApplicationController
     
   end
   
-  # POST /chats/:access_token/chat_messages
+  # POST /chats/:chat_access_token/chat_messages
   def create
     # Initialize new Chat
     @chat_message = ChatMessage.new(chat_message_params)
@@ -22,6 +22,24 @@ class ChatMessagesController < ApplicationController
       # end
     else
       #TODO :error here
+    end
+  end
+  
+  # GET /chats/:chat_access_token/chat_messages/images
+  def images
+    @chat_images = current_user.user_images
+    
+    respond_to do |format|
+      format.js { render 'images', layout: false }
+    end
+  end
+  
+  # GET /chats/:chat_access_token/chat_messages/videos
+  def videos
+    @chat_videos = current_user.user_videos
+    
+    respond_to do |format|
+      format.js { render 'videos', layout: false }
     end
   end
   

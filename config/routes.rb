@@ -21,12 +21,18 @@ Rails.application.routes.draw do
   }
   
   resources :chats, param: :access_token do
-    resources :chat_messages, only: [:create]
-    member do
-      put :update_members
+    resources :chat_messages, only: [:create] do
+      collection do
+        get :images
+        get :videos
+      end
     end
     
     resources :chat_memberships, only: [:index]
+    
+    member do
+      put :update_members
+    end
   end
   
   resources :chat_memberships, only: [:update, :destroy]
