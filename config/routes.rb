@@ -172,7 +172,11 @@ Rails.application.routes.draw do
           put :update_members
         end
         
-        resources :chat_memberships, only: [:index]
+        resources :chat_memberships, only: [:index] do
+          collection do
+            get :chat_users
+          end
+        end
       end
       
       resources :chat_memberships, only: [:update, :destroy]
