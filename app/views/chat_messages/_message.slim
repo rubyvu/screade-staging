@@ -1,1 +1,6 @@
-p #{chat_message.text}
+- case chat_message.message_type
+- when 'text'
+  p #{chat_message.text}
+- when 'image'
+  p
+    = image_tag(chat_message.image.url)

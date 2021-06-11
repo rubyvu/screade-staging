@@ -1,5 +1,7 @@
 class ChatMessagesController < ApplicationController
-  before_action :get_chat, only: [:create]
+  before_action :get_chat, only: [:create, :images, :videos]
+  before_action :get_user_image, only: [:create]
+  # before_action :get_user_video, only: [:create]
   
   # GET /chats/:chat_access_token/chat_messages
   def index
@@ -12,8 +14,11 @@ class ChatMessagesController < ApplicationController
     @chat_message = ChatMessage.new(chat_message_params)
     @chat_message.chat = @chat
     @chat_message.user = current_user
+    
+    @chat_message.remote_image_url = @user_image&.file&.url if @user_image.present?
+    # @chat_message.remote_video_url = @user_video&.file&.url if @user_video.present?
+    
     if @chat_message.save
-      
       ActionCable.server.broadcast "chat_#{@chat.access_token}_channel", chat_message: render_message(@chat_message)
       
       head :ok
@@ -49,10 +54,21 @@ class ChatMessagesController < ApplicationController
     end
     
     def chat_message_params
-      params.require(:chat_message).permit(:text, :message_type)
+      strong_params = params.require(:chat_message).permit(:image_id, :text, :message_type, :video_id)
+      strong_params.delete(:image_id)
+      strong_params.delete(:video_id)
+      strong_params
     end
     
     def render_message(chat_message)
       render partial: 'chat_messages/message', locals: { chat_message: chat_message }
+    end
+    
+    def get_user_image
+      @user_image = current_user.user_images.find_by(id: params[:chat_message][:image_id])
+    end
+    
+    def get_user_video
+      @user_image = current_user.user_videos.find_by(id: params[:chat_message][:video_id])
     end
 end
