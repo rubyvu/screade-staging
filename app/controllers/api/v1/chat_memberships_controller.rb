@@ -4,12 +4,7 @@ class Api::V1::ChatMembershipsController < Api::V1::ApiController
   
   # GET /api/v1/chats/:chat_access_token/chat_memberships
   def index
-    squad_receivers_sql = User.joins(:squad_requests_as_receiver).where(squad_requests_as_receiver: { requestor: current_user }).where.not(squad_requests_as_receiver: { accepted_at: nil }).to_sql
-    squad_requestors_sql = User.joins(:squad_requests_as_requestor).where(squad_requests_as_requestor: { receiver: current_user }).where.not(squad_requests_as_requestor: { accepted_at: nil }).to_sql
-    chat_users_sql = User.joins(:chat_memberships).where(chat_memberships: { chat: @chat }).where.not(chat_memberships: { user: current_user }).to_sql
-    chat_memberships = User.from("(#{squad_receivers_sql} UNION #{squad_requestors_sql} UNION #{chat_users_sql}) AS users")
-    
-    chat_memberships_json = ActiveModel::Serializer::CollectionSerializer.new(chat_memberships.order(updated_at: :desc).page(params[:page]).per(30), serializer: ChatMembershipSerializer).as_json
+    chat_memberships_json = ActiveModel::Serializer::CollectionSerializer.new(@chat.chat_memberships.order(updated_at: :desc).page(params[:page]).per(30), serializer: ChatMembershipSerializer).as_json
     render json: { chat_memberships: chat_memberships_json }, status: :ok
   end
   
