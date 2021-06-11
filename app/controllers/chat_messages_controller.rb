@@ -1,7 +1,7 @@
 class ChatMessagesController < ApplicationController
   before_action :get_chat, only: [:create, :images, :videos]
   before_action :get_user_image, only: [:create]
-  # before_action :get_user_video, only: [:create]
+  before_action :get_user_video, only: [:create]
   
   # GET /chats/:chat_access_token/chat_messages
   def index
@@ -16,7 +16,7 @@ class ChatMessagesController < ApplicationController
     @chat_message.user = current_user
     
     @chat_message.remote_image_url = @user_image&.file&.url if @user_image.present?
-    # @chat_message.remote_video_url = @user_video&.file&.url if @user_video.present?
+    @chat_message.remote_video_url = @user_video&.file&.url if @user_video.present?
     
     if @chat_message.save
       ActionCable.server.broadcast "chat_#{@chat.access_token}_channel", chat_message: render_message(@chat_message)
@@ -69,6 +69,6 @@ class ChatMessagesController < ApplicationController
     end
     
     def get_user_video
-      @user_image = current_user.user_videos.find_by(id: params[:chat_message][:video_id])
+      @user_video = current_user.user_videos.find_by(id: params[:chat_message][:video_id])
     end
 end

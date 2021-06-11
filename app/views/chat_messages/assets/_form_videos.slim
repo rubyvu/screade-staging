@@ -5,3 +5,8 @@
         = image_tag(video.file.thumb.url, data: {'image-url': video.file.thumb.url, 'video-id': video.id })
   - else
     = link_to 'Your video library is empty', videos_user_video_path(current_user.username)
+    
+= form_for ChatMessage.new, url: chat_chat_messages_path(@chat.access_token), remote: true, authenticity_token: true, html: { method: :post } do |f|
+  = f.hidden_field :message_type, value: 'video'
+  = hidden_field_tag 'chat_message[video_id]'
+  = f.submit "Save", style: "display: none;"

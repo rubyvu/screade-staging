@@ -6,3 +6,10 @@ $('#chat-images-form-placeholder').on('click', '.image-card', function() {
   $('#chat-images-form-placeholder #new_chat_message').find("input[type=submit]").click()
   $('#modal-chat-assets').modal('hide')
 })
+
+$('#chat-videos-form-placeholder').on('click', '.image-card', function() {
+  $('#chat_message_video_id').val($(this).find('img').data('videoId'))
+  
+  $('#chat-videos-form-placeholder #new_chat_message').find("input[type=submit]").click()
+  $('#modal-chat-assets').modal('hide')
+})

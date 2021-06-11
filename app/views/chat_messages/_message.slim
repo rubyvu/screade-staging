@@ -4,3 +4,6 @@
 - when 'image'
   p
     = image_tag(chat_message.image.url)
+- when 'video'
+  p
+    = image_tag(chat_message.video.thumb.url)
