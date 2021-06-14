@@ -23,7 +23,7 @@ GET
 ```
 HTTP code 200 :ok
 {
-  "chat_users: "[UserProfile]"                                                  (array of objects, required)
+  "users: "[UserProfile]"                                                  (array of objects, required)
 }
 ```
 
