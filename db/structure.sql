@@ -374,7 +374,9 @@ CREATE TABLE public.chat_messages (
     audio_record character varying,
     audio_record_hex character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    asset_source_id integer,
+    asset_source_type character varying
 );
 
 
@@ -2219,6 +2221,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210526091531'),
 ('20210531142735'),
 ('20210601075607'),
-('20210609094303');
+('20210609094303'),
+('20210614084112');
 
 

@@ -3,7 +3,17 @@
   p #{chat_message.text}
 - when 'image'
   p
-    = image_tag(chat_message.image.url)
+    - if chat_message.image.present?
+      = image_tag(chat_message.image.url)
+    - elsif chat_message.asset_source.present?
+      = image_tag(chat_message.asset_source.file.url)
+    - else
+      = image_pack_tag('media/images/placeholders/placeholder-news.png')
 - when 'video'
   p
-    = image_tag(chat_message.video.thumb.url)
+    - if chat_message.video.present?
+      = image_tag(chat_message.video.thumb.url)
+    - elsif chat_message.asset_source.present?
+      = image_tag(chat_message.asset_source.file.thumb.url)
+    - else
+      = image_pack_tag('media/images/placeholders/placeholder-news.png')

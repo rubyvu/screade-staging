@@ -15,8 +15,8 @@ class ChatMessagesController < ApplicationController
     @chat_message.chat = @chat
     @chat_message.user = current_user
     
-    @chat_message.remote_image_url = @user_image&.file&.url if @user_image.present?
-    @chat_message.remote_video_url = @user_video&.file&.url if @user_video.present?
+    @chat_message.asset_source = @user_image if @user_image.present?
+    @chat_message.asset_source = @user_video if @user_video.present?
     
     if @chat_message.save
       ActionCable.server.broadcast "chat_#{@chat.access_token}_channel", chat_message: render_message(@chat_message)

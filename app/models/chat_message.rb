@@ -2,6 +2,7 @@ class ChatMessage < ApplicationRecord
   
   # Constants
   TYPES_LIST = %w(image video text audio)
+  SOURCE_TYPES = %w(UserVideo UserImage)
   
   # File Uploader
   mount_uploader :image, ChatImageUploader
@@ -9,10 +10,12 @@ class ChatMessage < ApplicationRecord
   mount_uploader :audio_record, ChatAudioUploader
   
   # Callbacks
+  after_commit :upload_asset
   
   # Associations
   belongs_to :chat
   belongs_to :user
+  belongs_to :asset_source, polymorphic: true, optional: true
   
   # Associations validations
   validates :chat, presence: true
@@ -26,7 +29,7 @@ class ChatMessage < ApplicationRecord
   private
     # Validations
     def type_content_is_present
-      return if (self.message_type == 'image' && self.image.present?) || (self.message_type == 'video' && self.video.present?) || (self.message_type == 'text' && self.text.present?) || (self.message_type == 'audio' && self.audio_record.present?)
+      return if (self.message_type == 'image' && self.asset_source.present?) || (self.message_type == 'video' && self.asset_source.present?) || (self.message_type == 'text' && self.text.present?) || (self.message_type == 'audio' && self.audio_record.present?)
       errors.add(:base, 'One of 4 types should be present.')
     end
     
@@ -34,4 +37,10 @@ class ChatMessage < ApplicationRecord
       return if ChatMembership.find_by(user: self.user, chat: self.chat)
       errors.add(:base, 'You are not a member of this Chat')
     end
+    
+    # Calbacks
+      def upload_asset
+        return if ['image', 'video'].exclude?(self.message_type) || (self.message_type == 'image' && self.image.present?) || (self.message_type == 'video' && self.video.present?)
+        UploadChatMessageAssetJob.perform_later(self.id)
+      end
 end
