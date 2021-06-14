@@ -9,7 +9,7 @@
 DELETE
 
 ### API endpoint
-`/api/v1/chat_memberships/:access_token`
+`/api/v1/chat_memberships/:id`
 
 ```
 {}
