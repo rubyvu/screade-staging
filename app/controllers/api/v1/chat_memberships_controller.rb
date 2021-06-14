@@ -36,7 +36,7 @@ class Api::V1::ChatMembershipsController < Api::V1::ApiController
     end
   end
   
-  # DELETE /api/v1/chat_memberships/:access_token
+  # DELETE /api/v1/chat_memberships/:id
   def destroy
     if @chat_membership.destroy
       render json: { success: true }, status: :ok
