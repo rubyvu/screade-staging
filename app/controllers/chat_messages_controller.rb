@@ -15,6 +15,7 @@ class ChatMessagesController < ApplicationController
     @chat_message.chat = @chat
     @chat_message.user = current_user
     
+    @chat_message.audio_record = @audio_record if @audio_record.present?
     @chat_message.asset_source = @user_image if @user_image.present?
     @chat_message.asset_source = @user_video if @user_video.present?
     
@@ -54,7 +55,7 @@ class ChatMessagesController < ApplicationController
     end
     
     def chat_message_params
-      strong_params = params.require(:chat_message).permit(:image_id, :text, :message_type, :video_id)
+      strong_params = params.require(:chat_message).permit(:image_id, :text, :message_type, :video_id, :audio_record)
       strong_params.delete(:image_id)
       strong_params.delete(:video_id)
       strong_params

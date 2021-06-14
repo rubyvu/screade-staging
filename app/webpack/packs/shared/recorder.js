@@ -1,6 +1,6 @@
 import Recorder from 'recorderjs';
 
-$( document ).on('turbolinks:load', function() {
+$(document).on('ajax:success', 'a[id^=chat-element-]', function() {
   //webkitURL is deprecated but nevertheless
   URL = window.URL || window.webkitURL;
   
@@ -147,22 +147,21 @@ $( document ).on('turbolinks:load', function() {
     //add the save to disk link to li
     li.appendChild(link);
     
-    //upload link
-    var upload = document.createElement('a');
-    upload.href="#";
-    upload.innerHTML = "Upload";
-    upload.addEventListener("click", function(event){
-        var xhr=new XMLHttpRequest();
-        xhr.onload=function(e) {
-            if(this.readyState === 4) {
-                console.log("Server returned: ",e.target.responseText);
-            }
-        };
-        var fd=new FormData();
-        fd.append("audio_data",blob, filename);
-        xhr.open("POST","upload.php",true);
-        xhr.send(fd);
-    })
+    var formData = new FormData();
+    formData.append('chat_message[audio_record]', blob, filename);
+    formData.append('chat_message[message_type]', 'audio')
+    
+    let chatAccessToken = $('#chat-board').data('chat-token')
+    $.ajax({
+      url: '/chats/' + chatAccessToken + '/chat_messages',
+      data: formData,
+      cache: false,
+      contentType: false,
+      processData: false,
+      type: 'POST',
+      dataType: 'jsonp'
+    });
+    
     li.appendChild(document.createTextNode (" "))//add a space in between
     li.appendChild(upload)//add the upload link to li
     
