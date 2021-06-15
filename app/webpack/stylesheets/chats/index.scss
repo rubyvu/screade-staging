@@ -1,3 +1,4 @@
+@import './chat_message';
 @import './members_list';
 @import './control_panel';
 @import './icon_uploader';
@@ -152,6 +153,7 @@
     }
     
     .chat-message-board {
+      overflow: scroll;
       width: 100%;
       height: calc(100% - (56px + 49px));
     }

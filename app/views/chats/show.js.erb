@@ -25,3 +25,9 @@ $('#delete-chat-membership').on('ajax:error', function(e) {
   if (error.length == 0) { return }
   alert(error)
 });
+
+// Scroll chat to right position
+// var chatMessagesPlaceholder = $('#chat-message-placeholder');
+// $(chatMessagesPlaceholder).scrollTop($(chatMessagesPlaceholder).prop("scrollHeight"));
+var myDiv = document.getElementById('chat-message-placeholder');
+myDiv.scrollTop = myDiv.scrollHeight;

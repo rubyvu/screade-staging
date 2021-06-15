@@ -1,19 +1,58 @@
-- case chat_message.message_type
-- when 'text'
-  p #{chat_message.text}
-- when 'image'
-  p
-    - if chat_message.image.present?
-      = image_tag(chat_message.image.url)
-    - elsif chat_message.asset_source.present?
-      = image_tag(chat_message.asset_source.file.url)
-    - else
-      = image_pack_tag('media/images/placeholders/placeholder-news.png')
-- when 'video'
-  p
-    - if chat_message.video.present?
-      = image_tag(chat_message.video.thumb.url)
-    - elsif chat_message.asset_source.present?
-      = image_tag(chat_message.asset_source.file.thumb.url)
-    - else
-      = image_pack_tag('media/images/placeholders/placeholder-news.png')
+- message_owner = chat_message.user == current_user
+.message-box-wrapper
+  .message-wrapper
+    .header
+      .photo
+        - if chat_message.user.profile_picture.url
+          = image_tag(chat_message.user.profile_picture.square_320.url, class: 'profile-image')
+        - else
+          = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
+      .name
+        = chat_message.user.full_name
+        
+    .body
+      - case chat_message.message_type
+      - when 'text'
+        .text
+          = chat_message.text
+          
+      - when 'image'
+        .image
+          - if chat_message.image.present?
+            = image_tag(chat_message.image.url)
+          - elsif chat_message.asset_source.present?
+            = image_tag(chat_message.asset_source.file.url)
+          - else
+            = image_pack_tag('media/images/placeholders/placeholder-news.png')
+            
+      - when 'video'
+        .video
+          - if chat_message.video.present?
+            video controls="" width="100%"
+              source src="#{chat_message.video.url}" type="video/mp4"
+                span Sorry, your browser doesn't support embedded videos.
+                  
+          - elsif chat_message.asset_source.present?
+            video controls="" width="100%" height="250" preload="none"
+              source src="#{chat_message.asset_source.file.url}" type="video/mp4"
+                span Sorry, your browser doesn't support embedded videos.
+          - else
+            span Video record cannot be played.
+            
+      - when 'audio'
+        .audio
+          - if chat_message.audio_record.present?
+            audio controls="" preload="none"
+              source src="#{chat_message.audio_record.url}" type="audio/wav"
+              span Your browser does not support the audio element.
+              
+          - else
+            span Audio record cannot be played.
+            
+      .footer
+        .date
+          = hours_minutes(chat_message.created_at)
+        
+        - unless message_owner
+          .review-icon
+            i.ic.review

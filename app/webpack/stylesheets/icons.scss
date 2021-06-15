@@ -83,4 +83,11 @@ i.ic.comment.active:after {
 i.ic.comment.active.reverse:after {
   content: url('../images/icons/ic_comment_active_reverse.png');
 }
-  
+
+i.ic.review:after {
+  content: url('../images/icons/ic_review.png');
+}
+
+i.ic.review.active:after {
+  content: url('../images/icons/ic_review_done.png');
+}

@@ -12,7 +12,7 @@ module TimeHelper
     end
   end
   
-  def hours_seconds(time)
+  def hours_minutes(time)
     if is_twelve_hours_format
       format_time(time, "%I:%M %p")
     else
