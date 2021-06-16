@@ -20,8 +20,6 @@ class ChatMessagesController < ApplicationController
     @chat_message.asset_source = @user_video if @user_video.present?
     
     if @chat_message.save
-      ActionCable.server.broadcast "chat_#{@chat.access_token}_channel", chat_message: render_message(@chat_message)
-      
       head :ok
       # respond_to do |format|
       #   format.js { render 'create', layout: false }

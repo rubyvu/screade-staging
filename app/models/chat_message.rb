@@ -11,6 +11,7 @@ class ChatMessage < ApplicationRecord
   
   # Callbacks
   after_commit :upload_asset
+  after_commit :broadcast_message
   
   # Associations
   belongs_to :chat
@@ -39,8 +40,16 @@ class ChatMessage < ApplicationRecord
     end
     
     # Calbacks
-      def upload_asset
-        return if ['image', 'video'].exclude?(self.message_type) || (self.message_type == 'image' && self.image.present?) || (self.message_type == 'video' && self.video.present?)
-        UploadChatMessageAssetJob.perform_later(self.id)
-      end
+    def upload_asset
+      return if ['image', 'video'].exclude?(self.message_type) || (self.message_type == 'image' && self.image.present?) || (self.message_type == 'video' && self.video.present?)
+      UploadChatMessageAssetJob.perform_later(self.id)
+    end
+    
+    def broadcast_message
+      ActionCable.server.broadcast "chat_#{self.chat.access_token}_channel", chat_message_json: ChatMessageSerializer.new(self).as_json, chat_message_html: render_message_template
+    end
+    
+    def render_message_template
+      ApplicationController.renderer.render(partial: 'chat_messages/message_to_broadcast', locals: { chat_message: self })
+    end
 end

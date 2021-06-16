@@ -1,5 +1,6 @@
 .chat-message-board {
   .message-box-wrapper {
+    display: flex;
     padding: 4px 20px;
     width: 100%;
     border: 1px solid green;
@@ -43,10 +44,13 @@
         
         .text {}
         .image {
+          display: flex;
+          justify-content: center;
           height: 200px;
           min-width: 200px;
           img {height: 100%;}
         }
+        
         .video {}
         .audio {}
       }
@@ -68,11 +72,16 @@
           padding: 0 4px;
         }
       }
-      
-      &.message-owner {
-        
-      }
     }
-    
+  }
+}
+
+.chat-message-board .message-box-wrapper.message-owner {
+  justify-content: flex-end;
+  
+  .message-wrapper {
+    background-color: $color-blue;
+    color: $color-white;
+    border-radius: 4px 4px 0px 4px;
   }
 }

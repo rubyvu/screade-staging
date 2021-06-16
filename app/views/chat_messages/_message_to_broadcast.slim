@@ -1,5 +1,4 @@
-- message_owner = chat_message.user == current_user
-.message-box-wrapper
+.message-box-wrapper data-message-id="#{chat_message.id}"
   .message-wrapper
     .header
       .photo
@@ -53,6 +52,6 @@
         .date
           = hours_minutes(chat_message.created_at)
         
-        - unless message_owner
+        //- unless message_owner
           .review-icon
             i.ic.review

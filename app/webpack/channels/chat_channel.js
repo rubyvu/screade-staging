@@ -27,8 +27,16 @@ $(document).on('ajax:success', 'a[id^=chat-element-]', function() {
       },
   
       received(data) {
-        $('#chat-message-placeholder').append($.parseHTML(data.chat_message))
         // Called when there's incoming data on the websocket for this channel
+        let username = data.chat_message_json.user.username
+        let messageId = data.chat_message_json.id
+        let chatMessagesPlaceholder = $('#chat-message-placeholder')
+        let chatBoardPlaceholder = $('#chat-board-placeholder')
+        
+        chatMessagesPlaceholder.append($.parseHTML(data.chat_message_html))
+        if ( chatBoardPlaceholder.find('[data-chat-username]').data('chat-username') === username ) {
+          chatMessagesPlaceholder.find(`[data-message-id=${messageId}]`).addClass('message-owner')
+        }
       }
     });
   }
