@@ -25,6 +25,8 @@
 - [List of all Users that can be added/removed from the Chat](api/v1/chat_memberships/chat_users.md)
 - [Update ChatMember role](api/v1/chat_memberships/update.md)
 - [Remove ChatMember from the Chat](api/v1/chat_memberships/destroy.md)
+- [List of all ChatMessages in the Chat](api/v1/chat_messages/index.md)
+- [Create new ChatMessage](api/v1/chat_messages/create.md)
 
 ### Comments
 - [Show Article Comment](api/v1/comments/show.md)
