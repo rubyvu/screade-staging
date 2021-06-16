@@ -168,6 +168,7 @@ Rails.application.routes.draw do
       end
       
       resources :chats, only: [:index, :show, :create, :update], param: :access_token do
+        resources :chat_messages, only: [:index, :create]
         member do
           put :update_members
         end

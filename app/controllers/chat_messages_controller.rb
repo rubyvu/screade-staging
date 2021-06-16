@@ -59,10 +59,6 @@ class ChatMessagesController < ApplicationController
       strong_params
     end
     
-    def render_message(chat_message)
-      render partial: 'chat_messages/message', locals: { chat_message: chat_message }
-    end
-    
     def get_user_image
       @user_image = current_user.user_images.find_by(id: params[:chat_message][:image_id])
     end
