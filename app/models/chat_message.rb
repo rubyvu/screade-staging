@@ -51,10 +51,14 @@ class ChatMessage < ApplicationRecord
     end
     
     def broadcast_chat_state
-      ActionCable.server.broadcast "chat_state_channel", chat_json: ChatSerializer.new(self.chat).as_json
+      ActionCable.server.broadcast "chat_state_channel", chat_json: ChatSerializer.new(self.chat).as_json, chat_html: render_chat_state_template
     end
     
     def render_message_template
       ApplicationController.renderer.render(partial: 'chat_messages/message_to_broadcast', locals: { chat_message: self })
+    end
+    
+    def render_chat_state_template
+      ApplicationController.renderer.render(partial: 'chats/chats_list/chat_object', locals: { chat: self.chat })
     end
 end

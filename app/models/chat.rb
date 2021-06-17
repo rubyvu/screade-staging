@@ -6,6 +6,7 @@ class Chat < ApplicationRecord
   # Callbacks
   before_validation :generate_access_token, on: :create
   before_validation :set_default_chat_name, on: :create
+  after_update :broadcast_chat_state
   after_commit :update_chat_name, on: :create
   
   # Associations
@@ -38,5 +39,11 @@ class Chat < ApplicationRecord
     def generate_access_token
       new_token = SecureRandom.hex(16)
       Chat.exists?(access_token: new_token) ? generate_access_token : self.access_token = new_token
+    end
+    
+    # Broadcast Chat State
+    def broadcast_chat_state
+      render_chat_state_template = ApplicationController.renderer.render(partial: 'chats/chats_list/chat_object', locals: { chat: self })
+      ActionCable.server.broadcast "chat_state_channel", chat_json: ChatSerializer.new(self).as_json, chat_html: render_chat_state_template
     end
 end
