@@ -11,7 +11,8 @@ class ChatMessage < ApplicationRecord
   
   # Callbacks
   after_commit :upload_asset
-  after_commit :broadcast_message
+  after_commit :broadcast_chat_message
+  after_commit :broadcast_chat_state
   
   # Associations
   belongs_to :chat
@@ -45,8 +46,12 @@ class ChatMessage < ApplicationRecord
       UploadChatMessageAssetJob.perform_later(self.id)
     end
     
-    def broadcast_message
+    def broadcast_chat_message
       ActionCable.server.broadcast "chat_#{self.chat.access_token}_channel", chat_message_json: ChatMessageSerializer.new(self).as_json, chat_message_html: render_message_template
+    end
+    
+    def broadcast_chat_state
+      ActionCable.server.broadcast "chat_state_channel", chat_json: ChatSerializer.new(self.chat).as_json
     end
     
     def render_message_template
