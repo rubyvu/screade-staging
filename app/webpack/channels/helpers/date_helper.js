@@ -1,5 +1,32 @@
 export function chat_date(date){
-  console.log(date);
+  let currentDate = parseDate(date)
+  
+  if (!isTwelveHoursFormat()) {
+    // dd.mm.yyyy
+    return roundUpNumber(currentDate.getDate()) + '.' + roundUpNumber(currentDate.getMonth() + 1) + '.' + currentDate.getFullYear()
+  } else {
+    // mm/dd/yyy
+    return roundUpNumber(currentDate.getMonth() + 1) + '/' + roundUpNumber(currentDate.getDate()) + '/' + currentDate.getFullYear()
+  }
+}
+
+export function chat_time(date) {
+  let currentDate = parseDate(date)
+  
+  if (!isTwelveHoursFormat()) {
+    // dd.mm.yyyy
+    return new Intl.DateTimeFormat('default', { hour12: false, hour: 'numeric', minute: 'numeric' }).format(currentDate);
+  } else {
+    // mm/dd/yyy
+    return new Intl.DateTimeFormat('default', { hour12: true, hour: 'numeric', minute: 'numeric' }).format(currentDate).toUpperCase();
+  }
+}
+
+function roundUpNumber(number) {
+  return (number.toString().length == 1 ? '0' + number : number)
+}
+
+function parseDate(date) {
   let parsedDate = date.split(' ')
   let currentDate = parsedDate[0]
   let currentTime = parsedDate[1]
@@ -8,14 +35,5 @@ export function chat_date(date){
   currentDate = currentDate.split('-')
   currentTime = currentTime.split(':')
   
-  // year monthIndex day
-  //let newDate = new Date( currentDate[2], currentDate[0] - 1, currentDate[1], currentTime[0], currentTime[1], currentTime[2]);
-  
-  if (!isTwelveHoursFormat()) {
-    // dd.mm.yyyy
-    return currentDate[2] + '.' + currentDate[1] + '.' + currentDate[0]
-  } else {
-    // mm/dd/yyy
-    return currentDate[1] + '/' + currentDate[2] + '/' + currentDate[0]
-  }
+  return new Date( currentDate[0], currentDate[1] - 1, currentDate[2], currentTime[0], currentTime[1], currentTime[2]);
 }

@@ -1,4 +1,5 @@
 import consumer from "./consumer"
+import { chat_time } from "./helpers/date_helper"
 
 // Update User ChatChannel subscription when chat is rendered
 $(document).on('ajax:success', 'a[id^=chat-element-]', function() {
@@ -21,11 +22,11 @@ $(document).on('ajax:success', 'a[id^=chat-element-]', function() {
       connected() {
         // Called when the subscription is ready for use on the server
       },
-  
+      
       disconnected() {
         // Called when the subscription has been terminated by the server
       },
-  
+      
       received(data) {
         // Called when there's incoming data on the websocket for this channel
         let username = data.chat_message_json.user.username
@@ -37,6 +38,10 @@ $(document).on('ajax:success', 'a[id^=chat-element-]', function() {
         if ( chatBoardPlaceholder.find('[data-chat-username]').data('chat-username') === username ) {
           chatMessagesPlaceholder.find(`[data-message-id=${messageId}]`).addClass('message-owner')
         }
+        
+        // Set ChatMessage time to desired format
+        let messageCreatedAt = chat_time(data.chat_message_json.created_at)
+        $(`#chat-message-placeholder [data-message-id=${messageId}] .date`).html(messageCreatedAt)
       }
     });
   }
