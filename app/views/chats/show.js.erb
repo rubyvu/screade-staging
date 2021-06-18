@@ -29,3 +29,24 @@ $('#delete-chat-membership').on('ajax:error', function(e) {
 // Scroll chat to right position
 var myDiv = document.getElementById('chat-message-placeholder');
 myDiv.scrollTop = myDiv.scrollHeight;
+
+// Infinite scroll
+$('#chat-message-placeholder').scroll( function() {
+  if ( $('#chat-message-placeholder').scrollTop() == 0 ) {
+    setTimeout(function() {
+      let topMessage = $('#chat-message-placeholder').children().first()
+      let currentPage = $('#chat-message-placeholder').data('page')
+      let chatAccessToken = $('#chat-board').data('chat-token')
+      
+      $.ajax({
+        url: window.location.origin + '/chats/' + chatAccessToken,
+        type: 'GET',
+        data: { page: currentPage+1 },
+        dataType: 'jsonp'
+      })
+      
+      $('#chat-message-placeholder').data('page', currentPage+1)
+      $('#chat-message-placeholder').scrollTop(topMessage.offset().top - 100)
+    }, 1000)
+  }
+});

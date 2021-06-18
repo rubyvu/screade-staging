@@ -1,4 +1,4 @@
-class Api::V1::ChatsController < Api::V1::ApiController
+class Api::V1::ChatMessagesController < Api::V1::ApiController
   before_action :get_chat, only: [:index, :create]
   before_action :get_user_image, only: [:create]
   before_action :get_user_video, only: [:create]
