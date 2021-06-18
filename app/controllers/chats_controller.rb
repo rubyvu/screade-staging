@@ -10,7 +10,12 @@ class ChatsController < ApplicationController
   # GET /chats/:access_token
   def show
     current_page = params[:page]
-    @chat_messages = @chat.chat_messages.order(created_at: :desc).page(current_page).per(40)
+    if @current_user_membership.history_cleared_at.present?
+      @chat_messages = @chat.chat_messages.where('created_at > ?', @current_user_membership.history_cleared_at).order(created_at: :desc).page(current_page).per(40)
+    else
+      @chat_messages = @chat.chat_messages.order(created_at: :desc).page(current_page).per(40)
+    end
+    
     respond_to do |format|
       if current_page
         format.js { render 'chat_messages/prepend_messages', layout: false }

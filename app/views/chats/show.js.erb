@@ -15,6 +15,13 @@ $('#modal-add-chat-member').on('submit', '[id^=edit_chat]', function(e) {
   $('#modal-add-chat-member').modal('hide')
 })
 
+// Clear Chat history
+$('#clear-chat-history').on('ajax:success', function() {
+  // Reload current Chat board
+  let chatAccessToken = $('#chat-board').data('chat-token')
+  $.ajax({ url: window.location.origin + '/chats/' + chatAccessToken, type: 'GET', dataType: 'jsonp' });
+});
+
 // Delete Uers from Chat
 $('#delete-chat-membership').on('ajax:success', function() {
   location.reload()

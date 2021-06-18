@@ -32,6 +32,7 @@ class ChatMembershipsController < ApplicationController
       return
     end
     
+    @chat_membership.history_cleared_at = DateTime.current if params[:chat_membership][:is_history_cleared]
     if @chat_membership.update(memberships_params)
       render json: { success: true }, status: :ok
     else
@@ -58,6 +59,8 @@ class ChatMembershipsController < ApplicationController
     end
     
     def memberships_params
-      params.require(:chat_membership).permit(:role)
+      strong_params = params.require(:chat_membership).permit(:role, :is_history_cleared)
+      strong_params.delete(:is_history_cleared)
+      strong_params
     end
 end
