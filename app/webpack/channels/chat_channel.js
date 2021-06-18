@@ -42,6 +42,15 @@ $(document).on('ajax:success', 'a[id^=chat-element-]', function() {
         // Set ChatMessage time to desired format
         let messageCreatedAt = chat_time(data.chat_message_json.created_at)
         $(`#chat-message-placeholder [data-message-id=${messageId}] .date`).html(messageCreatedAt)
+        
+        // Scroll down for the last message if Client in the bottom position
+        let chatMessagePlaceholder = document.getElementById('chat-message-placeholder');
+        console.log(chatMessagePlaceholder.scrollTop);
+        console.log(chatMessagePlaceholder.scrollHeight);
+        if (chatMessagePlaceholder.scrollTop >= chatMessagePlaceholder.scrollHeight - 2000) {
+          chatMessagePlaceholder.scrollTop = chatMessagePlaceholder.scrollHeight;
+        }
+        // console.log($('#chat-message-placeholder').scrollTop());
       }
     });
   }
