@@ -28,6 +28,11 @@ class NotificationSerializer < ActiveModel::Serializer
     end
   end
   
+  attribute :source_type
+  def source_type
+    object.source_type
+  end
+  
   attribute :user
   def user
     object.sender.present? ? UserProfileSerializer.new(object.sender).as_json : nil

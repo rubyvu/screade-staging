@@ -13,6 +13,7 @@
   "is_viewed": "false"                                                          (boolean, required)
   "message": "Notification message"                                             (string, required)
   "source": Comment || Event || Post || UserImage || UserVideo || SquadRequest  (object, required)
+  "source_type": Comment || Event || Post || UserImage || UserVideo || ...      (string, required)
   "user": UserProfile                                                           (object, optional)
 }
 ```
