@@ -45,12 +45,9 @@ $(document).on('ajax:success', 'a[id^=chat-element-]', function() {
         
         // Scroll down for the last message if Client in the bottom position
         let chatMessagePlaceholder = document.getElementById('chat-message-placeholder');
-        console.log(chatMessagePlaceholder.scrollTop);
-        console.log(chatMessagePlaceholder.scrollHeight);
         if (chatMessagePlaceholder.scrollTop >= chatMessagePlaceholder.scrollHeight - 2000) {
           chatMessagePlaceholder.scrollTop = chatMessagePlaceholder.scrollHeight;
         }
-        // console.log($('#chat-message-placeholder').scrollTop());
       }
     });
   }
