@@ -1,6 +1,6 @@
 class ChatMembershipsController < ApplicationController
-  before_action :get_chat, only: [:index]
-  before_action :get_chat_membership, only: [:update, :destroy]
+  before_action :get_chat, only: [:index, :unread_messages]
+  before_action :get_chat_membership, only: [:clear_history, :destroy]
   
   # GET /chats/:chat_access_token/chat_memberships
   def index
@@ -21,22 +21,51 @@ class ChatMembershipsController < ApplicationController
   
   # PUT/PATCH /chat_memberships/:id
   def update
-    current_user_membership = ChatMembership.find_by(user: current_user, chat: @chat_membership.chat)
-    if current_user_membership.blank?
+    chat_membership = ChatMembership.find_by(id: params[:id])
+    if chat_membership.blank?
       render json: { errors: ['Record not found.'] }, status: :not_found
       return
     end
     
-    if current_user_membership.role != 'owner'
+    chat_owner_membership = ChatMembership.find_by(user: current_user, chat: chat_membership.chat)
+    if chat_owner_membership.blank?
+      render json: { errors: ['Record not found.'] }, status: :not_found
+      return
+    end
+    
+    if chat_owner_membership.role != 'owner'
       render json: { errors: ['Can be changed only by Owner.'] }, status: :unprocessable_entity
       return
     end
     
-    @chat_membership.history_cleared_at = DateTime.current if params[:chat_membership][:is_history_cleared]
-    if @chat_membership.update(memberships_params)
+    if chat_membership.update(memberships_params)
+      render json: { success: true }, status: :ok
+    else
+      render json: { errors: chat_membership.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+  
+  # PUT/PATCH /chat_memberships/:id/clear_history
+  def clear_history
+    if @chat_membership.update(history_cleared_at: DateTime.current)
       render json: { success: true }, status: :ok
     else
       render json: { errors: @chat_membership.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+  
+  # PUT/PATCH /chats/:chat_access_token/chat_membership/unread_messages
+  def unread_messages
+    chat_membership = ChatMembership.find_by(chat: @chat, user: current_user)
+    if chat_membership.blank?
+      render json: { errors: ['Record not found.'] }, status: :not_found
+      return
+    end
+    
+    if chat_membership.update(unread_messages_count: params[:chat_membership][:unread_messages_count])
+      render json: { success: true }, status: :ok
+    else
+      render json: { errors: chat_membership.errors.full_messages }, status: :unprocessable_entity
     end
   end
   
@@ -55,12 +84,10 @@ class ChatMembershipsController < ApplicationController
     end
     
     def get_chat_membership
-      @chat_membership = ChatMembership.find_by!(id: params[:id])
+      @chat_membership = ChatMembership.find_by!(id: params[:id], user: current_user)
     end
     
     def memberships_params
-      strong_params = params.require(:chat_membership).permit(:role, :is_history_cleared)
-      strong_params.delete(:is_history_cleared)
-      strong_params
+      params.require(:chat_membership).permit(:role, :unread_messages_count)
     end
 end

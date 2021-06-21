@@ -47,18 +47,12 @@ class ChatMessage < ApplicationRecord
     end
     
     def broadcast_chat_message
+      render_message_template = ApplicationController.renderer.render(partial: 'chat_messages/message_to_broadcast', locals: { chat_message: self })
       ActionCable.server.broadcast "chat_#{self.chat.access_token}_channel", chat_message_json: ChatMessageSerializer.new(self).as_json, chat_message_html: render_message_template
     end
     
     def broadcast_chat_state
+      render_chat_state_template = ApplicationController.renderer.render(partial: 'chats/chats_list/chat_object', locals: { chat: self.chat, is_message_counter: false })
       ActionCable.server.broadcast "chat_state_channel", chat_json: ChatSerializer.new(self.chat).as_json, chat_html: render_chat_state_template
-    end
-    
-    def render_message_template
-      ApplicationController.renderer.render(partial: 'chat_messages/message_to_broadcast', locals: { chat_message: self })
-    end
-    
-    def render_chat_state_template
-      ApplicationController.renderer.render(partial: 'chats/chats_list/chat_object', locals: { chat: self.chat })
     end
 end

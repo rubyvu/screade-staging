@@ -18,3 +18,9 @@
         //.icon
         .text
           span #{last_message_text(chat.chat_messages.last)}
+          
+        .unread_messages_count
+          - if is_message_counter
+            span #{chat.get_membership(current_user).unread_messages_count}
+          - else
+            span 0

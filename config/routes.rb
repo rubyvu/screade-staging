@@ -28,14 +28,23 @@ Rails.application.routes.draw do
       end
     end
     
-    resources :chat_memberships, only: [:index]
+    resources :chat_memberships, only: [:index] do
+      collection do
+        put :unread_messages
+      end
+    end
     
     member do
       put :update_members
     end
   end
   
-  resources :chat_memberships, only: [:update, :destroy]
+  resources :chat_memberships, only: [:update, :destroy] do
+    member do
+      put :clear_history
+    end
+  end
+  
   resources :comments, only: [] do
     member do
       post :lit

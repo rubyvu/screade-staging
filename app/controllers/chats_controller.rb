@@ -16,6 +16,9 @@ class ChatsController < ApplicationController
       @chat_messages = @chat.chat_messages.order(created_at: :desc).page(current_page).per(40)
     end
     
+    # Clear unread message counter
+    @current_user_membership.update_columns(unread_messages_count: 0)
+    
     respond_to do |format|
       if current_page
         format.js { render 'chat_messages/prepend_messages', layout: false }
