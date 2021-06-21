@@ -11,14 +11,18 @@ import 'bootstrap-datepicker';
 import 'timepicker/jquery.timepicker.js';
 
 // Import internal scripts
+import './shared/chats';
 import './shared/events';
 import './shared/font_customizer';
+import './shared/global-search';
 import './shared/groups';
 import './shared/image_viewer';
 import './shared/local_date';
 import './shared/modals';
 import './shared/multilevel_dropdown';
 import './shared/news_articles';
+import './shared/notifications';
+import './shared/posts';
 import './shared/user_asset';
 import './shared/video_player';
 import  { isTwelveHoursFormat } from './shared/location';
@@ -77,4 +81,11 @@ $(document).on('turbolinks:load', function () {
   
   //Init Ticker for Breaking news on page load
   $('#webticker').webTicker({ height: '36px', duplicate: true, startEmpty: false });
+  
+  // Hide modal after redirect and go back
+  // $('a[data-type="modal-link"]').on('click', function() {
+  //   $('a[data-type="modal-link"]').first().closest('[id^=modal]').modal('hide')
+  //   $('body').removeClass('modal-open');
+  //   $('.modal-backdrop').remove();
+  // })
 })

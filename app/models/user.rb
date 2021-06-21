@@ -3,6 +3,9 @@ class User < ApplicationRecord
   # :confirmable, :timeoutable, :trackable and :omniauthable
   devise :confirmable, :database_authenticatable, :lockable, :registerable, :recoverable, :validatable, authentication_keys: [:login]
   
+  # Search
+  searchkick searchable: [:username, :first_name, :last_name], match: :word_middle
+  
   # Constants
   EMAIL_FORMAT = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
   PASSWORD_FORMAT = /\A(?=.*[^a-zA-Z])/i  # Must contain at least one number or symbol
@@ -20,8 +23,13 @@ class User < ApplicationRecord
   belongs_to :country
   belongs_to :user_security_question
   has_one :setting, dependent: :destroy
+  has_many :chat_memberships, dependent: :destroy
+  has_many :own_chats, class_name: 'Chat', foreign_key: :owner_id, dependent: :destroy
   has_many :devices, class_name: 'Device', foreign_key: 'owner_id', dependent: :destroy
   has_many :events, dependent: :destroy
+  has_many :posts, dependent: :destroy
+  has_many :post_groups, through: :posts
+  has_many :received_notifications, class_name: 'Notification', foreign_key: :recipient_id, dependent: :destroy
   ## Squad requests
   has_many :squad_requests_as_receiver, foreign_key: :receiver_id, class_name: 'SquadRequest', dependent: :destroy
   has_many :squad_requests_as_requestor, foreign_key: :requestor_id, class_name: 'SquadRequest', dependent: :destroy
@@ -41,6 +49,8 @@ class User < ApplicationRecord
   has_many :user_topic_subscriptions, dependent: :destroy
   has_many :subscribed_news_categories, through: :user_topic_subscriptions, source: :source, source_type: 'NewsCategory'
   has_many :subscribed_topics, through: :user_topic_subscriptions, source: :source, source_type: 'Topic'
+  # Suggested Topics
+  has_many :suggested_topics, class_name: 'Topic', foreign_key: :suggester_id, dependent: :nullify
   # Languages
   has_and_belongs_to_many :languages
   
@@ -93,6 +103,10 @@ class User < ApplicationRecord
   
   def comments_count
     self.comments.count
+  end
+  
+  def views_count
+    View.where(source_type: 'Post', source_id: self.posts.ids).count
   end
   
   def full_name

@@ -1,0 +1,54 @@
+.search-section-header {
+  margin: 12px 0px;
+  font-size: 16px;
+  color: $color-grey;
+}
+
+.search-result-card {
+  width: 100%;
+  padding: 16px;
+  margin: 12px 0px;
+  box-shadow: 0px 3px 14px rgba(0, 0, 0, 0.12);
+  
+  a.search-title { color: $color-black }
+  p { margin: 0; color: $color-grey; }
+  
+  // Groups style
+  .search-element-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    
+    .text-content {
+      h5 {
+        font-size: 12px;
+        color: $color-grey;
+      }
+      
+      span {
+        font-size: 14px;
+        color: $color-black;
+      }
+    }
+    
+    .action-content {
+      display: flex;
+      align-items: center;
+    }
+    
+    .action-content .btn {
+      height: 36px;
+      padding: 0.5rem 1.6rem !important;
+      line-height: 1.2;
+    }
+    
+    .action-content .btn.btn-outline-primary {
+      padding: 0.5rem 0.75rem !important;
+    }
+    
+    .action-content .btn:focus {
+      outline:none;
+      box-shadow: none;
+    }
+  }
+}

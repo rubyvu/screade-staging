@@ -1,0 +1,27 @@
+- if squad_members.count == 0
+  .chat-member-wrapper.no-members
+    h5 You squad members list is empty.
+    
+- else
+  .chat-member-wrapper
+    - squad_members.each do |user|
+      .chat-member-card
+        .photo
+          = link_to user_path(user.username), target: :_blank, data: { type: 'modal-link' } do
+            - if user.profile_picture&.url
+              = image_tag(user.profile_picture.square_320.url, class: 'profile-image')
+            - else
+              = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
+            
+        .content
+          .member-name
+            = user.full_name
+          .member-is-checked
+            label class="big-checkbox-lable"
+              - if !@chat.new_record? && @chat.chat_memberships.exists?(user_id: user.id)
+                input type="checkbox" id="checkbox-member-#{user.username}" data-username="#{user.username}" checked='true'
+              
+              - else
+                input type="checkbox" id="checkbox-member-#{user.username}" data-username="#{user.username}"
+                
+              .checkmark

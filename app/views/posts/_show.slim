@@ -1,0 +1,57 @@
+.post-wrapper
+  .post-info-wrapper
+    .user-info-wrapper
+      = link_to user_path(post.user.username) do
+        - if post.user.profile_picture.url
+          = image_tag(post.user.profile_picture.square_320.url, class: 'profile-image')
+        - else
+          = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
+          
+      .user-info
+        span #{post.user.full_name}
+        span #{comment_timestamp(post.created_at)}
+    
+    - if post.source_type == 'Topic' && !post.source.is_approved
+      p.post-status On approve
+  
+  - if post.image.present?
+    .full-image-wrapper
+      = image_tag(post.image.url, class: '', onerror: "this.error=null;this.src='#{asset_pack_path('media/images/placeholders/placeholder-news.png')}'")
+  - else
+    = image_pack_tag('media/images/placeholders/placeholder-news.png', class: 'url-full-image')
+    
+  .post-info-panel
+    .info-actions
+      .div class="info-panel-value-wrapper"
+        - if post.is_lited(current_user)
+          = link_to post_post_lits_path(post), method: :delete, remote: true, id: "post-lit-#{post.id}" do
+            i.ic.lit.reverse.active
+        - else
+          = link_to post_post_lits_path(post), method: :post, remote: true, id: "post-lit-#{post.id}" do
+            i.ic.lit.reverse
+            
+        span.info-panel-value.color-black #{counter_measurement(post.lits.size)}
+        
+      .info-panel-value-wrapper.pointer-disable
+        i class=(post.is_commented(current_user) ? "ic comment reverse active" : "ic comment reverse")
+        span.info-panel-value.color-black #{counter_measurement(post.comments.size)}
+        
+      .info-panel-value-wrapper.pointer-disable
+        i class=(post.is_viewed(current_user) ? "ic view reverse" : "ic view reverse")
+        span.info-panel-value.color-black #{counter_measurement(post.views.size)}
+    
+    - if @post.user == current_user
+      .post-notifier-wrapper
+        = form_for @post, url: post_path(@post), method: :patch, remote: :true do |f|
+          label.switch
+            = f.check_box :is_notification
+            span.slider.default.round
+            
+          span.ml-2 Notifications
+        
+  .post-text
+    .post-title
+      = post.title
+    .post-description
+      = post.description
+      

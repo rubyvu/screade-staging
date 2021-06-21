@@ -3,6 +3,10 @@
   width: 100%;
   display: inline-flex;
   margin-top: 24px;
+  
+  &.content-post {
+    margin-top: 12px;
+  }
 }
 
 .comments-wrapper {

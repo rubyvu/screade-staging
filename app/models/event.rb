@@ -3,6 +3,9 @@ class Event < ApplicationRecord
   # Associations
   belongs_to :user
   
+  ## Notifications
+  has_many :notifications, as: :source, dependent: :destroy
+  
   # Association validation
   validates :user, presence: true
   

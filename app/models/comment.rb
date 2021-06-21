@@ -1,5 +1,8 @@
 class Comment < ApplicationRecord
-  SOURCE_TYPES = %w(NewsArticle)
+  SOURCE_TYPES = %w(NewsArticle Post)
+  
+  # Callbacks
+  after_create :add_notification
   
   # Associations
   has_many :replied_comments, class_name: 'Comment', foreign_key: :comment_id, dependent: :destroy
@@ -9,6 +12,8 @@ class Comment < ApplicationRecord
   ## Lits
   has_many :lits, as: :source, dependent: :destroy
   has_many :liting_users, through: :lits, source: :user
+  # Notifications
+  has_many :notifications, as: :source, dependent: :destroy
   
   # Field validations
   validates :message, presence: true
@@ -22,6 +27,12 @@ class Comment < ApplicationRecord
   end
   
   private
+    def add_notification
+      # Do not send notification to yourself
+      return if (self.comment_id.present? && self.comment.user == self.user) || (self.source_type == 'Post' && self.source.user == self.user)
+      CreateNewNotificationsJob.perform_later(self.id, self.class.name)
+    end
+    
     def replied_comment_only_for_comment
       return if self.comment.blank?
       self.errors.add(:base, 'You can create reply only from parent comment.') if self.comment.comment.present?

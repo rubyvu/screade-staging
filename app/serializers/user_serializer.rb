@@ -59,8 +59,7 @@ class UserSerializer < ActiveModel::Serializer
   
   attribute :views_count
   def views_count
-    # How many User posts viewd by another Users
-    0
+    object&.views_count
   end
   
   attribute :username

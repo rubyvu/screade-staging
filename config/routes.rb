@@ -20,6 +20,15 @@ Rails.application.routes.draw do
     passwords: 'users/passwords'
   }
   
+  resources :chats, param: :access_token do
+    member do
+      put :update_members
+    end
+    
+    resources :chat_memberships, only: [:index]
+  end
+  
+  resources :chat_memberships, only: [:update, :destroy]
   resources :comments, only: [] do
     member do
       post :lit
@@ -81,6 +90,24 @@ Rails.application.routes.draw do
     end
   end
   
+  resources :notifications, only: [:index, :update]
+  resources :posts do
+    resources :post_comments, only: [:index, :create] do
+      get :reply_comments
+    end
+    
+    resources :post_lits, only: [:create] do
+      collection do
+        delete :destroy
+      end
+    end
+    
+    collection do
+      get :user_images
+    end
+  end
+  
+  resources :searches, only: [:index]
   resources :settings, only: [:edit, :update]
   resources :squad_requests, only: [:index, :create] do
     member do
@@ -133,7 +160,20 @@ Rails.application.routes.draw do
         end
       end
       
-      resources :comments, only: [] do
+      resources :chats, only: [:index, :show, :create, :update], param: :access_token do
+        member do
+          put :update_members
+        end
+        
+        resources :chat_memberships, only: [:index] do
+          collection do
+            get :chat_users
+          end
+        end
+      end
+      
+      resources :chat_memberships, only: [:update, :destroy]
+      resources :comments, only: [:show] do
         member do
           get :reply_comments
           post :lit
@@ -200,6 +240,25 @@ Rails.application.routes.draw do
         end
       end
       
+      
+      resources :notifications, only: [:index, :update] do
+        collection do
+          put :view_all
+        end
+      end
+      
+      resources :posts, only: [:index, :show, :create, :update, :destroy] do
+        resources :post_comments, only: [:index, :create]
+        
+        resources :post_lits, only: [:create] do
+          collection do
+            delete :destroy
+          end
+        end
+      end
+      
+      resources :post_groups, only: [:index]
+      resources :searches, only: [:index]
       resources :settings, only: [:index] do
         collection do
           put :update

@@ -1,0 +1,22 @@
+.control-element#dropdown-control-element {
+  cursor: pointer;
+  a.dropdown-item {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    width: 290px;
+    
+    img {
+      width: 24px;
+      height: auto;
+      margin: 0 32px 0 18px;
+    }
+    
+    span {
+      padding: 12px 0;
+      font-size: 16px;
+      border-bottom: 1px solid $color-light-grey;
+      width: 100%;
+    }
+  }
+}

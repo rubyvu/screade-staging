@@ -4,8 +4,9 @@ class UsersController < ApplicationController
   # GET /users/:username
   def show
     @squad_request = @user.squad_requests_as_receiver.where(requestor: current_user, declined_at: nil).or(@user.squad_requests_as_requestor.where(receiver: current_user, declined_at: nil)).first
-    @images = @user.user_images.where(is_private: false).order(updated_at: :desc).limit(6)
-    @videos = @user.user_videos.where(is_private: false).order(updated_at: :desc).limit(6)
+    @posts = @user.posts.where(state: 'approved').order(created_at: :desc).limit(20)
+    @images = @user.user_images.where(is_private: false).order(updated_at: :desc).limit(20)
+    @videos = @user.user_videos.where(is_private: false).order(updated_at: :desc).limit(20)
   end
   
   # GET /users/:username

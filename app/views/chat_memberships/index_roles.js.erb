@@ -1,0 +1,32 @@
+$('#modal-chat-members-roles').modal('show')
+$('#chat-members-roles-placeholder').html("<%= j render partial: 'chats/chat_members/change_member_role' %>")
+
+// Change ChatMember role
+$('#modal-chat-members-roles').off('change', '[id$=_role]').on('change', '[id$=_role]', function() {
+  let role = $(this).val();
+  let chatMembershipId = $(this).attr('id').split('_')[0]
+  
+  if ( role === 'owner' ) {
+    let result = confirm("Are you really want to assign a new Owner?");
+    if (result) {
+      // Yes - Update role
+      updateMembershipRole(chatMembershipId, role)
+    }
+    
+    $('#chat-members-roles-placeholder').empty()
+    $('#chat-members-roles-placeholder').html("<%= j render partial: 'chats/chat_members/change_member_role' %>")
+    $('#modal-chat-members-roles').modal('hide')
+    return
+  }
+  
+  updateMembershipRole(chatMembershipId, role);
+})
+
+function updateMembershipRole(chatMembershipId, role) {
+  $.ajax({
+      url: window.location.origin + '/chat_memberships/' + chatMembershipId,
+      type: 'PUT',
+      data: { chat_membership: { role: role }},
+      dataType: 'json'
+  });
+}

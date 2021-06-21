@@ -1,0 +1,15 @@
+.chat-wrapper
+  .chat-objects-wrapper
+    = render 'chats/chats_list/index', chats: @chats
+    
+  .chat-board-wrapper#chat-board-placeholder
+    - if @chats.present?
+      = render 'chats/chat_board/welcome_board'
+    - else
+      = render 'chats/chat_board/no_board'
+  
+  .add-chat-button
+    = link_to new_chat_path, remote: true do
+      = image_pack_tag('media/images/icons/ic_plus.png', class: 'plus-with-border')
+      
+= render 'chats/chat_modals/new_chat'

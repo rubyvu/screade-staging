@@ -15,7 +15,19 @@
 - [List of all News Categories](api/v1/news_categories/index.md)
 - [List of NewsArticles for each Category](api/v1/news_categories/news.md)
 
+### Chat
+- [List of all Chats](api/v1/chats/index.md)
+- [View Chat](api/v1/chats/show.md)
+- [Create new Chat](api/v1/chats/create.md)
+- [Update Chat](api/v1/chats/update.md)
+- [Add/Remove Chat Members](api/v1/chats/update_members.md)
+- [List of all ChatMembers in the Chat](api/v1/chat_memberships/index.md)
+- [List of all Users that can be added/removed from the Chat](api/v1/chat_memberships/chat_users.md)
+- [Update ChatMember role](api/v1/chat_memberships/update.md)
+- [Remove ChatMember from the Chat](api/v1/chat_memberships/destroy.md)
+
 ### Comments
+- [Show Article Comment](api/v1/comments/show.md)
 - [List of Article Comments](api/v1/news_articles/index_comment.md)
 - [List of ReplyComments for Comment](api/v1/comments/reply_comments.md)
 - [Add Comment to Article](api/v1/news_articles/create_comment.md)
@@ -66,12 +78,32 @@
 - [Subscribe NewsArticle to Topic](api/v1/news_articles/topic_subscription.md)
 - [Get NewsArticle Groups with Subscriptions](api/v1/news_articles/groups.md)
 
+### Notifications
+- [Get all user Notifications](api/v1/notifications/index.md)
+- [Mark all User Notification as viewed](api/v1/notifications/view_all.md)
+- [Mark Notification as viewed](api/v1/notifications/update.md)
+
+### Squad Search
+- [Global Search](api/v1/searches/index.md)
+
 ### Squad Requst
 - [Accept request](api/v1/squad_requests/accept.md)
 - [Create new request](api/v1/squad_requests/create.md)
 - [Decline request](api/v1/squad_requests/decline.md)
 - [Get requsts list](api/v1/squad_requests/index.md)
 - [Get Squad Members by Username](api/v1/squad_members/index.md)
+
+### Post
+- [View all Posts](api/v1/posts/index.md)
+- [View Post](api/v1/posts/show.md)
+- [List of Groups for new Post](api/v1/post_groups/index.md)
+- [Create new Post](api/v1/posts/create.md)
+- [Update Post](api/v1/posts/update.md)
+- [Delete Post](api/v1/posts/destroy.md)
+- [Lit Post](api/v1/post_lits/create.md)
+- [Unlit Post](api/v1/post_lits/destroy.md)
+- [Post Comments List](api/v1/post_comments/index.md)
+- [Create Post Comments](api/v1/post_comments/create.md)
 
 ### Topic
 - [Create new Topic](api/v1/topics/create.md)

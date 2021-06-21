@@ -1,4 +1,6 @@
 class Topic < ApplicationRecord
+  # Search
+  searchkick text_middle: [:title]
   
   # Constants
   PARENT_TYPES = %w(Topic NewsCategory)
@@ -6,10 +8,13 @@ class Topic < ApplicationRecord
   # Callbacks
   before_validation :set_nesting_position
   after_update :unapprove_topic
+  after_update :update_nested_posts
   
   # Associations
   has_many :sub_topics, -> (topic) { where(parent_type: 'Topic') }, class_name: 'Topic', foreign_key: :parent_id, dependent: :destroy
-  
+  # Posts
+  has_many :posts, as: :source, dependent: :destroy
+  has_many :post_groups, as: :group
   # User Subscribed for Topic
   has_many :user_topic_subscriptions, as: :source, dependent: :destroy
   has_many :subscribed_users, through: :user_topic_subscriptions, source: :user
@@ -17,6 +22,7 @@ class Topic < ApplicationRecord
   has_and_belongs_to_many :news_articles
   
   belongs_to :parent, class_name: 'Topic', foreign_key: :parent_id, polymorphic: true
+  belongs_to :suggester, class_name: 'User', foreign_key: :suggester_id, optional: true
   
   # Field validations
   validates :nesting_position, presence: true, numericality: { less_than_or_equal_to: 2,  only_integer: true }
@@ -48,10 +54,21 @@ class Topic < ApplicationRecord
       unaprove_sub_topis(self) if self.saved_change_to_is_approved? && !self.is_approved && self.nesting_position < 2
     end
     
+    def update_nested_posts
+      if self.saved_change_to_is_approved?(from: true, to: false)
+        self.posts.update_all(state: 'pending')
+      elsif self.saved_change_to_is_approved?(from: false, to: true)
+        self.posts.update_all(state: 'approved')
+      end
+    end
+    
     def unaprove_sub_topis(topic)
       # Update each Topic SubTopics
       topic.sub_topics.where(is_approved: true).each do |sub_topic|
         sub_topic.update_columns(is_approved: false)
+        
+        # Change all nested posts to pending state
+        sub_topic.posts.update_all(state: 'pending')
         unaprove_sub_topis(sub_topic)
       end
     end

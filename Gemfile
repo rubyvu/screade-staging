@@ -15,6 +15,9 @@ gem 'pg', '1.2.3'
 # Use Puma as the app server
 gem 'puma'
 
+# Redis for ActionCable
+gem 'redis'
+
 # Admin panel
 gem 'activeadmin'
 
@@ -83,6 +86,13 @@ gem 'geocoder'
 
 # Detect language for NewsArticle
 gem 'cld'
+
+# Global Search
+gem 'searchkick'
+gem 'faraday_middleware-aws-sigv4'
+
+# Firebase Cloud Messaging
+gem 'fcm'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

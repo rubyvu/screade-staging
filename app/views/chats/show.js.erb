@@ -1,0 +1,27 @@
+$('#chat-board-placeholder').html("<%= j render partial: 'chats/chat_board/new_board' %>")
+
+// The current script should be placed here. It's called every time when partial is reload
+// On Chat update
+$('#modal-add-chat-member').on('submit', '[id^=edit_chat]', function(e) {
+  let checkedMembers = $("[id^=checkbox-member-]:checked")
+  if (checkedMembers.length > 0) {
+    $("#chat_membership_usernames_").remove()
+    checkedMembers.each(function() {
+      let username = $(this).attr("data-username")
+      $(e.target).append(`<input type="hidden" name="chat_membership[usernames][]" id="chat_membership_usernames_" value=${username}>`)
+    })
+  }
+  
+  $('#modal-add-chat-member').modal('hide')
+})
+
+// Delete Uers from Chat
+$('#delete-chat-membership').on('ajax:success', function() {
+  location.reload()
+});
+
+$('#delete-chat-membership').on('ajax:error', function(e) {
+  let error = e.detail[0].errors[0]
+  if (error.length == 0) { return }
+  alert(error)
+});

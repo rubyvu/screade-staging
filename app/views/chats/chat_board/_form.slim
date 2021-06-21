@@ -1,0 +1,19 @@
+= form_for @chat, url: chat_path(@chat.access_token), remote: true, authenticity_token: true, html: { method: :put } do |f|
+  .material-field
+    = f.label 'Group name'
+    = f.text_field :name, value: @chat.name , class: 'form-control'
+    
+  .material-field
+    = f.label 'Group icon'
+    = f.file_field :icon, class: 'form-control', style: 'display: none'
+    
+    .chat-icon-mask#edit-icon-mask
+      - if @chat.icon.present?
+        img#chat-icon-image.chat-icon-image style= "display: inline;" src="#{@chat.icon.url}"
+        = image_pack_tag 'media/images/icons/ic_chat_add_icon.png', class: 'icon-add-banner', id: 'icon-add-image', style: 'display:none;'
+      - else
+        img#chat-icon-image.chat-icon-image src=""
+        = image_pack_tag 'media/images/icons/ic_chat_add_icon.png', class: 'icon-add-banner', id: 'icon-add-image'
+    
+  .my-3
+    = f.submit 'Update', class: 'btn btn-primary w-100'

@@ -30,13 +30,43 @@
   box-shadow: none !important;
 }
 
+.navbar-control-panel {
+  display: flex;
+  align-items: center;
+  
+  #navbar-search-inactive {
+    cursor: pointer;
+    display: block;
+    margin-right: 8px;
+    margin-bottom: 2px;
+  }
+  
+  #navbar-search-active {
+    display: none;
+    cursor: pointer;
+   }
+}
+
 .navbar-icon-wrappers {
-  cursor: pointer;
   justify-content: center;
   height: 20px;
   width: 20px;
   display: inline-flex;
   margin: 0 10px;
+  
+  img { cursor: pointer; }
+  
+  &.devider {
+    height: 26px;
+    margin: 0px;
+    
+    i.vertical-line {
+      cursor: default;
+      height: auto;
+      width: 1px;
+      background-color: $color-light-grey;
+    }
+  }
 }
 
 // Dropdown
@@ -46,4 +76,98 @@
   padding: 0.5rem 1.5rem;
   
   &.no-border { border: none; }
+}
+
+#notifications-list-placeholder {
+  overflow: scroll;
+  max-height: 50vh;
+}
+
+.navbar-icon-wrappers .dropdown-item.notification {
+  padding: 0.25rem 0rem 0.25rem 1.5rem;
+  margin: 12px 0px;
+  display: flex;
+  align-items: center;
+  white-space: break-spaces;
+  border-bottom: none;
+  
+  .notification-image {
+    height: 40px;
+    width: 40px;
+    display: flex;
+  }
+  
+  .notification-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    
+    img {
+      height: 30px;
+      width: auto;
+    }
+  }
+  
+  .body {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 300px;
+    margin-left: 16px;
+    padding-right: 1.5rem;
+    border-bottom: 1px solid $color-light-grey;
+    
+    .header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      
+      .title {
+        width: 50%;
+        font-size: 16px;
+      }
+        
+      .date {
+        font-size: 12px;
+        color: $color-grey
+      }
+    }
+    
+    .message {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+      
+      .icon {
+        margin-right: 6px;
+        height: 18px;
+        width: auto;
+        
+        img { display: flex; height: 100%; }
+      }
+      
+      .text {
+        word-break: break-all;
+        font-size: 14px;
+        color: $color-dark-cadet-blue;
+      }
+    }
+  }
+}
+
+i.notification-bage {
+  position: absolute;
+  right: -5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: none;
+  
+  &.active {
+    display: block;
+    background-color: $color-red;
+  }
 }

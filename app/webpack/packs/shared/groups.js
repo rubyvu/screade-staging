@@ -96,7 +96,7 @@ $( document ).on('turbolinks:load', function() {
   })
   
   // Search
-  $('#modal-group-search, #modal-news-article-group-search').on('keyup', '#group-search-input', function() {
+  $('#modal-group-search, #modal-post-group-search, #modal-news-article-group-search').on('keyup', '#group-search-input', function() {
     // Typed letters
     var value = $(this).val()
     

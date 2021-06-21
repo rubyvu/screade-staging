@@ -31,7 +31,7 @@ class NewsArticlesController < ApplicationController
   
   # GET /news_articles/:id/comments
   def comments
-    @new_comment = Comment.new()
+    @new_comment = Comment.new(source_type: 'NewsArticle')
     @comments = Comment.where(source: @news_article, comment_id: nil).order(created_at: :desc)
   end
   

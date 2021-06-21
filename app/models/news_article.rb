@@ -1,4 +1,6 @@
 class NewsArticle < ApplicationRecord
+  # Search
+  searchkick word_middle: [:title]
   
   # Associations
   belongs_to :country

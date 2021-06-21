@@ -86,7 +86,7 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
   
   private
     def device_params
-      params.require(:device).permit(:name, :operational_system)
+      params.require(:device).permit(:name, :operational_system, :push_token)
     end
     
     def user_params

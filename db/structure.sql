@@ -325,6 +325,74 @@ ALTER SEQUENCE public.breaking_news_id_seq OWNED BY public.breaking_news.id;
 
 
 --
+-- Name: chat_memberships; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.chat_memberships (
+    id bigint NOT NULL,
+    chat_id integer NOT NULL,
+    user_id integer NOT NULL,
+    role character varying DEFAULT 'user'::character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: chat_memberships_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.chat_memberships_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: chat_memberships_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.chat_memberships_id_seq OWNED BY public.chat_memberships.id;
+
+
+--
+-- Name: chats; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.chats (
+    id bigint NOT NULL,
+    name character varying,
+    icon character varying,
+    icon_hex character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    owner_id integer NOT NULL,
+    access_token character varying NOT NULL
+);
+
+
+--
+-- Name: chats_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.chats_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: chats_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.chats_id_seq OWNED BY public.chats.id;
+
+
+--
 -- Name: comments; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -451,7 +519,8 @@ CREATE TABLE public.devices (
     name character varying,
     operational_system character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    push_token character varying
 );
 
 
@@ -713,6 +782,117 @@ ALTER SEQUENCE public.news_sources_id_seq OWNED BY public.news_sources.id;
 
 
 --
+-- Name: notifications; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.notifications (
+    id bigint NOT NULL,
+    recipient_id integer NOT NULL,
+    source_id integer NOT NULL,
+    source_type character varying NOT NULL,
+    is_viewed boolean DEFAULT false,
+    message character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    sender_id integer
+);
+
+
+--
+-- Name: notifications_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.notifications_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: notifications_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.notifications_id_seq OWNED BY public.notifications.id;
+
+
+--
+-- Name: post_groups; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.post_groups (
+    id bigint NOT NULL,
+    group_id integer NOT NULL,
+    group_type character varying NOT NULL,
+    post_id integer NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: post_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.post_groups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: post_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.post_groups_id_seq OWNED BY public.post_groups.id;
+
+
+--
+-- Name: posts; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.posts (
+    id bigint NOT NULL,
+    user_id integer NOT NULL,
+    title character varying NOT NULL,
+    description character varying NOT NULL,
+    image character varying,
+    image_hex character varying,
+    is_notification boolean DEFAULT true,
+    state character varying DEFAULT 'pending'::character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    comments_count integer DEFAULT 0 NOT NULL,
+    lits_count integer DEFAULT 0 NOT NULL,
+    views_count integer DEFAULT 0 NOT NULL,
+    source_id integer NOT NULL,
+    source_type character varying NOT NULL
+);
+
+
+--
+-- Name: posts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.posts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: posts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.posts_id_seq OWNED BY public.posts.id;
+
+
+--
 -- Name: que_jobs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -883,7 +1063,8 @@ CREATE TABLE public.topics (
     is_approved boolean DEFAULT false,
     nesting_position integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    suggester_id integer
 );
 
 
@@ -1139,6 +1320,20 @@ ALTER TABLE ONLY public.breaking_news ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
+-- Name: chat_memberships id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chat_memberships ALTER COLUMN id SET DEFAULT nextval('public.chat_memberships_id_seq'::regclass);
+
+
+--
+-- Name: chats id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chats ALTER COLUMN id SET DEFAULT nextval('public.chats_id_seq'::regclass);
+
+
+--
 -- Name: comments id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1206,6 +1401,27 @@ ALTER TABLE ONLY public.news_categories ALTER COLUMN id SET DEFAULT nextval('pub
 --
 
 ALTER TABLE ONLY public.news_sources ALTER COLUMN id SET DEFAULT nextval('public.news_sources_id_seq'::regclass);
+
+
+--
+-- Name: notifications id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.notifications ALTER COLUMN id SET DEFAULT nextval('public.notifications_id_seq'::regclass);
+
+
+--
+-- Name: post_groups id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.post_groups ALTER COLUMN id SET DEFAULT nextval('public.post_groups_id_seq'::regclass);
+
+
+--
+-- Name: posts id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.posts ALTER COLUMN id SET DEFAULT nextval('public.posts_id_seq'::regclass);
 
 
 --
@@ -1303,6 +1519,22 @@ ALTER TABLE ONLY public.breaking_news
 
 
 --
+-- Name: chat_memberships chat_memberships_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chat_memberships
+    ADD CONSTRAINT chat_memberships_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: chats chats_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chats
+    ADD CONSTRAINT chats_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: comments comments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1380,6 +1612,30 @@ ALTER TABLE ONLY public.news_categories
 
 ALTER TABLE ONLY public.news_sources
     ADD CONSTRAINT news_sources_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: notifications notifications_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.notifications
+    ADD CONSTRAINT notifications_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: post_groups post_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.post_groups
+    ADD CONSTRAINT post_groups_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: posts posts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.posts
+    ADD CONSTRAINT posts_pkey PRIMARY KEY (id);
 
 
 --
@@ -1509,6 +1765,34 @@ CREATE UNIQUE INDEX index_admin_users_on_reset_password_token ON public.admin_us
 
 
 --
+-- Name: index_chat_memberships_on_chat_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chat_memberships_on_chat_id ON public.chat_memberships USING btree (chat_id);
+
+
+--
+-- Name: index_chat_memberships_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chat_memberships_on_user_id ON public.chat_memberships USING btree (user_id);
+
+
+--
+-- Name: index_chats_on_access_token; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_chats_on_access_token ON public.chats USING btree (access_token);
+
+
+--
+-- Name: index_chats_on_owner_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chats_on_owner_id ON public.chats USING btree (owner_id);
+
+
+--
 -- Name: index_comments_on_source_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1541,6 +1825,13 @@ CREATE UNIQUE INDEX index_devices_on_access_token ON public.devices USING btree 
 --
 
 CREATE INDEX index_devices_on_owner_id ON public.devices USING btree (owner_id);
+
+
+--
+-- Name: index_devices_on_push_token; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_devices_on_push_token ON public.devices USING btree (push_token);
 
 
 --
@@ -1618,6 +1909,20 @@ CREATE INDEX index_news_sources_on_country_id ON public.news_sources USING btree
 --
 
 CREATE UNIQUE INDEX index_news_sources_on_source_identifier ON public.news_sources USING btree (source_identifier);
+
+
+--
+-- Name: index_notifications_on_recipient_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_notifications_on_recipient_id ON public.notifications USING btree (recipient_id);
+
+
+--
+-- Name: index_post_groups_on_post_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_post_groups_on_post_id ON public.post_groups USING btree (post_id);
 
 
 --
@@ -1824,6 +2129,19 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210422095808'),
 ('20210428081943'),
 ('20210428095951'),
-('20210505083950');
+('20210505083950'),
+('20210506070755'),
+('20210506082408'),
+('20210506122556'),
+('20210507153931'),
+('20210513073904'),
+('20210519140106'),
+('20210520091515'),
+('20210520092046'),
+('20210525134028'),
+('20210526091353'),
+('20210526091531'),
+('20210531142735'),
+('20210601075607');
 
 

@@ -1,0 +1,58 @@
+.chat-info
+  .main-info
+    .photo
+      - if @chat.icon&.url
+        = image_tag(@chat.icon&.rectangle_150_150.url, class: 'profile-image')
+      - elsif @chat.owner&.profile_picture&.url
+        = image_tag(@chat.owner.profile_picture.square_320.url, class: 'profile-image')
+      - else
+        = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
+        
+    .title
+      = @chat.name
+      
+  .control-info
+    .control-element
+      = image_pack_tag('media/images/icons/ic_chat_videocam.png')
+    .control-element
+      = image_pack_tag('media/images/icons/ic_chat_phone.png')
+    .control-element#dropdown-control-element
+      a.dropdown-toggle#dropdown-chat-more-button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+        = image_pack_tag('media/images/icons/ic_chat_more.png')
+      .dropdown-menu.dropdown-menu-right aria-labelledby="#dropdown-chat-more-button"
+        - if @chat.admins.include?(current_user) || @chat.owner == current_user
+          = link_to chat_chat_memberships_path(@chat.access_token), class: 'dropdown-item', remote: true do
+            = image_pack_tag('media/images/icons/ic_chat_add_member.png')
+            span Add member
+        = link_to chat_chat_memberships_path(@chat.access_token, response_type: 'roles'), class: 'dropdown-item', remote: true do
+          = image_pack_tag('media/images/icons/ic_chat_members.png')
+          span Members
+        - if @chat.admins.include?(current_user) || @chat.owner == current_user
+          = link_to edit_chat_path(@chat.access_token), class: 'dropdown-item', remote: true do
+            = image_pack_tag('media/images/icons/ic_chat_change_group.png')
+            span Change group
+          = link_to '', class: 'dropdown-item' do
+            = image_pack_tag('media/images/icons/ic_chat_clear_history.png')
+            span Clear history
+        = link_to chat_membership_path(@chat.get_membership(current_user)), class: 'dropdown-item', id: 'delete-chat-membership', method: :delete, data: { confirm: 'Are you realy whant to exit from this group?' }, remote: true  do
+          = image_pack_tag('media/images/icons/ic_chat_leave_group.png')
+          span Leave group
+      
+.chat-message-board
+  
+.chat-input
+  = form_for Chat.new do |f|
+    .input-group
+      .input-group-prepend
+        .input-group-text
+          = image_pack_tag('media/images/icons/ic_chat_document.png', class: 'img-responsive')
+          
+      = f.text_field :name, class: 'form-control', placeholder: 'Write a message', autocomplete: false, disabled: true
+      
+      .input-group-append
+        .input-group-text
+          = image_pack_tag('media/images/icons/ic_send_message.png', class: 'img-responsive')
+  
+= render 'chats/chat_modals/add_chat_member'
+= render 'chats/chat_modals/chat_members_roles'
+= render 'chats/chat_modals/edit_chat'

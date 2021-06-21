@@ -1,6 +1,6 @@
 class View < ApplicationRecord
   
-  SOURCE_TYPES = %w(NewsArticle)
+  SOURCE_TYPES = %w(NewsArticle Post)
   
   # Associations
   belongs_to :source, polymorphic: true, counter_cache: :views_count
