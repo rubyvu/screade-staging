@@ -18,7 +18,7 @@
      = f.text_field :title, autocomplete: 'off', class: 'form-control', placeholder: 'Title', required: true
       
     .input-group.mb-4
-      = f.text_area :description, autocomplete: 'off', class: 'form-control', placeholder: 'Event Description', required: true, rows: 2
+      = f.text_area :description, autocomplete: 'off', class: 'form-control', placeholder: 'Post Description', required: true, rows: 2
     
     .material-field.dropdown.mb-3#post-select-dropdown-position
       - if f.object.persisted?
