@@ -2,7 +2,7 @@
   - sub_topics = topic.sub_topics.where(is_approved: true)
   input type="checkbox" id="topic-#{topic.parent_id}"
   ul
-    li.group-wrapper
+    li.group-wrapper id="group-wrapper-#{topic.class.name}-#{topic.id}"
       .main-content class="#{current_user.is_group_subscription(topic) ? 'active' : ''}" data-type="Topic" id="#{topic.id}"
         .title-wrapper
           p #{topic.title.capitalize}

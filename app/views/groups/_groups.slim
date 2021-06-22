@@ -7,7 +7,7 @@
     ul.tree
       // Render Root of the Group from NewsCategory
       - groups.each do |group|
-        li.group-wrapper.root-level.noselect
+        li.group-wrapper.root-level.noselect id="group-wrapper-#{group.class.name}-#{group.id}"
           .main-content class="#{current_user.is_group_subscription(group) ? 'active' : ''}" data-type="NewsCategory" id="#{group.id}"
             .title-wrapper
               = image_tag group.image.url, class: 'main'
@@ -23,7 +23,7 @@
             - group_topics.each do |topic|
               input type="checkbox" id="news-category-#{group.id}"
               ul
-                li.group-wrapper
+                li.group-wrapper id="group-wrapper-#{group.class.name}-#{group.id}"
                   .main-content class="#{current_user.is_group_subscription(topic) ? 'active' : ''}" data-type="Topic" id="#{topic.id}"
                     .title-wrapper
                       p #{topic.title.capitalize}

@@ -71,7 +71,8 @@ class PostsController < ApplicationController
     end
     
     def get_groups
-      @groups = NewsCategory.all + Topic.where(is_approved: true).or(Topic.where.not(is_approved: true).where(suggester: current_user))
+      @groups = NewsCategory.order(title: :asc)
+      # @groups = NewsCategory.all + Topic.where(is_approved: true).or(Topic.where.not(is_approved: true).where(suggester: current_user))
     end
     
     def get_user_image
