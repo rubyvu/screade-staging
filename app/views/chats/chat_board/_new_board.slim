@@ -31,9 +31,6 @@
           = link_to edit_chat_path(@chat.access_token), class: 'dropdown-item', remote: true do
             = image_pack_tag('media/images/icons/ic_chat_change_group.png')
             span Change group
-          = link_to '', class: 'dropdown-item' do
-            = image_pack_tag('media/images/icons/ic_chat_clear_history.png')
-            span Clear history
         = link_to chat_membership_path(@chat.get_membership(current_user)), class: 'dropdown-item', id: 'delete-chat-membership', method: :delete, data: { confirm: 'Are you realy whant to exit from this group?' }, remote: true  do
           = image_pack_tag('media/images/icons/ic_chat_leave_group.png')
           span Leave group
