@@ -6,9 +6,9 @@
         - if post.user == current_user
           .post-header-panel
             .state
-              - if post.source_type == 'Topic' && !post.source.is_approved
+              - if !post.is_approved
                 p On approve
-              
+                
             .actions
               = link_to edit_post_path(post) do
                 = image_pack_tag('media/images/icons/ic_edit.png')
@@ -25,7 +25,7 @@
           .post-title-panel
             = link_to post.title, post_post_comments_path(post)
           
-          .post-info-panel
+          . class="#{post.is_approved ? 'post-info-panel' : 'post-info-panel on-approve'}"
             .div class="info-panel-value-wrapper"
               - if post.is_lited(current_user)
                 = link_to post_post_lits_path(post), method: :delete, remote: true, id: "post-lit-#{post.id}" do

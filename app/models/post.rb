@@ -3,11 +3,9 @@ class Post < ApplicationRecord
   searchkick text_middle: [:title]
   
   # Constants
-  APPROVING_STATES = %w(pending approved)
   SOURCE_TYPES = %w(NewsCategory Topic)
   
   # Callbacks
-  before_validation :set_state, on: :create
   after_save :update_associated_groups
   after_save :add_notification
   
@@ -38,7 +36,6 @@ class Post < ApplicationRecord
   # Fields validations
   validates :title, presence: true
   validates :description, presence: true
-  validates :state, presence: true, inclusion: { in: Post::APPROVING_STATES }
   validates :source_id, presence: true
   validates :source_type, presence: true, inclusion: { in: Post::SOURCE_TYPES }
   
@@ -56,12 +53,8 @@ class Post < ApplicationRecord
   
   private
     def add_notification
-      return if self.state != 'approved' || Notification.where(source_id: self.id, source_type: 'Post', sender: self.user).present? || !self.is_notification
+      return if self.is_approved || Notification.where(source_id: self.id, source_type: 'Post', sender: self.user).present? || !self.is_notification
       CreateNewNotificationsJob.perform_later(self.id, self.class.name)
-    end
-    
-    def set_state
-      self.state = 'approved' if self.source_type == 'NewsCategory' || (self.source_type == 'Topic' && self.source&.is_approved)
     end
     
     def update_associated_groups

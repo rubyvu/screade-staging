@@ -28,7 +28,7 @@
                     label type="label" for="topic-#{topic.id}"
                 
                 // If Topic have SubTopics show them + 'Add Topic' link
-                - if topic.sub_topics.present?
+                - if topic.sub_topics.where(is_approved: true).present?
                   = render 'groups/tree_board/topic', topics: topic.sub_topics, group_identifier: group_identifier
                 
                 // If Topic have now SubTopics show only 'Add Topic' link under Dropdown

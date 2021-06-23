@@ -6,7 +6,7 @@ class Api::V1::PostsController < Api::V1::ApiController
   def index
     if params[:username].present?
       user = User.find_by!(username: params[:username])
-      posts = user.posts.where(state: 'approved')
+      posts = user.posts.where(is_approved: true)
     else
       posts = current_user.posts
     end

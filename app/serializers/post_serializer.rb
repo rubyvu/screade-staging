@@ -51,7 +51,7 @@ class PostSerializer < ActiveModel::Serializer
   end
   
   attribute :title
-  attribute :state
+  attribute :is_approved
   
   attribute :views_count
   def views_count

@@ -8,7 +8,7 @@ class PostsController < ApplicationController
   def index
     if params[:username].present?
       @user = User.find_by!(username: params[:username])
-      posts = @user.posts.where(state: 'approved')
+      posts = @user.posts.where(is_approved: true)
     else
       @user = current_user
       posts = current_user.posts
