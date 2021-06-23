@@ -1,0 +1,46 @@
+.group-scroll
+  ul.tree
+    // Render Root of the Group from NewsCategory
+    - groups.each do |group|
+      li.group-wrapper.root-level.noselect id="#{group_identifier}-#{group.class.name}-#{group.id}"
+        .main-content class="#{current_user.is_group_subscription(group) && group_identifier == 'group-wrapper' ? 'active' : ''}" data-type="NewsCategory" id="#{group.id}" data-group-title="#{group.title.capitalize}"
+          .title-wrapper
+            = image_tag group.image.url, class: 'main'
+            p #{group.title.capitalize}
+          
+          .counter-dropdown-wrapper
+            - if group_identifier == 'group-wrapper'
+              span.counter #{current_user.group_subscription_counts(group)}
+            label type="label" for="news-category-#{group.id}"
+              
+        // Render Topics for NewsCategory under Dropdown
+        - group_topics = group.topics.where(is_approved: true)
+        - if group_topics.present?
+          - group_topics.each do |topic|
+            input type="checkbox" id="news-category-#{group.id}"
+            ul
+              li.group-wrapper id="#{group_identifier}-#{group.class.name}-#{group.id}"
+                .main-content class="#{current_user.is_group_subscription(topic) && group_identifier == 'group-wrapper'? 'active' : ''}" data-type="Topic" id="#{topic.id}" data-group-title="#{topic.title.capitalize}"
+                  .title-wrapper
+                    p #{topic.title.capitalize}
+                  
+                  .counter-dropdown-wrapper
+                    label type="label" for="topic-#{topic.id}"
+                
+                // If Topic have SubTopics show them + 'Add Topic' link
+                - if topic.sub_topics.present?
+                  = render 'groups/tree_board/topic', topics: topic.sub_topics, group_identifier: group_identifier
+                
+                // If Topic have now SubTopics show only 'Add Topic' link under Dropdown
+                - else
+                  input type="checkbox" id="topic-#{topic.id}"
+                
+                = render 'groups/tree_board/add_topic', data_type: 'Topic', data_id: topic.id
+                            
+          // Show 'Add Topic' to NewsCategory
+          = render 'groups/tree_board/add_topic', data_type: 'NewsCategory', data_id: group.id
+                    
+        // Render only 'Add Topic' under Dropdown
+        - else
+          input type="checkbox" id="news-category-#{group.id}"
+          = render 'groups/tree_board/add_topic', data_type: 'NewsCategory', data_id: group.id

@@ -3,6 +3,16 @@
   width: 50%;
   height: 100%;
   
+  &.modal-view {
+    width: 100%;
+    padding-left: 0;
+    height: 50vh;
+    overflow-y: scroll;
+    
+    p { color: $color-black; }
+    .group-scroll .group-wrapper { padding-left: 0; }
+  }
+  
   .group-search {
     width: 100%;
     text-align: end;

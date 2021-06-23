@@ -2,8 +2,8 @@
   - sub_topics = topic.sub_topics.where(is_approved: true)
   input type="checkbox" id="topic-#{topic.parent_id}"
   ul
-    li.group-wrapper id="group-wrapper-#{topic.class.name}-#{topic.id}"
-      .main-content class="#{current_user.is_group_subscription(topic) ? 'active' : ''}" data-type="Topic" id="#{topic.id}"
+    li.group-wrapper id="#{group_identifier}-#{topic.class.name}-#{topic.id}"
+      .main-content class="#{current_user.is_group_subscription(topic) && group_identifier == 'group-wrapper' ? 'active' : ''}" data-type="Topic" id="#{topic.id}" data-group-title="#{topic.title.capitalize}"
         .title-wrapper
           p #{topic.title.capitalize}
         
@@ -12,9 +12,9 @@
             label type="label" for="topic-#{topic.id}"
             
       - if topic.nesting_position < 2 && sub_topics.present?
-        = render 'groups/topic', topics: sub_topics
+        = render 'groups/tree_board/topic', topics: sub_topics, group_identifier: group_identifier
         
       - elsif topic.nesting_position < 2
         input type="checkbox" id="topic-#{topic.id}"
         
-      = render 'groups/add_topic', data_type: 'Topic', data_id: topic.id
+      = render 'groups/tree_board/add_topic', data_type: 'Topic', data_id: topic.id

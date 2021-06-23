@@ -10,14 +10,17 @@ class GroupsController < ApplicationController
   
   # GET /groups/search
   def search
-    @search_type = params[:search_type] || 'group'
-    @groups_for_search = []
-    (NewsCategory.all + Topic.where(is_approved: true).or(Topic.where.not(is_approved: true).where(suggester: current_user))).each do |group|
-      @groups_for_search << group
-    end
+    search_type = params[:search_type] || 'group'
+    @groups = NewsCategory.all
+    @groups_for_search = @groups + Topic.where(is_approved: true).or(Topic.where(is_approved: true))
     
     respond_to do |format|
-      format.js { render 'search', layout: false }
+      case search_type
+      when 'group'
+        format.js { render 'search', layout: false }
+      when 'post'
+        format.js { render 'post_search', layout: false }
+      end
     end
   end
   
