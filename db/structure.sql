@@ -1293,7 +1293,9 @@ CREATE TABLE public.users (
     user_security_question_id integer NOT NULL,
     security_question_answer character varying NOT NULL,
     country_id integer NOT NULL,
-    middle_name character varying
+    middle_name character varying,
+    blocked_at timestamp without time zone,
+    blocked_comment character varying
 );
 
 
@@ -2228,6 +2230,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210618140155'),
 ('20210621095528'),
 ('20210623112050'),
-('20210623112215');
+('20210623112215'),
+('20210623143251');
 
 
