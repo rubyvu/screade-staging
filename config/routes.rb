@@ -242,7 +242,7 @@ Rails.application.routes.draw do
       end
       
       
-      resources :notifications, only: [:index, :update] do
+      resources :notifications, only: [:index, :show, :update] do
         collection do
           put :view_all
         end

@@ -7,6 +7,13 @@ class Api::V1::NotificationsController < Api::V1::ApiController
     render json: { notifications: notifications_json }, status: :ok
   end
   
+  # GET /api/v1/notifications/:id
+  def show
+    notification = Notification.find(params[:id])
+    notification_json = NotificationSerializer.new(notification, current_user: current_user).as_json
+    render json: { notification: notification_json }, status: :ok
+  end
+  
   # PUT/PATCH /api/v1/notifications/:id
   def update
     notification = Notification.find(params[:id])
