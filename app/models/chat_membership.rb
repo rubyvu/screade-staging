@@ -19,6 +19,9 @@ class ChatMembership < ApplicationRecord
   # Fields validations
   validates :role, presence: true, inclusion: { in: ChatMembership::ROLES_LIST }
   
+  # Scopes
+  scope :order_by_roles, -> (first = 'owner', second = 'admin', third = 'user') { order(Arel.sql("role = '#{first}' DESC, role = '#{second}' DESC, role = '#{third}' DESC")) }
+  
   private
     def set_owner_role
       self.role = 'owner' if self.user == self.chat.owner

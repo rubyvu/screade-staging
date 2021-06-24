@@ -14,7 +14,9 @@ PUT
 ### Request body
 ```
 {
-  'push_token': 'd3k02nv94nd-2mcd94ndf9'                                        (string, required)
+  'device': {
+    'push_token': 'd3k02nv94nd-2mcd94ndf9'                                      (string, required)
+  }
 }
 ```
 

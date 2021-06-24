@@ -37,13 +37,21 @@
         height: 18px; // equal to checkbox height
       }
       
-      .member-role-select {
-        width: 70px;
-        text-align: center;
-        text-align-last: center;
-        -moz-text-align-last: center;
-        text-align:-moz-center;
-        text-align:-webkit-center;
+      .member-role-control {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        
+        &.user { width: 70px; }
+        
+        .member-role-select {
+          width: 70px;
+          text-align: center;
+          text-align-last: center;
+          -moz-text-align-last: center;
+          text-align:-moz-center;
+          text-align:-webkit-center;
+        }
       }
     }
   }
