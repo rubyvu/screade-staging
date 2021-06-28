@@ -69,4 +69,15 @@ $( document ).on('turbolinks:load', function() {
   $('[id^="edit_post_"]').on('change', '[type=checkbox]', function() {
     $(this).closest('form').submit();
   })
+  
+  // Change lable position when tree dropdown is opened/closed
+  $('#modal-select-group-for-post').on('change', '.group-wrapper input', function(e) {
+    let dropdownLabel = $(this).parent('.group-wrapper').find('.counter-dropdown-wrapper label').first()
+    
+    if ( $(this).is(":checked") ) {
+      dropdownLabel.toggleClass('flip');
+    } else {
+      dropdownLabel.toggleClass('flip');
+    }
+  })
 })

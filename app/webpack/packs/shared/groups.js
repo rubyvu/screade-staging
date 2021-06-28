@@ -1,7 +1,6 @@
 $( document ).on('turbolinks:load', function() {
   
   // Subscription
-  // $('.group-wrapper').on('click', function(e) {
   $('[id^="group-wrapper-"]').on('click', function(e) {
     // Prevent calling click event on all parent ul,li elements
     e.stopPropagation()
