@@ -79,9 +79,19 @@
 }
 
 #notifications-list-placeholder {
-  overflow: scroll;
+  overflow-y: scroll;
   max-height: 50vh;
+  
+  // Hide scroll bar
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
+
+// Hide scroll bar
+#notifications-list-placeholder::-webkit-scrollbar {
+  display: none; /*Chrome, Safari and Opera */
+}
+
 
 .navbar-icon-wrappers .dropdown-item.notification {
   padding: 0.25rem 0rem 0.25rem 1.5rem;
