@@ -30,5 +30,6 @@ $('div').find('[data-action="create-topic"]').on('click', function(e) {
 
 // Hide New Topic modal after create
 $('#modal-new-topic').on("ajax:success", '#new_topic', function(data) {
+  console.log(data);
   $('#modal-new-topic').modal('hide')
 })

@@ -17,7 +17,7 @@ class TopicsController < ApplicationController
     @topic.suggester = current_user
     if @topic.save
       if redirect_path == 'posts'
-        head :ok
+        render 'new_for_post', layout: false, status: :ok
       else
         render js: "window.location = '#{groups_path}'"
       end
