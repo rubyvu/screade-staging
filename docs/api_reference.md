@@ -47,6 +47,7 @@
 - [Update current user](api/v1/current_user/update.md)
 - [Resend email confirmation to current user](api/v1/current_user/resend_email_confirmation.md)
 - [Change password](api/v1/current_user/change_password.md)
+- [Update Device push token](api/v1/current_user/device_push_token.md)
 
 ### Events
 - [View all Events by Date](api/v1/events/index.md)
@@ -82,6 +83,7 @@
 
 ### Notifications
 - [Get all user Notifications](api/v1/notifications/index.md)
+- [Get Notification](api/v1/notifications/show.md)
 - [Mark all User Notification as viewed](api/v1/notifications/view_all.md)
 - [Mark Notification as viewed](api/v1/notifications/update.md)
 

@@ -906,14 +906,14 @@ CREATE TABLE public.posts (
     image character varying,
     image_hex character varying,
     is_notification boolean DEFAULT true,
-    state character varying DEFAULT 'pending'::character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     comments_count integer DEFAULT 0 NOT NULL,
     lits_count integer DEFAULT 0 NOT NULL,
     views_count integer DEFAULT 0 NOT NULL,
     source_id integer NOT NULL,
-    source_type character varying NOT NULL
+    source_type character varying NOT NULL,
+    is_approved boolean DEFAULT true
 );
 
 
@@ -1104,7 +1104,7 @@ CREATE TABLE public.topics (
     parent_id integer NOT NULL,
     parent_type character varying NOT NULL,
     title character varying NOT NULL,
-    is_approved boolean DEFAULT false,
+    is_approved boolean DEFAULT true,
     nesting_position integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
@@ -1293,7 +1293,9 @@ CREATE TABLE public.users (
     user_security_question_id integer NOT NULL,
     security_question_answer character varying NOT NULL,
     country_id integer NOT NULL,
-    middle_name character varying
+    middle_name character varying,
+    blocked_at timestamp without time zone,
+    blocked_comment character varying
 );
 
 
@@ -2226,6 +2228,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210609094303'),
 ('20210614084112'),
 ('20210618140155'),
-('20210621095528');
-
-
+('20210621095528'),
+('20210623112050'),
+('20210623112215'),
+('20210623143251');

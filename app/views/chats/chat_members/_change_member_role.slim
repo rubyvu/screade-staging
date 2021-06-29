@@ -1,5 +1,8 @@
 .chat-member-wrapper
-  - @chat.chat_memberships.each do |chat_membership|
+  - @chat.chat_memberships.order_by_roles.each do |chat_membership|
+    - user_membership = @chat.get_membership(chat_membership.user)
+    - current_user_membership = @chat.get_membership(current_user)
+    
     .chat-member-card
       .photo
         = link_to user_path(chat_membership.user.username), target: :_blank, data: { type: 'modal-link' } do
@@ -11,11 +14,17 @@
       .content
         .member-name
           = chat_membership.user.full_name
+        
+        .member-role-control class="#{current_user_membership.role == 'user' ? 'user' : '' }"
+          .member-role-select
+            - if @chat.owner == current_user && chat_membership.role == 'owner'
+              span #{chat_membership.role}
+            - elsif @chat.owner == current_user
+              = select chat_membership.id, :role, options_for_select(['owner', 'admin', 'user'], chat_membership.role), {}, { class: 'form-control chat-select' }
+            - else
+              span #{chat_membership.role}
           
-        .member-role-select
-          - if @chat.owner == current_user && chat_membership.role == 'owner'
-            span #{chat_membership.role}
-          - elsif @chat.owner == current_user
-            = select chat_membership.id, :role, options_for_select(['owner', 'admin', 'user'], chat_membership.role), {}, { class: 'form-control chat-select' }
-          - else
-            span #{chat_membership.role}
+          - if (current_user_membership.role == 'admin' && user_membership.role == 'user') || (current_user_membership.role == 'owner' && user_membership.role != 'owner')
+            .member-delete
+              = link_to chat_membership_path(user_membership, redirect_path: 'members'), class: 'dropdown-item', id: 'delete-chat-membership', method: :delete, data: { confirm: 'Are you realy want to delete this User from the group?', 'membership-id': user_membership.id }, remote: true  do
+                = image_pack_tag('media/images/icons/ic_cancel.png')

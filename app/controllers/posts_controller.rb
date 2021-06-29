@@ -8,7 +8,7 @@ class PostsController < ApplicationController
   def index
     if params[:username].present?
       @user = User.find_by!(username: params[:username])
-      posts = @user.posts.where(state: 'approved')
+      posts = @user.posts.where(is_approved: true)
     else
       @user = current_user
       posts = current_user.posts
@@ -71,7 +71,8 @@ class PostsController < ApplicationController
     end
     
     def get_groups
-      @groups = NewsCategory.all + Topic.where(is_approved: true).or(Topic.where.not(is_approved: true).where(suggester: current_user))
+      @groups = NewsCategory.order(title: :asc)
+      # @groups = NewsCategory.all + Topic.where(is_approved: true).or(Topic.where.not(is_approved: true).where(suggester: current_user))
     end
     
     def get_user_image

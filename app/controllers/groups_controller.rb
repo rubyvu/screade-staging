@@ -10,14 +10,17 @@ class GroupsController < ApplicationController
   
   # GET /groups/search
   def search
-    @search_type = params[:search_type] || 'group'
-    @groups_for_search = []
-    (NewsCategory.all + Topic.where(is_approved: true).or(Topic.where.not(is_approved: true).where(suggester: current_user))).each do |group|
-      @groups_for_search << group
-    end
+    search_type = params[:search_type] || 'group'
+    @groups = NewsCategory.all
+    @groups_for_search = @groups + Topic.where(is_approved: true).or(Topic.where(is_approved: true))
     
     respond_to do |format|
-      format.js { render 'search', layout: false }
+      case search_type
+      when 'group'
+        format.js { render 'search', layout: false }
+      when 'post'
+        format.js { render 'post_search', layout: false }
+      end
     end
   end
   
@@ -66,8 +69,8 @@ class GroupsController < ApplicationController
       # Get Source from Post
       topic_posts_ids = Topic.joins(:post_groups).where(post_groups: { id: current_user.post_groups.where(group_type: 'Topic').ids }).distinct.ids
       news_category_posts_ids = NewsCategory.joins(:post_groups).where(post_groups: { id: current_user.post_groups.where(group_type: 'NewsCategory').ids }).distinct.ids
-      post_source_ids = Post.where(source_type: 'Topic', source_id: topic_posts_ids, state: 'approved')
-                            .or(Post.where(source_type: 'NewsCategory', source_id: news_category_posts_ids, state: 'approved'))
+      post_source_ids = Post.where(source_type: 'Topic', source_id: topic_posts_ids, is_approved: true)
+                            .or(Post.where(source_type: 'NewsCategory', source_id: news_category_posts_ids, is_approved: true))
                             .order(id: :desc).limit(1000).ids
                             
       @comments = Comment.where(source_type: 'NewsArticle', source_id: source_ids, comment_id: nil).where.not(user: current_user)

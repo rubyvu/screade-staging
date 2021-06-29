@@ -1,0 +1,35 @@
+$('#modal-select-group-for-post').modal('show')
+$('#select-group-for-post-placeholder').html("<%= j render partial: 'groups/tree_board/group_scroll', locals: { groups: @groups, group_identifier: 'post-wrapper' } %>")
+
+// Add Information about Group to form
+if ($('#modal-select-group-for-post')) {
+  $(".main-content").on('click', function(e) {
+    // Click on Dropdown button do:
+    if( !$(e.target).is('.main-content') && !$(e.target).is('p') || $(e.target).hasClass('new-topic-link') ) { return }
+    
+    $('#post_source').val($(this).data('type') + ':' + $(this).attr('id'))
+    $('#post_virtual_source').val($(this).data('group-title'))
+    $('#modal-select-group-for-post').modal('hide')
+  })
+}
+  
+// Show New Topic Modal
+$('div').find('[data-action="create-topic"]').on('click', function(e) {
+  e.preventDefault()
+  var link = $(this).data('href');
+  
+  let groupType = $(this).data('type')
+  let groupId = $(this).data('id')
+  
+  $.ajax({
+    type: "GET",
+    url: window.location.origin + link,
+    data: { type: groupType, id: groupId, redirect_path: 'posts' }
+  })
+})
+
+// Hide New Topic modal after create
+$('#modal-new-topic').on("ajax:success", '#new_topic', function(data) {
+  console.log(data);
+  $('#modal-new-topic').modal('hide')
+})

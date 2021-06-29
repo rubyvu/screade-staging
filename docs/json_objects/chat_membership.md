@@ -8,7 +8,6 @@
 ### Object structure
 ```
 {
-  "chat": "Chat"                                                                (object, required)
   "id": "1"                                                                     (integer,required)
   "role": "owner" || "admin" || "user"                                          (string, required)
   "owner": "User"                                                               (object, required)

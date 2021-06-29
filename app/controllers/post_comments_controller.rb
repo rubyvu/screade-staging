@@ -31,7 +31,7 @@ class PostCommentsController < ApplicationController
   
   private
     def get_post
-      @post = Post.find(params[:post_id])
+      @post = Post.find_by!(id: params[:post_id], is_approved: true)
     end
     
     def comment_params

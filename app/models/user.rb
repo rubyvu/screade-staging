@@ -18,6 +18,7 @@ class User < ApplicationRecord
   
   # Callbacks
   after_commit :set_user_settings, on: [:create]
+  before_validation :block_user
   
   # Associations
   belongs_to :country
@@ -145,6 +146,15 @@ class User < ApplicationRecord
     end
   end
   
+  # Blocked User by Devise
+  def active_for_authentication?
+    super && self.blocked_at.blank?
+  end
+
+  def inactive_message
+    "This account has been blocked by Admin."
+  end
+  
   def count_squad_members
     self.squad_requests_as_receiver.where.not(accepted_at: nil).or(self.squad_requests_as_requestor.where.not(accepted_at: nil)).distinct.count
   end
@@ -158,5 +168,18 @@ class User < ApplicationRecord
     def set_user_settings
       return if self.setting.present?
       Setting.get_setting(self)
+    end
+    
+    def block_user
+      return if self.blocked_at.present? && self.blocked_comment.present?
+      
+      if self.blocked_comment.blank?
+        self.blocked_at = nil
+      else
+        self.blocked_at = DateTime.current
+        
+        # Remove API sessions
+        self.devices.destroy_all
+      end
     end
 end

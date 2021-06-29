@@ -34,8 +34,6 @@ RSpec.describe Post, type: :model do
     context 'fields' do
       it { should validate_presence_of(:title) }
       it { should validate_presence_of(:description) }
-      it { should validate_presence_of(:state) }
-      it { should validate_inclusion_of(:state).in_array(Post::APPROVING_STATES) }
       it { should validate_presence_of(:source_id) }
       it { should validate_presence_of(:source_type) }
       it { should validate_inclusion_of(:source_type).in_array(Post::SOURCE_TYPES) }

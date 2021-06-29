@@ -1,5 +1,7 @@
+= render 'topics/new'
+= render 'posts/select_group'
 = render 'posts/user_images', user_images: @user_images
-= render 'groups/search', groups: @groups_for_search, search_id: 'modal-post-group-search'
+
 .d-width-wrapper
   = form_with(model: post, url: (post.persisted? ?  post_path(post) : posts_path), local: true) do |f|
     
@@ -18,7 +20,7 @@
      = f.text_field :title, autocomplete: 'off', class: 'form-control', placeholder: 'Title', required: true
       
     .input-group.mb-4
-      = f.text_area :description, autocomplete: 'off', class: 'form-control', placeholder: 'Event Description', required: true, rows: 2
+      = f.text_area :description, autocomplete: 'off', class: 'form-control', placeholder: 'Post Description', required: true, rows: 2
     
     .material-field.dropdown.mb-3#post-select-dropdown-position
       - if f.object.persisted?

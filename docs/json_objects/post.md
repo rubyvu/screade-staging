@@ -19,7 +19,7 @@
   "is_viewed": "true"                                                           (boolean, required)
   "lits_count": "1"                                                             (integer, required)
   "source": NewsCategory || Topic                                               (object, required)
-  "state": 'pending | approved'                                                 (string, required)
+  "is_approved": true                                                           (boolean, required)
   "title": 'Post title'                                                         (string, required)
   "views_count": 1                                                              (integer, required)
   "user": UserProfile                                                           (object, required)

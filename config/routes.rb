@@ -203,6 +203,7 @@ Rails.application.routes.draw do
       resources :current_user, only: [] do
         collection do
           get :info
+          put :device_push_token
           put :update
           patch :update
           post :resend_email_confirmation
@@ -258,7 +259,7 @@ Rails.application.routes.draw do
       end
       
       
-      resources :notifications, only: [:index, :update] do
+      resources :notifications, only: [:index, :show, :update] do
         collection do
           put :view_all
         end

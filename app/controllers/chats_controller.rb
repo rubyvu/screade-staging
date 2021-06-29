@@ -83,10 +83,6 @@ class ChatsController < ApplicationController
       ChatMembership.create(chat: @chat, user: user)
     end
     
-    # Remove ChatMemberships from Chat
-    memberships_to_delete = @chat.chat_memberships.where.not(user_id: new_chat_users.ids).and(@chat.chat_memberships.where.not(user: current_user))
-    @chat.chat_memberships.delete(*memberships_to_delete)
-    
     respond_to do |format|
       format.js
     end
