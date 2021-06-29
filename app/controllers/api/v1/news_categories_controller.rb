@@ -4,7 +4,7 @@ class Api::V1::NewsCategoriesController < Api::V1::ApiController
   
   # GET /api/v1/news_categories/
   def index
-    news_categories = NewsCategory.all
+    news_categories = NewsCategory.where.not(title: 'general')
     news_categories_json = ActiveModel::Serializer::CollectionSerializer.new(news_categories, serializer: NewsCategorySerializer).as_json
     render json: { news_categories: news_categories_json }, status: :ok
   end

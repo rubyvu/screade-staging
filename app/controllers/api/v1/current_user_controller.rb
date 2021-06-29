@@ -34,6 +34,20 @@ class Api::V1::CurrentUserController < Api::V1::ApiController
     render json: { settings: settings_json }, status: :ok
   end
   
+  # PUT /current_user/update_push_token
+  def device_push_token
+    if device_params[:push_token].blank?
+      render json: { errors: ['Device push token should be present.'] }, status: :unprocessable_entity
+      return
+    end
+    
+    if current_device.update(device_params)
+      render json: { success: true }, status: :ok
+    else
+      render json: { success: false }, status: :ok
+    end
+  end
+  
   # POST /current_user/change_password
   def change_password
     old_password = change_password_params[:old_password]
@@ -78,6 +92,10 @@ class Api::V1::CurrentUserController < Api::V1::ApiController
       end
       
       strong_params
+    end
+    
+    def device_params
+      params.require(:device).permit(:push_token)
     end
     
     def change_password_params

@@ -6,7 +6,7 @@ class NewsCategoriesController < ApplicationController
     # News Categories
     news_category = NewsCategory.find(params[:id])
     @category = {}
-    @category[:news_categories] = NewsCategory.all
+    @category[:news_categories] = NewsCategory.where.not(title: 'general')
     
     # News articles
     @category[:is_national] = params[:is_national].blank? || params[:is_national].to_s.downcase == "true"

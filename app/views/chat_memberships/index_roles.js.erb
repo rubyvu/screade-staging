@@ -30,3 +30,12 @@ function updateMembershipRole(chatMembershipId, role) {
       dataType: 'json'
   });
 }
+
+// Delete ChatMember element from DOM
+$(".member-delete").find("[data-membership-id]").on('ajax:success', function() {
+  $(this).closest('.chat-member-card').remove()
+});
+
+$(".member-delete").find("[data-membership-id]").on('ajax:error', function(e) {
+  location.reload()
+});

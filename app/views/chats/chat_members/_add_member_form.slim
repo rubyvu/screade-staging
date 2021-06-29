@@ -5,7 +5,7 @@
     = form_for @chat do |f|
       = hidden_field_tag "chat_membership[usernames][]", []
       = f.submit 'Create', class: 'btn btn-primary w-100'
-  - else
+  - elsif @squad_members.present?
     = form_for @chat, url: update_members_chat_path(@chat.access_token), remote: true, authenticity_token: true, html: { method: :put } do |f|
       = hidden_field_tag "chat_membership[usernames][]", []
-      = f.submit 'Update', class: 'btn btn-primary w-100'
+      = f.submit 'Add', class: 'btn btn-primary w-100'

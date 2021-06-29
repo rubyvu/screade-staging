@@ -11,7 +11,7 @@
         span #{post.user.full_name}
         span #{comment_timestamp(post.created_at)}
     
-    - if post.source_type == 'Topic' && !post.source.is_approved
+    - if !post.is_approved
       p.post-status On approve
   
   - if post.image.present?

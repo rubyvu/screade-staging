@@ -15,8 +15,12 @@
 }
 
 .comments-scroll {
-  overflow: auto;
+  overflow-y: scroll;
   max-height: 600px;
+  
+  // Hide scroll bar
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
   
   .comment-wrapper {
     display: inline-flex;
@@ -98,6 +102,10 @@
   .reply-wrapper {
     display: none;
   }
+}
+
+.comments-scroll::-webkit-scrollbar {
+  display: none; /*Chrome, Safari and Opera */
 }
 
 @media (max-width: map-get($grid-breakpoints, "md")) {

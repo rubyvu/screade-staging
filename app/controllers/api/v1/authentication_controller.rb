@@ -27,7 +27,13 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
     
     # Check that User is not locked
     if user.access_locked?
-      render json: { errors: ['User has been blocked, please contact support.'] }, status: :forbidden
+      render json: { errors: ['User has been locked, please contact support.'] }, status: :forbidden
+      return
+    end
+    
+    # Check that User is not blocked from Admin panel
+    if user.blocked_at
+      render json: { errors: ['User has been blocked by Admin.'] }, status: :forbidden
       return
     end
     

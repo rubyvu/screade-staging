@@ -7,17 +7,22 @@ class TopicsController < ApplicationController
     @topic.parent = @group
     
     respond_to do |format|
-      format.js { render 'new', layout: false }
+      format.js { render 'new', layout: false, redirect_path: params[:redirect_path] }
     end
   end
   
   def create
+    redirect_path = params[:redirect_path]
     @topic = Topic.new(topic_params)
     @topic.suggester = current_user
     if @topic.save
-      render js: "window.location = '#{groups_path}'"
+      if redirect_path == 'posts'
+        render 'new_for_post', layout: false, status: :ok
+      else
+        render js: "window.location = '#{groups_path}'"
+      end
     else
-      render 'new', layout: false
+      render 'new', layout: false, redirect_path: redirect_path, status: :unprocessable_entity
     end
   end
   

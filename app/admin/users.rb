@@ -1,13 +1,13 @@
 ActiveAdmin.register User do
   
   # Actions
-  actions :index, :show
+  actions :index, :show, :edit, :update
   
   # Filters
   filter :email
   
   # Params
-  permit_params :birthday, :email, :first_name, :last_name, :phone_number
+  permit_params :birthday, :blocked_comment, :email, :first_name, :last_name, :phone_number
   
   # Controllers
   index do
@@ -17,6 +17,7 @@ ActiveAdmin.register User do
     column :first_name
     column :last_name
     column :birthday
+    column :blocked_at
     actions
   end
   
@@ -27,6 +28,8 @@ ActiveAdmin.register User do
       row :first_name
       row :last_name
       row :birthday
+      row :blocked_at
+      row :blocked_comment
       row :created_at
       row :updated_at
     end
@@ -39,6 +42,13 @@ ActiveAdmin.register User do
         column :created_at
       end
     end
+  end
+  
+  form do |f|
+    f.inputs do
+      f.input :blocked_comment, label: 'Type reason to block this User'
+    end
+    f.actions
   end
   
 end

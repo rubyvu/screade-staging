@@ -4,10 +4,10 @@ class ChatMembershipsController < ApplicationController
   
   # GET /chats/:chat_access_token/chat_memberships
   def index
-    squad_receivers_sql = User.joins(:squad_requests_as_receiver).where(squad_requests_as_receiver: { requestor: current_user }).where.not(squad_requests_as_receiver: { accepted_at: nil }).to_sql
-    squad_requestors_sql = User.joins(:squad_requests_as_requestor).where(squad_requests_as_requestor: { receiver: current_user }).where.not(squad_requests_as_requestor: { accepted_at: nil }).to_sql
-    chat_users_sql = User.joins(:chat_memberships).where(chat_memberships: { chat: @chat }).where.not(chat_memberships: { user: current_user }).to_sql
-    @squad_members = User.from("(#{squad_receivers_sql} UNION #{squad_requestors_sql} UNION #{chat_users_sql}) AS users")
+    chat_users_ids = @chat.chat_memberships.pluck(:user_id)
+    squad_receivers_sql = User.joins(:squad_requests_as_receiver).where(squad_requests_as_receiver: { requestor: current_user }).where.not(squad_requests_as_receiver: { accepted_at: nil }).where.not(users: { id: chat_users_ids }).to_sql
+    squad_requestors_sql = User.joins(:squad_requests_as_requestor).where(squad_requests_as_requestor: { receiver: current_user }).where.not(squad_requests_as_requestor: { accepted_at: nil }).where.not(users: { id: chat_users_ids }).to_sql
+    @squad_members = User.from("(#{squad_receivers_sql} UNION #{squad_requestors_sql}) AS users")
     
     respond_to do |format|
       case params[:response_type]
@@ -39,10 +39,21 @@ class ChatMembershipsController < ApplicationController
     end
   end
   
-  # DELETE /chat_memberships/:access_token
+  # DELETE /chat_memberships/:id
   def destroy
+    current_user_membership = ChatMembership.find_by(user: current_user, chat: @chat_membership.chat)
+    if current_user_membership.blank?
+      render json: { errors: ['Record not found.'] }, status: :not_found
+      return
+    end
+    
+    if ['admin', 'owner'].exclude?(current_user_membership.role) && current_user_membership != @chat_membership
+      render json: { errors: ['Can be changed only by Chat admin.'] }, status: :unprocessable_entity
+      return
+    end
+    
     if @chat_membership.destroy
-      render json: { success: true }, status: :ok
+      render json: { success: true, redirect_path: params[:redirect_path] }, status: :ok
     else
       render json: { errors: @chat_membership.errors.full_messages }, status: :unprocessable_entity
     end

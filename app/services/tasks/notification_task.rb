@@ -128,7 +128,7 @@ module Tasks
         source_type: 'SquadRequest',
         sender_id: squad_request.requestor.id,
         recipient_id: squad_request.receiver.id,
-        message: "#{squad_request.requestor.full_name} whant to join to your Squad"
+        message: "#{squad_request.requestor.full_name} want to join to your Squad"
       }
       
       create_notification(notificatiom_params)

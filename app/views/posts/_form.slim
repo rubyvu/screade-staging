@@ -1,5 +1,7 @@
+= render 'topics/new'
+= render 'posts/select_group'
 = render 'posts/user_images', user_images: @user_images
-= render 'groups/search', groups: @groups_for_search, search_id: 'modal-post-group-search'
+
 .d-width-wrapper
   = form_with(model: post, url: (post.persisted? ?  post_path(post) : posts_path), local: true) do |f|
     

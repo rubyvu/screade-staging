@@ -1,4 +1,4 @@
-## Notifications list - API endpoint
+## Show Notification - API endpoint
 
 ### Navigation
 [README](../../../../README.md)
@@ -9,13 +9,11 @@
 GET
 
 ### API endpoint
-`GET /api/v1/notifications`
+`GET /api/v1/notifications/:id`
 
 ### Request body
 ```
-{
-  "page": 1                                                                     (integer, required)
-}
+{}
 ```
 
 ### Response
@@ -23,7 +21,7 @@ GET
 ```
 HTTP code 200 :ok
 {
-  "notifications: "[Notification]"                                                      (array of objects, required)
+  "notification: "Notification"                                                 (array of objects, required)
 }
 ```
 

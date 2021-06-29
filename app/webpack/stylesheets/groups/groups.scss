@@ -3,6 +3,19 @@
   width: 50%;
   height: 100%;
   
+  &.modal-view {
+    width: 100%;
+    padding-left: 0;
+    height: 50vh;
+    overflow-y: scroll;
+    // Hide scroll bar
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    
+    p { color: $color-black; }
+    .group-scroll .group-wrapper { padding-left: 0; }
+  }
+  
   .group-search {
     width: 100%;
     text-align: end;
@@ -106,4 +119,8 @@
       }
     }
   }
+}
+
+.content-group-wrapper.modal-view::-webkit-scrollbar {
+  display: none; /*Chrome, Safari and Opera */
 }
