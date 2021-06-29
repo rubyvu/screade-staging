@@ -10,11 +10,7 @@ class ChatsController < ApplicationController
   # GET /chats/:access_token
   def show
     current_page = params[:page]
-    if @current_user_membership.history_cleared_at.present?
-      @chat_messages = @chat.chat_messages.where('created_at > ?', @current_user_membership.history_cleared_at).order(created_at: :desc).page(current_page).per(40)
-    else
-      @chat_messages = @chat.chat_messages.order(created_at: :desc).page(current_page).per(40)
-    end
+    @chat_messages = @chat.chat_messages.order(created_at: :desc).page(current_page).per(40)
     
     # Clear unread message counter
     @current_user_membership.update_columns(unread_messages_count: 0)

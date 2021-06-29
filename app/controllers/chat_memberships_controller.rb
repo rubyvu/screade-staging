@@ -1,6 +1,6 @@
 class ChatMembershipsController < ApplicationController
   before_action :get_chat, only: [:index, :unread_messages]
-  before_action :get_chat_membership, only: [:clear_history, :destroy]
+  before_action :get_chat_membership, only: [:destroy]
   
   # GET /chats/:chat_access_token/chat_memberships
   def index
@@ -45,15 +45,6 @@ class ChatMembershipsController < ApplicationController
     end
   end
   
-  # PUT/PATCH /chat_memberships/:id/clear_history
-  def clear_history
-    if @chat_membership.update(history_cleared_at: DateTime.current)
-      render json: { success: true }, status: :ok
-    else
-      render json: { errors: @chat_membership.errors.full_messages }, status: :unprocessable_entity
-    end
-  end
-  
   # PUT/PATCH /chats/:chat_access_token/chat_membership/unread_messages
   def unread_messages
     chat_membership = ChatMembership.find_by(chat: @chat, user: current_user)
@@ -95,7 +86,7 @@ class ChatMembershipsController < ApplicationController
     end
     
     def get_chat_membership
-      @chat_membership = ChatMembership.find_by!(id: params[:id], user: current_user)
+      @chat_membership = ChatMembership.find_by!(id: params[:id])
     end
     
     def memberships_params

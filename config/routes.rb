@@ -39,12 +39,7 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :chat_memberships, only: [:update, :destroy] do
-    member do
-      put :clear_history
-    end
-  end
-  
+  resources :chat_memberships, only: [:update, :destroy]
   resources :comments, only: [] do
     member do
       post :lit
