@@ -10,9 +10,9 @@ class ChatMessage < ApplicationRecord
   mount_uploader :audio_record, ChatAudioUploader
   
   # Callbacks
-  after_commit :upload_asset
-  after_commit :broadcast_chat_message
-  after_commit :broadcast_chat_state
+  after_commit :upload_asset, on: [:create, :update]
+  after_commit :broadcast_chat_message, on: [:create, :update]
+  after_commit :broadcast_chat_state, on: [:create, :update]
   
   # Associations
   belongs_to :chat
