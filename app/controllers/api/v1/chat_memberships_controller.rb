@@ -10,11 +10,6 @@ class Api::V1::ChatMembershipsController < Api::V1::ApiController
   
   # GET /api/v1/chats/:chat_access_token/chat_memberships/chat_users
   def chat_users
-    # squad_receivers_sql = User.joins(:squad_requests_as_receiver).where(squad_requests_as_receiver: { requestor: current_user }).where.not(squad_requests_as_receiver: { accepted_at: nil }).to_sql
-    # squad_requestors_sql = User.joins(:squad_requests_as_requestor).where(squad_requests_as_requestor: { receiver: current_user }).where.not(squad_requests_as_requestor: { accepted_at: nil }).to_sql
-    # chat_users_sql = User.joins(:chat_memberships).where(chat_memberships: { chat: @chat }).where.not(chat_memberships: { user: current_user }).to_sql
-    # chat_users = User.from("(#{squad_receivers_sql} UNION #{squad_requestors_sql} UNION #{chat_users_sql}) AS users")
-    
     chat_users_ids = @chat.chat_memberships.pluck(:user_id)
     squad_receivers_sql = User.joins(:squad_requests_as_receiver).where(squad_requests_as_receiver: { requestor: current_user }).where.not(squad_requests_as_receiver: { accepted_at: nil }).where.not(users: { id: chat_users_ids }).to_sql
     squad_requestors_sql = User.joins(:squad_requests_as_requestor).where(squad_requests_as_requestor: { receiver: current_user }).where.not(squad_requests_as_requestor: { accepted_at: nil }).where.not(users: { id: chat_users_ids }).to_sql
