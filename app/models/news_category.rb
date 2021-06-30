@@ -24,6 +24,7 @@ class NewsCategory < ApplicationRecord
   
   # Fields validations
   validates :title, uniqueness: true, presence: true
+  validate :general_as_news
   
   # Normalization
   def title=(value)
@@ -40,8 +41,12 @@ class NewsCategory < ApplicationRecord
   end
   
   private
+    def general_as_news
+      errors.add(:title, 'already exists.') if self.title == 'news'
+    end
+    
     def skip_default_categories
-      errors.add(:base, 'The default category cannot be destroyed') if NewsCategory::DEFAULT_CATEGORIES.include?(self.title)
+      errors.add(:base, 'The default category cannot be destroyed') if NewsCategory::DEFAULT_CATEGORIES.append('news').include?(self.title)
     end
     
     def get_children_topics_ids(topic_ids, nesting_position)
