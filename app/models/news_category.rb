@@ -30,6 +30,10 @@ class NewsCategory < ApplicationRecord
     super(value&.downcase&.strip)
   end
   
+  def title
+    self[:title] == 'general' ? 'news' : self[:title]
+  end
+  
   # Get All Approved Topics for NewsCategory
   def approved_nested_topics_ids
     get_children_topics_ids(self.topics.ids, 1)
