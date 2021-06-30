@@ -138,14 +138,14 @@ $(document).on('ajax:success', 'a[id^=chat-element-]', function() {
     link.download = filename+".wav"; //download forces the browser to donwload the file using the  filename
     link.innerHTML = "Save to disk";
     
-    //add the new audio element to li
-    li.appendChild(au);
-    
-    //add the filename to the li
-    li.appendChild(document.createTextNode(filename+".wav "))
-    
-    //add the save to disk link to li
-    li.appendChild(link);
+    // //add the new audio element to li
+    // li.appendChild(au);
+    //
+    // //add the filename to the li
+    // li.appendChild(document.createTextNode(filename+".wav "))
+    //
+    // //add the save to disk link to li
+    // li.appendChild(link);
     
     var formData = new FormData();
     formData.append('chat_message[audio_record]', blob, filename);
@@ -162,11 +162,11 @@ $(document).on('ajax:success', 'a[id^=chat-element-]', function() {
       dataType: 'jsonp'
     });
     
-    li.appendChild(document.createTextNode (" "))//add a space in between
-    li.appendChild(upload)//add the upload link to li
-    
-    //add the li element to the ol
-    var recordingsList = document.getElementById("recordingsList")
-    recordingsList.appendChild(li);
+    // li.appendChild(document.createTextNode (" "))//add a space in between
+    // li.appendChild(upload)//add the upload link to li
+    //
+    // //add the li element to the ol
+    // var recordingsList = document.getElementById("recordingsList")
+    // recordingsList.appendChild(li);
   }
 })

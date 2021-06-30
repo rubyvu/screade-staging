@@ -47,6 +47,8 @@ class ChatMessage < ApplicationRecord
     end
     
     def broadcast_chat_message
+      return if message_type == 'audio' # Audio saved on Carrierwave uploader. Bug https://github.com/carrierwaveuploader/carrierwave-mongoid/issues/129
+      
       render_message_template = ApplicationController.renderer.render(partial: 'chat_messages/message_to_broadcast', locals: { chat_message: self })
       ActionCable.server.broadcast "chat_#{self.chat.access_token}_channel", chat_message_json: ChatMessageSerializer.new(self).as_json, chat_message_html: render_message_template
     end

@@ -1,6 +1,7 @@
 class ChatAudioUploader < CarrierWave::Uploader::Base
   # Callbacks
   before :cache, :reset_secure_token
+  after :store, :broadcast_chat_message
   
   # Storage
   storage :fog
@@ -31,5 +32,10 @@ class ChatAudioUploader < CarrierWave::Uploader::Base
     
     def reset_secure_token(file)
       model.audio_record_hex = nil
+    end
+    
+    def broadcast_chat_message(file)
+      render_message_template = ApplicationController.renderer.render(partial: 'chat_messages/message_to_broadcast', locals: { chat_message: model })
+      ActionCable.server.broadcast "chat_#{model.chat.access_token}_channel", chat_message_json: ChatMessageSerializer.new(model).as_json, chat_message_html: render_message_template
     end
 end
