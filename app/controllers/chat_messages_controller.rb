@@ -20,12 +20,9 @@ class ChatMessagesController < ApplicationController
     @chat_message.asset_source = @user_video if @user_video.present?
     
     if @chat_message.save
-      head :ok
-      # respond_to do |format|
-      #   format.js { render 'create', layout: false }
-      # end
+      render json: { success: true }, callback: params[:callback], status: :ok
     else
-      #TODO :error here
+      render json: { success: false }, callback: params[:callback], status: :unprocessable_entity
     end
   end
   
