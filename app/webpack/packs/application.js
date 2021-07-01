@@ -14,6 +14,7 @@ import 'jquery-ui/ui/widgets/tabs';
 // Import internal scripts
 import './shared/chat/chats';
 import './shared/chat/chat_messages';
+import './shared/chat/recorder';
 import './shared/events';
 import './shared/font_customizer';
 import './shared/global-search';
@@ -25,7 +26,6 @@ import './shared/multilevel_dropdown';
 import './shared/news_articles';
 import './shared/notifications';
 import './shared/posts';
-import './shared/recorder';
 import './shared/user_asset';
 import './shared/video_player';
 import  { isTwelveHoursFormat } from './shared/location';

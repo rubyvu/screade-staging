@@ -1,6 +1,48 @@
 import Recorder from 'recorderjs';
 
 $(document).on('ajax:success', 'a[id^=chat-element-]', function() {
+  
+  // Start record
+  $('.chat-input').on('click', '#chat-record-button', function() {
+    let textMessageForm = $('#text-message-form')
+    let audioRecordForm = $('#audio-record-form')
+    
+    if (textMessageForm && audioRecordForm && textMessageForm.hasClass('active')) {
+      textMessageForm.removeClass('active')
+      audioRecordForm.addClass('active')
+      
+      startTimer()
+    } else if (textMessageForm && audioRecordForm && audioRecordForm.hasClass('active')) {
+      audioRecordForm.removeClass('active')
+      textMessageForm.addClass('active')
+      
+      stopTimer()
+    }
+  })
+  
+  // Timer
+  function startTimer() {
+    const minutes = document.querySelector("#minutes")
+    const seconds = document.querySelector("#seconds")
+    let count = 0;
+  
+    const renderTimer = () => {
+      count += 1;
+      minutes.innerHTML = Math.floor(count / 60).toString().padStart(2, "0");
+      seconds.innerHTML = (count % 60).toString().padStart(2, "0");
+    }
+  
+    window.timer = setInterval(renderTimer, 1000)
+  }
+  
+  function stopTimer() {
+    let minutesLabel = document.getElementById("minutes");
+    let secondsLabel = document.getElementById("seconds");
+    clearInterval(window.timer);
+    secondsLabel.innerHTML = '00';
+    minutesLabel.innerHTML = '00';
+  }
+  
   //webkitURL is deprecated but nevertheless
   URL = window.URL || window.webkitURL;
   
