@@ -15,7 +15,7 @@
             = f.submit '', class: 'btn btn-link send-message-button no-border', id: 'chat-message-submit'
             
             // Record button
-            .chat-record-button#chat-start-record-button
+            .chat-record-button.active#chat-start-record-button
               = image_pack_tag('media/images/icons/ic_microphone.png', class: 'img-responsive')
             
   .audio-record#audio-record-form
@@ -31,7 +31,7 @@
       span.chat-clear-record-button#chat-clear-record-button Click to cancel
       
       // Record button
-      .chat-record-button.active#chat-stop-record-button
+      .chat-record-button.on#chat-stop-record-button
         = image_pack_tag('media/images/icons/ic_microphone.png', class: 'img-responsive')
         
   .audio-record#audio-record-pending-form

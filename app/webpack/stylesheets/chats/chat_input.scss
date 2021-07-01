@@ -13,7 +13,13 @@
     
     form { width: 100%; }
     // Hide submit button
-    input[type="submit"].send-message-button { display: none; }
+    input[type="submit"].send-message-button {
+      display: none;
+      
+      &.active {
+        display: block
+      }
+    }
   }
   
   .audio-record {
@@ -51,7 +57,13 @@
   }
   
   .chat-record-button {
+    display: none;
+    
     &.active {
+      display: flex;
+    }
+    
+    &.on {
       display: flex;
       align-items: center;
       justify-content: center;
