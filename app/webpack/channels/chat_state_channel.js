@@ -16,7 +16,7 @@ $( document ).on('turbolinks:load', function() {
     received(data) {
       // Called when there's incoming data on the websocket for this channel
       let chatAccessToken = data.chat_json.access_token
-      let unreadMessagesWas = $(`#chat-element-${chatAccessToken} .unread_messages_count span`).text()
+      let unreadMessagesWas = $(`#chat-element-${chatAccessToken} .unread-messages-count span`).text()
       
       // Get Chat element to update
       let chatElement = $(`#chat-element-${chatAccessToken}`)
@@ -30,7 +30,7 @@ $( document ).on('turbolinks:load', function() {
       let currentChatBoard = $('#chat-board')
       if (currentChatBoard && currentChatBoard.data('chat-token') !== chatAccessToken) {
         // Update UnreadMessages view
-        let unreadMessagesCounter = parseInt(unreadMessagesWas) + 1
+        let unreadMessagesCounter = parseInt(unreadMessagesWas || 0) + 1
         
         // Update UnreadMessages value in DB
         $.ajax({
@@ -40,9 +40,11 @@ $( document ).on('turbolinks:load', function() {
           dataType: 'json'
         }).done(function(data) {
           if (data.success) {
-            $(`#chat-element-${chatAccessToken} .unread_messages_count span`).text(unreadMessagesCounter)
+            $(`#chat-element-${chatAccessToken} .unread-messages-count span`).text(unreadMessagesCounter)
           }
         });
+      } else if (currentChatBoard && currentChatBoard.data('chat-token') === chatAccessToken) {
+        $(`#chat-element-${chatAccessToken} .body .message .unread-messages-count`).addClass('no-messages')
       }
     }
   });

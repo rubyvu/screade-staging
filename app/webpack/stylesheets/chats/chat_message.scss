@@ -30,6 +30,8 @@
         }
         
         .body {
+          word-break: break-all;
+          
           .text {
             color: $color-black;
             font-size: 16px;

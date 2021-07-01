@@ -50,3 +50,6 @@ $('#chat-message-placeholder').scroll( function() {
     }, 1000)
   }
 });
+
+// Clear unread messages counter
+$(`#chat-element-${$('#chat-board').data('chat-token')} .body .message .unread-messages-count`).addClass('no-messages')

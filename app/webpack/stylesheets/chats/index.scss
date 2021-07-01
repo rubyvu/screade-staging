@@ -67,6 +67,7 @@
         .message {
           display: flex;
           align-items: center;
+          justify-content: space-between;
           margin-bottom: 12px;
           
           .icon {
@@ -79,11 +80,30 @@
           
           .text {
             word-break: break-all;
+            width: 90%;
             font-size: 14px;
             color: $color-dark-cadet-blue;
             min-width: 0;
             overflow: hidden;
             text-overflow: ellipsis;
+          }
+          
+          .unread-messages-count {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 16px;
+            width: 16px;
+            background-color: $color-blue;
+            border-radius: 100%;
+            color: $color-white;
+            font-size: 10px;
+            
+            &.no-values {
+              span { display: none }
+            }
+            
+            &.no-messages { display: none }
           }
         }
       }
