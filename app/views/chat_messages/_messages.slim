@@ -1,6 +1,16 @@
+- new_datetime = nil
 - @chat_messages.reverse.each do |chat_message|
+  // Timestamp .strftime('%Y-%m-%d %H:%M:%S %z')
+  - chat_message_datetime = chat_message.created_at
+  - new_datetime = chat_message_datetime if new_datetime.blank?
+  
+  - if new_datetime.present? && (new_datetime.to_date != chat_message_datetime.to_date)
+    - new_datetime = chat_message_datetime
+    .message-date-box
+      span #{new_datetime.strftime('%A %d.%m.%Y')}
+
   // ChatMessage template
-  .message-box-wrapper data-message-id="#{chat_message.id}" class="#{chat_message.user == current_user ? 'message-owner' : ''}"
+  .message-box-wrapper data-message-id="#{chat_message.id}" data-message-datetime="#{chat_message_datetime.strftime('%Y-%m-%d %H:%M:%S %z')}" class="#{chat_message.user == current_user ? 'message-owner' : ''}"
     .message-wrapper
       .photo-wrapper
         .photo

@@ -1,5 +1,5 @@
 import consumer from "./consumer"
-import { chat_time } from "./helpers/date_helper"
+import { chat_time, chat_board_date } from "./helpers/date_helper"
 
 // Update User ChatChannel subscription when chat is rendered
 $(document).on('ajax:success', 'a[id^=chat-element-]', function() {
@@ -42,6 +42,18 @@ $(document).on('ajax:success', 'a[id^=chat-element-]', function() {
         // Set ChatMessage time to desired format
         let messageCreatedAt = chat_time(data.chat_message_json.created_at)
         $(`#chat-message-placeholder [data-message-id=${messageId}] .date`).html(messageCreatedAt)
+        
+        // Set Messages time separator
+        let penultMessage = $('.message-box-wrapper:last').prev()
+        let lastMessage = $('.message-box-wrapper:last')
+        if (penultMessage.length > 0 && lastMessage.length > 0) {
+          let penultMessageDate = chat_board_date(penultMessage.data('message-datetime'));
+          let lastMessageDate = chat_board_date(lastMessage.data('message-datetime'));
+        
+          if (penultMessageDate !== lastMessageDate) {
+            $('<div class="message-date-box"><span>' + lastMessageDate + '<spna><div>').insertAfter(penultMessage)
+          }
+        }
         
         // Scroll down for the last message if Client in the bottom position
         let chatMessagePlaceholder = document.getElementById('chat-message-placeholder');

@@ -22,6 +22,13 @@ export function chat_time(date) {
   }
 }
 
+export function chat_board_date(date) {
+  let currentDate = parseDate(date)
+  let fullWeekDayName = currentDate.toLocaleString("default", { weekday: "long" })
+  
+  return fullWeekDayName + ' ' + roundUpNumber(currentDate.getDate()) + '.' + roundUpNumber(currentDate.getMonth() + 1) + '.' + currentDate.getFullYear()
+}
+
 function roundUpNumber(number) {
   return (number.toString().length == 1 ? '0' + number : number)
 }
