@@ -24,6 +24,7 @@
     "select2": "^4.1.0-rc.0",
     "timepicker": "^1.13.18",
     "turbolinks": "^5.2.0",
+    "twilio-video": "^2.15.1",
     "webticker": "^3.0.0"
   },
   "version": "0.1.0",

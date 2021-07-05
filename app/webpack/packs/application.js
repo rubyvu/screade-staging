@@ -14,6 +14,7 @@ import 'jquery-ui/ui/widgets/tabs';
 // Import internal scripts
 import './shared/chat/chats';
 import './shared/chat/chat_messages';
+import './shared/chat/chat_twilio';
 import './shared/chat/recorder';
 import './shared/events';
 import './shared/font_customizer';
