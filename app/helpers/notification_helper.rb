@@ -2,7 +2,11 @@ module NotificationHelper
   def notification_link_path(object)
     case object.source_type
     when 'BreakingNews'
-      link = root_path
+      if object.post.present?
+        link = post_post_comments(object.post)
+      else
+        link = root_path
+      end
     when 'Event'
       link = events_path(date: object.source.start_date)
     when 'Comment'
