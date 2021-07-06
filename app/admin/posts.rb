@@ -30,7 +30,7 @@ ActiveAdmin.register Post do
     actions defaults: false do |post|
       links = ''.html_safe
       links += link_to t('active_admin.edit'), edit_admin_post_path(post), class: "member_link view_link"
-      links += link_to t('active_admin.delete'), admin_post_path(post), method: :delete, confirm: I18n.t('active_admin.delete_confirmation'), class: "member_link delete_link" if post.user.username == 'dima'
+      links += link_to t('active_admin.delete'), admin_post_path(post), method: :delete, confirm: I18n.t('active_admin.delete_confirmation'), class: "member_link delete_link" if post.user.username == 'admin.screade'
       links
     end
   end
@@ -52,7 +52,7 @@ ActiveAdmin.register Post do
     end
     
     f.inputs do
-      if object.new_record? || object.user.username == 'dima'
+      if object.new_record? || object.user.username == 'admin.screade'
         f.input :image, input_html: { accept: 'image/png, image/jpeg' }
         f.input :title
         f.input :description
@@ -60,7 +60,7 @@ ActiveAdmin.register Post do
         f.input :source_id, label: 'Source', as: :select, collection: (NewsCategory.order(title: :desc) + Topic.where(is_approved: true).order(nesting_position: :desc, title: :asc)).map { |t| [parent_title(t), t.id, {"data-type" => t.class.name}]}
         f.input :source_type, as: :hidden
         
-        f.input :user
+        f.input :user_id, as: :hidden, input_html: { value: User.find_by(username: 'admin.screade').id }
       else
         f.inputs do
           f.input :is_approved

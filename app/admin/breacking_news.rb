@@ -14,8 +14,9 @@ ActiveAdmin.register BreakingNews do
   
   form do |f|
     f.inputs do
-      f.input :post_id, label: 'Post', as: :select, collection: Post.where(user: User.find_by(username: 'dima')).order(title: :desc)
+      f.input :post_id, label: 'Post', as: :select, collection: Post.where(user: User.find_by(username: 'admin.screade')).order(title: :desc)
     end
+    
     f.actions
   end
   
