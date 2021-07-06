@@ -7,7 +7,7 @@ module Tasks
       
       NewsCategory.all.each do |category|
         # Create Que job to save Article
-        CreateNewsArticlesJob.perform_later(country.code, category.title)
+        CreateNewsArticlesJob.perform_later(country.code, category.default_title)
       end
     end
     
@@ -18,7 +18,7 @@ module Tasks
       category = NewsCategory.find_by(title: category_title)
       return unless category
       
-      all_category_articles = get_all_category_articles(country.code, category.title)
+      all_category_articles = get_all_category_articles(country.code, category.default_title)
       all_category_articles.each do |article|
         
         # Create new Sources
@@ -72,7 +72,7 @@ module Tasks
           end
         end
         
-        article.news_categories << category if article && article.news_categories.pluck(:title).exclude?(category.title)
+        article.news_categories << category if article && article.news_categories.pluck(:title).exclude?(category.default_title)
       end
     end
     
