@@ -23,7 +23,7 @@ window.App = new function () {
       });
       
       // Post selector
-      $('#post_source_id').select2({})
+      $('#post_source_id, #breaking_news_post_id').select2({})
       $('#post_source_id').on('change', function() {
         let type = $("#post_source_id option:selected").attr('data-type');
         $('#post_source_type').val(type)

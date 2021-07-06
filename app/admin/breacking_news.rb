@@ -1,19 +1,20 @@
 ActiveAdmin.register BreakingNews do
   
   # Actions
-  actions :all
-  
-  # Filters
-  filter :is_active
-  filter :title
+  actions :all, except: [:new, :create, :destroy]
   
   # Params
-  permit_params :is_active, :title
+  permit_params :post_id
+  
+  index do
+    column :post
+    column :updated_at
+    actions
+  end
   
   form do |f|
     f.inputs do
-      f.input :title
-      f.input :is_active
+      f.input :post_id, label: 'Post', as: :select, collection: Post.where(user: User.find_by(username: 'dima')).order(title: :desc)
     end
     f.actions
   end

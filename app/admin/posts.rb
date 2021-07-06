@@ -53,11 +53,11 @@ ActiveAdmin.register Post do
     
     f.inputs do
       if object.new_record? || object.user.username == 'dima'
-        f.input :image
+        f.input :image, input_html: { accept: 'image/png, image/jpeg' }
         f.input :title
         f.input :description
         
-        f.input :source_id, label: 'Parent', as: :select, collection: (NewsCategory.order(title: :desc) + Topic.where(is_approved: true).order(nesting_position: :desc, title: :asc)).map { |t| [parent_title(t), t.id, {"data-type" => t.class.name}]}
+        f.input :source_id, label: 'Source', as: :select, collection: (NewsCategory.order(title: :desc) + Topic.where(is_approved: true).order(nesting_position: :desc, title: :asc)).map { |t| [parent_title(t), t.id, {"data-type" => t.class.name}]}
         f.input :source_type, as: :hidden
         
         f.input :user
