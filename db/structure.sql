@@ -298,10 +298,9 @@ CREATE TABLE public.ar_internal_metadata (
 
 CREATE TABLE public.breaking_news (
     id bigint NOT NULL,
-    title character varying NOT NULL,
-    is_active boolean DEFAULT false,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    post_id integer
 );
 
 
@@ -902,7 +901,7 @@ CREATE TABLE public.posts (
     id bigint NOT NULL,
     user_id integer NOT NULL,
     title character varying NOT NULL,
-    description character varying NOT NULL,
+    description text NOT NULL,
     image character varying,
     image_hex character varying,
     is_notification boolean DEFAULT true,
@@ -2231,6 +2230,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210621095528'),
 ('20210623112050'),
 ('20210623112215'),
-('20210623143251');
-
-
+('20210623143251'),
+('20210706135930'),
+('20210706153513');
