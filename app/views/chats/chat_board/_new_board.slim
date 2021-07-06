@@ -14,7 +14,8 @@
       
   .control-info
     .control-element#twilio-video-call
-      = image_pack_tag('media/images/icons/ic_chat_videocam.png')
+      = link_to new_chat_chat_video_room_path(@chat.access_token) do
+        = image_pack_tag('media/images/icons/ic_chat_videocam.png')
     .control-element
       = image_pack_tag('media/images/icons/ic_chat_phone.png')
     .control-element#dropdown-control-element

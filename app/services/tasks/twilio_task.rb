@@ -19,24 +19,28 @@ module Tasks
       token.add_grant(grant)
 
       # Generate the token
-      puts token.to_jwt
+      token.to_jwt
     end
     
-    def self.create_new_room(chat_access_token)
+    def self.create_new_room(unique_name)
       # Find your Account SID and Auth Token at twilio.com/console
       # and set the environment variables. See http://twil.io/secure
       account_sid = ENV['TWILIO_ACCOUNT_API_KEY_SID']
       auth_token = ENV['TWILIO_ACCOUNT_API_KEY_TOKEN']
       @client = Twilio::REST::Client.new(account_sid, auth_token)
       
-      room = @client.video.rooms.create(
-         record_participants_on_connect: true,
-         status_callback: 'http://example.org',
-         type: 'group',
-         unique_name: chat_access_token
-       )
-       
-      puts room.sid
+      begin
+        room = @client.video.rooms.create(
+           record_participants_on_connect: true,
+           status_callback: 'http://example.org',
+           type: 'group',
+           unique_name: unique_name
+         )
+         
+        room.sid
+      rescue
+        nil
+      end
     end
     
     def self.complete_room(room_sid)

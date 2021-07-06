@@ -401,6 +401,40 @@ ALTER SEQUENCE public.chat_messages_id_seq OWNED BY public.chat_messages.id;
 
 
 --
+-- Name: chat_video_rooms; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.chat_video_rooms (
+    id bigint NOT NULL,
+    chat_id integer NOT NULL,
+    sid character varying NOT NULL,
+    status character varying DEFAULT 'in-progress'::character varying NOT NULL,
+    name character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: chat_video_rooms_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.chat_video_rooms_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: chat_video_rooms_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.chat_video_rooms_id_seq OWNED BY public.chat_video_rooms.id;
+
+
+--
 -- Name: chats; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1379,6 +1413,13 @@ ALTER TABLE ONLY public.chat_messages ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
+-- Name: chat_video_rooms id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chat_video_rooms ALTER COLUMN id SET DEFAULT nextval('public.chat_video_rooms_id_seq'::regclass);
+
+
+--
 -- Name: chats id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1584,6 +1625,14 @@ ALTER TABLE ONLY public.chat_memberships
 
 ALTER TABLE ONLY public.chat_messages
     ADD CONSTRAINT chat_messages_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: chat_video_rooms chat_video_rooms_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chat_video_rooms
+    ADD CONSTRAINT chat_video_rooms_pkey PRIMARY KEY (id);
 
 
 --
@@ -1857,6 +1906,20 @@ CREATE INDEX index_chat_messages_on_message_type ON public.chat_messages USING b
 --
 
 CREATE INDEX index_chat_messages_on_user_id ON public.chat_messages USING btree (user_id);
+
+
+--
+-- Name: index_chat_video_rooms_on_chat_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chat_video_rooms_on_chat_id ON public.chat_video_rooms USING btree (chat_id);
+
+
+--
+-- Name: index_chat_video_rooms_on_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_chat_video_rooms_on_name ON public.chat_video_rooms USING btree (name);
 
 
 --
@@ -2231,6 +2294,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210623112050'),
 ('20210623112215'),
 ('20210623143251'),
-('20210629103137');
+('20210629103137'),
+('20210705073155');
 
 

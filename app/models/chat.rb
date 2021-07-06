@@ -14,6 +14,7 @@ class Chat < ApplicationRecord
   has_many :chat_memberships, dependent: :destroy
   belongs_to :owner, class_name: 'User', foreign_key: 'owner_id'
   has_many :chat_messages, dependent: :destroy
+  has_many :chat_video_rooms, dependent: :destroy
   
   # Association validations
   validates :owner, presence: true
