@@ -53,5 +53,5 @@
     .post-title
       = post.title
     .post-description
-      = post.description
+      = auto_link(post.description, :html => { :target => '_blank' })
       
