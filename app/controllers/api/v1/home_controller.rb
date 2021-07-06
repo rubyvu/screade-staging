@@ -28,7 +28,7 @@ class Api::V1::HomeController < Api::V1::ApiController
   
   # GET /api/v1/home/breaking_news
   def breaking_news
-    breaking_news = BreakingNews.find_by(is_active: true)
+    breaking_news = BreakingNews.get_breaking_news.post
     if breaking_news
       breaking_news_json = BreakingNewsSerializer.new(breaking_news).as_json
     else
