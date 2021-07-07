@@ -1,9 +1,8 @@
 h2 Welcome to Video Chat
 span #{@chat_video_room.attributes}
-#chat-video-room
+#chat-video-room data-twilio-video-token="#{@chat_video_room_user_token}" data-room-name="#{@chat_video_room.name}"
 
-button#connect-to-video-chat GET TOKEN
-
+button#disconect-from-video-chat Leave
 
 #video-chat-local-media
 

@@ -32,4 +32,13 @@ $( document ).on('turbolinks:load', function() {
     
     $('#modal-add-chat-member').modal('hide')
   })
+  
+  // Return to last Chat
+  if ( window.location.pathname === '/chats' ) {
+    let currentUrl = new URL(window.location.href);
+    let lastChatAccessToken = currentUrl.searchParams.get('chat_access_token');
+    let chatElement = $(`#chat-element-${lastChatAccessToken}`)
+    window.history.pushState("", "", '/chats');
+    if (lastChatAccessToken && chatElement.length > 0) { chatElement[0].click() }
+  }
 })

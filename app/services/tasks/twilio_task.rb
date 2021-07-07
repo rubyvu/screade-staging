@@ -1,7 +1,7 @@
 module Tasks
   class TwilioTask
     
-    def self.generate_access_token_for_user(username)
+    def self.generate_access_token_for_user(username, room_sid)
       # Required for any Twilio Access Token
       account_sid = ENV['TWILIO_ACCOUNT_API_KEY_SID']
       api_key = ENV['TWILIO_CHAT_VIDEO_API_KEY_SID']
@@ -15,7 +15,7 @@ module Tasks
       
       # Create Video grant for our token
       grant = Twilio::JWT::AccessToken::VideoGrant.new
-      grant.room = 'Test Chat'
+      grant.room = room_sid
       token.add_grant(grant)
 
       # Generate the token

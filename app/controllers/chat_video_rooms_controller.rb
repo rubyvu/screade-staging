@@ -6,6 +6,7 @@ class ChatVideoRoomsController < ApplicationController
   def new
     # TODO: error when Chat does not created
     @chat_video_room = ChatVideoRoom.create(chat: @chat) unless @chat_video_room
+    @chat_video_room_user_token = Tasks::TwilioTask.generate_access_token_for_user(current_user.username, @chat_video_room.sid)
   end
   
   # GET /chats/:chat_access_token/chat_video_rooms/participant_toke
