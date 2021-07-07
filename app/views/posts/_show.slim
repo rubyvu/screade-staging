@@ -53,5 +53,5 @@
     .post-title
       = post.title
     .post-description
-      = auto_link(post.description, :html => { :target => '_blank' })
+      = auto_link(post.description&.gsub(/\n/, '<br>').html_safe, html: { target: '_blank' })
       
