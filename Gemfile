@@ -96,6 +96,8 @@ gem 'fcm'
 
 # Twilio audio/video call
 gem 'twilio-ruby'
+# Wrap link
+gem 'rails_autolink'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

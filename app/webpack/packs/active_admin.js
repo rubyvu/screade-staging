@@ -6,6 +6,9 @@ import "@activeadmin/activeadmin";
 import jQuery from 'jquery';
 window.$ = window.jQuery = jQuery;
 
+import "select2";
+import "select2/dist/css/select2.min.css"
+
 window.App = new function () {
   /**
    * Initializer
@@ -17,6 +20,13 @@ window.App = new function () {
       $('#topic_parent_id').on('change', function() {
         let type = $("#topic_parent_id option:selected").attr('data-type');
         $('#topic_parent_type').val(type)
+      });
+      
+      // Post selector
+      $('#post_source_id, #breaking_news_post_id').select2({})
+      $('#post_source_id').on('change', function() {
+        let type = $("#post_source_id option:selected").attr('data-type');
+        $('#post_source_type').val(type)
       });
     })
   })

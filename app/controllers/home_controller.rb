@@ -9,7 +9,7 @@ class HomeController < ApplicationController
     @home[:news_categories] = NewsCategory.where.not(title: 'general')
     
     # Breaking News
-    @home[:breaking_news_title] = BreakingNews.find_by(is_active: true)&.title
+    @home[:breaking_news_post] = BreakingNews.get_breaking_news.post
     
     # Trends
     @home[:trends] = []

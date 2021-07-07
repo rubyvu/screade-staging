@@ -1,6 +1,6 @@
 = render './shared/panels/news_categories', news_categories: @home[:news_categories]
 = render './shared/panels/confirmation_notification' if current_user&.can_be_reconfirmed?
-= render 'breaking_news', breaking_news_title: @home[:breaking_news_title] if @home[:breaking_news_title]
+= render 'breaking_news', post: @home[:breaking_news_post] if @home[:breaking_news_post]
 = render './shared/ads/home_banner' if Rails.env.production?
 = render 'trends', trends: @home[:trends]
 = render 'news', news_articles: @home[:news_articles], is_national: @home[:is_national]

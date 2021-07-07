@@ -3,8 +3,8 @@
     | Breaking News
   
   .breaking-news-text-wrapper
-    .breaking-news-layout
+    = link_to post_post_comments_path(post), class: 'breaking-news-layout' do
       .arrow-right
     .breaking-news
       #webticker
-        li #{breaking_news_title}
+        li #{post.title}
