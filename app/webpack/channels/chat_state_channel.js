@@ -20,6 +20,8 @@ $( document ).on('turbolinks:load', function() {
       
       // Get Chat element to update
       let chatElement = $(`#chat-element-${chatAccessToken}`)
+      if ( chatElement.length === 0 ) { return }
+      
       chatElement.replaceWith(data.chat_html)
       
       // Set ChatDate to desired format
