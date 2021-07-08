@@ -95,7 +95,8 @@ $( document ).on('turbolinks:load', function() {
     placeholder: "Please select a language",
     multiple: true
   });
-  $('#sign_up_update_user_language_ids option')[0].remove();                    // Empty placeholder for multiple elements step 2
+  
+  if ($('#sign_up_update_user_language_ids option').length > 0 ) { $('#sign_up_update_user_language_ids option')[0].remove(); } // Empty placeholder for multiple elements step 2
   
   // Block submit button on Sign Up
   let signUpSubmitButton = $('#sign-up-submit-button')
