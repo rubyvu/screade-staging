@@ -11,6 +11,9 @@ class Api::V1::ChatsController < Api::V1::ApiController
   
   # GET /api/v1/chats/:access_token
   def show
+    # Clear unread message counter
+    @current_user_membership.update_columns(unread_messages_count: 0)
+    
     chat_json = ChatSerializer.new(@chat).as_json
     render json: { chat: chat_json }, status: :ok
   end
