@@ -33,6 +33,7 @@ $( document ).on('turbolinks:load', function() {
     $('#modal-add-chat-member').modal('hide')
   })
   
+  // Twilio Video/Audio
   // Return to last Chat
   if ( window.location.pathname === '/chats' ) {
     let currentUrl = new URL(window.location.href);

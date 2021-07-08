@@ -10,5 +10,13 @@ $( document ).on('turbolinks:load', function() {
       console.log('--> disconect');
       chatVideoRoom.disconectFromTheRoom()
     })
+    
+    // Get History back event
+    if ( window.history && window.history.pushState) {
+      $(window).on('popstate', function() {
+        console.log('--> disconect');
+        chatVideoRoom.disconectFromTheRoom()
+      });
+    }
   }
 })
