@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   resources :chats, param: :access_token do
     resources :chat_video_rooms, only: [:new], param: :name do
       collection do
-        get :participant_token
+        put :complete
       end
     end
     

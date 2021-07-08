@@ -15,7 +15,7 @@ module Tasks
       
       # Create Video grant for our token
       grant = Twilio::JWT::AccessToken::VideoGrant.new
-      grant.room = room_sid
+      # grant.room = room_sid
       token.add_grant(grant)
 
       # Generate the token
@@ -23,8 +23,6 @@ module Tasks
     end
     
     def self.create_new_room(unique_name)
-      # Find your Account SID and Auth Token at twilio.com/console
-      # and set the environment variables. See http://twil.io/secure
       account_sid = ENV['TWILIO_ACCOUNT_API_KEY_SID']
       auth_token = ENV['TWILIO_ACCOUNT_API_KEY_TOKEN']
       @client = Twilio::REST::Client.new(account_sid, auth_token)
@@ -44,15 +42,57 @@ module Tasks
     end
     
     def self.complete_room(room_sid)
-      # Find your Account SID and Auth Token at twilio.com/console
-      # and set the environment variables. See http://twil.io/secure
       account_sid = ENV['TWILIO_ACCOUNT_API_KEY_SID']
       auth_token = ENV['TWILIO_ACCOUNT_API_KEY_TOKEN']
       @client = Twilio::REST::Client.new(account_sid, auth_token)
       
-      room = @client.video.rooms(room_sid).update(status: 'completed')
-                          
-      puts room.unique_name
+      begin
+        room = @client.video.rooms(room_sid).update(status: 'completed')
+        room.unique_name
+      rescue
+        nil
+      end
+    end
+    
+    def self.retrieve_list_of_rooms(unique_name, status)
+      account_sid = ENV['TWILIO_ACCOUNT_API_KEY_SID']
+      auth_token = ENV['TWILIO_ACCOUNT_API_KEY_TOKEN']
+      @client = Twilio::REST::Client.new(account_sid, auth_token)
+      
+      begin
+        rooms = @client.video.rooms.list(
+          unique_name: unique_name,
+          status: status,
+          limit: 20
+        )
+        
+        rooms.map { |record| record.sid }
+      rescue
+        return []
+      end
+    end
+    
+    def self.retrieve_rooms_by_status(status)
+      account_sid = ENV['TWILIO_ACCOUNT_API_KEY_SID']
+      auth_token = ENV['TWILIO_ACCOUNT_API_KEY_TOKEN']
+      @client = Twilio::REST::Client.new(account_sid, auth_token)
+      
+      rooms = @client.video.rooms.list(status: status, limit: 20)
+      rooms.each do |record|
+        puts record.sid
+      end
+    end
+    
+    def self.retrieve_list_of_connected_participants(sid)
+      account_sid = ENV['TWILIO_ACCOUNT_API_KEY_SID']
+      auth_token = ENV['TWILIO_ACCOUNT_API_KEY_TOKEN']
+      
+      @client = Twilio::REST::Client.new(account_sid, auth_token)
+      begin
+        @client.video.rooms(sid).participants.list(status: 'connected').map { |participant| participant.sid }
+      rescue
+        return []
+      end
     end
   end
 end

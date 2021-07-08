@@ -19,6 +19,10 @@ class ChatVideoRoom < ApplicationRecord
   validates :sid, presence: true
   validate :only_one_active_room, on: :create
   
+  def participants
+    Tasks::TwilioTask.retrieve_list_of_connected_participants(self.sid)
+  end
+  
   private
     def set_chat_name
       unique_name = "video-#{self.chat.access_token}-#{SecureRandom.hex(8)}"

@@ -54,9 +54,21 @@ export default class ChatVideoRoom {
     this.room.disconnect();
     console.log(this.room);
     
+    this.updateRoomStateForServer()
     // Go to the chat
     window.location.href = this.location_callback + '?chat_access_token=' + this.name.split('-')[1]
-    
+  }
+  
+  // Send update request to server to complete Room without participants
+  updateRoomStateForServer() {
+    $.ajax({
+      url: window.origin + '/chats/' + this.name.split('-')[1] + '/chat_video_rooms/complete',
+      type: 'PUT',
+      data: { chat_video_room_name: this.name },
+      success: function(result) {
+        console.log(result);
+      }
+    });
   }
   
   showLocalMedia() {
