@@ -12,6 +12,15 @@ Rails.application.routes.draw do
     mount Que::Web, at: 'admin/que'
   end
   
+  # Webhooks
+  namespace :webhooks do
+    resources :twilio, only: [] do
+      collection do
+        post :status_callback
+      end
+    end
+  end
+  
   # Web routes
   devise_for :users, controllers: {
     confirmations: 'users/confirmations',
