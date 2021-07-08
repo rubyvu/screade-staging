@@ -1,4 +1,5 @@
 class ChatVideoRoomsController < ApplicationController
+  layout 'twilio'
   before_action :get_chat, only: [:new, :complete]
   before_action :get_chat_video_room, only: [:new]
   
@@ -11,7 +12,6 @@ class ChatVideoRoomsController < ApplicationController
   
   # PUT /chats/:chat_access_token/chat_video_rooms/complete
   def complete
-    puts "=== params[:chat_video_room_name] #{params[:chat_video_room_name]}"
     chat_video_room = @chat.chat_video_rooms.find_by(name: params[:chat_video_room_name], status: 'in-progress')
     unless chat_video_room
       render json: { errors: ['Record not found.']}, status: :ok

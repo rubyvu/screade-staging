@@ -29,7 +29,7 @@ module Tasks
       
       begin
         room = @client.video.rooms.create(
-           record_participants_on_connect: true,
+           record_participants_on_connect: false,
            status_callback: 'https://www.screade.com' + '/webhooks/twilio/status_callback',
            type: 'group',
            unique_name: unique_name
