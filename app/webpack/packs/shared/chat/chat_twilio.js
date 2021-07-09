@@ -6,9 +6,19 @@ $( document ).on('turbolinks:load', function() {
     chatVideoRoom.connectToTheRoom()
     chatVideoRoom.showLocalMedia()
     
-    $('#disconect-from-video-chat').on('click', function(){
+    $('#disconect-from-video-chat').on('click', function() {
       console.log('--> disconect');
       chatVideoRoom.disconectFromTheRoom()
+    })
+    
+    $('#mute-audio').on('click', function() {
+      console.log('-- mute audio');
+      chatVideoRoom.audioMuteControl()
+    })
+    
+    $('#mute-video').on('click', function() {
+      console.log('-- mute video');
+      chatVideoRoom.videoMuteControl()
     })
     
     // Get History back event

@@ -6,6 +6,8 @@ export default class ChatVideoRoom {
     this.name = ''
     this.room = null
     this.location_callback = window.origin + '/chats'
+    this.isAudioMute = false
+    this.isVideoMute = false
     this.init()
   }
   
@@ -77,6 +79,30 @@ export default class ChatVideoRoom {
     createLocalVideoTrack().then(track => {
       const localMediaContainer = document.getElementById('video-chat-local-media');
       localMediaContainer.appendChild(track.attach());
+    });
+  }
+  
+  audioMuteControl() {
+    this.room.localParticipant.audioTracks.forEach(publication => {
+      if (this.isAudioMute) {
+        publication.track.enable();
+      } else {
+        publication.track.disable();
+      }
+      
+      this.isAudioMute = !this.isAudioMute
+    });
+  }
+  
+  videoMuteControl() {
+    this.room.localParticipant.videoTracks.forEach(publication => {
+      if (this.isVideoMute) {
+        publication.track.enable();
+      } else {
+        publication.track.disable();
+      }
+      
+      this.isVideoMute = !this.isVideoMute
     });
   }
 }
