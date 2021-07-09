@@ -19,28 +19,22 @@ export default class ChatVideoRoom {
       this.room = room
       this.room.participants.forEach(participant => {
         console.log(`!!! Participant "${participant.identity}" is connected to the Room`);
-        participant.on('trackSubscribed', track => {
-          console.log('track:', track);
-          document.getElementById('video-chat-remote-media').appendChild(track.attach());
-        });
+        
+        this.addParticipantVideoDiv(participant)
       });
       
-      // Cache Participant connection to the room
-      this.room.on('participantConnected', participant => {
-        console.log(`A remote Participant connected: ${participant}`);
-      });
-      
-      
-      // Participant video
-      // Attach the Participant's Media to a <div> element.
+      // On participant connect create new participantVideoDiv
       this.room.on('participantConnected', participant => {
         console.log(`Participant "${participant.identity}" connected`);
         
-        console.log('participant is', participant);
-        participant.on('trackSubscribed', track => {
-          console.log('track:', track);
-          document.getElementById('video-chat-remote-media').appendChild(track.attach());
-        });
+        this.addParticipantVideoDiv(participant)
+      });
+      
+      // On participant disconnect remove participantVideoDiv
+      this.room.on('participantDisconnected', participant => {
+        console.log(`Participant disconnected: ${participant.identity}`);
+        console.log(participant);
+        document.getElementById(participant.sid).remove()
       });
     }, error => {
       console.error(`Unable to connect to Room: ${error.message}`);
@@ -48,11 +42,8 @@ export default class ChatVideoRoom {
   }
   
   disconectFromTheRoom() {
-    console.log(this.room);
-    
-    // To disconnect from a Room
+    // To disconnect from the Room
     this.room.disconnect();
-    console.log(this.room);
     
     this.updateRoomStateForServer()
     // Go to the chat
@@ -68,6 +59,17 @@ export default class ChatVideoRoom {
       success: function(result) {
         console.log(result);
       }
+    });
+  }
+  
+  addParticipantVideoDiv(participant) {
+    const participantVideoDiv = document.createElement('div');
+    participantVideoDiv.id = participant.sid;
+    document.getElementById('video-chat-remote-media').append(participantVideoDiv)
+    
+    participant.on('trackSubscribed', (track, participantVideoDiv) => {
+      console.log('track:', track);
+      document.getElementById(participant.sid).appendChild(track.attach());
     });
   }
   
