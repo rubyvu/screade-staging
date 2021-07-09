@@ -1,8 +1,9 @@
 class ChatMessage < ApplicationRecord
   
   # Constants
-  TYPES_LIST = %w(image video text audio)
+  TYPES_LIST = %w(image video text audio audio-room video-room)
   SOURCE_TYPES = %w(UserVideo UserImage)
+  ROOM_SOURCE_TYPES = %w(ChatVideoRoom)
   
   # File Uploader
   mount_uploader :image, ChatImageUploader
@@ -16,6 +17,7 @@ class ChatMessage < ApplicationRecord
   
   # Associations
   belongs_to :chat
+  belongs_to :chat_room_source, polymorphic: true, optional: true
   belongs_to :user
   belongs_to :asset_source, polymorphic: true, optional: true
   
@@ -32,7 +34,8 @@ class ChatMessage < ApplicationRecord
     # Validations
     def type_content_is_present
       return if (self.message_type == 'image' && self.asset_source.present?) || (self.message_type == 'video' && self.asset_source.present?) || (self.message_type == 'text' && self.text.present?) || (self.message_type == 'audio' && self.audio_record.present?)
-      errors.add(:base, 'One of 4 types should be present.')
+      return if (self.message_type == 'audio-room' && self.chat_room_source.present?) || (self.message_type == 'video-room' && self.chat_room_source.present?)
+      errors.add(:base, 'Message type should be present.')
     end
     
     def chat_membership

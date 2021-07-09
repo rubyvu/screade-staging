@@ -376,7 +376,9 @@ CREATE TABLE public.chat_messages (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     asset_source_id integer,
-    asset_source_type character varying
+    asset_source_type character varying,
+    chat_room_source_id integer,
+    chat_room_source_type character varying
 );
 
 
@@ -2296,6 +2298,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210629103137'),
 ('20210705073155'),
 ('20210706135930'),
-('20210706153513');
+('20210706153513'),
+('20210709141257');
 
 

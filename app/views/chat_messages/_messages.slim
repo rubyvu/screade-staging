@@ -62,6 +62,10 @@
               - else
                 span Audio record cannot be played.
                 
+          - when 'video-room'
+            .video-room
+              span #{chat_message.chat_room_source.status}
+                
           .footer
             .date
               = hours_minutes(chat_message.created_at)

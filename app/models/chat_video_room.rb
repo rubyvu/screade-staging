@@ -6,8 +6,10 @@ class ChatVideoRoom < ApplicationRecord
   # Callbacks
   before_validation :set_chat_name, on: :create
   before_validation :create_twilio_room, on: :create
+  after_commit :create_chat_message, on: :create
   
-  # Callbacks
+  # Associations
+  has_one :chat_message
   belongs_to :chat
   
   # Associations validations
@@ -31,6 +33,10 @@ class ChatVideoRoom < ApplicationRecord
     
     def create_twilio_room
       self.sid = Tasks::TwilioTask.create_new_room(self.name)
+    end
+    
+    def create_chat_message
+      ChatMessage.create(chat: self.chat, chat_room_source: self, user: self.chat.owner, message_type: 'video-room')
     end
     
     def only_one_active_room
