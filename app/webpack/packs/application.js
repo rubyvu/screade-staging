@@ -6,7 +6,7 @@ import Turbolinks from "turbolinks";
 import * as ActiveStorage from "@rails/activestorage";
 import "channels";
 import "select2";
-import "webticker/jquery.webticker.min.js";
+import Marquee3k from 'marquee3000';
 import 'bootstrap-datepicker';
 import 'timepicker/jquery.timepicker.js';
 import 'jquery-ui/ui/widgets/tabs';
@@ -84,7 +84,12 @@ $(document).on('turbolinks:load', function () {
   $('input.timepicker').timepicker(timePickerOptions)
   
   //Init Ticker for Breaking news on page load
-  $('#webticker').webTicker({ height: '36px', duplicate: true, startEmpty: false });
+  Marquee3k.init({
+    selector: 'marquee3k',
+  });
+  window.addEventListener('load', (event) => {
+     Marquee3k.refreshAll();
+  });
   
   // Hide modal after redirect and go back
   // $('a[data-type="modal-link"]').on('click', function() {

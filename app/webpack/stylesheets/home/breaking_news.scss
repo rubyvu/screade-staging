@@ -50,20 +50,11 @@
 
 .breaking-news-wrapper .breaking-news {
   height: 100%;
-}
-
-.breaking-news-wrapper .breaking-news #webticker,
-.breaking-news-wrapper .breaking-news li {
-  height: 100%;
   display: flex;
   align-items: center;
-  font-size: 16px;
-  font-weight: 300;
-  white-space: nowrap;
-  overflow: hidden;
 }
 
-.tickercontainer li {
-  font-size: 16px;
-  font-weight: 300;
+.breaking-news-wrapper .breaking-news .marquee3k .marquee3k__wrapper .marquee3k__copy {
+  padding-right: 10px;
+  box-sizing: border-box;
 }
