@@ -34,8 +34,15 @@ $(document).on('ajax:success', 'a[id^=chat-element-]', function() {
         let chatMessagesPlaceholder = $('#chat-message-placeholder')
         let chatBoardPlaceholder = $('#chat-board-placeholder')
         
+        
+        // Style Message Owner message
         chatMessagesPlaceholder.append($.parseHTML(data.chat_message_html))
         if ( chatBoardPlaceholder.find('[data-chat-username]').data('chat-username') === username ) {
+          chatMessagesPlaceholder.find(`[data-message-id=${messageId}]`).addClass('message-owner')
+        }
+        
+        // Style Audio/Video call message
+        if ( chatMessagesPlaceholder.find(`[data-message-id=${messageId}]`).length > 0 && chatMessagesPlaceholder.find(`[data-message-id=${messageId}]`).find('.video-room').length > 0 ) {
           chatMessagesPlaceholder.find(`[data-message-id=${messageId}]`).addClass('message-owner')
         }
         
