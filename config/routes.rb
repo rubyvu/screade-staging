@@ -271,6 +271,7 @@ Rails.application.routes.draw do
       
       resources :notifications, only: [:index, :show, :update] do
         collection do
+          get :unviewed_notifications_count
           put :view_all
         end
       end

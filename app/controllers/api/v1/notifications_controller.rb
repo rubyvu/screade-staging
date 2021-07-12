@@ -7,6 +7,11 @@ class Api::V1::NotificationsController < Api::V1::ApiController
     render json: { notifications: notifications_json }, status: :ok
   end
   
+  # GET /api/v1/notifications/unviewed_notifications_count
+  def unviewed_notifications_count
+    render json: { unviewed_notifications_count: Notification.where(recipient: current_user).unviewed.count }, status: :ok
+  end
+  
   # GET /api/v1/notifications/:id
   def show
     notification = Notification.find(params[:id])
