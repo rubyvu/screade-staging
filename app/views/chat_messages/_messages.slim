@@ -10,7 +10,7 @@
       span #{new_datetime.strftime('%A %d.%m.%Y')}
 
   // ChatMessage template
-  .message-box-wrapper data-message-id="#{chat_message.id}" data-message-datetime="#{chat_message_datetime.strftime('%Y-%m-%d %H:%M:%S %z')}" class="#{chat_message.user == current_user ? 'message-owner' : ''}"
+  .message-box-wrapper data-message-id="#{chat_message.id}" data-message-datetime="#{chat_message_datetime.strftime('%Y-%m-%d %H:%M:%S %z')}" class="#{chat_message.user == current_user || chat_message.chat_room_source.present? ? 'message-owner' : ''}"
     .message-wrapper
       .photo-wrapper
         .photo
@@ -64,7 +64,10 @@
                 
           - when 'video-room'
             .video-room
-              span #{chat_message.chat_room_source.status}
+              - if chat_message.chat_room_source.status == 'completed'
+                span  Video call #{chat_message.chat_room_source.status}
+              - else
+                = link_to "Join to the video chat #{chat_message.chat_room_source.participants_count}/50", new_chat_chat_video_room_path(@chat.access_token)
                 
           .footer
             .date

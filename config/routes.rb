@@ -33,6 +33,7 @@ Rails.application.routes.draw do
     resources :chat_video_rooms, only: [:new], param: :name do
       collection do
         put :complete
+        put :update_participants_counter
       end
     end
     

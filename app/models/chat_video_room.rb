@@ -17,6 +17,7 @@ class ChatVideoRoom < ApplicationRecord
   
   # Fields validations
   validates :name, presence: true
+  validates :participants_count, presence: true
   validates :status, presence: true, inclusion: { in: ChatVideoRoom::STATUS_LIST }
   validates :sid, presence: true
   validate :only_one_active_room, on: :create

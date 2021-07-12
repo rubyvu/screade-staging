@@ -3,6 +3,7 @@ import ChatVideoRoom from './chat_video_room'
 $( document ).on('turbolinks:load', function() {
   if ($('#chat-video-room').length > 0 ) {
     var chatVideoRoom = new ChatVideoRoom();
+    if (chatVideoRoom.name.length === 0) { return }
     chatVideoRoom.connectToTheRoom()
     chatVideoRoom.showLocalMedia()
     

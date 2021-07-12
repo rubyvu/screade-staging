@@ -57,7 +57,7 @@ $(document).on('ajax:success', 'a[id^=chat-element-]', function() {
         
         // Scroll down for the last message if Client in the bottom position
         let chatMessagePlaceholder = document.getElementById('chat-message-placeholder');
-        if (chatMessagePlaceholder.scrollTop >= chatMessagePlaceholder.scrollHeight - 2000) {
+        if (chatMessagePlaceholder && chatMessagePlaceholder.scrollTop >= chatMessagePlaceholder.scrollHeight - 2000) {
           chatMessagePlaceholder.scrollTop = chatMessagePlaceholder.scrollHeight;
         }
       }

@@ -14,11 +14,20 @@ export default class ChatVideoRoom {
   init() {
     this.chatAccessToken = $('#chat-video-room').data('twilio-video-token')
     this.name = $('#chat-video-room').data('room-name')
+    
+    if (this.chatAccessToken.length === 0 ) {
+      alert('Current Chat cannot be reached at this moment, please try again later.')
+      window.location.href = this.location_callback + '?chat_access_token=' + this.name.split('-')[1]
+    }
   }
   
   connectToTheRoom() {
     connect(this.chatAccessToken, { name: this.name }).then(room => {
       this.room = room
+      
+      // Update participant counter (+1 is localParticipant)
+      this.setChatParticipantsCounter(this.room.participants.size+1)
+      
       this.room.participants.forEach(participant => {
         console.log(`!!! Participant "${participant.identity}" is connected to the Room`);
         
@@ -37,6 +46,11 @@ export default class ChatVideoRoom {
         console.log(`Participant disconnected: ${participant.identity}`);
         console.log(participant);
         document.getElementById(participant.sid).remove()
+        
+        // Update participant counter
+        let participantsCount = this.room.participants.size
+        if (this.room.localParticipant.sid && this.room.localParticipant.sid.length > 0) { participantsCount += 1 }
+        this.setChatParticipantsCounter(participantsCount)
       });
     }, error => {
       console.error(`Unable to connect to Room: ${error.message}`);
@@ -44,8 +58,10 @@ export default class ChatVideoRoom {
   }
   
   disconectFromTheRoom() {
-    // To disconnect from the Room
-    this.room.disconnect();
+    if (this.room) {
+      // To disconnect from the Room
+      this.room.disconnect();
+    }
     
     this.updateRoomStateForServer()
     // Go to the chat
@@ -58,6 +74,18 @@ export default class ChatVideoRoom {
       url: window.origin + '/chats/' + this.name.split('-')[1] + '/chat_video_rooms/complete',
       type: 'PUT',
       data: { chat_video_room_name: this.name },
+      success: function(result) {
+        console.log(result);
+      }
+    });
+  }
+  
+  // Send request to update participants counter
+  setChatParticipantsCounter(participantsCount) {
+    $.ajax({
+      url: window.origin + '/chats/' + this.name.split('-')[1] + '/chat_video_rooms/update_participants_counter',
+      type: 'PUT',
+      data: { chat_video_room_name: this.name, participants_count: participantsCount },
       success: function(result) {
         console.log(result);
       }

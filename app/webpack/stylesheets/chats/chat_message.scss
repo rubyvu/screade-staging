@@ -110,6 +110,13 @@
         color: $color-white;
         font-size: 16px;
       }
+      
+      .video-room {
+        color: $color-white;
+        a {
+          color: $color-white;
+        }
+      }
     }
     
     .content-wrapper:before, .content-wrapper:after { content: none; }

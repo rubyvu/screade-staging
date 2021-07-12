@@ -412,7 +412,8 @@ CREATE TABLE public.chat_video_rooms (
     status character varying DEFAULT 'in-progress'::character varying NOT NULL,
     name character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    participants_count integer DEFAULT 0 NOT NULL
 );
 
 
@@ -2299,6 +2300,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210705073155'),
 ('20210706135930'),
 ('20210706153513'),
-('20210709141257');
+('20210709141257'),
+('20210712104336');
 
 
