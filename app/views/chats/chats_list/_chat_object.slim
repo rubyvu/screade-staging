@@ -21,12 +21,9 @@
         
         - if is_message_counter
           - unread_messages_count = chat.get_membership(current_user).unread_messages_count
-          - if unread_messages_count > 0 && unread_messages_count < 99
+          - if unread_messages_count > 0
             .unread-messages-count
               span #{chat.get_membership(current_user).unread_messages_count}
-          - elsif unread_messages_count > 99
-            .unread-messages-count.no-values
-              span
           - else
             .unread-messages-count.no-messages
               span

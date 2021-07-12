@@ -45,7 +45,7 @@ class ChatMembershipsController < ApplicationController
     end
   end
   
-  # PUT/PATCH /chats/:chat_access_token/chat_membership/unread_messages
+  # PUT/PATCH /chats/:chat_access_token/chat_memberships/unread_messages
   def unread_messages
     chat_membership = ChatMembership.find_by(chat: @chat, user: current_user)
     if chat_membership.blank?
@@ -53,11 +53,10 @@ class ChatMembershipsController < ApplicationController
       return
     end
     
-    if chat_membership.update(unread_messages_count: params[:chat_membership][:unread_messages_count])
-      render json: { success: true }, status: :ok
-    else
-      render json: { errors: chat_membership.errors.full_messages }, status: :unprocessable_entity
-    end
+    # Clear unread message counter
+    chat_membership.update_columns(unread_messages_count: 0)
+    chat_membership_json = ChatMembershipSerializer.new(chat_membership).as_json
+    render json: { chat_membership: chat_membership_json }, status: :ok
   end
   
   # DELETE /chat_memberships/:id

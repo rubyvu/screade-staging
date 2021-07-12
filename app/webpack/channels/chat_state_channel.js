@@ -16,6 +16,8 @@ $( document ).on('turbolinks:load', function() {
     received(data) {
       // Called when there's incoming data on the websocket for this channel
       let chatAccessToken = data.chat_json.access_token
+      let currentChatBoard = $('#chat-board')
+      let chatBoardPlaceholder = $('#chat-board-placeholder')
       let unreadMessagesWas = $(`#chat-element-${chatAccessToken} .unread-messages-count span`).text()
       
       // Get Chat element to update
@@ -29,25 +31,31 @@ $( document ).on('turbolinks:load', function() {
       $(`#chat-element-${chatAccessToken} .date`).html(chatUpdatedAt)
       
       // Add Messages unviewed counter if User out of Chat
-      let currentChatBoard = $('#chat-board')
-      if (currentChatBoard && currentChatBoard.data('chat-token') !== chatAccessToken) {
-        // Update UnreadMessages view
-        let unreadMessagesCounter = parseInt(unreadMessagesWas || 0) + 1
-        
-        // Update UnreadMessages value in DB
-        $.ajax({
-          url: window.location.origin + '/chats/' + chatAccessToken + '/chat_memberships/unread_messages',
-          type: 'PUT',
-          data: { chat_membership: { unread_messages_count: unreadMessagesCounter } },
-          dataType: 'json'
-        }).done(function(data) {
-          if (data.success) {
+      data.chat_json.chat_memberships.forEach(chatMembership => {
+        console.log('chatMembership', chatMembership);
+        if ( chatBoardPlaceholder.find('[data-chat-username]').data('chat-username') === chatMembership.user.username ) {
+          console.log('????????');
+          // // Update UnreadMessages value in DB
+          $.ajax({
+            url: window.location.origin + '/chats/' + chatAccessToken + '/chat_memberships/unread_messages',
+            type: 'PUT',
+            dataType: 'json'
+          }).done(function(data) {
+            if (data.success) {
+              $(`#chat-element-${chatAccessToken} .body .message .unread-messages-count`).addClass('no-messages')
+            }
+          });
+        } else {
+          if (currentChatBoard && currentChatBoard.data('chat-token') !== chatAccessToken) {
+            // Update UnreadMessages view
+            let unreadMessagesCounter = parseInt(unreadMessagesWas || 0)+1
+            console.log(unreadMessagesCounter);
             $(`#chat-element-${chatAccessToken} .unread-messages-count span`).text(unreadMessagesCounter)
+          } else if (currentChatBoard && currentChatBoard.data('chat-token') === chatAccessToken) {
+            $(`#chat-element-${chatAccessToken} .body .message .unread-messages-count`).addClass('no-messages')
           }
-        });
-      } else if (currentChatBoard && currentChatBoard.data('chat-token') === chatAccessToken) {
-        $(`#chat-element-${chatAccessToken} .body .message .unread-messages-count`).addClass('no-messages')
-      }
+        }
+      })
     }
   });
 })

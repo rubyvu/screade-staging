@@ -196,6 +196,7 @@ Rails.application.routes.draw do
         resources :chat_memberships, only: [:index] do
           collection do
             get :chat_users
+            put :unread_messages
           end
         end
       end

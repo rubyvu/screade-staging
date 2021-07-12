@@ -1,5 +1,5 @@
 class Api::V1::ChatMembershipsController < Api::V1::ApiController
-  before_action :get_chat, only: [:index, :chat_users]
+  before_action :get_chat, only: [:index, :chat_users, :unread_messages]
   before_action :get_chat_membership, only: [:update, :destroy]
   
   # GET /api/v1/chats/:chat_access_token/chat_memberships
@@ -34,6 +34,16 @@ class Api::V1::ChatMembershipsController < Api::V1::ApiController
     else
       render json: { errors: @chat_membership.errors.full_messages }, status: :unprocessable_entity
     end
+  end
+  
+  # PUT /api/v1/chats/:chat_access_token/chat_memberships/unread_messages
+  def unread_messages
+    current_user_membership = ChatMembership.find_by!(user: current_user, chat: @chat)
+    
+    # Clear unread message counter
+    current_user_membership.update_columns(unread_messages_count: 0)
+    chat_membership_json = ChatMembershipSerializer.new(current_user_membership).as_json
+    render json: { chat_membership: chat_membership_json }, status: :ok
   end
   
   # DELETE /api/v1/chat_memberships/:id

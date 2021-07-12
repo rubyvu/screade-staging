@@ -50,6 +50,12 @@ class ChatMessage < ApplicationRecord
     end
     
     def broadcast_chat_message
+      # Set unread messages counter
+      self.chat.chat_memberships.where.not(user: self.user).each do |chat_membership|
+        chat_membership.update_columns(unread_messages_count: chat_membership.unread_messages_count+1)
+      end
+      
+      # Broadcast message
       return if message_type == 'audio' # Audio saved on Carrierwave uploader. Bug https://github.com/carrierwaveuploader/carrierwave-mongoid/issues/129
       
       render_message_template = ApplicationController.renderer.render(partial: 'chat_messages/message_to_broadcast', locals: { chat_message: self })
