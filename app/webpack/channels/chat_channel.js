@@ -9,7 +9,7 @@ $(document).on('ajax:success', 'a[id^=chat-element-]', function() {
     // Clear all User ChatChannel subscriptions before new subscription
     for ( var i = 0, l = consumer.subscriptions.subscriptions.length; i < l; i++ ) {
       let consumerSubscription = consumer.subscriptions.subscriptions[i]
-      if ( JSON.parse(consumerSubscription.identifier).channel === 'ChatChannel' ) {
+      if ( consumerSubscription && JSON.parse(consumerSubscription.identifier).channel === 'ChatChannel' ) {
         consumer.subscriptions.remove(consumerSubscription)
       }
     }

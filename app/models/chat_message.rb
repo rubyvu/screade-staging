@@ -64,6 +64,9 @@ class ChatMessage < ApplicationRecord
     
     def broadcast_chat_state
       render_chat_state_template = ApplicationController.renderer.render(partial: 'chats/chats_list/chat_object', locals: { chat: self.chat, is_message_counter: false })
-      ActionCable.server.broadcast "chat_state_channel", chat_json: ChatSerializer.new(self.chat).as_json, chat_html: render_chat_state_template
+      
+      self.chat.chat_memberships.each do |chat_membership|
+        ActionCable.server.broadcast "#{chat_membership.user.username}_chat_state_channel", chat_json: ChatSerializer.new(self.chat).as_json, chat_html: render_chat_state_template
+      end
     end
 end

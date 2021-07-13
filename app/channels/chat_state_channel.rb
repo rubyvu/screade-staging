@@ -1,6 +1,6 @@
 class ChatStateChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "chat_state_channel"
+    stream_from "#{current_user.username}_chat_state_channel"
   end
   
   def unsubscribed
