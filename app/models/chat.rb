@@ -27,6 +27,10 @@ class Chat < ApplicationRecord
     self.chat_memberships.find_by(user: user)
   end
   
+  def last_message
+    self.chat_messages.order(id: :desc).first
+  end
+  
   private
     def set_default_chat_name
       self.name = owner.full_name if self.name.blank? && owner.present?

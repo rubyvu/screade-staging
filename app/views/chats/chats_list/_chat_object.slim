@@ -12,12 +12,12 @@
       .title
         span #{chat.name}
       .date
-        = month_with_date(chat.updated_at)
+        = month_with_date(chat.last_message.present? ? chat.last_message.updated_at : chat.updated_at)
     .body
       .message
         //.icon
         .text
-          span #{last_message_text(chat.chat_messages.last)}
+          span #{last_message_text(chat.last_message)}
         
         - if is_message_counter
           - unread_messages_count = chat.get_membership(current_user).unread_messages_count

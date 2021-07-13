@@ -18,7 +18,7 @@ class ChatSerializer < ActiveModel::Serializer
   
   attribute :last_message
   def last_message
-    ChatMessageSerializer.new(object.chat_messages.last).as_json if object.chat_messages.present?
+    ChatMessageSerializer.new(object.last_message).as_json if object.chat_messages.present?
   end
   
   attribute :name
