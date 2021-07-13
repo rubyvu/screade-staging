@@ -1,4 +1,4 @@
-.message-box-wrapper data-message-id="#{chat_message.id}" data-message-datetime="#{chat_message.created_at.strftime('%Y-%m-%d %H:%M:%S %z')}"
+.message-box-wrapper data-message-id="#{chat_message.id}" data-message-datetime="#{chat_message.created_at.strftime('%Y-%m-%d %H:%M:%S %z')}" data-twilio-id="#{chat_message.message_type == 'video-room' || chat_message.message_type == 'audio-room' ? chat_message.chat_room_source.sid : ''}"
   .message-wrapper
     .photo-wrapper
       .photo
