@@ -6,10 +6,11 @@ class ChatVideoRoom < ApplicationRecord
   # Callbacks
   before_validation :set_chat_name, on: :create
   before_validation :create_twilio_room, on: :create
+  after_update :broadcast_room_state
   after_commit :create_chat_message, on: :create
   
   # Associations
-  has_one :chat_message
+  has_one :chat_message, as: :chat_room_source
   belongs_to :chat
   
   # Associations validations
@@ -42,5 +43,10 @@ class ChatVideoRoom < ApplicationRecord
     
     def only_one_active_room
       self.errors.add(:base, 'Only one room can be active at a time') if self.chat.chat_video_rooms.exists?(status: 'in-progress')
+    end
+    
+    def broadcast_room_state
+      render_message_template = ApplicationController.renderer.render(partial: 'chat_messages/message_to_broadcast', locals: { chat_message: self.chat_message })
+      ActionCable.server.broadcast "twilio_room_#{self.chat.access_token}_state_chanel", chat_message_json: ChatMessageSerializer.new(self.chat_message).as_json, chat_message_html: render_message_template
     end
 end

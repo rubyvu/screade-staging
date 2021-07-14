@@ -11,6 +11,7 @@ class ChatMessage < ApplicationRecord
   mount_uploader :audio_record, ChatAudioUploader
   
   # Callbacks
+  after_validation :increase_unread_messages_counter, on: :create
   after_commit :upload_asset, on: [:create, :update]
   after_commit :broadcast_chat_message, on: [:create, :update]
   after_commit :broadcast_chat_state, on: [:create, :update]
@@ -43,6 +44,13 @@ class ChatMessage < ApplicationRecord
       errors.add(:base, 'You are not a member of this Chat')
     end
     
+    def increase_unread_messages_counter
+      # Set unread messages counter
+      self.chat.chat_memberships.where.not(user: self.user).each do |chat_membership|
+        chat_membership.update_columns(unread_messages_count: chat_membership.unread_messages_count+1)
+      end
+    end
+    
     # Calbacks
     def upload_asset
       return if ['image', 'video'].exclude?(self.message_type) || (self.message_type == 'image' && self.image.present?) || (self.message_type == 'video' && self.video.present?)
@@ -50,11 +58,6 @@ class ChatMessage < ApplicationRecord
     end
     
     def broadcast_chat_message
-      # Set unread messages counter
-      self.chat.chat_memberships.where.not(user: self.user).each do |chat_membership|
-        chat_membership.update_columns(unread_messages_count: chat_membership.unread_messages_count+1)
-      end
-      
       # Broadcast message
       return if message_type == 'audio' # Audio saved on Carrierwave uploader. Bug https://github.com/carrierwaveuploader/carrierwave-mongoid/issues/129
       
