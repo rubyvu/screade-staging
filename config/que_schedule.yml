@@ -1,5 +1,5 @@
 get_news_articles_job:
-  cron: "0 1 * * *" # Run every day at 01:00
+  cron: "0 */1 * * *" # Run every hour
   class: Schedule::GetNewsArticlesJob
   queue: schedule
   schedule_type: default
