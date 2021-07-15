@@ -1,0 +1,129 @@
+.call-control-panel {
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  width: 100%;
+  border: 1px solid red;
+  
+  .call-buttons {
+    width: 33.3%;
+    display: flex;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    
+    &.video-call {
+      width: 100%;
+    }
+    
+    .button {
+      margin: 0 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 50px;
+      width: 50px;
+      background-color: $color-grey;
+      border-radius: 100%;
+      
+      &.call-end {
+        background-color: $color-red;
+      }
+      
+      &.active {
+        /* Opacity */
+        /* IE 8 */
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+        /* IE 5-7 */
+        filter: alpha(opacity=75);
+        /* Netscape */
+        -moz-opacity: 0.75;
+        /* Safari 1.x */
+        -khtml-opacity: 0.75;
+        /* Good browsers */
+        opacity: 0.75;
+      }
+      
+      &.inactive {
+        /* Opacity */
+        /* IE 8 */
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+        /* IE 5-7 */
+        filter: alpha(opacity=30);
+        /* Netscape */
+        -moz-opacity: 0.3;
+        /* Safari 1.x */
+        -khtml-opacity: 0.3;
+        /* Good browsers */
+        opacity: 0.3;
+      }
+    }
+    
+    .button:active {
+      /* Opacity */
+      /* IE 8 */
+      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+      /* IE 5-7 */
+      filter: alpha(opacity=50);
+      /* Netscape */
+      -moz-opacity: 0.5;
+      /* Safari 1.x */
+      -khtml-opacity: 0.5;
+      /* Good browsers */
+      opacity: 0.5;
+    }
+  }
+  
+  .call-space-wrapper {
+    height: 0;
+    width: 33.3%;
+  }
+  
+  .call-profiles-wrapper {
+    // display: flex;
+    width: 33.3%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    height: 80px;
+    
+    .call-profiles {
+      display: inline-flex;
+      
+      .profile-image {
+        margin: 0 4px;
+        height: 80px;
+        width: 80px;
+        border-radius: 50%;
+        background-color: $color-light-grey;
+        object-fit: cover;
+      }
+    }
+  }
+}
+
+@media (max-width: map-get($grid-breakpoints, "md")) {
+  .call-control-panel {
+    height: 200px;
+    flex-direction: column;
+    bottom: 0;
+    
+    .call-buttons {
+      margin: 25px 0;
+      width: 100%;
+    }
+    
+    .call-space-wrapper {
+      display: none
+    }
+    
+    .call-profiles-wrapper {
+      width: 100%;
+    }
+  }
+}

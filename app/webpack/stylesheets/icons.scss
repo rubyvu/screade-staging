@@ -44,6 +44,11 @@ i.ic {
   width: 20px;
 }
 
+i.ic-button {
+  height: 32px;
+  width: 32px;
+}
+
 /* Lit */
 i.ic.lit:after {
   content: url('../images/icons/ic_lit.png');
@@ -93,4 +98,33 @@ i.ic.review:after {
 
 i.ic.review.active:after {
   content: url('../images/icons/ic_review_done.png');
+}
+
+/* Chat */
+i.ic-button.call-end:after {
+  content: url('../images/icons/chat_calls/ic_call_end.png');
+}
+
+i.ic-button.video.on:after {
+  content: url('../images/icons/chat_calls/ic_video_on.png');
+}
+
+i.ic-button.video.off:after {
+  content: url('../images/icons/chat_calls/ic_video_off.png');
+}
+
+i.ic-button.volume.on:after {
+  content: url('../images/icons/chat_calls/ic_volume_on.png');
+}
+
+i.ic-button.volume.off:after {
+  content: url('../images/icons/chat_calls/ic_volume_off.png');
+}
+
+i.ic-button.microphone.on:after {
+  content: url('../images/icons/chat_calls/ic_microphone_on.png');
+}
+
+i.ic-button.microphone.off:after {
+  content: url('../images/icons/chat_calls/ic_microphone_off.png');
 }
