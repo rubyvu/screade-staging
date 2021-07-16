@@ -107,6 +107,38 @@
   }
 }
 
+.video-chat-header {
+  height: 150px;
+  width: 100%;
+}
+
+.video-chat-content {
+  
+  width: 100%;
+  height: calc(100vh - 300px);
+  display: flex;
+  flex-wrap: wrap;
+  overflow-y: scroll;
+  
+  .video-chat-sceen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    width: 30%;
+    margin: 1% 1%;
+    // background-color: $color-black;
+    
+    video {
+      width: 100%;
+    }
+    
+    &.dominant-speaker {
+      border: 4px solid green;
+    }
+  }
+}
+
 @media (max-width: map-get($grid-breakpoints, "md")) {
   .call-control-panel {
     height: 200px;

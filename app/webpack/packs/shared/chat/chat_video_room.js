@@ -93,9 +93,11 @@ export default class ChatVideoRoom {
   }
   
   addParticipantVideoDiv(participant) {
+    const localMediaContainer = document.getElementById('video-chat-content');
     const participantVideoDiv = document.createElement('div');
+    participantVideoDiv.classList.add('video-chat-sceen')
     participantVideoDiv.id = participant.sid;
-    document.getElementById('video-chat-remote-media').append(participantVideoDiv)
+    localMediaContainer.append(participantVideoDiv)
     
     participant.on('trackSubscribed', (track, participantVideoDiv) => {
       console.log('track:', track);
@@ -105,8 +107,12 @@ export default class ChatVideoRoom {
   
   showLocalMedia() {
     createLocalVideoTrack().then(track => {
-      const localMediaContainer = document.getElementById('video-chat-local-media');
-      localMediaContainer.appendChild(track.attach());
+      const localMediaContainer = document.getElementById('video-chat-content');
+      
+      const participantVideoDiv = document.createElement('div');
+      participantVideoDiv.classList.add('video-chat-sceen')
+      localMediaContainer.appendChild(participantVideoDiv);
+      participantVideoDiv.appendChild(track.attach());
     });
   }
   
