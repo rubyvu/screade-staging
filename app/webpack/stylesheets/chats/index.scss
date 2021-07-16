@@ -18,6 +18,7 @@
   .chat-objects-wrapper {
     min-width: 300px;
     max-width: 300px;
+    overflow-y: scroll;
     
     .chat-element {
       padding: 16px 0 0 0;
