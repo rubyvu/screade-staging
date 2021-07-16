@@ -7,7 +7,7 @@
           .input-group-text
             = image_pack_tag('media/images/icons/ic_chat_document.png', class: 'img-responsive', id: 'chat-assset-button')
             
-        = f.text_field :text, class: 'form-control', placeholder: 'Write a message', autocomplete: false
+        = f.text_field :text, class: 'form-control', placeholder: 'Write a message', autocomplete: 'off'
         
         .input-group-append
           .input-group-text.align-items-center
