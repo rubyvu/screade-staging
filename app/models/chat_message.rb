@@ -12,9 +12,9 @@ class ChatMessage < ApplicationRecord
   
   # Callbacks
   after_validation :increase_unread_messages_counter, on: :create
-  after_commit :upload_asset, on: [:create, :update]
-  after_commit :broadcast_chat_message, on: [:create, :update]
-  after_commit :broadcast_chat_state, on: [:create, :update]
+  after_commit :upload_asset, on: :create
+  after_commit :broadcast_chat_message, on: :create
+  after_commit :broadcast_chat_state, on: :create
   
   # Associations
   belongs_to :chat
