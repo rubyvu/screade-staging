@@ -160,10 +160,17 @@ export default class ChatVideoRoom {
   
   audioMuteControl() {
     this.room.localParticipant.audioTracks.forEach(publication => {
+      let microphoneButton = $('.call-control-panel .button#mute-audio')
+      if (microphoneButton.length === 0) { return }
+      
       if (this.isAudioMute) {
         publication.track.enable();
+        microphoneButton.removeClass('inactive')
+        microphoneButton.find('i').removeClass('off').addClass('on')
       } else {
         publication.track.disable();
+        microphoneButton.addClass('inactive')
+        microphoneButton.find('i').removeClass('on').addClass('off')
       }
       
       this.isAudioMute = !this.isAudioMute
@@ -171,11 +178,18 @@ export default class ChatVideoRoom {
   }
   
   videoMuteControl() {
+    let cameraButton = $('.call-control-panel .button#mute-video')
+    if (cameraButton.length === 0) { return }
+    
     this.room.localParticipant.videoTracks.forEach(publication => {
       if (this.isVideoMute) {
         publication.track.enable();
+        cameraButton.removeClass('inactive')
+        cameraButton.find('i').removeClass('off').addClass('on')
       } else {
         publication.track.disable();
+        cameraButton.addClass('inactive')
+        cameraButton.find('i').removeClass('on').addClass('off')
       }
       
       this.isVideoMute = !this.isVideoMute

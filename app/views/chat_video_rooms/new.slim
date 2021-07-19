@@ -1,10 +1,6 @@
 #chat-video-room data-chat-token="#{@chat_video_room.chat.access_token}" data-twilio-video-token="#{@chat_video_room_user_token}" data-room-name="#{@chat_video_room.name}"
 
 .video-chat-header
-  button#disconect-from-video-chat Leave
-  button#mute-audio MuteAudio
-  button#mute-video MuteVideo
-
 
 .video-chat-content#video-chat-content
   //.video-chat-sceen
@@ -60,7 +56,7 @@
 .call-control-panel
   .call-buttons
       
-    .button
+    .button#mute-video
       i.ic-button.video.on
       
     //.button.inactive
@@ -72,11 +68,11 @@
     //.button.inactive
       i.ic-button.volume.off
       
-    .button
+    .button#mute-audio
       i.ic-button.microphone.on
       
     //.button.inactive
       i.ic-button.microphone.off
       
-    .button.call-end
+    .button.call-end#disconect-from-video-chat
       i.ic-button.call-end
