@@ -118,12 +118,16 @@
   height: calc(100vh - 300px);
   display: flex;
   flex-wrap: wrap;
+  flex-direction: row;
+  align-content: flex-start;
   overflow-y: scroll;
   
   .video-chat-sceen {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 1px solid $color-black;
     
     width: 30%;
     margin: 1% 1%;
@@ -136,6 +140,34 @@
     &.dominant-speaker {
       border: 4px solid green;
     }
+  }
+  
+  .video-chat-sceen .name {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 36px;
+    padding: 0 20px;
+    background-color: $color-black;
+    color: $color-white;
+    
+    height: 14%;
+    font-size: 1em;
+    
+    /* Opacity */
+    /* IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+    /* IE 5-7 */
+    filter: alpha(opacity=60);
+    /* Netscape */
+    -moz-opacity: 0.6;
+    /* Safari 1.x */
+    -khtml-opacity: 0.6;
+    /* Good browsers */
+    opacity: 0.6;
   }
 }
 

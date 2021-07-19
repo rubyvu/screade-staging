@@ -89,7 +89,7 @@ module Tasks
       
       @client = Twilio::REST::Client.new(account_sid, auth_token)
       begin
-        @client.video.rooms(sid).participants.list(status: 'connected').map { |participant| participant.sid }
+        @client.video.rooms(sid).participants.list(status: 'connected').map { |participant| [participant.sid, participant.identity] }
       rescue
         return []
       end

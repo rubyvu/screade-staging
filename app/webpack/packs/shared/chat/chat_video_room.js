@@ -21,6 +21,28 @@ export default class ChatVideoRoom {
     }
   }
   
+  // Send request to get room members
+  updateRoomMembersView() {
+    let chatAccessToken = $('#chat-video-room').data('chat-token')
+    return $.ajax({
+      url: window.origin + '/chats/' + chatAccessToken + '/chat_memberships/video_room',
+      type: 'GET',
+      success: function(data) {
+        data.video_room_members.forEach((user) => {
+          let currentUser = $(`.name span#${user.username}`)
+          if (currentUser.length > 0 ) {
+            let fullName = user.username
+            if (user.first_name.length > 0 && user.last_name.length > 0) {
+              fullName = user.first_name + ' ' + user.last_name
+            }
+            
+            currentUser.text(fullName)
+          }
+        });
+      }
+    });
+  }
+  
   connectToTheRoom() {
     connect(this.chatAccessToken, { name: this.name }).then(room => {
       this.room = room
@@ -39,6 +61,7 @@ export default class ChatVideoRoom {
         console.log(`Participant "${participant.identity}" connected`);
         
         this.addParticipantVideoDiv(participant)
+        this.updateRoomMembersView()
       });
       
       // On participant disconnect remove participantVideoDiv
@@ -52,6 +75,8 @@ export default class ChatVideoRoom {
         if (this.room.localParticipant.sid && this.room.localParticipant.sid.length > 0) { participantsCount += 1 }
         this.setChatParticipantsCounter(participantsCount)
       });
+      
+      this.updateRoomMembersView()
     }, error => {
       console.error(`Unable to connect to Room: ${error.message}`);
     });
@@ -93,14 +118,24 @@ export default class ChatVideoRoom {
   }
   
   addParticipantVideoDiv(participant) {
+    // List of all video chats
     const localMediaContainer = document.getElementById('video-chat-content');
+    
+    // Current participant video
     const participantVideoDiv = document.createElement('div');
     participantVideoDiv.classList.add('video-chat-sceen')
     participantVideoDiv.id = participant.sid;
+    
+    // Current participant name
+    const participantNameDiv = document.createElement('div');
+    participantNameDiv.classList.add('name')
+    participantNameDiv.innerHTML = '<span id="' + participant.identity + '">' + participant.identity + '</span>';
+    participantVideoDiv.append(participantNameDiv)
+    
+    // Add Video to DOM
     localMediaContainer.append(participantVideoDiv)
     
     participant.on('trackSubscribed', (track, participantVideoDiv) => {
-      console.log('track:', track);
       document.getElementById(participant.sid).appendChild(track.attach());
     });
   }
@@ -111,6 +146,13 @@ export default class ChatVideoRoom {
       
       const participantVideoDiv = document.createElement('div');
       participantVideoDiv.classList.add('video-chat-sceen')
+      
+      // Current participant name
+      const participantNameDiv = document.createElement('div');
+      participantNameDiv.innerHTML = '<span>' + 'You' + '</span>';
+      participantNameDiv.classList.add('name')
+      participantVideoDiv.append(participantNameDiv)
+      
       localMediaContainer.appendChild(participantVideoDiv);
       participantVideoDiv.appendChild(track.attach());
     });

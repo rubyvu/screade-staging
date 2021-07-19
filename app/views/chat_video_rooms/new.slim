@@ -1,4 +1,4 @@
-#chat-video-room data-twilio-video-token="#{@chat_video_room_user_token}" data-room-name="#{@chat_video_room.name}"
+#chat-video-room data-chat-token="#{@chat_video_room.chat.access_token}" data-twilio-video-token="#{@chat_video_room_user_token}" data-room-name="#{@chat_video_room.name}"
 
 .video-chat-header
   button#disconect-from-video-chat Leave
@@ -57,7 +57,7 @@
       .profile-image
 
 // Video call
-//.call-control-panel
+.call-control-panel
   .call-buttons
       
     .button

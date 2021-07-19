@@ -46,6 +46,7 @@ Rails.application.routes.draw do
     
     resources :chat_memberships, only: [:index] do
       collection do
+        get :video_room
         put :unread_messages
       end
     end
