@@ -37,6 +37,13 @@ Rails.application.routes.draw do
       end
     end
     
+    resources :chat_audio_rooms, only: [:new], param: :name do
+      collection do
+        put :complete
+        put :update_participants_counter
+      end
+    end
+    
     resources :chat_messages, only: [:create] do
       collection do
         get :images
