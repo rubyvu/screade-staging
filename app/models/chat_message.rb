@@ -1,9 +1,9 @@
 class ChatMessage < ApplicationRecord
   
   # Constants
-  TYPES_LIST = %w(image video text audio audio-room video-room)
+  TYPES_LIST = %w(image video text audio audio-room video-room audio-room)
   SOURCE_TYPES = %w(UserVideo UserImage)
-  ROOM_SOURCE_TYPES = %w(ChatVideoRoom)
+  ROOM_SOURCE_TYPES = %w(ChatVideoRoom ChatAudioRoom)
   
   # File Uploader
   mount_uploader :image, ChatImageUploader

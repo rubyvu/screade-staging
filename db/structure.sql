@@ -324,6 +324,41 @@ ALTER SEQUENCE public.breaking_news_id_seq OWNED BY public.breaking_news.id;
 
 
 --
+-- Name: chat_audio_rooms; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.chat_audio_rooms (
+    id bigint NOT NULL,
+    chat_id integer NOT NULL,
+    sid character varying NOT NULL,
+    status character varying DEFAULT 'in-progress'::character varying NOT NULL,
+    name character varying NOT NULL,
+    participants_count integer DEFAULT 0 NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: chat_audio_rooms_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.chat_audio_rooms_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: chat_audio_rooms_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.chat_audio_rooms_id_seq OWNED BY public.chat_audio_rooms.id;
+
+
+--
 -- Name: chat_memberships; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1401,6 +1436,13 @@ ALTER TABLE ONLY public.breaking_news ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
+-- Name: chat_audio_rooms id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chat_audio_rooms ALTER COLUMN id SET DEFAULT nextval('public.chat_audio_rooms_id_seq'::regclass);
+
+
+--
 -- Name: chat_memberships id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1611,6 +1653,14 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 ALTER TABLE ONLY public.breaking_news
     ADD CONSTRAINT breaking_news_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: chat_audio_rooms chat_audio_rooms_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chat_audio_rooms
+    ADD CONSTRAINT chat_audio_rooms_pkey PRIMARY KEY (id);
 
 
 --
@@ -1873,6 +1923,20 @@ CREATE UNIQUE INDEX index_admin_users_on_email ON public.admin_users USING btree
 --
 
 CREATE UNIQUE INDEX index_admin_users_on_reset_password_token ON public.admin_users USING btree (reset_password_token);
+
+
+--
+-- Name: index_chat_audio_rooms_on_chat_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chat_audio_rooms_on_chat_id ON public.chat_audio_rooms USING btree (chat_id);
+
+
+--
+-- Name: index_chat_audio_rooms_on_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_chat_audio_rooms_on_name ON public.chat_audio_rooms USING btree (name);
 
 
 --
@@ -2301,6 +2365,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210706135930'),
 ('20210706153513'),
 ('20210709141257'),
-('20210712104336');
+('20210712104336'),
+('20210720140558');
 
 
