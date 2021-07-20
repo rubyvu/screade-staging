@@ -44,7 +44,7 @@ export default class ChatVideoRoom {
   }
   
   connectToTheRoom() {
-    connect(this.chatAccessToken, { name: this.name }).then(room => {
+    connect(this.chatAccessToken, { name: this.name, dominantSpeaker: true }).then(room => {
       this.room = room
       
       // Update participant counter (+1 is localParticipant)
@@ -74,6 +74,19 @@ export default class ChatVideoRoom {
         let participantsCount = this.room.participants.size
         if (this.room.localParticipant.sid && this.room.localParticipant.sid.length > 0) { participantsCount += 1 }
         this.setChatParticipantsCounter(participantsCount)
+      });
+      
+      // Dominant speaker event);
+      this.room.on('dominantSpeakerChanged', participant => {
+        console.log('DS: ', participant);
+        console.log('The new dominant speaker in the Room is:', participant);
+        if (participant) {
+          let dominatnVideoScreen = $(`#${participant.sid}`)
+          dominatnVideoScreen.addClass('dominant-speaker')
+          dominatnVideoScreen.insertAfter(".video-chat-sceen#local-participant")
+        } else {
+          $('.video-chat-sceen').removeClass('dominant-speaker')
+        }
       });
       
       this.updateRoomMembersView()
@@ -112,7 +125,7 @@ export default class ChatVideoRoom {
       type: 'PUT',
       data: { chat_video_room_name: this.name, participants_count: participantsCount },
       success: function(result) {
-        console.log(result);
+        // console.log(result);
       }
     });
   }
@@ -146,6 +159,7 @@ export default class ChatVideoRoom {
       
       const participantVideoDiv = document.createElement('div');
       participantVideoDiv.classList.add('video-chat-sceen')
+      participantVideoDiv.id = 'local-participant'
       
       // Current participant name
       const participantNameDiv = document.createElement('div');
