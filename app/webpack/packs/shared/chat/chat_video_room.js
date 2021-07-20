@@ -200,10 +200,12 @@ export default class ChatVideoRoom {
         publication.track.enable();
         cameraButton.removeClass('inactive')
         cameraButton.find('i').removeClass('off').addClass('on')
+        $('#local-participant').removeClass('video-mute')
       } else {
         publication.track.disable();
         cameraButton.addClass('inactive')
         cameraButton.find('i').removeClass('on').addClass('off')
+        $('#local-participant').addClass('video-mute')
       }
       
       this.isVideoMute = !this.isVideoMute
