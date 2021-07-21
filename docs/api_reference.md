@@ -27,6 +27,7 @@
 - [Remove ChatMember from the Chat](api/v1/chat_memberships/destroy.md)
 - [List of all ChatMessages in the Chat](api/v1/chat_messages/index.md)
 - [Create new ChatMessage](api/v1/chat_messages/create.md)
+- [Create new ChatAudioRoom](api/v1/chat_audio_rooms/create.md)
 - [Create new ChatVideoRoom](api/v1/chat_video_rooms/create.md)
 
 ### Comments

@@ -31,6 +31,8 @@ class ChatMessageSerializer < ActiveModel::Serializer
       object.audio_record.url
     when 'video-room'
       ChatVideoRoomSerializer.new(object.chat_room_source).as_json
+    when 'audio-room'
+      ChatAudioRoomSerializer.new(object.chat_room_source).as_json
     end
   end
   

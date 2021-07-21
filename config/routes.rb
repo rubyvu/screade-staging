@@ -197,6 +197,7 @@ Rails.application.routes.draw do
       end
       
       resources :chats, only: [:index, :show, :create, :update], param: :access_token do
+        resources :chat_audio_rooms, only: [:create]
         resources :chat_video_rooms, only: [:create]
         resources :chat_messages, only: [:index, :create]
         member do
