@@ -1,5 +1,51 @@
 .audio-chat-header {
+  height: 150px;
+  width: 100%;
 }
 
 .audio-chat-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: calc(100vh - 300px);
+  
+  .audio-main-content-wrapper {
+    width: 100%;
+    display: flex;
+    
+    .main-content {
+      width: 50%;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      
+      .user-icon {
+        height: 266px;
+        width: 266px;
+        border-radius: 100%;
+        background-color: $color-white;
+        object-fit: cover;
+      }
+      
+      span {
+        color: $color-white;
+        padding: 24px;
+        font-size: 36px;
+        font-weight: 700;
+      }
+      
+      &.dominant-speaker {
+        .user-icon {
+          border: 4px solid green;
+        }
+      }
+      
+      &.no-participant {
+        display: none
+      }
+      
+    }
+  }
 }

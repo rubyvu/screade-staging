@@ -101,6 +101,10 @@
         border-radius: 50%;
         background-color: $color-light-grey;
         object-fit: cover;
+        
+        &.dominant-speaker {
+          border: 4px solid green;
+        }
       }
     }
   }

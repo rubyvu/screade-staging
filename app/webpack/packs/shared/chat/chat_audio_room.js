@@ -28,14 +28,19 @@ export default class ChatAudioRoom {
       type: 'GET',
       success: function(data) {
         data.audio_room_members.forEach((user) => {
-          let currentUser = $(`.name span#${user.username}`)
-          if (currentUser.length > 0 ) {
+          let userProfile = $('img.profile-image').closest(`[data-username='${user.username}']`)
+          if (userProfile.length > 0) {
+            // Set image
+            if (user.profile_picture && user.profile_picture.length > 0) {
+              userProfile.attr("src", user.profile_picture );
+            }
+            
+            // Set full name
             let fullName = user.username
             if (user.first_name.length > 0 && user.last_name.length > 0) {
               fullName = user.first_name + ' ' + user.last_name
             }
-            
-            currentUser.text(fullName)
+            userProfile.data("full-name", fullName)
           }
         });
       }
@@ -53,14 +58,14 @@ export default class ChatAudioRoom {
       this.room.participants.forEach(participant => {
         console.log(`!!! Participant "${participant.identity}" is connected to the Room`);
         
-        this.addParticipantVideoDiv(participant)
+        this.addParticipantIconDiv(participant)
       });
       
       // On participant connect create new participantVideoDiv
       this.room.on('participantConnected', participant => {
         console.log(`Participant "${participant.identity}" connected`);
         
-        this.addParticipantVideoDiv(participant)
+        this.addParticipantIconDiv(participant)
         this.updateRoomMembersView()
       });
       
@@ -68,7 +73,10 @@ export default class ChatAudioRoom {
       this.room.on('participantDisconnected', participant => {
         console.log(`Participant disconnected: ${participant.identity}`);
         console.log(participant);
+        
+        // Remove icons
         document.getElementById(participant.sid).remove()
+        $('#audio-remote-participant').css('display', 'none')
         
         // Update participant counter
         let participantsCount = this.room.participants.size
@@ -80,12 +88,22 @@ export default class ChatAudioRoom {
       this.room.on('dominantSpeakerChanged', participant => {
         console.log('DS: ', participant);
         console.log('The new dominant speaker in the Room is:', participant);
+        // If speaker change clear all styles
+        $('.profile-image').removeClass('dominant-speaker')
+        let remoteParticipantDiv = $('#audio-remote-participant')
+        remoteParticipantDiv.removeClass('dominant-speaker')
+        
         if (participant) {
-          let dominatnVideoScreen = $(`#${participant.sid}`)
-          dominatnVideoScreen.addClass('dominant-speaker')
-          dominatnVideoScreen.insertAfter(".video-chat-sceen#local-participant")
-        } else {
-          $('.video-chat-sceen').removeClass('dominant-speaker')
+          // Bottom menu
+          let dominatnAudioIcon = $(`.profile-image#${participant.sid}`)
+          dominatnAudioIcon.addClass('dominant-speaker')
+          dominatnAudioIcon.prependTo("#audio-participants-list")
+          
+          // Main content
+          remoteParticipantDiv.css('display', 'flex')
+          remoteParticipantDiv.addClass('dominant-speaker')
+          remoteParticipantDiv.children('img').attr('src', dominatnAudioIcon.attr('src'))
+          remoteParticipantDiv.children('span').text(dominatnAudioIcon.data('full-name'))
         }
       });
       
@@ -130,26 +148,23 @@ export default class ChatAudioRoom {
     });
   }
   
-  addParticipantVideoDiv(participant) {
+  addParticipantIconDiv(participant) {
     // List of all video chats
-    const localMediaContainer = document.getElementById('video-chat-content');
+    const audioListContainer = document.getElementById('audio-participants-list');
     
-    // Current participant video
-    const participantVideoDiv = document.createElement('div');
-    participantVideoDiv.classList.add('video-chat-sceen')
-    participantVideoDiv.id = participant.sid;
-    
-    // Current participant name
-    const participantNameDiv = document.createElement('div');
-    participantNameDiv.classList.add('name')
-    participantNameDiv.innerHTML = '<span id="' + participant.identity + '">' + participant.identity + '</span>';
-    participantVideoDiv.append(participantNameDiv)
+    // Current participant audio
+    const participantImage = document.createElement('img');
+    participantImage.classList.add('profile-image')
+    participantImage.id = participant.sid;
+    participantImage.src = $('#chat-audio-room').data('default-user-image')
+    participantImage.setAttribute("data-username", participant.identity)
+    participantImage.setAttribute("data-full-name", '')
     
     // Add Video to DOM
-    localMediaContainer.append(participantVideoDiv)
+    audioListContainer.append(participantImage)
     
-    participant.on('trackSubscribed', (track, participantVideoDiv) => {
-      document.getElementById(participant.sid).appendChild(track.attach());
+    participant.on('trackSubscribed', (track, participantImage) => {
+      track.attach()
     });
   }
   
