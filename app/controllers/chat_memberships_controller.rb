@@ -1,5 +1,5 @@
 class ChatMembershipsController < ApplicationController
-  before_action :get_chat, only: [:index, :video_room, :unread_messages]
+  before_action :get_chat, only: [:audio_room, :index, :video_room, :unread_messages]
   before_action :get_chat_membership, only: [:destroy]
   
   # GET /chats/:chat_access_token/chat_memberships
@@ -17,6 +17,15 @@ class ChatMembershipsController < ApplicationController
         format.js { render 'index', layout: false }
       end
     end
+  end
+  
+  # GET /chats/:chat_access_token/chat_memberships/audio_room
+  def audio_room
+    audio_room = @chat.chat_audio_rooms.find_by!(status: 'in-progress')
+    participant_usernames = audio_room.participants.map { |participant| participant[1] }
+    users = User.where(username: participant_usernames)
+    audio_room_members = ActiveModel::Serializer::CollectionSerializer.new(users, serializer: UserProfileSerializer).as_json
+    render json: { audio_room_members: audio_room_members }, status: :ok
   end
   
   # GET /chats/:chat_access_token/chat_memberships/video_room

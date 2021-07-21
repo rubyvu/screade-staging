@@ -16,8 +16,9 @@
     .control-element#twilio-video-call
       = link_to new_chat_chat_video_room_path(@chat.access_token) do
         = image_pack_tag('media/images/icons/ic_chat_videocam.png')
-    .control-element
-      = image_pack_tag('media/images/icons/ic_chat_phone.png')
+    .control-element#twilio-audio-call
+      = link_to new_chat_chat_audio_room_path(@chat.access_token) do
+        = image_pack_tag('media/images/icons/ic_chat_phone.png')
     .control-element#dropdown-control-element
       a.dropdown-toggle#dropdown-chat-more-button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
         = image_pack_tag('media/images/icons/ic_chat_more.png')

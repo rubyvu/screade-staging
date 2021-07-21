@@ -55,7 +55,14 @@
             - if chat_message.chat_room_source.status == 'completed'
               span  Video call #{chat_message.chat_room_source.status}
             - else
-              = link_to "Join to the video chat #{chat_message.chat_room_source.participants_count}/50", new_chat_chat_video_room_path(chat_message.chat.access_token)
+              = link_to "Join to the video call #{chat_message.chat_room_source.participants_count}/50", new_chat_chat_video_room_path(chat_message.chat.access_token)
+              
+        - when 'audio-room'
+          .audio-room
+            - if chat_message.chat_room_source.status == 'completed'
+              span  Audio call #{chat_message.chat_room_source.status}
+            - else
+              = link_to "Join to the audio call #{chat_message.chat_room_source.participants_count}/50", new_chat_chat_audio_room_path(chat_message.chat.access_token)
               
         .footer
           .date

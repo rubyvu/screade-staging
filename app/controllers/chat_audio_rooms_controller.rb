@@ -6,7 +6,7 @@ class ChatAudioRoomsController < ApplicationController
   # GET /chats/:chat_access_token/chat_audio_rooms
   def new
     if @chat_audio_room.blank?
-      @chat_audio_room = ChatAudiRoom.create(chat: @chat)
+      @chat_audio_room = ChatAudioRoom.create(chat: @chat)
       @chat_audio_room_user_token = Tasks::TwilioTask.generate_access_token_for_user(current_user.username, @chat_audio_room.sid)
     elsif @chat_audio_room.present? && @chat_audio_room.participants.count < 50
       @chat_audio_room_user_token = Tasks::TwilioTask.generate_access_token_for_user(current_user.username, @chat_audio_room.sid)
