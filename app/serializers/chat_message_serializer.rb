@@ -1,7 +1,7 @@
 class ChatMessageSerializer < ActiveModel::Serializer
   attribute :chat_access_token
   def chat_access_token
-    object.chat.chat_access_token
+    object.chat.access_token
   end
   
   attribute :created_at
