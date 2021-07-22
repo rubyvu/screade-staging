@@ -17,6 +17,32 @@ module Tasks
       end
     end
     
+    def self.new_chat_message(id)
+      chat_message = ChatMessage.find_by(id: id)
+      return if chat_message.blank?
+      
+      chat_connections = Redis.new.pubsub("channels", "chat_#{chat_message.chat.access_token}_*_channel")
+      return if chat_connections.blank?
+      
+      # Send Notification to Users that NOT connected to the Chat
+      usernames_list = chat_connections.map { |connection| connection.remove("chat_#{chat_message.chat.access_token}_").remove('_channel') }
+      
+      ChatMembership.joins(:user).where(chat: chat_message.chat).where.not(user: { username: usernames_list}).each do |chat_membership|
+        # Check if User already get Notification from this Chat and it's unviewed
+        next if ChatMessage.joins(:notifications).where(notifications: { source_type: 'ChatMessage', is_viewed: false, recipient: chat_membership.user }, chat_messages: { chat: chat_message.chat}).present?
+        
+        notificatiom_params = {
+          source_id: chat_message.id,
+          source_type: 'ChatMessage',
+          sender_id: chat_message.user.id,
+          recipient_id: chat_membership.user.id,
+          message: "New message in #{chat_message.chat.name} Chat"
+        }
+        
+        create_notification(notificatiom_params) if notificatiom_params[:message].present?
+      end
+    end
+    
     def self.new_comment(id)
       
       comment = Comment.find_by(id: id)

@@ -9,6 +9,8 @@ module NotificationHelper
       end
     when 'Event'
       link = events_path(date: object.source.start_date)
+    when 'ChatMessage'
+      link = chats_path()
     when 'Comment'
       if object.source.source_type == 'NewsArticle'
         if object.source.comment_id.nil?

@@ -1,6 +1,13 @@
 import consumer from "./consumer"
 import { chat_time, chat_board_date } from "./helpers/date_helper"
 
+// Remove ChatChannel subscription after leave the chat (Notification logic for Chat messages)
+$( document ).on('turbolinks:load', function() {
+  if (consumer.subscriptions.subscriptions.includes(App.chatMessagesChanel) && $('#chat-board').length === 0) {
+    consumer.subscriptions.remove(App.chatMessagesChanel)
+  };
+})
+
 // Update User ChatChannel subscription when chat is rendered
 $(document).on('ajax:success', 'a[id^=chat-element-]', function() {
   let chatAccessToken = this.id.split('chat-element-')[1]
@@ -15,7 +22,7 @@ $(document).on('ajax:success', 'a[id^=chat-element-]', function() {
     }
     
     // Create new ChatChannel subscription
-    let currentSubscription = consumer.subscriptions.create({
+    App.chatMessagesChanel = consumer.subscriptions.create({
       channel: "ChatChannel",
       chat_access_token: chatAccessToken
       }, {
@@ -33,7 +40,6 @@ $(document).on('ajax:success', 'a[id^=chat-element-]', function() {
         let messageId = data.chat_message_json.id
         let chatMessagesPlaceholder = $('#chat-message-placeholder')
         let chatBoardPlaceholder = $('#chat-board-placeholder')
-        
         
         // Style Message Owner message
         chatMessagesPlaceholder.append($.parseHTML(data.chat_message_html))

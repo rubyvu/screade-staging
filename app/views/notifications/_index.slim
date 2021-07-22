@@ -16,6 +16,8 @@
             = image_pack_tag('media/images/icons/notifications/ic_notification_new.png')
           - when 'Event'
             = image_pack_tag('media/images/icons/notifications/ic_notification_event.png')
+          - when 'ChatMessage'
+            = image_pack_tag('media/images/icons/notifications/ic_notification_replied_comment.png')
           - when 'Comment'
             = image_pack_tag('media/images/icons/notifications/ic_notification_replied_comment.png')
           - when 'Post'
@@ -27,6 +29,8 @@
             - if notification.is_user_type?
               span
                 = notification.sender.full_name
+            - elsif notification.source_type == 'ChatMessage'
+            
             - elsif notification.source_type == 'Comment'
               = notification.source.message
             - elsif notification.source_type == 'BreakingNews'

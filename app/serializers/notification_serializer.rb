@@ -13,6 +13,8 @@ class NotificationSerializer < ActiveModel::Serializer
     case object.source_type
     when 'BreakingNews'
       BreakingNewsSerializer.new(object.source).as_json
+    when 'ChatMessage'
+      ChatMessageSerializer.new(object.source).as_json
     when 'Comment'
       CommentSerializer.new(object.source, current_user: current_user).as_json
     when 'Event'
