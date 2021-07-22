@@ -8,6 +8,7 @@
 ### Object structure
 ```
 {
+  "chat_access_token": "ae4k5j3l23mdf34kkf34cln54bo"                            (string, required)
   "created_at": "2021-02-04 14:22:14 +0000",                                    (string, required, represents date in format "%Y-%m-%d %H:%M:%S %z")
   "message_type": 'text' || 'audio' || 'video' || 'image' || 'video-room' || 'audio-room'           (string, required)
   "message_content": "http://site.com/small.png"                                (string or object, optional)
