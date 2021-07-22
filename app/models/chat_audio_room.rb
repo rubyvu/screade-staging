@@ -8,9 +8,11 @@ class ChatAudioRoom < ApplicationRecord
   before_validation :create_twilio_room, on: :create
   after_update :broadcast_room_state
   after_commit :create_chat_message, on: :create
+  after_commit :add_notification, on: :create
   
   # Associations
   has_one :chat_message, as: :chat_room_source
+  has_many :notifications, as: :source, dependent: :destroy
   belongs_to :chat
   
   # Associations validations
@@ -28,6 +30,10 @@ class ChatAudioRoom < ApplicationRecord
   end
   
   private
+    def add_notification
+      CreateNewNotificationsJob.perform_later(self.id, self.class.name)
+    end
+    
     def set_chat_name
       unique_name = "audio-#{self.chat.access_token}-#{SecureRandom.hex(8)}"
       ChatAudioRoom.exists?(name: unique_name) ? set_chat_name : self.name = unique_name

@@ -9,6 +9,10 @@ class CreateNewNotificationsJob < ApplicationJob
       Tasks::NotificationTask.new_comment(source_id)
     when 'ChatMessage'
       Tasks::NotificationTask.new_chat_message(source_id)
+    when 'ChatAudioRoom'
+      Tasks::NotificationTask.new_audio_room(source_id)
+    when 'ChatVideoRoom'
+      Tasks::NotificationTask.new_video_room(source_id)
     when 'Event'
       Tasks::NotificationTask.new_event(source_id)
     when 'Post'
