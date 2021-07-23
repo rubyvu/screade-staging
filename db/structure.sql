@@ -369,7 +369,8 @@ CREATE TABLE public.chat_memberships (
     role character varying DEFAULT 'user'::character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    unread_messages_count integer DEFAULT 0 NOT NULL
+    unread_messages_count integer DEFAULT 0 NOT NULL,
+    is_mute boolean DEFAULT false NOT NULL
 );
 
 
@@ -2366,6 +2367,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210706153513'),
 ('20210709141257'),
 ('20210712104336'),
-('20210720140558');
+('20210720140558'),
+('20210723074726');
 
 

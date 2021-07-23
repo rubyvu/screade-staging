@@ -55,6 +55,7 @@ Rails.application.routes.draw do
       collection do
         get :audio_room
         get :video_room
+        put :mute
         put :unread_messages
       end
     end
@@ -207,6 +208,7 @@ Rails.application.routes.draw do
         resources :chat_memberships, only: [:index] do
           collection do
             get :chat_users
+            put :mute
             put :unread_messages
           end
         end

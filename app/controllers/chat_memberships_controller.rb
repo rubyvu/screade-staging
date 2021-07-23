@@ -1,5 +1,5 @@
 class ChatMembershipsController < ApplicationController
-  before_action :get_chat, only: [:audio_room, :index, :video_room, :unread_messages]
+  before_action :get_chat, only: [:audio_room, :index, :mute, :video_room, :unread_messages]
   before_action :get_chat_membership, only: [:destroy]
   
   # GET /chats/:chat_access_token/chat_memberships
@@ -73,6 +73,20 @@ class ChatMembershipsController < ApplicationController
     
     # Clear unread message counter
     chat_membership.update_columns(unread_messages_count: 0)
+    chat_membership_json = ChatMembershipSerializer.new(chat_membership).as_json
+    render json: { chat_membership: chat_membership_json }, status: :ok
+  end
+  
+  # PUT/PATCH /chats/:chat_access_token/chat_memberships/mute
+  def mute
+    chat_membership = ChatMembership.find_by(chat: @chat, user: current_user)
+    if chat_membership.blank?
+      render json: { errors: ['Record not found.'] }, status: :not_found
+      return
+    end
+    
+    # Clear unread message counter
+    chat_membership.update_columns(is_mute: !chat_membership.is_mute)
     chat_membership_json = ChatMembershipSerializer.new(chat_membership).as_json
     render json: { chat_membership: chat_membership_json }, status: :ok
   end

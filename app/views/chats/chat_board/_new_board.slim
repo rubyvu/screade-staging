@@ -30,6 +30,13 @@
         = link_to chat_chat_memberships_path(@chat.access_token, response_type: 'roles'), class: 'dropdown-item', remote: true do
           = image_pack_tag('media/images/icons/ic_chat_members.png')
           span Members
+        - is_chat_mute = @chat.get_membership(current_user).is_mute
+        = link_to mute_chat_chat_memberships_path(@chat.access_token), class: 'dropdown-item', id: 'mute-chat-membership', remote: true, method: :put, data: {'is-mute': is_chat_mute } do
+          = image_pack_tag('media/images/icons/ic_mute_notifications.png')
+          - if is_chat_mute
+            span Unmute chat
+          - else
+            span Mute chat
         - if @chat.admins.include?(current_user) || @chat.owner == current_user
           = link_to edit_chat_path(@chat.access_token), class: 'dropdown-item', remote: true do
             = image_pack_tag('media/images/icons/ic_chat_change_group.png')

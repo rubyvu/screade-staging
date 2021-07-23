@@ -15,6 +15,18 @@ $('#modal-add-chat-member').on('submit', '[id^=edit_chat]', function(e) {
   $('#modal-add-chat-member').modal('hide')
 })
 
+// User Mute/Unmute chat
+$('#mute-chat-membership').on('ajax:success', function() {
+  let currentMuteStatus = $(this).data('is-mute')
+  $(this).data('is-mute', !currentMuteStatus)
+  
+  if ( $(this).data('is-mute') ) {
+    $(this).children('span').text('Unmute chat')
+  } else {
+    $(this).children('span').text('Mute chat')
+  }
+});
+
 // User leave chat
 $('#delete-chat-membership').on('ajax:success', function() {
   location.reload()
