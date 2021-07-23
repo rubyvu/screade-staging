@@ -7,6 +7,7 @@ class ChatAudioRoom < ApplicationRecord
   before_validation :set_chat_name, on: :create
   before_validation :create_twilio_room, on: :create
   after_update :broadcast_room_state
+  after_update :broadcast_chat_state
   after_commit :create_chat_message, on: :create
   after_commit :add_notification, on: :create
   
@@ -54,5 +55,13 @@ class ChatAudioRoom < ApplicationRecord
     def broadcast_room_state
       render_message_template = ApplicationController.renderer.render(partial: 'chat_messages/message_to_broadcast', locals: { chat_message: self.chat_message })
       ActionCable.server.broadcast "twilio_room_#{self.chat.access_token}_state_chanel", chat_message_json: ChatMessageSerializer.new(self.chat_message).as_json, chat_message_html: render_message_template
+    end
+    
+    def broadcast_chat_state
+      return unless self.status == 'completed'
+      render_chat_state_template = ApplicationController.renderer.render(partial: 'chats/chats_list/chat_object', locals: { chat: self.chat, is_message_counter: false })
+      self.chat.chat_memberships.each do |chat_membership|
+        ActionCable.server.broadcast "#{chat_membership.user.username}_chat_state_channel", chat_json: ChatSerializer.new(self.chat).as_json, chat_html: render_chat_state_template
+      end
     end
 end

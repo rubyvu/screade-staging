@@ -43,6 +43,8 @@ $( document ).on('turbolinks:load', function() {
                 $(`#chat-element-${chatAccessToken} .body .message .unread-messages-count`).addClass('no-messages')
               }
             });
+          } else if ((data.chat_json.last_message.message_type == 'video-room' && data.chat_json.last_message.message_content.status == 'completed') || (data.chat_json.last_message.message_type == 'audio-room' && data.chat_json.last_message.message_content.status == 'completed') ) {
+            $(`#chat-element-${chatAccessToken} .unread-messages-count span`).text(unreadMessagesWas)
           } else {
             if (currentChatBoard && currentChatBoard.data('chat-token') !== chatAccessToken) {
               // Update UnreadMessages view

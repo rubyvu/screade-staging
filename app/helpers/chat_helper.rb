@@ -9,7 +9,19 @@ module ChatHelper
     when 'video'
       "#{message.user.username} sent video"
     when 'image'
-      "#{message.user.username} sent image"
+      "#{message.user.username} sent photo"
+    when 'video-room'
+      if message.chat_room_source.status == 'in-progress'
+        "#{message.user.username} video call in progress"
+      else
+        "#{message.user.username} video call in ended"
+      end
+    when 'audio-room'
+      if message.chat_room_source.status == 'in-progress'
+        "#{message.user.username} audio call in progress"
+      else
+        "#{message.user.username} audio call in ended"
+      end
     end
   end
 end

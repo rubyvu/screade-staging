@@ -14,8 +14,24 @@
       .date
         = month_with_date(chat.last_message.present? ? chat.last_message.updated_at : chat.updated_at)
     .body
-      .message
-        //.icon
+      .message class="#{(chat.last_message&.message_type == 'video-room' || chat.last_message&.message_type == 'audio-room') && chat.last_message&.chat_room_source.status == 'in-progress' ? 'active-room' : ''}" class="#{(chat.last_message&.message_type == 'video-room' || chat.last_message&.message_type == 'audio-room') && chat.last_message&.chat_room_source.status == 'completed' ? 'inactive-room' : ''}"
+        - case chat.last_message&.message_type
+        - when 'audio'
+          .icon
+            = image_pack_tag('media/images/icons/ic_microphone.png')
+        - when 'video'
+          .icon
+            = image_pack_tag('media/images/icons/ic_chat_videocam.png')
+        - when 'image'
+          .icon
+            = image_pack_tag('media/images/icons/ic_chat_add_icon.png')
+        - when 'audio-room'
+          .icon
+            = image_pack_tag('media/images/icons/ic_chat_phone.png')
+        - when 'video-room'
+          .icon
+            = image_pack_tag('media/images/icons/ic_chat_videocam.png')
+            
         .text
           span #{last_message_text(chat.last_message)}
         

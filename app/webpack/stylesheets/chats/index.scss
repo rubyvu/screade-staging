@@ -108,6 +108,22 @@
             
             &.no-messages { display: none }
           }
+          
+          &.active-room {
+            .text span { color: $color-green }
+            .icon img {
+              -webkit-filter: hue-rotate(290deg);
+              filter: hue-rotate(290deg);
+            }
+          }
+          
+          &.inactive-room {
+            .text span { color: $color-red }
+            .icon img {
+              -webkit-filter: hue-rotate(116deg) brightness(1.2);
+              filter: hue-rotate(116deg) brightness(1.2);
+            }
+          }
         }
       }
       
