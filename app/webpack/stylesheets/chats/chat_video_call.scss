@@ -85,14 +85,13 @@
   }
   
   .call-profiles-wrapper {
-    // display: flex;
+    display: flex;
     width: 33.3%;
     overflow-x: scroll;
     overflow-y: hidden;
     height: 80px;
     
     .call-profiles {
-      display: inline-flex;
       
       .profile-image {
         margin: 0 4px;
