@@ -271,6 +271,7 @@ Rails.application.routes.draw do
         end
       end
       
+      resources :maps, only: [:index]
       resources :news_articles, only: [] do
         member do
           get :groups
