@@ -104,6 +104,7 @@ Rails.application.routes.draw do
     end
   end
   
+  resources :maps, only: [:index]
   resources :news_articles, only: [] do
     resources :comments, only: [] do
       get :reply_comments
