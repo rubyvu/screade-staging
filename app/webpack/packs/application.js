@@ -22,6 +22,7 @@ import './shared/global-search';
 import './shared/groups';
 import './shared/image_viewer';
 import './shared/local_date';
+import './shared/maps';
 import './shared/modals';
 import './shared/multilevel_dropdown';
 import './shared/news_articles';

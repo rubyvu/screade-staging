@@ -44,6 +44,9 @@ class ApplicationController < ActionController::Base
       country_code = current_user&.country&.code
       cookies[:current_location] = country_code if country_code
       
+      # request.location.coordinates
+      # location_coordinates = [50.9216, 34.8003]
+      
       return if cookies[:current_location].present?
       begin
         result = request.location

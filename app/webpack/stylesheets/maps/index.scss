@@ -1,0 +1,76 @@
+#map {
+  height: 80vh;
+  width: 100%;
+  margin-top: 24px;
+}
+
+.map-switcher-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.self-marker {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  
+  .circle-out {
+    position: absolute;
+    background-color: $color-blue;
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    
+    /* Opacity */
+    /* IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
+    /* IE 5-7 */
+    filter: alpha(opacity=40);
+    /* Netscape */
+    -moz-opacity: 0.40;
+    /* Safari 1.x */
+    -khtml-opacity: 0.40;
+    /* Good browsers */
+    opacity: 0.40;
+  }
+  
+  .circle-in {
+    position: absolute;
+    background-color: $color-blue;
+    width: 16px;
+    height: 16px;
+    border-radius: 100%;
+    right: 8px;
+    top: 8px;
+    z-index: 1;
+  }
+}
+
+.squad-member-marker {
+  position: relative;
+  .circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    border: 2px solid $color-blue;
+    
+    img {
+      height: 100%;
+      width: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
+  
+  .triangle {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid $color-blue;
+    position: absolute;
+    left: 10px;
+    bottom: -5px;
+  }
+}

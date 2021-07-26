@@ -14,7 +14,12 @@ class SettingsController < ApplicationController
     end
     
     if settings.update(settings_params)
-      redirect_to user_path(username: current_user.username)
+      case params[:redirect_path]
+      when 'map'
+        redirect_to maps_path
+      else
+        redirect_to user_path(username: current_user.username)
+      end
     else
       redirect_back fallback_location: root_path
     end
@@ -22,6 +27,6 @@ class SettingsController < ApplicationController
   
   private
     def settings_params
-      params.require(:setting).permit(:font_family, :font_style, :is_notification, :is_email, :is_images, :is_videos, :is_posts)
+      params.require(:setting).permit(:font_family, :font_style, :is_current_location, :is_notification, :is_email, :is_images, :is_videos, :is_posts)
     end
 end
