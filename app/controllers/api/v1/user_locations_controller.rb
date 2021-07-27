@@ -2,7 +2,8 @@ class Api::V1::UserLocationsController < Api::V1::ApiController
   
   # GET /api/v1/user_locations
   def index
-    current_user_location = UserLocationSerializer.new(current_user).as_json
+    current_user_location = nil
+    current_user_location = UserLocationSerializer.new(current_user).as_json if current_user.user_location.present? && current_user.setting.is_current_location
     
     # Get Squad Users that have UserLocation and is_current_location set to true
     squad_receivers_sql = User.joins(:squad_requests_as_receiver).where(squad_requests_as_receiver: { requestor: current_user }).where.not(squad_requests_as_receiver: { accepted_at: nil }).joins(:user_location, :setting).where(setting: { is_current_location: true }).to_sql

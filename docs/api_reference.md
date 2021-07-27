@@ -128,6 +128,10 @@
 ### User Security Question
 - [Get User Security Questions list](api/v1/user_security_questions/index.md)
 
+### User Location
+- [Get User and UserSquadMembers Locations](api/v1/user_locations/index.md)
+- [Create or Update UserLocation](api/v1/user_locations/create.md)
+
 ### User Settings
 - [Get user Settings](api/v1/settings/index.md)
 - [Update user Settings](api/v1/settings/update.md)

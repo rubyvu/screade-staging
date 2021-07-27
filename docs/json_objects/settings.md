@@ -10,6 +10,7 @@
 {
   "font_family": "Roboto"                                                       (string, required)
   "font_style": "normal"                                                        (string, required)
+  "is_current_location": "true"                                                 (boolean, required)
   "is_notification": "true"                                                     (boolean, required)
   "is_email": "true"                                                            (boolean, required)
   "is_images": "true"                                                           (boolean, required)
