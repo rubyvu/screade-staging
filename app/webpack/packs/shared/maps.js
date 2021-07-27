@@ -19,17 +19,25 @@ $( document ).on('turbolinks:load', function() {
         console.log('result', result);
         let currentUserLocation = result.current_user_location
         let squadMembersLocations = result.squad_members_locations
+        let map = null
         
-        let map = setDefaultMap(currentUserLocation)
-        setCurrentUserMarker(map, currentUserLocation)
+        if (currentUserLocation) {
+          map = setDefaultMap(currentUserLocation)
+          setCurrentUserMarker(map, currentUserLocation)
+        } else {
+          let center = result.squad_members_locations[0] || { latitude: 38.9072, longitude: -77.0369 }
+          map = setDefaultMap(center)
+        }
+        
         setSquadMembersMarker(map, squadMembersLocations)
       }
     });
     
-    function setDefaultMap(currentUserLocation) {
+    function setDefaultMap(center) {
+      console.log(center);
       const map = new google.maps.Map(document.getElementById('map'), {
         zoom: 7,
-        center: { lat: currentUserLocation.latitude, lng: currentUserLocation.longitude },
+        center: { lat: center.latitude, lng: center.longitude },
       });
     
       return map

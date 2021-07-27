@@ -9,7 +9,7 @@
 GET
 
 ### API endpoint
-`/api/v1/index`
+`/api/v1/user_locations`
 
 ### Request body
 ```

@@ -1,7 +1,6 @@
 #map
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXWns0NrAoztlUcajCSX19-DxGmRCU1KE&libraries=&v=weekly" async></script>
 
-.map-switcher-wrapper
+//.map-switcher-wrapper
   = form_for @location_setting, url: setting_path(@location_setting, redirect_path: 'map'), method: :patch do |f|
     label.switch
       = f.check_box :is_current_location

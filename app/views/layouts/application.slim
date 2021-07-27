@@ -14,6 +14,8 @@ html
     // AddSense
     - if Rails.env.production?
       script async="" data-ad-client="ca-pub-6870429523010770" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+      
+    script src="https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&libraries=&v=weekly" async=""
     
   body
     nav.navbar.navbar-expand-lg.navbar-light
