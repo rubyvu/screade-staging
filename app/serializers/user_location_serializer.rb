@@ -5,16 +5,18 @@ class UserLocationSerializer < ActiveModel::Serializer
     object&.banner_picture&.rectangle_300_250.url
   end
   
-  attribute :full_name
+  attribute :username
   def full_name
-    object.full_name
+    object.username
   end
   
   attribute :latitude
   def latitude
+    object.user_location&.latitude
   end
   
   attribute :longitude
   def longitude
+    object.user_location&.longitude
   end
 end

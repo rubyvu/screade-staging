@@ -1238,6 +1238,39 @@ ALTER SEQUENCE public.user_images_id_seq OWNED BY public.user_images.id;
 
 
 --
+-- Name: user_locations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.user_locations (
+    id bigint NOT NULL,
+    latitude numeric(10,6) NOT NULL,
+    longitude numeric(10,6) NOT NULL,
+    user_id integer NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: user_locations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.user_locations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: user_locations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.user_locations_id_seq OWNED BY public.user_locations.id;
+
+
+--
 -- Name: user_security_questions; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1599,6 +1632,13 @@ ALTER TABLE ONLY public.user_images ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: user_locations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_locations ALTER COLUMN id SET DEFAULT nextval('public.user_locations_id_seq'::regclass);
+
+
+--
 -- Name: user_security_questions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1871,6 +1911,14 @@ ALTER TABLE ONLY public.topics
 
 ALTER TABLE ONLY public.user_images
     ADD CONSTRAINT user_images_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_locations user_locations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_locations
+    ADD CONSTRAINT user_locations_pkey PRIMARY KEY (id);
 
 
 --
@@ -2159,6 +2207,13 @@ CREATE INDEX index_topics_on_parent_id ON public.topics USING btree (parent_id);
 
 
 --
+-- Name: index_user_locations_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_locations_on_user_id ON public.user_locations USING btree (user_id);
+
+
+--
 -- Name: index_user_security_questions_on_question_identifier; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2370,6 +2425,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210712104336'),
 ('20210720140558'),
 ('20210723074726'),
-('20210726143917');
+('20210726143917'),
+('20210727085203');
 
 

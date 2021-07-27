@@ -79,9 +79,9 @@ $( document ).on('turbolinks:load', function() {
     
     function setSquadMembersMarker(map, squadMembersLocations) {
       // Squad Member Marker
-      function squadMemberHTMLMarker(lat, lng, memberProfilePictureUrl, memberFullName) {
+      function squadMemberHTMLMarker(lat, lng, memberProfilePictureUrl, memberUsername) {
          this.profileImage = memberProfilePictureUrl
-         this.fullName = memberFullName
+         this.username = memberUsername
          this.lat = lat;
          this.lng = lng;
          this.pos = new google.maps.LatLng(lat, lng);
@@ -95,7 +95,7 @@ $( document ).on('turbolinks:load', function() {
          
          div2 = document.createElement('div');
          div2.className = "circle";
-         div2.innerHTML = '<img src="' + this.profileImage + '" alt="' + this.fullName + '">'
+         div2.innerHTML = '<img src="' + this.profileImage + '" alt="' + this.username + '">'
          
          div3 = document.createElement('div');
          div3.className = "triangle";
@@ -118,7 +118,7 @@ $( document ).on('turbolinks:load', function() {
        
        // Draw current User Marker
        squadMembersLocations.forEach(member => {
-         var squadMemberMarker = new squadMemberHTMLMarker(member.latitude, member.longitude, member.profile_picture_url, member.full_name);
+         var squadMemberMarker = new squadMemberHTMLMarker(member.latitude, member.longitude, member.profile_picture_url, member.username);
          squadMemberMarker.setMap(map);
        });
     }

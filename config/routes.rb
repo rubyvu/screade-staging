@@ -271,7 +271,6 @@ Rails.application.routes.draw do
         end
       end
       
-      resources :maps, only: [:index]
       resources :news_articles, only: [] do
         member do
           get :groups
@@ -333,6 +332,7 @@ Rails.application.routes.draw do
       end
       
       resources :user_images, only: [:update]
+      resources :user_locations, only: [:index, :create]
       resources :user_security_questions, only: [:index]
       resources :user_videos, only: [:update]
       resources :users, only: [:show], param: :username, username: User::USERNAME_ROUTE_FORMAT do
