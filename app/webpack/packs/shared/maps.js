@@ -16,7 +16,6 @@ $( document ).on('turbolinks:load', function() {
       type: 'GET',
       dataType: 'json',
       success: function(result) {
-        console.log('result', result);
         let currentUserLocation = result.current_user_location
         let squadMembersLocations = result.squad_members_locations
         let map = null
@@ -34,7 +33,6 @@ $( document ).on('turbolinks:load', function() {
     });
     
     function setDefaultMap(center) {
-      console.log(center);
       const map = new google.maps.Map(document.getElementById('map'), {
         zoom: 7,
         center: { lat: center.latitude, lng: center.longitude },
