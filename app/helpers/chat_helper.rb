@@ -12,15 +12,15 @@ module ChatHelper
       "#{message.user.username} sent photo"
     when 'video-room'
       if message.chat_room_source.status == 'in-progress'
-        "#{message.user.username} video call in progress"
+        "Video call in progress"
       else
-        "#{message.user.username} video call in ended"
+        "Video call in ended"
       end
     when 'audio-room'
       if message.chat_room_source.status == 'in-progress'
-        "#{message.user.username} audio call in progress"
+        "Audio call in progress"
       else
-        "#{message.user.username} audio call in ended"
+        "Audio call in ended"
       end
     end
   end
