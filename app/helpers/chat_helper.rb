@@ -14,13 +14,13 @@ module ChatHelper
       if message.chat_room_source.status == 'in-progress'
         "Video call in progress"
       else
-        "Video call in ended"
+        "Video call is ended"
       end
     when 'audio-room'
       if message.chat_room_source.status == 'in-progress'
         "Audio call in progress"
       else
-        "Audio call in ended"
+        "Audio call is ended"
       end
     end
   end
