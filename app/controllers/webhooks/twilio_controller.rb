@@ -24,7 +24,7 @@ class Webhooks::TwilioController < ApplicationController
     if room_type == 'video'
       room = ChatVideoRoom.find_by(name: room_name, status: 'in-progress')
     elsif room_type == 'audio'
-      room = nil
+      room = ChatAudioRoom.find_by(name: room_name, status: 'in-progress')
     end
     
     if room.blank?
