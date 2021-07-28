@@ -1,8 +1,8 @@
 class UserLocationSerializer < ActiveModel::Serializer
   
-  attribute :banner_picture
-  def banner_picture
-    object&.banner_picture&.rectangle_300_250.url || ActionMailer::Base.asset_host + ActionController::Base.helpers.asset_pack_path('media/images/placeholders/placeholder-user-profile.png')
+  attribute :profile_picture
+  def profile_picture
+    object&.profile_picture&.square_320&.url || ActionMailer::Base.asset_host + ActionController::Base.helpers.asset_pack_path('media/images/placeholders/placeholder-user-profile.png')
   end
   
   attribute :username

@@ -85,48 +85,54 @@ $( document ).on('turbolinks:load', function() {
     
     function setSquadMembersMarker(map, squadMembersLocations) {
       // Squad Member Marker
-      function squadMemberHTMLMarker(lat, lng, memberProfilePictureUrl, memberUsername) {
-         this.profileImage = memberProfilePictureUrl
-         this.username = memberUsername
-         this.lat = lat;
-         this.lng = lng;
-         this.pos = new google.maps.LatLng(lat, lng);
-       }
-       
-       squadMemberHTMLMarker.prototype = new google.maps.OverlayView();
-       squadMemberHTMLMarker.prototype.onRemove = function () {}
-       squadMemberHTMLMarker.prototype.onAdd = function () {
-         div = document.createElement('div');
-         div.className = "squad-member-marker";
-         
-         div2 = document.createElement('div');
-         div2.className = "circle";
-         div2.innerHTML = '<img src="' + this.profileImage + '" alt="' + this.username + '">'
-         
-         div3 = document.createElement('div');
-         div3.className = "triangle";
-         
-         div.appendChild(div3)
-         div.appendChild(div2)
-         
-         var panes = this.getPanes();
-         panes.overlayImage.appendChild(div);
-         this.div=div;
-       }
-       
-       squadMemberHTMLMarker.prototype.draw = function () {
-         var overlayProjection = this.getProjection();
-         var position = overlayProjection.fromLatLngToDivPixel(this.pos);
-         var panes = this.getPanes();
-         this.div.style.left = position.x - 16 + 'px';
-         this.div.style.top = position.y  - 70 +'px';
-       }
-       
-       // Draw current User Marker
-       squadMembersLocations.forEach(member => {
-         var squadMemberMarker = new squadMemberHTMLMarker(member.latitude, member.longitude, member.profile_picture_url, member.username);
-         squadMemberMarker.setMap(map);
-       });
+      class SquadMemberHTMLMarker extends google.maps.OverlayView {
+        constructor(lat, lng, memberProfilePictureUrl, memberUsername, shiftPosition) {
+          super();
+          this.profileImage = memberProfilePictureUrl
+          this.username = memberUsername
+          this.lat = lat;
+          this.lng = lng;
+          this.pos = new google.maps.LatLng(lat, lng);
+          this.shiftPosition = shiftPosition
+        }
+        
+        onRemove() {
+          
+        }
+        
+        onAdd() {
+          div = document.createElement('div');
+          div.className = "squad-member-marker";
+        
+          div2 = document.createElement('div');
+          div2.className = "circle";
+          div2.innerHTML = '<img src="' + this.profileImage + '" alt="' + this.username + '">'
+        
+          div3 = document.createElement('div');
+          div3.className = "triangle";
+        
+          div.appendChild(div3)
+          div.appendChild(div2)
+        
+          var panes = this.getPanes();
+          panes.overlayImage.appendChild(div);
+          this.div=div;
+        }
+        
+        draw() {
+          var overlayProjection = this.getProjection();
+          var position = overlayProjection.fromLatLngToDivPixel(this.pos);
+          var panes = this.getPanes();
+          this.div.style.left = position.x - 16 + 'px';
+          this.div.style.top = position.y -6 -(32*this.shiftPosition) + 'px';
+        }
+      }
+      
+      // Draw current User Marker
+      squadMembersLocations.forEach((member, arrayIndex) => {
+        var squadMemberMarker = new SquadMemberHTMLMarker(member.latitude, member.longitude, member.profile_picture, member.username, arrayIndex);
+        squadMemberMarker.setMap(map);
+      });
     }
   }
 })

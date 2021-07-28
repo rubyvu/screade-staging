@@ -49,6 +49,7 @@
 
 .squad-member-marker {
   position: relative;
+  transform: translate(0, -100%);
   .circle {
     width: 32px;
     height: 32px;
