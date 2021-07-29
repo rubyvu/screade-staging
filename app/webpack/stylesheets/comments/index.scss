@@ -4,7 +4,7 @@
   display: inline-flex;
   margin-top: 24px;
   
-  &.content-post {
+  &.content-post, &.content-stream {
     margin-top: 12px;
   }
 }

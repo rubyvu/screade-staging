@@ -1,0 +1,12 @@
+.comments-wrapper
+  h5 Comments
+  
+  - if current_user
+    = render 'stream_comments/form', new_comment: new_comment
+      
+  .comments-scroll
+    - comments.each_with_index do |comment, index|
+      = render 'stream_comments/show', comment: comment, index: index
+      
+      - if (index+1)%5 == 0 && Rails.env.production?
+        //= render './shared/ads/home_banner'
