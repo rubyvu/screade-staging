@@ -40,6 +40,8 @@ html
               = link_to 'Map', maps_path, class: 'nav-link'
             li.nav-item
               = link_to 'Videos', videos_user_video_path(current_user.username), class: 'nav-link'
+            li.nav-item
+              = link_to 'Streams', streams_path, class: 'nav-link'
               
           - else
             li.nav-item

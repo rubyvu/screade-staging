@@ -1168,6 +1168,41 @@ ALTER SEQUENCE public.squad_requests_id_seq OWNED BY public.squad_requests.id;
 
 
 --
+-- Name: streams; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.streams (
+    id bigint NOT NULL,
+    title character varying NOT NULL,
+    is_private boolean DEFAULT true NOT NULL,
+    user_id integer NOT NULL,
+    image character varying,
+    image_hex character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: streams_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.streams_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: streams_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.streams_id_seq OWNED BY public.streams.id;
+
+
+--
 -- Name: topics; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1618,6 +1653,13 @@ ALTER TABLE ONLY public.squad_requests ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: streams id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.streams ALTER COLUMN id SET DEFAULT nextval('public.streams_id_seq'::regclass);
+
+
+--
 -- Name: topics id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1895,6 +1937,14 @@ ALTER TABLE ONLY public.settings
 
 ALTER TABLE ONLY public.squad_requests
     ADD CONSTRAINT squad_requests_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: streams streams_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.streams
+    ADD CONSTRAINT streams_pkey PRIMARY KEY (id);
 
 
 --
@@ -2200,6 +2250,13 @@ CREATE INDEX index_squad_requests_on_receiver_id_and_requestor_id ON public.squa
 
 
 --
+-- Name: index_streams_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_streams_on_user_id ON public.streams USING btree (user_id);
+
+
+--
 -- Name: index_topics_on_parent_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2426,6 +2483,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210720140558'),
 ('20210723074726'),
 ('20210726143917'),
-('20210727085203');
+('20210727085203'),
+('20210728125603');
 
 

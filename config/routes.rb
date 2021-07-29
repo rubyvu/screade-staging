@@ -147,6 +147,7 @@ Rails.application.routes.draw do
   
   resources :searches, only: [:index]
   resources :settings, only: [:edit, :update]
+  resources :streams, only: [:index, :show]
   resources :squad_requests, only: [:index, :create] do
     member do
       post :accept
