@@ -1,0 +1,47 @@
+.streams-wrapper.my-4
+  .streams-cards-wrapper
+    - @streams.each do |stream|
+      .streams-card value="#{stream.id}"
+      
+        - if stream.user == current_user
+          .stream-header-panel
+            .state
+            
+            .actions
+              = link_to '' do
+                = image_pack_tag('media/images/icons/ic_edit.png')
+              
+              = link_to '', method: :delete, data: { confirm: 'Do you really want to delete this Stream?' } do
+                = image_pack_tag('media/images/icons/ic_delete_object.png')
+              
+        .streams-image-wrapper
+          - if stream.image.present?
+            = image_tag(stream.image.url, class: 'stream-image', onerror: "this.error=null;this.src='#{asset_pack_path('media/images/placeholders/placeholder-news.png')}'")
+          - else
+            = image_pack_tag('media/images/placeholders/placeholder-news.png', class: 'stream-image')
+          
+          .stream-title-panel
+            = link_to stream.title, stream_path(stream)
+          
+          .stream-info-panel
+            .div class="info-panel-value-wrapper"
+              - if stream.is_lited(current_user)
+                = link_to '', method: :delete, remote: true, id: "stream-lit-#{stream.id}" do
+                  i.ic.lit.active
+              - else
+                = link_to '', method: :stream, remote: true, id: "stream-lit-#{stream.id}" do
+                  i.ic.lit
+                  
+              span.info-panel-value #{counter_measurement(stream.lits.size)}
+              
+            .info-panel-value-wrapper
+              = link_to '', class: 'comment-link-icon' do
+                i class=(stream.is_commented(current_user) ? "ic comment active" : "ic comment")
+              span.info-panel-value #{counter_measurement(stream.stream_comments.size)}
+              
+            .info-panel-value-wrapper.pointer-disable
+              i class=(stream.is_viewed(current_user) ? "ic view active" : "ic view")
+              span.info-panel-value #{counter_measurement(stream.views.size)}
+          
+  .mt-4.d-flex.justify-content-center
+    = paginate @streams
