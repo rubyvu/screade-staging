@@ -1168,6 +1168,39 @@ ALTER SEQUENCE public.squad_requests_id_seq OWNED BY public.squad_requests.id;
 
 
 --
+-- Name: stream_comments; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.stream_comments (
+    id bigint NOT NULL,
+    message text,
+    user_id integer,
+    stream_id integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: stream_comments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.stream_comments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: stream_comments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.stream_comments_id_seq OWNED BY public.stream_comments.id;
+
+
+--
 -- Name: streams; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1653,6 +1686,13 @@ ALTER TABLE ONLY public.squad_requests ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: stream_comments id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.stream_comments ALTER COLUMN id SET DEFAULT nextval('public.stream_comments_id_seq'::regclass);
+
+
+--
 -- Name: streams id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1937,6 +1977,14 @@ ALTER TABLE ONLY public.settings
 
 ALTER TABLE ONLY public.squad_requests
     ADD CONSTRAINT squad_requests_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: stream_comments stream_comments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.stream_comments
+    ADD CONSTRAINT stream_comments_pkey PRIMARY KEY (id);
 
 
 --
@@ -2250,6 +2298,13 @@ CREATE INDEX index_squad_requests_on_receiver_id_and_requestor_id ON public.squa
 
 
 --
+-- Name: index_stream_comments_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_stream_comments_on_user_id ON public.stream_comments USING btree (user_id);
+
+
+--
 -- Name: index_streams_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2484,6 +2539,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210723074726'),
 ('20210726143917'),
 ('20210727085203'),
-('20210728125603');
+('20210728125603'),
+('20210729132102');
 
 

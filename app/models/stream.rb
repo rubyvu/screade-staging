@@ -10,7 +10,7 @@ class Stream < ApplicationRecord
   belongs_to :user
   
   ## Comments
-  has_many :stream_comments, as: :source, dependent: :destroy
+  has_many :stream_comments, dependent: :destroy
   has_many :commenting_users, through: :stream_comments, source: :user
   ## Lits
   has_many :lits, as: :source, dependent: :destroy
