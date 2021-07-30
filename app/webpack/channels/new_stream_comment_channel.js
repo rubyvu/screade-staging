@@ -1,4 +1,5 @@
 import consumer from "./consumer"
+import { chat_date, chat_time } from "./helpers/date_helper"
 
 $( document ).on('turbolinks:load', function() {
   let pageRegexp = new RegExp('\/streams\/[0-9]+');
@@ -19,7 +20,13 @@ $( document ).on('turbolinks:load', function() {
       },
       
       received(data) {
+        // Render StreamComment html
         $('.comments-scroll .comment-wrapper:first').before(data.stream_comment_html)
+        let commentDate = chat_date(data.stream_comment_json.created_at)
+        let commentTime = chat_time(data.stream_comment_json.created_at)
+        
+        // Change Date to propriate format
+        $('.comment-content-wrapper[value="' + data.stream_comment_json.id + '"] .comment-date').html(commentDate + '-' + commentTime)
       }
     })
   }
