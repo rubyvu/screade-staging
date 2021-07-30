@@ -19,7 +19,3 @@
       = comment.message
     .comment-date
       = comment_timestamp(comment.created_at)
-      
-      .div class="#{ current_user ? 'comment-lit' : 'comment-lit pointer-disable' }"
-        span.info-panel-value.color-black #{counter_measurement(comment.lits.size)}
-        i class=(comment.is_lited(current_user) ? "ic lit active reverse" : "ic lit reverse")
