@@ -17,8 +17,75 @@ module Tasks
       end
     end
     
-    def self.new_comment(id)
+    def self.new_chat_message(id)
+      chat_message = ChatMessage.find_by(id: id)
+      return if chat_message.blank?
       
+      # Send Notification to Users that NOT connected to the Chat
+      chat_connections = Redis.new.pubsub("channels", "chat_#{chat_message.chat.access_token}_*_channel")
+      usernames_list = chat_connections.map { |connection| connection.remove("chat_#{chat_message.chat.access_token}_").remove('_channel') }
+      
+      ChatMembership.joins(:user).where(chat: chat_message.chat, is_mute: false).where.not(user: { username: usernames_list}).each do |chat_membership|
+        # Check if User already get Notification from this Chat and it's unviewed
+        next if ChatMessage.joins(:notifications).where(notifications: { source_type: 'ChatMessage', is_viewed: false, recipient: chat_membership.user }, chat_messages: { chat: chat_message.chat}).present?
+        
+        notificatiom_params = {
+          source_id: chat_message.id,
+          source_type: 'ChatMessage',
+          sender_id: chat_message.user.id,
+          recipient_id: chat_membership.user.id,
+          message: "New message in #{chat_message.chat.name} chat"
+        }
+        
+        create_notification(notificatiom_params) if notificatiom_params[:message].present?
+      end
+    end
+    
+    def self.new_audio_room(id)
+      chat_audio_room = ChatAudioRoom.find_by(id: id)
+      return if chat_audio_room.blank? || chat_audio_room.status == 'completed'
+      
+      chat_connections = Redis.new.pubsub("channels", "chat_#{chat_audio_room.chat.access_token}_*_channel")
+      usernames_list = chat_connections.map { |connection| connection.remove("chat_#{chat_audio_room.chat.access_token}_").remove('_channel') }
+      
+      ChatMembership.joins(:user).where(chat: chat_audio_room.chat).where.not(user: { username: usernames_list}).each do |chat_membership|
+        # Check if User already get Notification from this Chat and it's unviewed
+        next if ChatAudioRoom.joins(:notifications).where(notifications: { source_type: 'ChatAudioRoom', is_viewed: false, recipient: chat_membership.user }, chat_audio_rooms: { chat: chat_audio_room.chat }).present?
+        
+        notificatiom_params = {
+          source_id: chat_audio_room.id,
+          source_type: 'ChatAudioRoom',
+          recipient_id: chat_membership.user.id,
+          message: "New Audio Call in #{chat_audio_room.chat.name} chat"
+        }
+        
+        create_notification(notificatiom_params) if notificatiom_params[:message].present?
+      end
+    end
+    
+    def self.new_video_room(id)
+      chat_video_room = ChatVideoRoom.find_by(id: id)
+      return if chat_video_room.blank? || chat_video_room.status == 'completed'
+      
+      chat_connections = Redis.new.pubsub("channels", "chat_#{chat_video_room.chat.access_token}_*_channel")
+      usernames_list = chat_connections.map { |connection| connection.remove("chat_#{chat_message.chat.access_token}_").remove('_channel') }
+      
+      ChatMembership.joins(:user).where(chat: chat_video_room.chat).where.not(user: { username: usernames_list}).each do |chat_membership|
+        # Check if User already get Notification from this Chat and it's unviewed
+        next if ChatVideoRoom.joins(:notifications).where(notifications: { source_type: 'ChatVideoRoom', is_viewed: false, recipient: chat_membership.user }, chat_video_rooms: { chat: chat_video_room.chat }).present?
+        
+        notificatiom_params = {
+          source_id: chat_video_room.id,
+          source_type: 'ChatVideoRoom',
+          recipient_id: chat_membership.user.id,
+          message: "New Video Call in #{chat_video_room.chat.name} chat"
+        }
+        
+        create_notification(notificatiom_params) if notificatiom_params[:message].present?
+      end
+    end
+    
+    def self.new_comment(id)
       comment = Comment.find_by(id: id)
       return if comment.blank?
       
@@ -136,7 +203,7 @@ module Tasks
     
     private
       def self.create_notification(notificatiom_params)
-        notification = Notification.create(notificatiom_params)
+        notification = Notification.create!(notificatiom_params)
         NotificationChannel.broadcast_to(notification.recipient, bage_counter: notification.recipient.received_notifications.count)
       end
   end

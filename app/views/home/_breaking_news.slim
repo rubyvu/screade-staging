@@ -2,9 +2,9 @@
   .breaking-news-label
     | Breaking News
   
-  .breaking-news-text-wrapper
-    = link_to post_post_comments_path(post), class: 'breaking-news-layout' do
+  = link_to post_post_comments_path(post), class: 'breaking-news-text-wrapper' do
+    .breaking-news-layout
       .arrow-right
     .breaking-news
-      #webticker
-        li #{post.title}
+      .marquee3k data-speed="1"
+        span #{post.title}

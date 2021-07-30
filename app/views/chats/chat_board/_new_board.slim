@@ -1,3 +1,4 @@
+#chat-board data-chat-token="#{@chat.access_token}" data-chat-username="#{current_user.username}"
 .chat-info
   .main-info
     .photo
@@ -12,10 +13,12 @@
       = @chat.name
       
   .control-info
-    .control-element
-      = image_pack_tag('media/images/icons/ic_chat_videocam.png')
-    .control-element
-      = image_pack_tag('media/images/icons/ic_chat_phone.png')
+    .control-element#twilio-video-call
+      = link_to new_chat_chat_video_room_path(@chat.access_token) do
+        = image_pack_tag('media/images/icons/ic_chat_videocam.png')
+    .control-element#twilio-audio-call
+      = link_to new_chat_chat_audio_room_path(@chat.access_token) do
+        = image_pack_tag('media/images/icons/ic_chat_phone.png')
     .control-element#dropdown-control-element
       a.dropdown-toggle#dropdown-chat-more-button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
         = image_pack_tag('media/images/icons/ic_chat_more.png')
@@ -27,6 +30,13 @@
         = link_to chat_chat_memberships_path(@chat.access_token, response_type: 'roles'), class: 'dropdown-item', remote: true do
           = image_pack_tag('media/images/icons/ic_chat_members.png')
           span Members
+        - is_chat_mute = @chat.get_membership(current_user).is_mute
+        = link_to mute_chat_chat_memberships_path(@chat.access_token), class: 'dropdown-item', id: 'mute-chat-membership', remote: true, method: :put, data: {'is-mute': is_chat_mute } do
+          = image_pack_tag('media/images/icons/ic_mute_notifications.png')
+          - if is_chat_mute
+            span Unmute chat
+          - else
+            span Mute chat
         - if @chat.admins.include?(current_user) || @chat.owner == current_user
           = link_to edit_chat_path(@chat.access_token), class: 'dropdown-item', remote: true do
             = image_pack_tag('media/images/icons/ic_chat_change_group.png')
@@ -35,21 +45,14 @@
           = image_pack_tag('media/images/icons/ic_chat_leave_group.png')
           span Leave group
       
-.chat-message-board
+// Chat Messages
+= render 'chat_messages/index'
+= render 'chat_messages/new'
+
+// Chat Message Modals
+= render 'chat_messages/assets/chat_assets_modal'
   
-.chat-input
-  = form_for Chat.new do |f|
-    .input-group
-      .input-group-prepend
-        .input-group-text
-          = image_pack_tag('media/images/icons/ic_chat_document.png', class: 'img-responsive')
-          
-      = f.text_field :name, class: 'form-control', placeholder: 'Write a message', autocomplete: false, disabled: true
-      
-      .input-group-append
-        .input-group-text
-          = image_pack_tag('media/images/icons/ic_send_message.png', class: 'img-responsive')
-  
+// Chat Modals
 = render 'chats/chat_modals/add_chat_member'
 = render 'chats/chat_modals/chat_members_roles'
 = render 'chats/chat_modals/edit_chat'

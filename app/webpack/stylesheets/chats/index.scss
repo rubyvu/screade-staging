@@ -1,3 +1,8 @@
+@import './chat_assets';
+@import './chat_audio_call';
+@import './chat_message';
+@import './chat_input';
+@import './chat_video_call';
 @import './members_list';
 @import './control_panel';
 @import './icon_uploader';
@@ -14,6 +19,7 @@
   .chat-objects-wrapper {
     min-width: 300px;
     max-width: 300px;
+    overflow-y: scroll;
     
     .chat-element {
       padding: 16px 0 0 0;
@@ -64,6 +70,7 @@
         .message {
           display: flex;
           align-items: center;
+          justify-content: space-between;
           margin-bottom: 12px;
           
           .icon {
@@ -76,11 +83,46 @@
           
           .text {
             word-break: break-all;
+            width: 90%;
             font-size: 14px;
             color: $color-dark-cadet-blue;
             min-width: 0;
             overflow: hidden;
             text-overflow: ellipsis;
+          }
+          
+          .unread-messages-count {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 18px;
+            width: 18px;
+            background-color: $color-blue;
+            border-radius: 100%;
+            color: $color-white;
+            font-size: 10px;
+            
+            &.no-values {
+              span { display: none }
+            }
+            
+            &.no-messages { display: none }
+          }
+          
+          &.active-room {
+            .text span { color: $color-green }
+            .icon img {
+              -webkit-filter: hue-rotate(290deg);
+              filter: hue-rotate(290deg);
+            }
+          }
+          
+          &.inactive-room {
+            .text span { color: $color-red }
+            .icon img {
+              -webkit-filter: hue-rotate(116deg) brightness(1.2);
+              filter: hue-rotate(116deg) brightness(1.2);
+            }
           }
         }
       }
@@ -159,19 +201,9 @@
     }
     
     .chat-message-board {
+      overflow: scroll;
       width: 100%;
       height: calc(100% - (56px + 49px));
-    }
-    
-    .chat-input {
-      display: flex;
-      align-items: center;
-      padding: 0 20px;
-      width: 100%;
-      height: 49px;
-      border-top: 1px solid $color-light-grey;
-      
-      form { width: 100%; }
     }
   }
   

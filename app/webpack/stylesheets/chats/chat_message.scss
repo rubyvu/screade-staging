@@ -1,0 +1,123 @@
+.chat-message-board {
+  .message-box-wrapper {
+    display: flex;
+    padding: 4px 20px;
+    width: 100%;
+    
+    .message-wrapper {
+      display: flex;
+      .photo-wrapper {
+        display: flex;
+        align-items: flex-end;
+        .photo {}
+      }
+      
+      .content-wrapper {
+        display: flex;
+        flex-direction: column;
+        background-color: $color-light-grey;
+        position: relative;
+        margin-left: 10px;
+        padding: 4px 12px 4px 24px;
+        border-radius: 4px 4px 4px 0;
+
+        .header {
+          .name {
+            color: $color-blue;
+            font-size: 16px;
+          }
+        }
+        
+        .body {
+          word-break: break-all;
+          
+          .text {
+            color: $color-black;
+            font-size: 16px;
+          }
+          
+          .image {
+            display: flex;
+            justify-content: center;
+            height: 200px;
+            min-width: 200px;
+            img { height: 100%; }
+          }
+        }
+        
+        .footer {
+          .date {
+            display: flex;
+            justify-content: flex-end;
+            color: $color-grey;
+            font-size: 12px;
+          }
+        }
+      }
+      
+      .content-wrapper:before {
+        content: "";
+        width: 10px;
+        height: 20px;
+        position: absolute;
+        background-color: $color-light-grey;
+        left: -10px;
+        bottom: 0;
+        border-radius: 0 0 0 1px;
+      }
+      
+      .content-wrapper:after {
+        content: "";
+        position: absolute;
+        width: 10px;
+        height: 20px;
+        left: -10px;
+        bottom: 0px;
+        clip-path: ellipse(15px 20px at -45% 0%);
+        background-color: $color-white;
+      }
+    }
+  }
+  
+  .message-date-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 8px 0;
+    font-size: 14px;
+    font-weight: 500;
+  }
+}
+
+
+// Owner ChatMessage style
+.chat-message-board .message-box-wrapper.message-owner {
+  justify-content: flex-end;
+  
+  .message-wrapper {
+    .content-wrapper {
+      background-color: $color-blue;
+      border-radius: 4px 4px 0px 4px;
+      padding: 8px 12px 4px 12px;
+    }
+    
+    .photo-wrapper { display: none; }
+    .header { display: none }
+    
+    .body {
+      .text {
+        color: $color-white;
+        font-size: 16px;
+      }
+      
+      .video-room, .audio-room {
+        color: $color-white;
+        a {
+          color: $color-white;
+        }
+      }
+    }
+    
+    .content-wrapper:before, .content-wrapper:after { content: none; }
+  }
+}

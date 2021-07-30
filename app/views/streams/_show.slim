@@ -1,0 +1,43 @@
+.stream-wrapper
+  .stream-info-wrapper
+    .user-info-wrapper
+      = link_to user_path(stream.user.username) do
+        - if stream.user.profile_picture.url
+          = image_tag(stream.user.profile_picture.square_320.url, class: 'profile-image')
+        - else
+          = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
+          
+      .user-info
+        span #{stream.user.full_name}
+        span #{comment_timestamp(stream.created_at)}
+  
+  - if stream.image.present?
+    .full-image-wrapper
+      = image_tag(stream.image.url, class: '', onerror: "this.error=null;this.src='#{asset_pack_path('media/images/placeholders/placeholder-news.png')}'")
+  - else
+    = image_pack_tag('media/images/placeholders/placeholder-news.png', class: 'url-full-image')
+    
+  .stream-info-panel
+    .info-actions
+      .div class="info-panel-value-wrapper"
+        - if stream.is_lited(current_user)
+          = link_to '', method: :delete, remote: true, id: "stream-lit-#{stream.id}" do
+            i.ic.lit.reverse.active
+        - else
+          = link_to '', method: :stream, remote: true, id: "stream-lit-#{stream.id}" do
+            i.ic.lit.reverse
+            
+        span.info-panel-value.color-black #{counter_measurement(stream.lits.size)}
+        
+      .info-panel-value-wrapper.pointer-disable
+        i class=(stream.is_commented(current_user) ? "ic comment reverse active" : "ic comment reverse")
+        span.info-panel-value.color-black #{counter_measurement(stream.stream_comments.size)}
+        
+      .info-panel-value-wrapper.pointer-disable
+        i class=(stream.is_viewed(current_user) ? "ic view reverse" : "ic view reverse")
+        span.info-panel-value.color-black #{counter_measurement(stream.views.size)}
+        
+  .stream-text
+    .stream-title
+      = stream.title
+      

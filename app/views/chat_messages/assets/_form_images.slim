@@ -1,0 +1,12 @@
+.post-images-wrapper
+  - if chat_images.present?
+    - chat_images.each do |image|
+      .image-card
+        = image_tag(image.file.rectangle_160_160.url, data: {'image-url': image.file.url, 'image-id': image.id })
+  - else
+    = link_to 'Your image library is empty', images_user_image_path(current_user.username)
+
+= form_for ChatMessage.new, url: chat_chat_messages_path(@chat.access_token), remote: true, authenticity_token: true, html: { method: :post } do |f|
+  = f.hidden_field :message_type, value: 'image'
+  = hidden_field_tag 'chat_message[image_id]'
+  = f.submit "Save", style: "display: none;"

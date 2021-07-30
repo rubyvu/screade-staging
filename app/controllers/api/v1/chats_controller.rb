@@ -11,6 +11,9 @@ class Api::V1::ChatsController < Api::V1::ApiController
   
   # GET /api/v1/chats/:access_token
   def show
+    # Clear unread message counter
+    @current_user_membership.update_columns(unread_messages_count: 0)
+    
     chat_json = ChatSerializer.new(@chat).as_json
     render json: { chat: chat_json }, status: :ok
   end
@@ -55,10 +58,6 @@ class Api::V1::ChatsController < Api::V1::ApiController
       next if @chat.chat_memberships.exists?(user_id: user.id)
       ChatMembership.create(chat: @chat, user: user)
     end
-    
-    # Remove ChatMemberships from Chat
-    memberships_to_delete = @chat.chat_memberships.where.not(user_id: new_chat_users.ids).and(@chat.chat_memberships.where.not(user: current_user))
-    @chat.chat_memberships.delete(*memberships_to_delete)
     
     chat_json = ChatSerializer.new(@chat).as_json
     render json: { chat: chat_json }, status: :ok

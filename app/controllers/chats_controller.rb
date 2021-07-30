@@ -5,13 +5,22 @@ class ChatsController < ApplicationController
   # GET /chats
   def index
     @chats = Chat.joins(:chat_memberships).where(chat_memberships: { user: current_user }).order(updated_at: :desc)
-    @chat = @chats.first
   end
   
   # GET /chats/:access_token
   def show
+    current_page = params[:page]
+    @chat_messages = @chat.chat_messages.order(created_at: :desc).page(current_page).per(40)
+    
+    # Clear unread message counter
+    @current_user_membership.update_columns(unread_messages_count: 0)
+    
     respond_to do |format|
-      format.js { render 'show', layout: false }
+      if current_page
+        format.js { render 'chat_messages/prepend_messages', layout: false }
+      else
+        format.js { render 'show', layout: false }
+      end
     end
   end
   

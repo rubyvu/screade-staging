@@ -15,7 +15,19 @@ $('#modal-add-chat-member').on('submit', '[id^=edit_chat]', function(e) {
   $('#modal-add-chat-member').modal('hide')
 })
 
-// Delete Uers from Chat
+// User Mute/Unmute chat
+$('#mute-chat-membership').on('ajax:success', function() {
+  let currentMuteStatus = $(this).data('is-mute')
+  $(this).data('is-mute', !currentMuteStatus)
+  
+  if ( $(this).data('is-mute') ) {
+    $(this).children('span').text('Unmute chat')
+  } else {
+    $(this).children('span').text('Mute chat')
+  }
+});
+
+// User leave chat
 $('#delete-chat-membership').on('ajax:success', function() {
   location.reload()
 });
@@ -25,3 +37,31 @@ $('#delete-chat-membership').on('ajax:error', function(e) {
   if (error.length == 0) { return }
   alert(error)
 });
+
+// Scroll chat to right position
+var chatMessagePlaceholder = document.getElementById('chat-message-placeholder');
+chatMessagePlaceholder.scrollTop = chatMessagePlaceholder.scrollHeight;
+
+// Infinite scroll
+$('#chat-message-placeholder').scroll( function() {
+  if ( $('#chat-message-placeholder').scrollTop() == 0 ) {
+    setTimeout(function() {
+      let topMessage = $('#chat-message-placeholder').children().first()
+      let currentPage = $('#chat-message-placeholder').data('page')
+      let chatAccessToken = $('#chat-board').data('chat-token')
+      
+      $.ajax({
+        url: window.location.origin + '/chats/' + chatAccessToken,
+        type: 'GET',
+        data: { page: currentPage+1 },
+        dataType: 'jsonp'
+      })
+      
+      $('#chat-message-placeholder').data('page', currentPage+1)
+      $('#chat-message-placeholder').scrollTop(topMessage.offset().top - 100)
+    }, 1000)
+  }
+});
+
+// Clear unread messages counter
+$(`#chat-element-${$('#chat-board').data('chat-token')} .body .message .unread-messages-count`).addClass('no-messages')

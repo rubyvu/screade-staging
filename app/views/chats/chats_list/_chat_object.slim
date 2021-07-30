@@ -1,4 +1,4 @@
-= link_to chat_path(chat.access_token), class: 'chat-element', remote: true do
+= link_to chat_path(chat.access_token), class: 'chat-element', remote: true, id: "chat-element-#{chat.access_token}" do
   .photo
     - if chat.icon&.url
       = image_tag(chat.icon&.rectangle_150_150.url, class: 'profile-image')
@@ -12,9 +12,37 @@
       .title
         span #{chat.name}
       .date
-        = month_with_date(chat.updated_at)
+        = month_with_date(chat.last_message.present? ? chat.last_message.updated_at : chat.updated_at)
     .body
-      .message
-        //.icon
+      .message class="#{(chat.last_message&.message_type == 'video-room' || chat.last_message&.message_type == 'audio-room') && chat.last_message&.chat_room_source.status == 'in-progress' ? 'active-room' : ''}" class="#{(chat.last_message&.message_type == 'video-room' || chat.last_message&.message_type == 'audio-room') && chat.last_message&.chat_room_source.status == 'completed' ? 'inactive-room' : ''}"
+        - case chat.last_message&.message_type
+        - when 'audio'
+          .icon
+            = image_pack_tag('media/images/icons/ic_microphone.png')
+        - when 'video'
+          .icon
+            = image_pack_tag('media/images/icons/ic_chat_videocam.png')
+        - when 'image'
+          .icon
+            = image_pack_tag('media/images/icons/ic_chat_add_icon.png')
+        - when 'audio-room'
+          .icon
+            = image_pack_tag('media/images/icons/ic_chat_phone.png')
+        - when 'video-room'
+          .icon
+            = image_pack_tag('media/images/icons/ic_chat_videocam.png')
+            
         .text
-          span Test message go go go go go go go !!! !!! Test message go go go go go go go !!! !!!
+          span #{last_message_text(chat.last_message)}
+        
+        - if is_message_counter
+          - unread_messages_count = chat.get_membership(current_user).unread_messages_count
+          - if unread_messages_count > 0
+            .unread-messages-count
+              span #{chat.get_membership(current_user).unread_messages_count}
+          - else
+            .unread-messages-count.no-messages
+              span
+        - else
+          .unread-messages-count
+            span

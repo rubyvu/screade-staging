@@ -12,6 +12,15 @@ Rails.application.routes.draw do
     mount Que::Web, at: 'admin/que'
   end
   
+  # Webhooks
+  namespace :webhooks do
+    resources :twilio, only: [] do
+      collection do
+        post :status_callback
+      end
+    end
+  end
+  
   # Web routes
   devise_for :users, controllers: {
     confirmations: 'users/confirmations',
@@ -21,11 +30,39 @@ Rails.application.routes.draw do
   }
   
   resources :chats, param: :access_token do
+    resources :chat_video_rooms, only: [:new], param: :name do
+      collection do
+        put :complete
+        put :update_participants_counter
+      end
+    end
+    
+    resources :chat_audio_rooms, only: [:new], param: :name do
+      collection do
+        put :complete
+        put :update_participants_counter
+      end
+    end
+    
+    resources :chat_messages, only: [:create] do
+      collection do
+        get :images
+        get :videos
+      end
+    end
+    
+    resources :chat_memberships, only: [:index] do
+      collection do
+        get :audio_room
+        get :video_room
+        put :mute
+        put :unread_messages
+      end
+    end
+    
     member do
       put :update_members
     end
-    
-    resources :chat_memberships, only: [:index]
   end
   
   resources :chat_memberships, only: [:update, :destroy]
@@ -67,6 +104,7 @@ Rails.application.routes.draw do
     end
   end
   
+  resources :maps, only: [:index]
   resources :news_articles, only: [] do
     resources :comments, only: [] do
       get :reply_comments
@@ -109,6 +147,9 @@ Rails.application.routes.draw do
   
   resources :searches, only: [:index]
   resources :settings, only: [:edit, :update]
+  resources :streams, only: [:index, :show] do
+    resources :stream_comments, only: [:create]
+  end
   resources :squad_requests, only: [:index, :create] do
     member do
       post :accept
@@ -161,6 +202,9 @@ Rails.application.routes.draw do
       end
       
       resources :chats, only: [:index, :show, :create, :update], param: :access_token do
+        resources :chat_audio_rooms, only: [:create]
+        resources :chat_video_rooms, only: [:create]
+        resources :chat_messages, only: [:index, :create]
         member do
           put :update_members
         end
@@ -168,6 +212,8 @@ Rails.application.routes.draw do
         resources :chat_memberships, only: [:index] do
           collection do
             get :chat_users
+            put :mute
+            put :unread_messages
           end
         end
       end
@@ -289,6 +335,7 @@ Rails.application.routes.draw do
       end
       
       resources :user_images, only: [:update]
+      resources :user_locations, only: [:index, :create]
       resources :user_security_questions, only: [:index]
       resources :user_videos, only: [:update]
       resources :users, only: [:show], param: :username, username: User::USERNAME_ROUTE_FORMAT do

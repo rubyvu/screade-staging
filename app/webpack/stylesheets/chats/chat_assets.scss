@@ -1,0 +1,20 @@
+#tabs ul {
+  padding: 0;
+  display: inline-flex;
+  list-style-type: none;
+  
+  a {
+    font-size: 16px;
+    color: $color-grey;
+  }
+  
+  span.divider {
+    margin: 0 6px;
+    color: $color-blue;
+  }
+  
+  // Active Tab
+  li.ui-tabs-active {
+    a { color: $color-blue; }
+  }
+}

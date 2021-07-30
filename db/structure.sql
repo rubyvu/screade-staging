@@ -324,6 +324,41 @@ ALTER SEQUENCE public.breaking_news_id_seq OWNED BY public.breaking_news.id;
 
 
 --
+-- Name: chat_audio_rooms; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.chat_audio_rooms (
+    id bigint NOT NULL,
+    chat_id integer NOT NULL,
+    sid character varying NOT NULL,
+    status character varying DEFAULT 'in-progress'::character varying NOT NULL,
+    name character varying NOT NULL,
+    participants_count integer DEFAULT 0 NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: chat_audio_rooms_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.chat_audio_rooms_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: chat_audio_rooms_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.chat_audio_rooms_id_seq OWNED BY public.chat_audio_rooms.id;
+
+
+--
 -- Name: chat_memberships; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -334,8 +369,8 @@ CREATE TABLE public.chat_memberships (
     role character varying DEFAULT 'user'::character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    history_cleared_at timestamp without time zone,
-    unread_messages_count integer DEFAULT 0 NOT NULL
+    unread_messages_count integer DEFAULT 0 NOT NULL,
+    is_mute boolean DEFAULT false NOT NULL
 );
 
 
@@ -377,7 +412,9 @@ CREATE TABLE public.chat_messages (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     asset_source_id integer,
-    asset_source_type character varying
+    asset_source_type character varying,
+    chat_room_source_id integer,
+    chat_room_source_type character varying
 );
 
 
@@ -398,6 +435,41 @@ CREATE SEQUENCE public.chat_messages_id_seq
 --
 
 ALTER SEQUENCE public.chat_messages_id_seq OWNED BY public.chat_messages.id;
+
+
+--
+-- Name: chat_video_rooms; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.chat_video_rooms (
+    id bigint NOT NULL,
+    chat_id integer NOT NULL,
+    sid character varying NOT NULL,
+    status character varying DEFAULT 'in-progress'::character varying NOT NULL,
+    name character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    participants_count integer DEFAULT 0 NOT NULL
+);
+
+
+--
+-- Name: chat_video_rooms_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.chat_video_rooms_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: chat_video_rooms_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.chat_video_rooms_id_seq OWNED BY public.chat_video_rooms.id;
 
 
 --
@@ -1037,7 +1109,8 @@ CREATE TABLE public.settings (
     is_videos boolean DEFAULT true,
     is_posts boolean DEFAULT true,
     user_id integer NOT NULL,
-    is_email boolean
+    is_email boolean,
+    is_current_location boolean DEFAULT false NOT NULL
 );
 
 
@@ -1092,6 +1165,74 @@ CREATE SEQUENCE public.squad_requests_id_seq
 --
 
 ALTER SEQUENCE public.squad_requests_id_seq OWNED BY public.squad_requests.id;
+
+
+--
+-- Name: stream_comments; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.stream_comments (
+    id bigint NOT NULL,
+    message text,
+    user_id integer,
+    stream_id integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: stream_comments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.stream_comments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: stream_comments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.stream_comments_id_seq OWNED BY public.stream_comments.id;
+
+
+--
+-- Name: streams; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.streams (
+    id bigint NOT NULL,
+    title character varying NOT NULL,
+    is_private boolean DEFAULT true NOT NULL,
+    user_id integer NOT NULL,
+    image character varying,
+    image_hex character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: streams_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.streams_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: streams_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.streams_id_seq OWNED BY public.streams.id;
 
 
 --
@@ -1162,6 +1303,39 @@ CREATE SEQUENCE public.user_images_id_seq
 --
 
 ALTER SEQUENCE public.user_images_id_seq OWNED BY public.user_images.id;
+
+
+--
+-- Name: user_locations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.user_locations (
+    id bigint NOT NULL,
+    latitude numeric(10,6) NOT NULL,
+    longitude numeric(10,6) NOT NULL,
+    user_id integer NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: user_locations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.user_locations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: user_locations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.user_locations_id_seq OWNED BY public.user_locations.id;
 
 
 --
@@ -1365,6 +1539,13 @@ ALTER TABLE ONLY public.breaking_news ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
+-- Name: chat_audio_rooms id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chat_audio_rooms ALTER COLUMN id SET DEFAULT nextval('public.chat_audio_rooms_id_seq'::regclass);
+
+
+--
 -- Name: chat_memberships id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1376,6 +1557,13 @@ ALTER TABLE ONLY public.chat_memberships ALTER COLUMN id SET DEFAULT nextval('pu
 --
 
 ALTER TABLE ONLY public.chat_messages ALTER COLUMN id SET DEFAULT nextval('public.chat_messages_id_seq'::regclass);
+
+
+--
+-- Name: chat_video_rooms id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chat_video_rooms ALTER COLUMN id SET DEFAULT nextval('public.chat_video_rooms_id_seq'::regclass);
 
 
 --
@@ -1498,6 +1686,20 @@ ALTER TABLE ONLY public.squad_requests ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: stream_comments id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.stream_comments ALTER COLUMN id SET DEFAULT nextval('public.stream_comments_id_seq'::regclass);
+
+
+--
+-- Name: streams id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.streams ALTER COLUMN id SET DEFAULT nextval('public.streams_id_seq'::regclass);
+
+
+--
 -- Name: topics id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1509,6 +1711,13 @@ ALTER TABLE ONLY public.topics ALTER COLUMN id SET DEFAULT nextval('public.topic
 --
 
 ALTER TABLE ONLY public.user_images ALTER COLUMN id SET DEFAULT nextval('public.user_images_id_seq'::regclass);
+
+
+--
+-- Name: user_locations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_locations ALTER COLUMN id SET DEFAULT nextval('public.user_locations_id_seq'::regclass);
 
 
 --
@@ -1571,6 +1780,14 @@ ALTER TABLE ONLY public.breaking_news
 
 
 --
+-- Name: chat_audio_rooms chat_audio_rooms_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chat_audio_rooms
+    ADD CONSTRAINT chat_audio_rooms_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: chat_memberships chat_memberships_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1584,6 +1801,14 @@ ALTER TABLE ONLY public.chat_memberships
 
 ALTER TABLE ONLY public.chat_messages
     ADD CONSTRAINT chat_messages_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: chat_video_rooms chat_video_rooms_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chat_video_rooms
+    ADD CONSTRAINT chat_video_rooms_pkey PRIMARY KEY (id);
 
 
 --
@@ -1755,6 +1980,22 @@ ALTER TABLE ONLY public.squad_requests
 
 
 --
+-- Name: stream_comments stream_comments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.stream_comments
+    ADD CONSTRAINT stream_comments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: streams streams_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.streams
+    ADD CONSTRAINT streams_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: topics topics_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1768,6 +2009,14 @@ ALTER TABLE ONLY public.topics
 
 ALTER TABLE ONLY public.user_images
     ADD CONSTRAINT user_images_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_locations user_locations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_locations
+    ADD CONSTRAINT user_locations_pkey PRIMARY KEY (id);
 
 
 --
@@ -1825,6 +2074,20 @@ CREATE UNIQUE INDEX index_admin_users_on_reset_password_token ON public.admin_us
 
 
 --
+-- Name: index_chat_audio_rooms_on_chat_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chat_audio_rooms_on_chat_id ON public.chat_audio_rooms USING btree (chat_id);
+
+
+--
+-- Name: index_chat_audio_rooms_on_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_chat_audio_rooms_on_name ON public.chat_audio_rooms USING btree (name);
+
+
+--
 -- Name: index_chat_memberships_on_chat_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1857,6 +2120,20 @@ CREATE INDEX index_chat_messages_on_message_type ON public.chat_messages USING b
 --
 
 CREATE INDEX index_chat_messages_on_user_id ON public.chat_messages USING btree (user_id);
+
+
+--
+-- Name: index_chat_video_rooms_on_chat_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chat_video_rooms_on_chat_id ON public.chat_video_rooms USING btree (chat_id);
+
+
+--
+-- Name: index_chat_video_rooms_on_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_chat_video_rooms_on_name ON public.chat_video_rooms USING btree (name);
 
 
 --
@@ -2021,10 +2298,31 @@ CREATE INDEX index_squad_requests_on_receiver_id_and_requestor_id ON public.squa
 
 
 --
+-- Name: index_stream_comments_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_stream_comments_on_user_id ON public.stream_comments USING btree (user_id);
+
+
+--
+-- Name: index_streams_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_streams_on_user_id ON public.streams USING btree (user_id);
+
+
+--
 -- Name: index_topics_on_parent_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_topics_on_parent_id ON public.topics USING btree (parent_id);
+
+
+--
+-- Name: index_user_locations_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_locations_on_user_id ON public.user_locations USING btree (user_id);
 
 
 --
@@ -2231,5 +2529,17 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210623112050'),
 ('20210623112215'),
 ('20210623143251'),
+('20210629103137'),
+('20210705073155'),
 ('20210706135930'),
-('20210706153513');
+('20210706153513'),
+('20210709141257'),
+('20210712104336'),
+('20210720140558'),
+('20210723074726'),
+('20210726143917'),
+('20210727085203'),
+('20210728125603'),
+('20210729132102');
+
+

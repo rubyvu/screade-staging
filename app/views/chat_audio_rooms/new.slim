@@ -1,0 +1,31 @@
+#chat-audio-room data-chat-token="#{@chat_audio_room.chat.access_token}" data-twilio-video-token="#{@chat_audio_room_user_token}" data-room-name="#{@chat_audio_room.name}" data-default-user-image="#{asset_pack_path('media/images/placeholders/placeholder-user-profile.png')}"
+
+.audio-chat-header
+
+.audio-chat-content#audio-chat-content
+  .audio-main-content-wrapper
+    .main-content.self-user
+      - if current_user.profile_picture.url
+        = image_tag(current_user.profile_picture.square_320.url, class: 'user-icon')
+      - else
+        = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'user-icon')
+        
+      span You
+      
+    .main-content.no-participant#audio-remote-participant
+      = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'user-icon')
+      span
+    
+// Audio call
+.call-control-panel
+  .call-space-wrapper
+  
+  .call-buttons
+    .button#mute-audio
+      i.ic-button.microphone.on
+      
+    .button.call-end#disconect-from-audio-chat
+      i.ic-button.call-end
+  
+  .call-profiles-wrapper
+    .call-profiles#audio-participants-list

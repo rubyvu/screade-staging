@@ -6,18 +6,23 @@ import Turbolinks from "turbolinks";
 import * as ActiveStorage from "@rails/activestorage";
 import "channels";
 import "select2";
-import "webticker/jquery.webticker.min.js";
+import Marquee3k from 'marquee3000';
 import 'bootstrap-datepicker';
 import 'timepicker/jquery.timepicker.js';
+import 'jquery-ui/ui/widgets/tabs';
 
 // Import internal scripts
-import './shared/chats';
+import './shared/chat/chats';
+import './shared/chat/chat_messages';
+import './shared/chat/chat_twilio';
+import './shared/chat/recorder';
 import './shared/events';
 import './shared/font_customizer';
 import './shared/global-search';
 import './shared/groups';
 import './shared/image_viewer';
 import './shared/local_date';
+import './shared/maps';
 import './shared/modals';
 import './shared/multilevel_dropdown';
 import './shared/news_articles';
@@ -80,7 +85,12 @@ $(document).on('turbolinks:load', function () {
   $('input.timepicker').timepicker(timePickerOptions)
   
   //Init Ticker for Breaking news on page load
-  $('#webticker').webTicker({ height: '36px', duplicate: true, startEmpty: false });
+  Marquee3k.init({
+    selector: 'marquee3k',
+  });
+  window.addEventListener('load', (event) => {
+     Marquee3k.refreshAll();
+  });
   
   // Hide modal after redirect and go back
   // $('a[data-type="modal-link"]').on('click', function() {

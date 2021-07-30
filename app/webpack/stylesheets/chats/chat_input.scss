@@ -1,0 +1,78 @@
+.chat-wrapper .chat-board-wrapper .chat-input {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  height: 49px;
+  border-top: 1px solid $color-light-grey;
+  
+  .text-message {
+    width: 100%;
+    display: none;
+    
+    &.active { display: block;}
+    
+    form { width: 100%; }
+    // Hide submit button
+    input[type="submit"].send-message-button {
+      display: none;
+      
+      &.active {
+        display: block
+      }
+    }
+  }
+  
+  .audio-record {
+    width: 100%;
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    
+    &.active { display: flex;}
+    
+    .timer-wrapper {
+      display: flex;
+      align-items: center;
+      color: $color-red;
+      
+      .ic-record {
+        margin-right: 4px;
+        height: 8px;
+        width: 8px;
+        background-color: $color-red;
+        border-radius: 100%;
+      }
+    }
+    
+    .record-button-wrapper {
+      display: flex;
+      align-items: center;
+      
+      span {
+        color: $color-grey;
+        font-size: 12px;
+        margin-right: 30px;
+      }
+    }
+  }
+  
+  .chat-record-button {
+    display: none;
+    
+    &.active {
+      display: flex;
+    }
+    
+    &.on {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 100%;
+      height: 32px;
+      width: 32px;
+      background-color: $color-light-blue;
+    }
+  }
+  
+  .input-group-prepend, .input-group-append, .chat-record-button, .chat-clear-record-button { cursor: pointer; }
+}

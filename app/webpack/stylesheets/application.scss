@@ -10,6 +10,8 @@ $color-black: #000000;
 $color-red: #DA100B;
 $color-grey: #9C9C9C;
 $color-light-grey: #EBF0F3;
+$color-dark-grey: #272727;
+$color-green: #11933B;
 $color-white: #FFFFFF;
 
 // Sizes
@@ -52,6 +54,8 @@ $grid-breakpoints: (
 @import './events/index';
 @import './squad_requests/index';
 @import './groups/index';
+@import './maps/index';
+@import './streams/index';
 
 /**************************************
 * Import stylesheets from node modules:
@@ -75,6 +79,11 @@ html, body {
   //border: 1px solid green;
   font-family: 'roboto';
   font-weight: 400; // 900, 700, 500, 400, 300
+  
+  &.twilio {
+    background-color: $color-dark-grey;
+    padding: 0;
+  }
 }
 
 // Prevent text from selection

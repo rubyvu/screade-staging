@@ -1,0 +1,9 @@
+#map
+
+//.map-switcher-wrapper
+  = form_for @location_setting, url: setting_path(@location_setting, redirect_path: 'map'), method: :patch do |f|
+    label.switch
+      = f.check_box :is_current_location
+      span.slider.default.round
+      
+    span.ml-2 Show current location

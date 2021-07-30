@@ -1,0 +1,73 @@
+.message-box-wrapper class="#{chat_message.chat_room_source.present? ? 'message-owner' : ''}" data-message-id="#{chat_message.id}" data-message-type="#{chat_message.message_type}" data-message-datetime="#{chat_message.created_at.strftime('%Y-%m-%d %H:%M:%S %z')}"
+  .message-wrapper
+    .photo-wrapper
+      .photo
+        - if chat_message.user.profile_picture.url
+          = image_tag(chat_message.user.profile_picture.square_320.url, class: 'profile-image')
+        - else
+          = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
+    
+    .content-wrapper
+      .header
+        .name
+          = chat_message.user.full_name
+      .body
+        - case chat_message.message_type
+        - when 'text'
+          .text
+            = chat_message.text
+            
+        - when 'image'
+          .image
+            - if chat_message.image.present?
+              = image_tag(chat_message.image.url)
+            - elsif chat_message.asset_source.present?
+              = image_tag(chat_message.asset_source.file.url)
+            - else
+              = image_pack_tag('media/images/placeholders/placeholder-news.png')
+              
+        - when 'video'
+          .video
+            - if chat_message.video.present?
+              video controls="" width="350"
+                source src="#{chat_message.video.url}" type="video/mp4"
+                  span Sorry, your browser doesn't support embedded videos.
+                    
+            - elsif chat_message.asset_source.present?
+              video controls="" width="350" height="250" preload="none"
+                source src="#{chat_message.asset_source.file.url}" type="video/mp4"
+                  span Sorry, your browser doesn't support embedded videos.
+            - else
+              span Video record cannot be played.
+              
+        - when 'audio'
+          .audio
+            - if chat_message.audio_record.present?
+              audio controls="" preload="none"
+                source src="#{chat_message.audio_record.url}" type="audio/wav"
+                span Your browser does not support the audio element.
+                
+            - else
+              span Audio record cannot be played.
+              
+        - when 'video-room'
+          .video-room
+            - if chat_message.chat_room_source.status == 'completed'
+              span  Video call #{chat_message.chat_room_source.status}
+            - else
+              = link_to "Join to the video call #{chat_message.chat_room_source.participants_count}/50", new_chat_chat_video_room_path(chat_message.chat.access_token)
+              
+        - when 'audio-room'
+          .audio-room
+            - if chat_message.chat_room_source.status == 'completed'
+              span  Audio call #{chat_message.chat_room_source.status}
+            - else
+              = link_to "Join to the audio call #{chat_message.chat_room_source.participants_count}/50", new_chat_chat_audio_room_path(chat_message.chat.access_token)
+              
+        .footer
+          .date
+            = hours_minutes(chat_message.created_at)
+          
+          //- unless message_owner
+            .review-icon
+              i.ic.review

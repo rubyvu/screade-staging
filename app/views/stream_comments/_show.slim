@@ -1,0 +1,15 @@
+.comment-wrapper
+  .comment-image-wrapper
+    = link_to user_path(comment.user.username) do
+      - if comment.user.profile_picture.url
+        = image_tag(comment.user.profile_picture.square_320.url, class: 'profile-image')
+      - else
+        = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
+    
+  .comment-content-wrapper value="#{comment.id}"
+    .comment-user-name
+      = comment.user.full_name
+    .comment-text
+      = comment.message
+    .comment-date
+      = comment_timestamp(comment.created_at)

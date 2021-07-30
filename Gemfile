@@ -94,6 +94,8 @@ gem 'faraday_middleware-aws-sigv4'
 # Firebase Cloud Messaging
 gem 'fcm'
 
+# Twilio audio/video call
+gem 'twilio-ruby'
 # Wrap link
 gem 'rails_autolink'
 

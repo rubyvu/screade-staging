@@ -1,0 +1,38 @@
+.chat-input
+  .text-message.active#text-message-form
+    = form_for ChatMessage.new, url: chat_chat_messages_path(@chat.access_token), remote: true, authenticity_token: true, html: { method: :post } do |f|
+      = f.hidden_field :message_type, value: 'text'
+      .input-group
+        .input-group-prepend
+          .input-group-text
+            = image_pack_tag('media/images/icons/ic_chat_document.png', class: 'img-responsive', id: 'chat-assset-button')
+            
+        = f.text_field :text, class: 'form-control', placeholder: 'Write a message', autocomplete: 'off'
+        
+        .input-group-append
+          .input-group-text.align-items-center
+            // Submit button
+            = f.submit '', class: 'btn btn-link send-message-button no-border', id: 'chat-message-submit'
+            
+            // Record button
+            .chat-record-button.active#chat-start-record-button
+              = image_pack_tag('media/images/icons/ic_microphone.png', class: 'img-responsive')
+            
+  .audio-record#audio-record-form
+    .timer-wrapper
+      .ic-record
+      .timer
+        span#minutes 00
+        span
+          |:
+        span#seconds 00
+        
+    .record-button-wrapper
+      span.chat-clear-record-button#chat-clear-record-button Click to cancel
+      
+      // Record button
+      .chat-record-button.on#chat-stop-record-button
+        = image_pack_tag('media/images/icons/ic_microphone.png', class: 'img-responsive')
+        
+  .audio-record#audio-record-pending-form
+    span Audio record saving ...

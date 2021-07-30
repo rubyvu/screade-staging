@@ -1,6 +1,6 @@
 class ChatMembershipsController < ApplicationController
-  before_action :get_chat, only: [:index]
-  before_action :get_chat_membership, only: [:update, :destroy]
+  before_action :get_chat, only: [:audio_room, :index, :mute, :video_room, :unread_messages]
+  before_action :get_chat_membership, only: [:destroy]
   
   # GET /chats/:chat_access_token/chat_memberships
   def index
@@ -19,24 +19,76 @@ class ChatMembershipsController < ApplicationController
     end
   end
   
+  # GET /chats/:chat_access_token/chat_memberships/audio_room
+  def audio_room
+    audio_room = @chat.chat_audio_rooms.find_by!(status: 'in-progress')
+    participant_usernames = audio_room.participants.map { |participant| participant[1] }
+    users = User.where(username: participant_usernames)
+    audio_room_members = ActiveModel::Serializer::CollectionSerializer.new(users, serializer: UserProfileSerializer).as_json
+    render json: { audio_room_members: audio_room_members }, status: :ok
+  end
+  
+  # GET /chats/:chat_access_token/chat_memberships/video_room
+  def video_room
+    video_room = @chat.chat_video_rooms.find_by!(status: 'in-progress')
+    participant_usernames = video_room.participants.map { |participant| participant[1] }
+    users = User.where(username: participant_usernames)
+    video_room_members = ActiveModel::Serializer::CollectionSerializer.new(users, serializer: UserProfileSerializer).as_json
+    render json: { video_room_members: video_room_members }, status: :ok
+  end
+  
   # PUT/PATCH /chat_memberships/:id
   def update
-    current_user_membership = ChatMembership.find_by(user: current_user, chat: @chat_membership.chat)
-    if current_user_membership.blank?
+    chat_membership = ChatMembership.find_by(id: params[:id])
+    if chat_membership.blank?
       render json: { errors: ['Record not found.'] }, status: :not_found
       return
     end
     
-    if current_user_membership.role != 'owner'
+    chat_owner_membership = ChatMembership.find_by(user: current_user, chat: chat_membership.chat)
+    if chat_owner_membership.blank?
+      render json: { errors: ['Record not found.'] }, status: :not_found
+      return
+    end
+    
+    if chat_owner_membership.role != 'owner'
       render json: { errors: ['Can be changed only by Owner.'] }, status: :unprocessable_entity
       return
     end
     
-    if @chat_membership.update(memberships_params)
+    if chat_membership.update(memberships_params)
       render json: { success: true }, status: :ok
     else
-      render json: { errors: @chat_membership.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: chat_membership.errors.full_messages }, status: :unprocessable_entity
     end
+  end
+  
+  # PUT/PATCH /chats/:chat_access_token/chat_memberships/unread_messages
+  def unread_messages
+    chat_membership = ChatMembership.find_by(chat: @chat, user: current_user)
+    if chat_membership.blank?
+      render json: { errors: ['Record not found.'] }, status: :not_found
+      return
+    end
+    
+    # Clear unread message counter
+    chat_membership.update_columns(unread_messages_count: 0)
+    chat_membership_json = ChatMembershipSerializer.new(chat_membership).as_json
+    render json: { chat_membership: chat_membership_json }, status: :ok
+  end
+  
+  # PUT/PATCH /chats/:chat_access_token/chat_memberships/mute
+  def mute
+    chat_membership = ChatMembership.find_by(chat: @chat, user: current_user)
+    if chat_membership.blank?
+      render json: { errors: ['Record not found.'] }, status: :not_found
+      return
+    end
+    
+    # Clear unread message counter
+    chat_membership.update_columns(is_mute: !chat_membership.is_mute)
+    chat_membership_json = ChatMembershipSerializer.new(chat_membership).as_json
+    render json: { chat_membership: chat_membership_json }, status: :ok
   end
   
   # DELETE /chat_memberships/:id
@@ -69,6 +121,6 @@ class ChatMembershipsController < ApplicationController
     end
     
     def memberships_params
-      params.require(:chat_membership).permit(:role)
+      params.require(:chat_membership).permit(:role, :unread_messages_count)
     end
 end

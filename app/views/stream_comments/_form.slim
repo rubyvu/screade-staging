@@ -1,0 +1,8 @@
+= form_for new_comment, url: stream_stream_comments_path(new_comment.stream), remote: true do |f|
+  
+  .input-group.mb-3
+    = f.text_field :message, autofocus: false, autocomplete: 'off', placeholder: "Write a comment", class: 'form-control'
+    
+    .input-group-append
+      .input-group-text.submit-button
+        = f.submit '', class: 'btn btn-link send-message-button'

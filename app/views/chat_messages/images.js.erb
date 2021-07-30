@@ -1,0 +1,15 @@
+$('#chat-images-form-placeholder').empty().append("<%= j render partial: 'chat_messages/assets/form_images', locals: { chat_images: @chat_images } %>")
+
+$('#chat-images-form-placeholder').on('click', '.image-card', function() {
+  $('#chat_message_image_id').val($(this).find('img').data('imageId'))
+  
+  $('#chat-images-form-placeholder #new_chat_message').find("input[type=submit]").click()
+  $('#modal-chat-assets').modal('hide')
+})
+
+$('#chat-videos-form-placeholder').on('click', '.image-card', function() {
+  $('#chat_message_video_id').val($(this).find('img').data('videoId'))
+  
+  $('#chat-videos-form-placeholder #new_chat_message').find("input[type=submit]").click()
+  $('#modal-chat-assets').modal('hide')
+})

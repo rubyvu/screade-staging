@@ -25,6 +25,10 @@
 - [List of all Users that can be added/removed from the Chat](api/v1/chat_memberships/chat_users.md)
 - [Update ChatMember role](api/v1/chat_memberships/update.md)
 - [Remove ChatMember from the Chat](api/v1/chat_memberships/destroy.md)
+- [List of all ChatMessages in the Chat](api/v1/chat_messages/index.md)
+- [Create new ChatMessage](api/v1/chat_messages/create.md)
+- [Create new ChatAudioRoom](api/v1/chat_audio_rooms/create.md)
+- [Create new ChatVideoRoom](api/v1/chat_video_rooms/create.md)
 
 ### Comments
 - [Show Article Comment](api/v1/comments/show.md)
@@ -123,6 +127,10 @@
 
 ### User Security Question
 - [Get User Security Questions list](api/v1/user_security_questions/index.md)
+
+### User Location
+- [Get User and UserSquadMembers Locations](api/v1/user_locations/index.md)
+- [Create or Update UserLocation](api/v1/user_locations/create.md)
 
 ### User Settings
 - [Get user Settings](api/v1/settings/index.md)

@@ -1,0 +1,208 @@
+.call-control-panel {
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  width: 100%;
+  
+  .call-buttons {
+    width: 33.3%;
+    display: flex;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    
+    &.video-call {
+      width: 100%;
+    }
+    
+    .button {
+      margin: 0 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 50px;
+      width: 50px;
+      background-color: $color-grey;
+      border-radius: 100%;
+      
+      &.call-end {
+        background-color: $color-red;
+      }
+      
+      &.active {
+        /* Opacity */
+        /* IE 8 */
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+        /* IE 5-7 */
+        filter: alpha(opacity=75);
+        /* Netscape */
+        -moz-opacity: 0.75;
+        /* Safari 1.x */
+        -khtml-opacity: 0.75;
+        /* Good browsers */
+        opacity: 0.75;
+      }
+      
+      &.inactive {
+        /* Opacity */
+        /* IE 8 */
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+        /* IE 5-7 */
+        filter: alpha(opacity=30);
+        /* Netscape */
+        -moz-opacity: 0.3;
+        /* Safari 1.x */
+        -khtml-opacity: 0.3;
+        /* Good browsers */
+        opacity: 0.3;
+      }
+    }
+    
+    .button:active {
+      /* Opacity */
+      /* IE 8 */
+      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+      /* IE 5-7 */
+      filter: alpha(opacity=50);
+      /* Netscape */
+      -moz-opacity: 0.5;
+      /* Safari 1.x */
+      -khtml-opacity: 0.5;
+      /* Good browsers */
+      opacity: 0.5;
+    }
+  }
+  
+  .call-space-wrapper {
+    height: 0;
+    width: 33.3%;
+  }
+  
+  .call-profiles-wrapper {
+    display: flex;
+    width: 33.3%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    height: 80px;
+    
+    .call-profiles {
+      
+      .profile-image {
+        margin: 0 4px;
+        height: 80px;
+        width: 80px;
+        border-radius: 50%;
+        background-color: $color-light-grey;
+        object-fit: cover;
+        
+        &.dominant-speaker {
+          border: 4px solid green;
+        }
+      }
+    }
+  }
+}
+
+.video-chat-header {
+  height: 150px;
+  width: 100%;
+}
+
+.video-chat-content {
+  
+  width: 100%;
+  height: calc(100vh - 300px);
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-content: flex-start;
+  overflow-y: scroll;
+  
+  .video-chat-sceen {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid $color-black;
+    
+    width: 30%;
+    margin: 1% 1%;
+    // background-color: $color-black;
+    
+    video {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      max-height: 300px;
+    }
+    
+    &.dominant-speaker {
+      border: 4px solid green;
+    }
+  }
+  
+  .video-chat-sceen {
+    &.video-mute:after {
+      content: url('../images/icons/chat_calls/ic_video_off.png');
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+  }
+  
+  .video-chat-sceen .name {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 36px;
+    padding: 0 20px;
+    background-color: $color-black;
+    color: $color-white;
+    z-index: 1;
+    
+    height: 14%;
+    font-size: 1em;
+    
+    /* Opacity */
+    /* IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+    /* IE 5-7 */
+    filter: alpha(opacity=60);
+    /* Netscape */
+    -moz-opacity: 0.6;
+    /* Safari 1.x */
+    -khtml-opacity: 0.6;
+    /* Good browsers */
+    opacity: 0.6;
+  }
+}
+
+@media (max-width: map-get($grid-breakpoints, "md")) {
+  .call-control-panel {
+    height: 200px;
+    flex-direction: column;
+    bottom: 0;
+    
+    .call-buttons {
+      margin: 25px 0;
+      width: 100%;
+    }
+    
+    .call-space-wrapper {
+      display: none
+    }
+    
+    .call-profiles-wrapper {
+      width: 100%;
+    }
+  }
+}
