@@ -59,6 +59,8 @@ gem 'que-scheduler'
 # AWS S3 adapter for Carrierwave
 gem 'fog-aws'
 gem 'aws-sdk-s3'
+gem 'aws-sdk-mediapackage'
+gem 'aws-sdk-medialive'
 
 # File uploading
 gem 'carrierwave'
