@@ -61,6 +61,7 @@ gem 'fog-aws'
 gem 'aws-sdk-s3'
 gem 'aws-sdk-mediapackage'
 gem 'aws-sdk-medialive'
+gem 'aws-sdk-mediastore'
 
 # File uploading
 gem 'carrierwave'
