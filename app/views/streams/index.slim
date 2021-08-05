@@ -7,7 +7,7 @@
     - @streams.each do |stream|
       .streams-card value="#{stream.id}"
       
-        - if stream.user == current_user
+        - if stream.owner == current_user
           .stream-header-panel
             .state
             

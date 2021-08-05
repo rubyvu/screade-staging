@@ -1,14 +1,14 @@
 .stream-wrapper
   .stream-info-wrapper
     .user-info-wrapper
-      = link_to user_path(stream.user.username) do
-        - if stream.user.profile_picture.url
-          = image_tag(stream.user.profile_picture.square_320.url, class: 'profile-image')
+      = link_to user_path(stream.owner.username) do
+        - if stream.owner.profile_picture.url
+          = image_tag(stream.owner.profile_picture.square_320.url, class: 'profile-image')
         - else
           = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
           
       .user-info
-        span #{stream.user.full_name}
+        span #{stream.owner.full_name}
         span #{comment_timestamp(stream.created_at)}
   
   - if stream.image.present?

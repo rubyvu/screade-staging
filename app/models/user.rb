@@ -33,6 +33,8 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :post_groups, through: :posts
   has_many :received_notifications, class_name: 'Notification', foreign_key: :recipient_id, dependent: :destroy
+  ## Streams
+  has_many :user_streams, class_name: 'Stream', foreign_key: 'user_id', dependent: :destroy
   ## Squad requests
   has_many :squad_requests_as_receiver, foreign_key: :receiver_id, class_name: 'SquadRequest', dependent: :destroy
   has_many :squad_requests_as_requestor, foreign_key: :requestor_id, class_name: 'SquadRequest', dependent: :destroy
@@ -56,6 +58,7 @@ class User < ApplicationRecord
   has_many :suggested_topics, class_name: 'Topic', foreign_key: :suggester_id, dependent: :nullify
   # Languages
   has_and_belongs_to_many :languages
+  has_and_belongs_to_many :streams
   
   # Fields validations
   validates :email, uniqueness: true, presence: true, length: { maximum: 100 }, format: { with: User::EMAIL_FORMAT }
