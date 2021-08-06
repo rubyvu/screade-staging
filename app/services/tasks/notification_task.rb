@@ -17,6 +17,21 @@ module Tasks
       end
     end
     
+    def self.new_chat_membership(id)
+      chat_membership = ChatMembership.find_by(id: id)
+      return if chat_membership.blank?
+      
+      notificatiom_params = {
+        source_id: chat_membership.id,
+        source_type: 'ChatMembership',
+        sender_id: chat_membership.chat.owner.id,
+        recipient_id: chat_membership.user.id,
+        message: "You were invited to the #{chat_membership.chat.name} Chat"
+      }
+      
+      create_notification(notificatiom_params)
+    end
+    
     def self.new_chat_message(id)
       chat_message = ChatMessage.find_by(id: id)
       return if chat_message.blank?

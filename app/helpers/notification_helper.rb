@@ -9,6 +9,8 @@ module NotificationHelper
       end
     when 'Event'
       link = events_path(date: object.source.start_date)
+    when 'ChatMembership'
+      link = chats_path()
     when 'ChatMessage'
       link = chats_path()
     when 'ChatAudioRoom'

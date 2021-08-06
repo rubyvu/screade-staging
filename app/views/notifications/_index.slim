@@ -16,6 +16,8 @@
             = image_pack_tag('media/images/icons/notifications/ic_notification_new.png')
           - when 'Event'
             = image_pack_tag('media/images/icons/notifications/ic_notification_event.png')
+          - when 'ChatMembership'
+            = image_pack_tag('media/images/icons/notifications/ic_notification_new.png')
           - when 'ChatMessage'
             = image_pack_tag('media/images/icons/notifications/ic_notification_replied_comment.png')
           - when 'ChatAudioRoom'
@@ -33,7 +35,7 @@
             - if notification.is_user_type?
               span
                 = notification.sender.full_name
-            - elsif notification.source_type == 'ChatMessage' || notification.source_type == 'ChatAudioRoom' || notification.source_type == 'ChatVideoRoom'
+            - elsif notification.source_type == 'ChatMembership' || notification.source_type == 'ChatMessage' || notification.source_type == 'ChatAudioRoom' || notification.source_type == 'ChatVideoRoom'
             
             - elsif notification.source_type == 'Comment'
               = notification.source.message
