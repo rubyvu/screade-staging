@@ -9,6 +9,11 @@ class ChatMessageSerializer < ActiveModel::Serializer
     object.created_at.strftime('%Y-%m-%d %H:%M:%S %z')
   end
   
+  attribute :unix_created_at
+  def unix_created_at
+    object.created_at.in_time_zone('UTC').to_i
+  end
+  
   attribute :id
   attribute :message_type
   attribute :message_content

@@ -23,7 +23,7 @@ $( document ).on('turbolinks:load', function() {
         // Render StreamComment html
         $('.comments-scroll .comment-wrapper:first').before(data.stream_comment_html)
         let commentDate = chat_date(data.stream_comment_json.created_at)
-        let commentTime = chat_time(data.stream_comment_json.created_at)
+        let commentTime = chat_time(data.stream_comment_json.unix_created_at)
         
         // Change Date to propriate format
         $('.comment-content-wrapper[value="' + data.stream_comment_json.id + '"] .comment-date').html(commentDate + '-' + commentTime)

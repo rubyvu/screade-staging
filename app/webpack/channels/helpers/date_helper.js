@@ -10,8 +10,8 @@ export function chat_date(date){
   }
 }
 
-export function chat_time(date) {
-  let currentDate = parseDate(date)
+export function chat_time(timestamp) {
+  let currentDate = new Date(timestamp*1000)
   
   if (!isTwelveHoursFormat()) {
     // dd.mm.yyyy

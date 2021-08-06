@@ -53,7 +53,7 @@ $(document).on('ajax:success', 'a[id^=chat-element-]', function() {
         }
         
         // Set ChatMessage time to desired format
-        let messageCreatedAt = chat_time(data.chat_message_json.created_at)
+        let messageCreatedAt = chat_time(data.chat_message_json.unix_created_at)
         $(`#chat-message-placeholder [data-message-id=${messageId}] .date`).html(messageCreatedAt)
         
         // Set Messages time separator
