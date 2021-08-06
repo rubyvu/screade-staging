@@ -96,9 +96,6 @@ GEM
     aws-sdk-medialive (1.62.0)
       aws-sdk-core (~> 3, >= 3.109.0)
       aws-sigv4 (~> 1.1)
-    aws-sdk-mediapackage (1.36.0)
-      aws-sdk-core (~> 3, >= 3.109.0)
-      aws-sigv4 (~> 1.1)
     aws-sdk-mediastore (1.30.0)
       aws-sdk-core (~> 3, >= 3.109.0)
       aws-sigv4 (~> 1.1)
@@ -443,7 +440,6 @@ DEPENDENCIES
   activeadmin
   airbrake
   aws-sdk-medialive
-  aws-sdk-mediapackage
   aws-sdk-mediastore
   aws-sdk-s3
   bcrypt (~> 3.1.16)
