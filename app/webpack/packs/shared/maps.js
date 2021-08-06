@@ -110,9 +110,14 @@ $( document ).on('turbolinks:load', function() {
         
           div3 = document.createElement('div');
           div3.className = "triangle";
+          
+          div4 = document.createElement('div');
+          div4.className = "map-username";
+          div4.innerHTML = '<span>' + this.username + '</span>'
         
           div.appendChild(div3)
           div.appendChild(div2)
+          div.appendChild(div4)
         
           var panes = this.getPanes();
           panes.overlayImage.appendChild(div);
