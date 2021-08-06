@@ -41,6 +41,7 @@ module Tasks
       usernames_list = chat_connections.map { |connection| connection.remove("chat_#{chat_message.chat.access_token}_").remove('_channel') }
       
       ChatMembership.joins(:user).where(chat: chat_message.chat, is_mute: false).where.not(user: { username: usernames_list}).each do |chat_membership|
+        next if chat_membership.user == chat_message.user
         # Check if User already get Notification from this Chat and it's unviewed
         next if ChatMessage.joins(:notifications).where(notifications: { source_type: 'ChatMessage', is_viewed: false, recipient: chat_membership.user }, chat_messages: { chat: chat_message.chat}).present?
         
