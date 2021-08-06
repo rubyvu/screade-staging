@@ -1222,7 +1222,14 @@ CREATE TABLE public.streams (
     image character varying,
     image_hex character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    access_token character varying NOT NULL,
+    error_message character varying,
+    status character varying DEFAULT 'pending'::character varying NOT NULL,
+    rtmp_url character varying,
+    stream_url character varying,
+    video character varying,
+    video_hex character varying
 );
 
 
@@ -2342,6 +2349,13 @@ CREATE INDEX index_stream_comments_on_user_id ON public.stream_comments USING bt
 
 
 --
+-- Name: index_streams_on_status; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_streams_on_status ON public.streams USING btree (status);
+
+
+--
 -- Name: index_streams_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2594,6 +2608,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210729132102'),
 ('20210805112619'),
 ('20210805112742'),
-('20210805112813');
+('20210805112813'),
+('20210805134812');
 
 
