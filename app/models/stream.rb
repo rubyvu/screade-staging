@@ -2,6 +2,7 @@ class Stream < ApplicationRecord
   
   # Constants
   STATUS_LIST = %w(pending in-progress completed finished faild)
+  GROUP_TYPES = %w(NewsCategory Topic)
   VIDEO_RESOLUTIONS = %w(mp4)
   
   # Callbacks
@@ -16,9 +17,9 @@ class Stream < ApplicationRecord
   
   # Associations
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
+  belongs_to :group, polymorphic: true, optional: true
   has_and_belongs_to_many :users
   has_and_belongs_to_many :news_categories
-  has_and_belongs_to_many :topics
   
   ## Comments
   has_many :stream_comments, dependent: :destroy

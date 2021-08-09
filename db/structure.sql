@@ -863,16 +863,6 @@ ALTER SEQUENCE public.news_categories_id_seq OWNED BY public.news_categories.id;
 
 
 --
--- Name: news_categories_streams; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.news_categories_streams (
-    stream_id bigint NOT NULL,
-    news_category_id bigint NOT NULL
-);
-
-
---
 -- Name: news_sources; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1229,7 +1219,9 @@ CREATE TABLE public.streams (
     rtmp_url character varying,
     stream_url character varying,
     video character varying,
-    video_hex character varying
+    video_hex character varying,
+    group_id integer,
+    group_type character varying
 );
 
 
@@ -1250,16 +1242,6 @@ CREATE SEQUENCE public.streams_id_seq
 --
 
 ALTER SEQUENCE public.streams_id_seq OWNED BY public.streams.id;
-
-
---
--- Name: streams_topics; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.streams_topics (
-    stream_id bigint NOT NULL,
-    topic_id bigint NOT NULL
-);
 
 
 --
@@ -2293,13 +2275,6 @@ CREATE UNIQUE INDEX index_news_categories_on_title ON public.news_categories USI
 
 
 --
--- Name: index_news_categories_streams_on_stream_id_and_news_category_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_news_categories_streams_on_stream_id_and_news_category_id ON public.news_categories_streams USING btree (stream_id, news_category_id);
-
-
---
 -- Name: index_news_sources_on_country_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2360,13 +2335,6 @@ CREATE INDEX index_streams_on_status ON public.streams USING btree (status);
 --
 
 CREATE INDEX index_streams_on_user_id ON public.streams USING btree (user_id);
-
-
---
--- Name: index_streams_topics_on_stream_id_and_topic_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_streams_topics_on_stream_id_and_topic_id ON public.streams_topics USING btree (stream_id, topic_id);
 
 
 --
@@ -2609,6 +2577,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210805112619'),
 ('20210805112742'),
 ('20210805112813'),
-('20210805134812');
+('20210805134812'),
+('20210809121132'),
+('20210809121315');
 
 
