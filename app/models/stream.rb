@@ -34,11 +34,11 @@ class Stream < ApplicationRecord
   # has_many :notifications, as: :source, dependent: :destroy
   
   # Association validations
-  validates :user, presence: true
+  validates :owner, presence: true
   
   # Fields validations
   validates :title, presence: true
-  validates :status, presence: true, inclusion: { in: ChatVideoRoom::STATUS_LIST }
+  validates :status, presence: true, inclusion: { in: Stream::STATUS_LIST }
   
   def is_lited(user)
     user.present? && self.liting_users.include?(user)
@@ -64,30 +64,55 @@ class Stream < ApplicationRecord
     end
     
     def create_aws_media
-      input_security_group = Tasks::AwsMediaLiveApi.create_input_security_group
+      puts "===== Start AWS requsts"
+      input_security_group = Tasks::AwsMediaLiveApi.get_input_security_group
       if input_security_group.blank?
         set_faild_status('Input security group cannot be created.')
         return
       end
       
+      puts "===== 1 Security group created"
       channel_input_to_attach = Tasks::AwsMediaLiveApi.create_input(self.access_token, input_security_group)
       if input_security_group.blank?
-        set_faild_status('Channal Input cannot be created.')
+        set_faild_status('Channel Input cannot be created.')
         return
       end
       
+      puts "===== 2 Input channel created"
       channel = Tasks::AwsMediaLiveApi.create_channel(self.access_token, channel_input_to_attach)
       if channel.blank?
-        set_faild_status('Channal cannot be created.')
+        set_faild_status('Channel cannot be created.')
         return
       end
       
-      puts "=========="
-      puts channel
+      puts "===== 3 GET channel ID and input ID"
+      channel_id = channel.id
+      channel_input_id = channel['input_attachments'][0]['input_id']
+      if channel_input_id.blank?
+        set_faild_status('Channel ID should be present.')
+        return
+      end
       
+      puts "===== 4 GET RTMP URL"
+      input_rtmp_url = Tasks::AwsMediaLiveApi.get_input_url(channel_input_id.to_s)
+      if input_rtmp_url.blank?
+        set_faild_status('Input attachments should be present.')
+        #TODO: clear AWS Media, inputs, secure groups
+        return
+      end
+      
+      puts "===== 5 Done"
       # Save chanel data
+      aws_channel_params = {
+        channel_id: channel_id,
+        channel_input_id: channel_input_id,
+        rtmp_url: input_rtmp_url,
+        stream_url: "https://#{ENV['AWS_STREAM_CLOUD_FRONT_DOMAIN_NAME']}/#{self.access_token}/index.m3u8"
+      }
+      self.update_columns(aws_channel_params)
+      
       # Start Stream Chanel
-      # Start Job to check Chanel Status(should be started)
+      StartStreamChannelsJob.perform_later(self.id)
     end
     
     def remove_aws_media

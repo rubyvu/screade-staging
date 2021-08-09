@@ -1221,7 +1221,9 @@ CREATE TABLE public.streams (
     video character varying,
     video_hex character varying,
     group_id integer,
-    group_type character varying
+    group_type character varying,
+    channel_id character varying,
+    channel_input_id character varying
 );
 
 
@@ -2579,6 +2581,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210805112813'),
 ('20210805134812'),
 ('20210809121132'),
-('20210809121315');
+('20210809121315'),
+('20210809142007');
 
 

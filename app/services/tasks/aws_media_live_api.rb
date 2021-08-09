@@ -7,6 +7,19 @@ module Tasks
     )
     
     # Security Group methods
+    def self.get_input_security_group()
+      begin
+        response = @aws_client.list_input_security_groups({ max_results: 10 })
+        security_group = response.input_security_groups[0]
+        
+        security_group = create_input_security_group() if security_group.blank?
+      rescue
+        security_group = create_input_security_group()
+      end
+      
+      return security_group
+    end
+    
     def self.delete_input_security_group(input_security_group_id)
       @aws_client.delete_input_security_group({
         input_security_group_id: input_security_group_id
@@ -33,6 +46,19 @@ module Tasks
       
     end
     
+    def self.get_input_url(input_id)
+      return if input_id.blank?
+      
+      begin
+        response = @aws_client.describe_input({
+          input_id: input_id
+        })
+        response.destinations[0].url
+      rescue
+        nil
+      end
+    end
+    
     def self.create_input(stream_access_token, input_security_group)
       return if input_security_group.blank?
       
@@ -54,8 +80,16 @@ module Tasks
     end
     
     # Chanel methods
-    def self.channel_status(stream_access_token)
-      
+    def self.channel_status(channel_id)
+      begin
+        @aws_client.describe_channel({ channel_id: channel_id }).state
+      end
+    end
+    
+    def self.channel_start(channel_id)
+      @aws_client.batch_start({
+        channel_ids: [channel_id]
+      })
     end
     
     def self.create_channel(stream_access_token, input_to_attach)
