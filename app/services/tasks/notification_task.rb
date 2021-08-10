@@ -66,7 +66,7 @@ module Tasks
       
       ChatMembership.joins(:user).where(chat: chat_audio_room.chat).where.not(user: { username: usernames_list}).each do |chat_membership|
         # Check if User already get Notification from this Chat and it's unviewed
-        next if ChatAudioRoom.joins(:notifications).where(notifications: { source_type: 'ChatAudioRoom', is_viewed: false, recipient: chat_membership.user }, chat_audio_rooms: { chat: chat_audio_room.chat }).present?
+        # next if ChatAudioRoom.joins(:notifications).where(notifications: { source_type: 'ChatAudioRoom', is_viewed: false, recipient: chat_membership.user }, chat_audio_rooms: { chat: chat_audio_room.chat }).present?
         
         notificatiom_params = {
           source_id: chat_audio_room.id,
@@ -88,7 +88,7 @@ module Tasks
       
       ChatMembership.joins(:user).where(chat: chat_video_room.chat).where.not(user: { username: usernames_list}).each do |chat_membership|
         # Check if User already get Notification from this Chat and it's unviewed
-        next if ChatVideoRoom.joins(:notifications).where(notifications: { source_type: 'ChatVideoRoom', is_viewed: false, recipient: chat_membership.user }, chat_video_rooms: { chat: chat_video_room.chat }).present?
+        # next if ChatVideoRoom.joins(:notifications).where(notifications: { source_type: 'ChatVideoRoom', is_viewed: false, recipient: chat_membership.user }, chat_video_rooms: { chat: chat_video_room.chat }).present?
         
         notificatiom_params = {
           source_id: chat_video_room.id,
