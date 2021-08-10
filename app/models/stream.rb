@@ -16,6 +16,7 @@ class Stream < ApplicationRecord
   before_validation :generate_access_token, on: :create
   after_commit :create_aws_media, on: :create
   after_commit :remove_aws_media, on: :update
+  before_destroy :check_for_status, prepend: true
   # after_save :add_notification
   
   # File Uploader
@@ -26,7 +27,6 @@ class Stream < ApplicationRecord
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
   belongs_to :group, polymorphic: true, optional: true
   has_and_belongs_to_many :users
-  has_and_belongs_to_many :news_categories
   
   ## Comments
   has_many :stream_comments, dependent: :destroy
@@ -136,5 +136,12 @@ class Stream < ApplicationRecord
     
     def set_failed_status(error_message)
       self.update(status: 'failed', error_message: error_message)
+    end
+    
+    def check_for_status
+      if ['completed', 'finished'].exclude?(self.status)
+        errors.add(:base, "Cannot delete Stream that not finished")
+        throw :abort
+      end
     end
 end
