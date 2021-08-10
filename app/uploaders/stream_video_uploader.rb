@@ -4,6 +4,7 @@ class StreamVideoUploader < CarrierWave::Uploader::Base
   
   # Callbacks
   before :cache, :reset_secure_token
+  after :store, :finish_stream
   
   def initialize(*)
     super
@@ -29,5 +30,10 @@ class StreamVideoUploader < CarrierWave::Uploader::Base
     
     def reset_secure_token(video)
       model.video_hex = nil
+    end
+    
+    def finish_stream(file)
+      return if model.status != 'completed'
+      model.update(status: 'finished')
     end
 end

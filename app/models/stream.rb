@@ -1,7 +1,14 @@
 class Stream < ApplicationRecord
   
+  # Statuses
+  # pending     - New Stream was created and waiting for running in AWS Media Live
+  # in-progress - Stream is running in AWS Medialive and waiting video from client
+  # completed   - Client is successfully end video streaming, wait for Video file to save, stop and clear AWS dependencies
+  # finished    - Client is successfully saved stream Video, now it can be show in Stream list (status updated in StreamVideoUploader callback)
+  # failed       - Error occurred while AWS services deploying, stream will be stopped, error will be added to object.error_message field, all AWS dependencies will be cleared
+  
   # Constants
-  STATUS_LIST = %w(pending in-progress completed finished faild)
+  STATUS_LIST = %w(pending in-progress completed finished failed)
   GROUP_TYPES = %w(NewsCategory Topic)
   VIDEO_RESOLUTIONS = %w(mp4)
   
@@ -67,21 +74,22 @@ class Stream < ApplicationRecord
       puts "===== Start AWS requsts"
       input_security_group = Tasks::AwsMediaLiveApi.get_input_security_group
       if input_security_group.blank?
-        set_faild_status('Input security group cannot be created.')
+        set_failed_status('Input security group cannot be created.')
         return
       end
       
       puts "===== 1 Security group created"
       channel_input_to_attach = Tasks::AwsMediaLiveApi.create_input(self.access_token, input_security_group)
+      puts "ISG: #{input_security_group}"
       if input_security_group.blank?
-        set_faild_status('Channel Input cannot be created.')
+        set_failed_status('Channel Input cannot be created.')
         return
       end
       
       puts "===== 2 Input channel created"
       channel = Tasks::AwsMediaLiveApi.create_channel(self.access_token, channel_input_to_attach)
       if channel.blank?
-        set_faild_status('Channel cannot be created.')
+        set_failed_status('Channel cannot be created.')
         return
       end
       
@@ -89,15 +97,14 @@ class Stream < ApplicationRecord
       channel_id = channel.id
       channel_input_id = channel['input_attachments'][0]['input_id']
       if channel_input_id.blank?
-        set_faild_status('Channel ID should be present.')
+        set_failed_status('Channel ID should be present.')
         return
       end
       
       puts "===== 4 GET RTMP URL"
       input_rtmp_url = Tasks::AwsMediaLiveApi.get_input_url(channel_input_id.to_s)
       if input_rtmp_url.blank?
-        set_faild_status('Input attachments should be present.')
-        #TODO: clear AWS Media, inputs, secure groups
+        set_failed_status('Input attachments should be present.')
         return
       end
       
@@ -106,6 +113,7 @@ class Stream < ApplicationRecord
       aws_channel_params = {
         channel_id: channel_id,
         channel_input_id: channel_input_id,
+        channel_security_group_id: input_security_group[:id],
         rtmp_url: input_rtmp_url,
         stream_url: "https://#{ENV['AWS_STREAM_CLOUD_FRONT_DOMAIN_NAME']}/#{self.access_token}/index.m3u8"
       }
@@ -116,11 +124,17 @@ class Stream < ApplicationRecord
     end
     
     def remove_aws_media
-      return if ['faild', 'finished'].exclude?(self.status)
-      # Delete input group, attached group, chanel media store items from AWS services
+      return if ['completed', 'failed'].exclude?(self.status) && self.channel_id.present?
+      # Delete attached input and Channel from AWS services
+      
+      # Run Channel stopping proccess
+      Tasks::AwsMediaLiveApi.channel_stop(self.channel_id)
+      
+      # Delete Stream Chanel for AWS service
+      DeleteStreamChannelsJob.perform_later(self.id)
     end
     
-    def set_faild_status(error_message)
-      self.update(status: 'faild', error_message: error_message)
+    def set_failed_status(error_message)
+      self.update(status: 'failed', error_message: error_message)
     end
 end

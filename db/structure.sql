@@ -1223,7 +1223,8 @@ CREATE TABLE public.streams (
     group_id integer,
     group_type character varying,
     channel_id character varying,
-    channel_input_id character varying
+    channel_input_id character varying,
+    channel_security_group_id character varying
 );
 
 
@@ -2582,6 +2583,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210805134812'),
 ('20210809121132'),
 ('20210809121315'),
-('20210809142007');
+('20210809142007'),
+('20210810081300');
 
 

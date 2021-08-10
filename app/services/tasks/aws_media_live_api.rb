@@ -42,8 +42,8 @@ module Tasks
     end
     
     # Input methods
-    def self.delete_input(stream_access_token)
-      
+    def self.delete_input(input_id)
+      @aws_client.delete_input({ input_id: input_id })
     end
     
     def self.get_input_url(input_id)
@@ -88,6 +88,12 @@ module Tasks
     
     def self.channel_start(channel_id)
       @aws_client.batch_start({
+        channel_ids: [channel_id]
+      })
+    end
+    
+    def self.channel_stop(channel_id)
+      @aws_client.batch_stop({
         channel_ids: [channel_id]
       })
     end
@@ -561,5 +567,10 @@ module Tasks
       end
     end
     
+    def self.delete_channel(channel_id)
+      @aws_client.delete_channel({
+        channel_id: channel_id
+      })
+    end
   end
 end

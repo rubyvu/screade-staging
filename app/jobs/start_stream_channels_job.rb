@@ -20,7 +20,7 @@ class StartStreamChannelsJob < ApplicationJob
     when 'RUNNING'
       return
     else
-      stream.update(status: 'failed', error_message: 'Starting request faild.')
+      stream.update(status: 'failed', error_message: 'Starting request failed.')
     end
   end
 end
