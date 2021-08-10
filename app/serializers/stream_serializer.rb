@@ -1,4 +1,4 @@
-class StreamCommentSerializer < ActiveModel::Serializer
+class StreamSerializer < ActiveModel::Serializer
   attribute :access_token
   attribute :channel_id
   attribute :channel_input_id
