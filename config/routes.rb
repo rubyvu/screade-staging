@@ -319,6 +319,19 @@ Rails.application.routes.draw do
         end
       end
       
+      resources :streams, only: [:index, :show, :create, :update, :destroy], param: :access_token do
+        member do
+          put :complete
+        end
+        
+        resources :stream_comments, only: [:index, :create]
+        resources :stream_lits, only: [:create] do
+          collection do
+            delete :destroy
+          end
+        end
+      end
+      
       resources :topics, only: [:index, :show, :create]
       resources :user_assets, only: [:images],  param: :username, username: User::USERNAME_ROUTE_FORMAT do
         collection do
