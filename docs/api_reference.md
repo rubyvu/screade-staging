@@ -118,6 +118,7 @@
 - [Update Stream](api/v1/streams/update.md)
 - [Delete Stream](api/v1/streams/destroy.md)
 - [Complete Stream](api/v1/streams/complete.md)
+- [Update in-progress status date in Stream](api/v1/streams/in_progress.md)
 - [Lit Stream](api/v1/stream_lits/create.md)
 - [Unlit Stream](api/v1/stream_lits/destroy.md)
 - [Stream Comments List](api/v1/stream_comments/index.md)

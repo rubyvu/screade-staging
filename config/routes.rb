@@ -322,6 +322,7 @@ Rails.application.routes.draw do
       resources :streams, only: [:index, :show, :create, :update, :destroy], param: :access_token do
         member do
           put :complete
+          put :in_progress
         end
         
         resources :stream_comments, only: [:index, :create]

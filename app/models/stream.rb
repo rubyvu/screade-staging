@@ -14,6 +14,7 @@ class Stream < ApplicationRecord
   
   # Callbacks
   before_validation :generate_access_token, on: :create
+  after_update :start_in_progress_tracker, if: -> { self.status == 'in-progress'}
   after_commit :create_aws_media, on: :create
   after_commit :remove_aws_media, on: :update
   before_destroy :check_for_status, prepend: true
@@ -132,6 +133,10 @@ class Stream < ApplicationRecord
       
       # Delete Stream Chanel for AWS service
       DeleteStreamChannelsJob.perform_later(self.id)
+    end
+    
+    def start_in_progress_tracker
+      StartInProgressTrackerJob.perform_later(self.id)
     end
     
     def set_failed_status(error_message)

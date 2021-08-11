@@ -1,5 +1,5 @@
 class Api::V1::StreamsController < Api::V1::ApiController
-  before_action :get_stream, only: [:show, :update, :complete, :destroy]
+  before_action :get_stream, only: [:show, :update, :complete, :destroy, :in_progress_at]
   
   # GET /api/v1/streams
   def index
@@ -78,6 +78,16 @@ class Api::V1::StreamsController < Api::V1::ApiController
   def destroy
     @stream.destroy
     render json: { success: true }, status: :ok
+  end
+  
+  # PUT /api/v1/streams/:access_token/in_progress
+  def in_progress
+    if @stream.status == 'in_progress'
+      @stream.update_columns(in_progress_at: DateTime.current)
+      render json: { success: true }, status: :ok
+    else
+      render json: { success: false }, status: :unprocessable_entity
+    end
   end
   
   private

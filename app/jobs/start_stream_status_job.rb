@@ -7,7 +7,7 @@ class StartStreamStatusJob < ApplicationJob
     stream_start_status = Tasks::AwsMediaLiveApi.channel_status(stream.channel_id)
     case stream_start_status
     when 'RUNNING'
-      stream.update(status: 'in-progress')
+      stream.update(status: 'in-progress', in_progress_at: DateTime.current)
     when 'STARTING'
       StartStreamStatusJob.set(wait: 10.seconds).perform_later(stream_id)
     else
