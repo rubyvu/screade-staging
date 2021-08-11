@@ -53,21 +53,25 @@ class Api::V1::StreamsController < Api::V1::ApiController
     end
   end
   
-  # PUT/PATCH /api/v1/streams/:access_token/complete
-  def complete
-    if stream.save(status: 'complete')
-      stream_json = StreamSerializer.new(stream).as_json
+  # PUT/PATCH /api/v1/streams/:access_token
+  def update
+    @stream.status == 'finished' if stream_update_params[:video].present? && @stream.status == 'completed'
+    if @stream.update(stream_update_params)
+      stream_json = StreamSerializer.new(@stream).as_json
       render json: { stream: stream_json }, status: :ok
     else
-      render json: { errors: stream.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @stream.errors.full_messages }, status: :unprocessable_entity
     end
   end
   
-  # PUT/PATCH /api/v1/streams/:access_token
-  def update
-    
-  end
-  
+  # PUT/PATCH /api/v1/streams/:access_token/complete
+  def complete
+    if @stream.save(status: 'complete')
+      stream_json = StreamSerializer.new(@stream).as_json
+      render json: { stream: stream_json }, status: :ok
+    else
+      render json: { errors: @stream.errors.full_messages }, status: :unprocessable_entity
+    end
   end
   
   # DELETE /api/v1/streams/:access_token
@@ -83,5 +87,9 @@ class Api::V1::StreamsController < Api::V1::ApiController
     
     def stream_params
       params.require(:stream).permit(:group_id, :group_type, :is_private, :image, :title, :video, usernames: [])
+    end
+    
+    def stream_update_params
+      params.require(:stream).permit(:image, :title, :video)
     end
 end
