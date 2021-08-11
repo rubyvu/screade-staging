@@ -4,7 +4,7 @@ class Api::V1::StreamCommentsController < Api::V1::ApiController
   # GET /api/v1/stream/:stream_access_token/stream_comments
   def index
     comments_json = ActiveModel::Serializer::CollectionSerializer.new(@stream.comments.order(created_at: :desc).page(params[:page]).per(30), serializer: StreamCommentSerializer, current_user: current_user).as_json
-    render json: { comments: comments_json }, status: :ok
+    render json: { stream_comments: comments_json }, status: :ok
   end
   
   # POST /api/v1/stream/:stream_access_token/stream_comments
@@ -14,7 +14,7 @@ class Api::V1::StreamCommentsController < Api::V1::ApiController
     comment.user = current_user
     if comment.save
       comment_json = StreamCommentSerializer.new(comment, current_user: current_user).as_json
-      render json: { comment: comment_json }, status: :ok
+      render json: { stream_comment: comment_json }, status: :ok
     else
       render json: { errors: comment.errors.full_messages }, status: :unprocessable_entity
     end

@@ -86,7 +86,7 @@ class Api::V1::StreamsController < Api::V1::ApiController
     end
     
     def stream_params
-      params.require(:stream).permit(:group_id, :group_type, :is_private, :image, :title, :video, usernames: [])
+      params.require(:stream).permit(:group_id, :group_type, :is_private, :title, usernames: [])
     end
     
     def stream_update_params
