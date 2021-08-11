@@ -1,5 +1,4 @@
 class StreamVideoUploader < CarrierWave::Uploader::Base
-  include CarrierWaveDirect::Uploader
   include CarrierWave::Video  # for your video processing
   
   # Callbacks
@@ -19,16 +18,12 @@ class StreamVideoUploader < CarrierWave::Uploader::Base
     Stream::VIDEO_RESOLUTIONS
   end
   
-  def default_url
-    ActionController::Base.helpers.asset_pack_path('media/images/placeholders/placeholder-main.png')
-  end
-  
   protected
     def secure_token(length)
       model.video_hex ||= SecureRandom.hex(length)
     end
     
-    def reset_secure_token(video)
+    def reset_secure_token(file)
       model.video_hex = nil
     end
     

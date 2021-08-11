@@ -111,6 +111,18 @@
 - [Post Comments List](api/v1/post_comments/index.md)
 - [Create Post Comments](api/v1/post_comments/create.md)
 
+### Stream
+- [View all Streams](api/v1/streams/index.md)
+- [View Stream](api/v1/streams/show.md)
+- [Create new Stream](api/v1/streams/create.md)
+- [Update Stream](api/v1/streams/update.md)
+- [Delete Stream](api/v1/streams/destroy.md)
+- [Complete Stream](api/v1/streams/complete.md)
+- [Lit Stream](api/v1/stream_lits/create.md)
+- [Unlit Stream](api/v1/stream_lits/destroy.md)
+- [Stream Comments List](api/v1/stream_comments/index.md)
+- [Create Stream Comment](api/v1/stream_comments/create.md)
+
 ### Topic
 - [Create new Topic](api/v1/topics/create.md)
 - [Show Topic](api/v1/topics/show.md)
