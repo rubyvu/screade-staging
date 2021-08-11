@@ -42,8 +42,15 @@ module Tasks
     end
     
     # Input methods
-    def self.delete_input(input_id)
-      @aws_client.delete_input({ input_id: input_id })
+    def self.delete_input(input_id, try_counter=1)
+      return if try_counter >= 5
+      sleep 5.seconds
+      
+      begin
+        @aws_client.delete_input({ input_id: input_id })
+      rescue
+        delete_input(input_id, try_counter+1)
+      end
     end
     
     def self.get_input_url(input_id)
