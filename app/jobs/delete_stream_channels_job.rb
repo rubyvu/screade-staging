@@ -4,9 +4,10 @@ class DeleteStreamChannelsJob < ApplicationJob
     stream = Stream.find_by(id: stream_id)
     return if stream.blank? || stream.channel_id.blank?
     
-    channel_status = ''
     begin
       channel_status = Tasks::AwsMediaLiveApi.channel_status(stream.channel_id)
+    rescue
+      channel_status = ''
     end
     
     case channel_status

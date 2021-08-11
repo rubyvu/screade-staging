@@ -47,6 +47,7 @@ class Stream < ApplicationRecord
   # Fields validations
   validates :title, presence: true
   validates :status, presence: true, inclusion: { in: Stream::STATUS_LIST }
+  validates :group, presence: true, if: -> { !self.is_private }
   
   def is_lited(user)
     user.present? && self.liting_users.include?(user)
