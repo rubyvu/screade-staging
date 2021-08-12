@@ -1,7 +1,7 @@
 class Api::V1::StreamLitsController < Api::V1::ApiController
   before_action :get_stream, only: [:create, :destroy]
   
-  # POST /api/v1/sterams/:stream_access_token/stream_lits
+  # POST /api/v1/streams/:stream_access_token/stream_lits
   def create
     lit = Lit.new(source: @stream, user: current_user)
     if lit.save
@@ -12,7 +12,7 @@ class Api::V1::StreamLitsController < Api::V1::ApiController
     end
   end
   
-  # DELETE /api/v1/sterams/:stream_access_token/stream_lits
+  # DELETE /api/v1/streams/:stream_access_token/stream_lits
   def destroy
     lit = Lit.find_by!(source: @stream, user: current_user)
     lit.destroy

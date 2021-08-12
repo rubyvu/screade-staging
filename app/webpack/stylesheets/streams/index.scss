@@ -1,5 +1,15 @@
 .streams-wrapper {
   margin: 24px 0px;
+  
+  .stream-switcher-title {
+    display: inline-block;
+    cursor: pointer;
+    margin-bottom: 24px;
+    
+    &.active {
+      color: $color-blue;
+    }
+  }
 }
 
 .streams-cards-wrapper.profile .streams-card:nth-child(4n) { margin-right: 16px; }

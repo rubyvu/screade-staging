@@ -4,7 +4,7 @@ class StreamComment < ApplicationRecord
   after_commit :broadcast_new_comment, on: :create
   
   # Associations
-  belongs_to :stream
+  belongs_to :stream, counter_cache: :stream_comments_count
   belongs_to :user
   
   # Associations validations

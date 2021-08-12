@@ -9,7 +9,7 @@
 DELETE
 
 ### API endpoint
-`/api/v1/sterams/:stream_access_token/stream_lits`
+`/api/v1/streams/:stream_access_token/stream_lits`
 
 ### Request body
 ```

@@ -14,7 +14,7 @@ class StreamCommentSerializer < ActiveModel::Serializer
   attribute :message
   attribute :stream_access_token
   def stream_access_token
-    object.chat.access_token
+    object.stream.access_token
   end
   
   attribute :unix_created_at

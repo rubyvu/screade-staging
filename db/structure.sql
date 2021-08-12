@@ -1225,7 +1225,10 @@ CREATE TABLE public.streams (
     channel_id character varying,
     channel_input_id character varying,
     channel_security_group_id character varying,
-    in_progress_at timestamp without time zone
+    in_progress_at timestamp without time zone,
+    stream_comments_count integer DEFAULT 0 NOT NULL,
+    views_count integer DEFAULT 0 NOT NULL,
+    lits_count integer DEFAULT 0 NOT NULL
 );
 
 
@@ -2586,6 +2589,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210809121315'),
 ('20210809142007'),
 ('20210810081300'),
-('20210811112849');
+('20210811112849'),
+('20210812103022');
 
 

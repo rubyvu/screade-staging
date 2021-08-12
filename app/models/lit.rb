@@ -1,6 +1,6 @@
 class Lit < ApplicationRecord
   
-  SOURCE_TYPES = %w(NewsArticle Comment Post)
+  SOURCE_TYPES = %w(NewsArticle Comment Post Stream)
   
   # Associations
   belongs_to :source, polymorphic: true, counter_cache: :lits_count

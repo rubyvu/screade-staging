@@ -1,8 +1,16 @@
-<video width="352" height="198" controls>
-  <source src="https://d3i4cb8byzw70h.cloudfront.net/stream/index.m3u8" type="application/x-mpegURL">
-</video>
-
-//.streams-wrapper.my-4
+.streams-wrapper.my-4
+  
+  h4.stream-switcher-title#all-streams-switcher class="#{'active' unless @is_private_stream}" All Streams
+  label.switch.news
+    - if @is_private_stream
+      input#stream-switcher type="checkbox" checked="checked"
+    - else
+      input#stream-switcher type="checkbox"
+      
+    span.slider.round
+        
+  h4.stream-switcher-title#my-streams-switcher class="#{'active' if @is_private_stream}" My Streams
+  
   .streams-cards-wrapper
     - @streams.each do |stream|
       .streams-card value="#{stream.id}"
@@ -10,11 +18,8 @@
         - if stream.owner == current_user
           .stream-header-panel
             .state
-            
+              = image_pack_tag('media/images/icons/ic_live_streaming.png') if stream.status == 'in-progress'
             .actions
-              = link_to '' do
-                = image_pack_tag('media/images/icons/ic_edit.png')
-              
               = link_to '', method: :delete, data: { confirm: 'Do you really want to delete this Stream?' } do
                 = image_pack_tag('media/images/icons/ic_delete_object.png')
               

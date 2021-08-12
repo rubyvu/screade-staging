@@ -21,7 +21,7 @@ GET
 ```
 HTTP code 200 :ok
 {
-  "steram: Stream                                                               (objects, required)
+  "stream: Stream                                                               (objects, required)
 }
 ```
 

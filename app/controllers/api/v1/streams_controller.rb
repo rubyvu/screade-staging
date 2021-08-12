@@ -5,7 +5,7 @@ class Api::V1::StreamsController < Api::V1::ApiController
   def index
     if params[:is_private]
       # User finished streams
-      streams = Stream.where(user: current_user, status: 'finished', is_private: true).page(params[:page]).per(30)
+      streams = Stream.where(owner: current_user, status: 'finished', is_private: true).page(params[:page]).per(30)
     else
       # All Streams from User subscription
       streams = Stream.joins(:users).where( streams: { is_private: true }, users: { id: current_user.id } )
@@ -28,7 +28,7 @@ class Api::V1::StreamsController < Api::V1::ApiController
   
   # POST /api/v1/streams
   def create
-    stream = Stream.new(user: current_user, title: stream_params[:title], is_private: stream_params[:is_private])
+    stream = Stream.new(owner: current_user, title: stream_params[:title], is_private: stream_params[:is_private])
     
     # Set params for publick/private Streams
     if stream.is_private
@@ -84,7 +84,8 @@ class Api::V1::StreamsController < Api::V1::ApiController
   def in_progress
     if @stream.status == 'in_progress'
       @stream.update_columns(in_progress_at: DateTime.current)
-      render json: { success: true }, status: :ok
+      stream_json = StreamSerializer.new(@stream).as_json
+      render json: { stream: stream_json }, status: :ok
     else
       render json: { success: false }, status: :unprocessable_entity
     end
@@ -92,7 +93,7 @@ class Api::V1::StreamsController < Api::V1::ApiController
   
   private
     def get_stream
-      @stream = Stream.find_by!(access_token: params[:access_token], user: current_user)
+      @stream = Stream.find_by!(access_token: params[:access_token], owner: current_user)
     end
     
     def stream_params
