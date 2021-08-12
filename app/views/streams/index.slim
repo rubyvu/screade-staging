@@ -30,7 +30,7 @@
             = image_pack_tag('media/images/placeholders/placeholder-news.png', class: 'stream-image')
           
           .stream-title-panel
-            = link_to stream.title, stream_path(stream)
+            = link_to stream.title, stream_path(stream.access_token)
           
           .stream-info-panel
             .div class="info-panel-value-wrapper"

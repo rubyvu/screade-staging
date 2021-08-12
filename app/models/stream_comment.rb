@@ -17,6 +17,6 @@ class StreamComment < ApplicationRecord
   private
   def broadcast_new_comment
     render_stream_comment_template = ApplicationController.renderer.render(partial: 'stream_comments/show', locals: { comment: self })
-    ActionCable.server.broadcast "new_stream_#{self.stream.id}_comment_channel", stream_comment_json: StreamCommentSerializer.new(self, current_user: self.user).as_json, stream_comment_html: render_stream_comment_template
+    ActionCable.server.broadcast "new_stream_#{self.stream.access_token}_comment_channel", stream_comment_json: StreamCommentSerializer.new(self, current_user: self.user).as_json, stream_comment_html: render_stream_comment_template
   end
 end

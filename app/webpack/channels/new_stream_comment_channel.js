@@ -6,10 +6,10 @@ $( document ).on('turbolinks:load', function() {
   if (!window.location.pathname.match(pageRegexp)) { return }
 
   if (!App.newStreamCommentChannel || App.newStreamCommentChannel.consumer.connection.disconnected) {
-    let streamId = window.location.pathname.split('/')[2]
+    let streamAccessToken = window.location.pathname.split('/')[2]
     App.newStreamCommentChannel = consumer.subscriptions.create({
       channel: "NewStreamCommentChannel",
-      stream_id: streamId
+      stream_access_token: streamAccessToken
       }, {
       connected() {
         // Called when the subscription is ready for use on the server

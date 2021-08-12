@@ -16,9 +16,9 @@ class StreamsController < ApplicationController
     end
   end
   
-  # GET /streams/:id
+  # GET /streams/:access_token
   def show
-    @stream = Stream.find_by(id: params[:id])
+    @stream = Stream.find_by(access_token: params[:access_token])
     View.find_or_create_by!(source: @stream, user: current_user)
     
     @new_comment = StreamComment.new(stream: @stream, user: current_user)
