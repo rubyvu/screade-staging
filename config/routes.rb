@@ -149,6 +149,12 @@ Rails.application.routes.draw do
   resources :settings, only: [:edit, :update]
   resources :streams, only: [:index, :show], param: :access_token do
     resources :stream_comments, only: [:create]
+    
+    resources :stream_lits, only: [:create] do
+      collection do
+        delete :destroy
+      end
+    end
   end
   resources :squad_requests, only: [:index, :create] do
     member do

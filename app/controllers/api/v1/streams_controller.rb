@@ -1,5 +1,5 @@
 class Api::V1::StreamsController < Api::V1::ApiController
-  before_action :get_stream, only: [:show, :update, :complete, :destroy, :in_progress_at]
+  before_action :get_stream, only: [:show, :update, :complete, :destroy, :in_progress]
   
   # GET /api/v1/streams
   def index
@@ -82,7 +82,7 @@ class Api::V1::StreamsController < Api::V1::ApiController
   
   # PUT /api/v1/streams/:access_token/in_progress
   def in_progress
-    if @stream.status == 'in_progress'
+    if @stream.status == 'in-progress'
       @stream.update_columns(in_progress_at: DateTime.current)
       stream_json = StreamSerializer.new(@stream).as_json
       render json: { stream: stream_json }, status: :ok

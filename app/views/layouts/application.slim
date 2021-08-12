@@ -41,7 +41,7 @@ html
             li.nav-item
               = link_to 'Videos', videos_user_video_path(current_user.username), class: 'nav-link'
             li.nav-item
-              //= link_to 'Streams', streams_path, class: 'nav-link'
+              = link_to 'Streams', streams_path, class: 'nav-link'
               
           - else
             li.nav-item
@@ -56,6 +56,8 @@ html
               = link_to 'Map', '#', class: 'nav-link', data: { toggle: "modal", target: "#modal-sign-in-or-sign-up" }
             li.nav-item
               = link_to 'Video', '#', class: 'nav-link', data: { toggle: "modal", target: "#modal-sign-in-or-sign-up" }
+            li.nav-item
+              = link_to 'Streams', '#', class: 'nav-link', data: { toggle: "modal", target: "#modal-sign-in-or-sign-up" }
             
         - if current_user
           .navbar-control-panel
