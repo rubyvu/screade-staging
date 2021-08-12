@@ -28,6 +28,11 @@ class Api::V1::StreamsController < Api::V1::ApiController
   
   # POST /api/v1/streams
   def create
+    if Stream.exists?(owner: current_user, status: ['pending', 'in-progress'])
+      render json: { errors: 'You can create only one stream at a time.' }, status: :unprocessable_entity
+      return
+    end
+    
     stream = Stream.new(owner: current_user, title: stream_params[:title], is_private: stream_params[:is_private])
     
     # Set params for publick/private Streams
@@ -66,7 +71,7 @@ class Api::V1::StreamsController < Api::V1::ApiController
   
   # PUT/PATCH /api/v1/streams/:access_token/complete
   def complete
-    if @stream.save(status: 'complete')
+    if @stream.update(status: 'completed')
       stream_json = StreamSerializer.new(@stream).as_json
       render json: { stream: stream_json }, status: :ok
     else

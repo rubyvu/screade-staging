@@ -3,7 +3,7 @@ class Api::V1::StreamCommentsController < Api::V1::ApiController
   
   # GET /api/v1/stream/:stream_access_token/stream_comments
   def index
-    comments_json = ActiveModel::Serializer::CollectionSerializer.new(@stream.comments.order(created_at: :desc).page(params[:page]).per(30), serializer: StreamCommentSerializer, current_user: current_user).as_json
+    comments_json = ActiveModel::Serializer::CollectionSerializer.new(@stream.stream_comments.order(created_at: :desc).page(params[:page]).per(30), serializer: StreamCommentSerializer, current_user: current_user).as_json
     render json: { stream_comments: comments_json }, status: :ok
   end
   
@@ -22,7 +22,7 @@ class Api::V1::StreamCommentsController < Api::V1::ApiController
   
   private
     def get_stream
-      @stream = Stream.find(params[:stream_access_token])
+      @stream = Stream.find_by(access_token: params[:stream_access_token])
     end
     
     def stream_comment_params

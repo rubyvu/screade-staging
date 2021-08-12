@@ -13,10 +13,10 @@
   
   - if stream.status == 'in-progress'
     <video width="100%" height="300px" controls>
-      <source src="https://d3i4cb8byzw70h.cloudfront.net/stream/index.m3u8" type="application/x-mpegURL">
+      <source src="#{stream.stream_url}" type="application/x-mpegURL">
     </video>
     
-  - if stream.video.present?
+  - if stream.video.url.present?
     <video width="100%" height="300px" controls>
       <source src="#{stream.video.url}">
     </video>
@@ -26,26 +26,7 @@
   - else
     = image_pack_tag('media/images/placeholders/placeholder-news.png', class: 'url-full-image')
     
-  .stream-info-panel
-    .info-actions
-      .div class="info-panel-value-wrapper"
-        - if stream.is_lited(current_user)
-        
-          = link_to stream_stream_lits_path(stream_access_token: stream.access_token), method: :delete, remote: true, id: "stream-lit-#{stream.id}" do
-            i.ic.lit.reverse.active
-        - else
-          = link_to stream_stream_lits_path(stream_access_token: stream.access_token), method: :post, remote: true, id: "stream-lit-#{stream.id}" do
-            i.ic.lit.reverse
-            
-        span.info-panel-value.color-black #{counter_measurement(stream.lits.size)}
-        
-      .info-panel-value-wrapper.pointer-disable
-        i class=(stream.is_commented(current_user) ? "ic comment reverse active" : "ic comment reverse")
-        span.info-panel-value.color-black #{counter_measurement(stream.stream_comments.size)}
-        
-      .info-panel-value-wrapper.pointer-disable
-        i class=(stream.is_viewed(current_user) ? "ic view reverse" : "ic view reverse")
-        span.info-panel-value.color-black #{counter_measurement(stream.views.size)}
+  = render 'streams/info_panel', stream: stream
         
   .stream-text
     .stream-title

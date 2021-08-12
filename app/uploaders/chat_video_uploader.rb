@@ -5,6 +5,9 @@ class ChatVideoUploader < CarrierWave::Uploader::Base
   # Callbacks
   before :cache, :reset_secure_token
   
+  # Storage
+  storage :fog
+  
   def initialize(*)
     super
     self.allowed_content_types = %w(video/mp4)
