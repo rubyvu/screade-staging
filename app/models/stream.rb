@@ -15,7 +15,7 @@ class Stream < ApplicationRecord
   # Callbacks
   before_validation :generate_access_token, on: :create
   after_update :start_in_progress_tracker
-  after_commit :add_notification, on: :create
+  after_commit :add_notification
   after_commit :create_aws_media, on: :create
   after_commit :remove_aws_media, on: :update
   before_destroy :check_for_status, prepend: true

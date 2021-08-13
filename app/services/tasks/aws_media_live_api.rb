@@ -206,6 +206,24 @@ module Tasks
                 audio_selector_name: "default", # required
                 language_code_control: "FOLLOW_INPUT", # accepts FOLLOW_INPUT, USE_CONFIGURED
                 name: "audio_i3rm19"
+              },
+              {
+                codec_settings: {
+                  aac_settings: {
+                    bitrate: 96000,
+                    coding_mode: "CODING_MODE_2_0", # accepts AD_RECEIVER_MIX, CODING_MODE_1_0, CODING_MODE_1_1, CODING_MODE_2_0, CODING_MODE_5_1
+                    input_type: "NORMAL", # accepts BROADCASTER_MIXED_AD, NORMAL
+                    profile: "LC", # accepts HEV1, HEV2, LC
+                    rate_control_mode: "CBR", # accepts CBR, VBR
+                    raw_format: "NONE", # accepts LATM_LOAS, NONE
+                    sample_rate: 48000,
+                    spec: "MPEG4", # accepts MPEG2, MPEG4
+                  }
+                },
+                audio_type_control: "FOLLOW_INPUT", # accepts FOLLOW_INPUT, USE_CONFIGURED
+                audio_selector_name: "default", # required
+                language_code_control: "FOLLOW_INPUT", # accepts FOLLOW_INPUT, USE_CONFIGURED
+                name: "audio_ze3rtr"
               }
             ],
             avail_configuration: {
@@ -377,6 +395,37 @@ module Tasks
                     output_name: "_960x540",
                     video_description_name: "_960x540",
                     audio_description_names: ["audio_i3rm19"],
+                    caption_description_names: []
+                  },
+                  {
+                    output_settings: {
+                      hls_output_settings: {
+                        name_modifier: "_1280x720",
+                        segment_modifier: "_$t$_",
+                        hls_settings: {
+                          standard_hls_settings: {
+                            m3u_8_settings: {
+                              audio_frames_per_pes: 4,
+                              audio_pids: "492-498",
+                              nielsen_id_3_behavior: "NO_PASSTHROUGH", # accepts NO_PASSTHROUGH, PASSTHROUGH
+                              pcr_control: "PCR_EVERY_PES_PACKET", # accepts CONFIGURED_PCR_PERIOD, PCR_EVERY_PES_PACKET
+                              pmt_pid: "480",
+                              program_num: 1,
+                              scte_35_behavior: "PASSTHROUGH", # accepts NO_PASSTHROUGH, PASSTHROUGH
+                              scte_35_pid: "500",
+                              timed_metadata_behavior: "NO_PASSTHROUGH", # accepts NO_PASSTHROUGH, PASSTHROUGH
+                              timed_metadata_pid: "502",
+                              video_pid: "481",
+                            },
+                            audio_rendition_sets: "program_audio"
+                          }
+                        },
+                        h265_packaging_type: "HVC1"
+                      }
+                    },
+                    output_name: "_1280x720",
+                    video_description_name: "_1280x720",
+                    audio_description_names: ["audio_ze3rtr"],
                     caption_description_names: []
                   }
                 ]
@@ -558,12 +607,55 @@ module Tasks
                 scaling_behavior: "DEFAULT",
                 width: 960
               },
+              {
+                codec_settings: {
+                  h264_settings: {
+                    adaptive_quantization: "HIGH", # accepts AUTO, HIGH, HIGHER, LOW, MAX, MEDIUM, OFF
+                    afd_signaling: "NONE", # accepts AUTO, FIXED, NONE
+                    bitrate: 2700000,
+                    buf_fill_pct: 90,
+                    buf_size: 5400000,
+                    color_metadata: "INSERT", # accepts IGNORE, INSERT
+                    entropy_encoding: "CAVLC", # accepts CABAC, CAVLC
+                    flicker_aq: "ENABLED", # accepts DISABLED, ENABLED
+                    framerate_control: "SPECIFIED", # accepts INITIALIZE_FROM_SOURCE, SPECIFIED
+                    framerate_denominator: 1,
+                    framerate_numerator: 30,
+                    gop_b_reference: "ENABLED", # accepts DISABLED, ENABLED
+                    gop_closed_cadence: 1,
+                    gop_num_b_frames: 0,
+                    gop_size: 2,
+                    gop_size_units: "SECONDS", # accepts FRAMES, SECONDS
+                    level: "H264_LEVEL_AUTO", # accepts H264_LEVEL_1, H264_LEVEL_1_1, H264_LEVEL_1_2, H264_LEVEL_1_3, H264_LEVEL_2, H264_LEVEL_2_1, H264_LEVEL_2_2, H264_LEVEL_3, H264_LEVEL_3_1, H264_LEVEL_3_2, H264_LEVEL_4, H264_LEVEL_4_1, H264_LEVEL_4_2, H264_LEVEL_5, H264_LEVEL_5_1, H264_LEVEL_5_2, H264_LEVEL_AUTO
+                    look_ahead_rate_control: "HIGH", # accepts HIGH, LOW, MEDIUM
+                    max_bitrate: 2700000,
+                    num_ref_frames: 5,
+                    par_control: "INITIALIZE_FROM_SOURCE", # accepts INITIALIZE_FROM_SOURCE, SPECIFIED
+                    profile: "BASELINE", # accepts BASELINE, HIGH, HIGH_10BIT, HIGH_422, HIGH_422_10BIT, MAIN
+                    qvbr_quality_level: 8,
+                    rate_control_mode: "QVBR", # accepts CBR, MULTIPLEX, QVBR, VBR
+                    scan_type: "PROGRESSIVE", # accepts INTERLACED, PROGRESSIVE
+                    scene_change_detect: "ENABLED", # accepts DISABLED, ENABLED
+                    spatial_aq: "ENABLED", # accepts DISABLED, ENABLED
+                    subgop_length: "DYNAMIC", # accepts DYNAMIC, FIXED
+                    syntax: "DEFAULT", # accepts DEFAULT, RP2027
+                    temporal_aq: "ENABLED", # accepts DISABLED, ENABLED
+                    timecode_insertion: "DISABLED", # accepts DISABLED, PIC_TIMING_SEI
+                  }
+                },
+                height: 720,
+                name: "_1280x720",
+                respond_to_afd: "NONE",
+                sharpness: 100,
+                scaling_behavior: "DEFAULT",
+                width: 1280
+              }
             ],
           },
           input_specification: {
             codec: "AVC", # accepts MPEG2, AVC, HEVC
-            maximum_bitrate: "MAX_10_MBPS", # accepts MAX_10_MBPS, MAX_20_MBPS, MAX_50_MBPS
-            resolution: "SD", # accepts SD, HD, UHD
+            maximum_bitrate: "MAX_50_MBPS", # accepts MAX_10_MBPS, MAX_20_MBPS, MAX_50_MBPS
+            resolution: "HD", # accepts SD, HD, UHD
           },
           role_arn: 'arn:aws:iam::081999022144:role/screade-live-streame-with-me-MediaLiveRole1149D189-32EJTK8LEY41'
         })

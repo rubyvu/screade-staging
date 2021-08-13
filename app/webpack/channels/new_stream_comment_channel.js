@@ -21,7 +21,12 @@ $( document ).on('turbolinks:load', function() {
       
       received(data) {
         // Render StreamComment html
-        $('.comments-scroll .comment-wrapper:first').before(data.stream_comment_html)
+        if ($('.comments-scroll .comment-wrapper').length > 0) {
+          $('.comments-scroll .comment-wrapper:first').before(data.stream_comment_html)
+        } else {
+          $('.comments-scroll').append(data.stream_comment_html)
+        }
+        
         let commentDate = chat_date(data.stream_comment_json.created_at)
         let commentTime = chat_time(data.stream_comment_json.unix_created_at)
         

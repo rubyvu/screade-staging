@@ -27,8 +27,6 @@
         | To view this video please enable JavaScript, and consider upgrading to a
         | web browser that
     
-  - elsif stream.image.present?
-    = image_tag(stream.image.url, class: '', onerror: "this.error=null;this.src='#{asset_pack_path('media/images/placeholders/placeholder-news.png')}'")
   - else
     = image_pack_tag('media/images/placeholders/placeholder-news.png', class: 'url-full-image')
     
