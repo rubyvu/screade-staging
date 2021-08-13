@@ -12,13 +12,20 @@
         span #{comment_timestamp(stream.created_at)}
   
   - if stream.status == 'in-progress'
-    <video width="100%" height="300px" controls>
-      <source src="#{stream.stream_url}" type="application/x-mpegURL">
-    </video>
+  
+    video#my-video.video-js.vjs-default-skin.vjs-16-9.vjs-big-play-centered controls="" data-setup="{}" height="500px" poster="#{stream.image.url}" preload="auto" width="100%"
+      source src="#{stream.stream_url}" type="application/x-mpegURL"
+      
+      p.vjs-no-js
+        | To view this video please enable JavaScript, and consider upgrading to a
+        | web browser that
     
   - if stream.video.url.present?
-    video controls="" height="500px" width="100%"
-      source src="#{stream.video.url}"
+    video#my-video.video-js.vjs-default-skin.vjs-16-9.vjs-big-play-centered controls="" data-setup="{}"  poster="#{stream.image.url}" preload="auto"
+      source src="#{stream.video.url}" type="video/mp4"
+      p.vjs-no-js
+        | To view this video please enable JavaScript, and consider upgrading to a
+        | web browser that
     
   - elsif stream.image.present?
     = image_tag(stream.image.url, class: '', onerror: "this.error=null;this.src='#{asset_pack_path('media/images/placeholders/placeholder-news.png')}'")

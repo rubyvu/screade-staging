@@ -10,6 +10,7 @@ import Marquee3k from 'marquee3000';
 import 'bootstrap-datepicker';
 import 'timepicker/jquery.timepicker.js';
 import 'jquery-ui/ui/widgets/tabs';
+import videojs from 'video.js';
 
 // Import internal scripts
 import './shared/chat/chats';
@@ -92,6 +93,10 @@ $(document).on('turbolinks:load', function () {
   window.addEventListener('load', (event) => {
      Marquee3k.refreshAll();
   });
+  
+  // Init Video.js
+  let videojsElement = document.querySelector('.video-js')
+  if (videojsElement) { videojs(videojsElement) }
   
   // Hide modal after redirect and go back
   // $('a[data-type="modal-link"]').on('click', function() {
