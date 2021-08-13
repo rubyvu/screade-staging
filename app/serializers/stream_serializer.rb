@@ -39,7 +39,7 @@ class StreamSerializer < ActiveModel::Serializer
   
   attribute :lits_count
   def lits_count
-    object.lits.count
+    object.lits_count
   end
   
   attribute :owner
@@ -53,7 +53,7 @@ class StreamSerializer < ActiveModel::Serializer
   
   attribute :stream_comments_count
   def stream_comments_count
-    object.stream_comments.count
+    object.stream_comments_count
   end
   
   attribute :rtmp_url
@@ -66,6 +66,6 @@ class StreamSerializer < ActiveModel::Serializer
   
   attribute :views_count
   def views_count
-    object.views.count
+    object.views_count
   end
 end

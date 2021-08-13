@@ -16,14 +16,14 @@ class Api::V1::StreamsController < Api::V1::ApiController
                       .order(created_at: :desc).page(params[:page]).per(30)
     end
     
-    streams_json = ActiveModel::Serializer::CollectionSerializer.new(streams, serializer: StreamSerializer).as_json
+    streams_json = ActiveModel::Serializer::CollectionSerializer.new(streams, serializer: StreamSerializer, current_user: current_user ).as_json
     render json: { streams: streams_json }, status: :ok
   end
   
   # GET /api/v1/streams/:access_token
   def show
     View.find_or_create_by(source: @stream, user: current_user)
-    stream_json = StreamSerializer.new(@stream).as_json
+    stream_json = StreamSerializer.new(@stream, current_user: current_user).as_json
     render json: { stream: stream_json }, status: :ok
   end
   
@@ -52,7 +52,7 @@ class Api::V1::StreamsController < Api::V1::ApiController
     
     
     if stream.save
-      stream_json = StreamSerializer.new(stream).as_json
+      stream_json = StreamSerializer.new(stream, current_user: current_user).as_json
       render json: { stream: stream_json }, status: :ok
     else
       render json: { errors: stream.errors.full_messages }, status: :unprocessable_entity
@@ -63,7 +63,7 @@ class Api::V1::StreamsController < Api::V1::ApiController
   def update
     @stream.status == 'finished' if stream_update_params[:video].present? && @stream.status == 'completed'
     if @stream.update(stream_update_params)
-      stream_json = StreamSerializer.new(@stream).as_json
+      stream_json = StreamSerializer.new(@stream, current_user: current_user).as_json
       render json: { stream: stream_json }, status: :ok
     else
       render json: { errors: @stream.errors.full_messages }, status: :unprocessable_entity
@@ -73,7 +73,7 @@ class Api::V1::StreamsController < Api::V1::ApiController
   # PUT/PATCH /api/v1/streams/:access_token/complete
   def complete
     if @stream.update(status: 'completed')
-      stream_json = StreamSerializer.new(@stream).as_json
+      stream_json = StreamSerializer.new(@stream, current_user: current_user).as_json
       render json: { stream: stream_json }, status: :ok
     else
       render json: { errors: @stream.errors.full_messages }, status: :unprocessable_entity
@@ -90,7 +90,7 @@ class Api::V1::StreamsController < Api::V1::ApiController
   def in_progress
     if @stream.status == 'in-progress'
       @stream.update_columns(in_progress_at: DateTime.current)
-      stream_json = StreamSerializer.new(@stream).as_json
+      stream_json = StreamSerializer.new(@stream, current_user: current_user).as_json
       render json: { stream: stream_json }, status: :ok
     else
       render json: { success: false }, status: :unprocessable_entity

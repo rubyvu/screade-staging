@@ -4,7 +4,7 @@ class Api::V1::StreamLitsController < Api::V1::ApiController
   # POST /api/v1/streams/:stream_access_token/stream_lits
   def create
     lit = Lit.new(source: @stream, user: current_user)
-    if lit.save
+    if lit.save!
       stream_json = StreamSerializer.new(@stream, current_user: current_user).as_json
       render json: { stream: stream_json }, status: :ok
     else
