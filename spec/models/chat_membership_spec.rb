@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe ChatMembership, type: :model do
   before :all do
-    @chat = FactoryBot.create(:chat)
     @country = Country.find_by(code: 'US') || FactoryBot.create(:country, code: 'US')
     @user_security_question = FactoryBot.create(:user_security_question)
     @user_owner = FactoryBot.create(:user, country: @country, user_security_question: @user_security_question)
     @user_default = FactoryBot.create(:user, country: @country, user_security_question: @user_security_question)
+    @chat = FactoryBot.create(:chat, owner: @user_owner)
     @chat_membership = FactoryBot.create(:chat_membership, chat: @chat, user: @user_owner)
   end
   
@@ -35,7 +35,7 @@ RSpec.describe ChatMembership, type: :model do
     
     context 'custom' do
       it 'should set owner role for first membership only' do
-        chat = FactoryBot.create(:chat)
+        chat = FactoryBot.create(:chat, owner: @user_owner)
         expect(chat.chat_memberships.count).to eq(0)
         chat_membership_1 = FactoryBot.create(:chat_membership, chat: chat, user: @user_owner)
         chat_membership_2 = FactoryBot.create(:chat_membership, chat: chat, user: @user_default)
@@ -46,7 +46,7 @@ RSpec.describe ChatMembership, type: :model do
       end
       
       it 'should remove User(owner) Membership if Chat have ony 1 User' do
-        chat = FactoryBot.create(:chat)
+        chat = FactoryBot.create(:chat, owner: @user_owner)
         expect(chat.chat_memberships.count).to eq(0)
         chat_membership_1 = FactoryBot.create(:chat_membership, chat: chat, user: @user_owner)
         
@@ -58,7 +58,7 @@ RSpec.describe ChatMembership, type: :model do
       end
       
       it 'should NOT remove User(owner) membership if Chat have more than 1 User' do
-        chat = FactoryBot.create(:chat)
+        chat = FactoryBot.create(:chat, owner: @user_owner)
         expect(chat.chat_memberships.count).to eq(0)
         chat_membership_1 = FactoryBot.create(:chat_membership, chat: chat, user: @user_owner)
         chat_membership_2 = FactoryBot.create(:chat_membership, chat: chat, user: @user_default)

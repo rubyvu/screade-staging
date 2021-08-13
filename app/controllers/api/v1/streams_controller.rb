@@ -23,7 +23,7 @@ class Api::V1::StreamsController < Api::V1::ApiController
   # GET /api/v1/streams/:access_token
   def show
     stream = Stream.find_by!(access_token: params[:access_token])
-    if stream.is_private && stream.users.exclude?(current_user)
+    if stream.is_private && (stream.owner != current_user && stream.users.exclude?(current_user))
       render json: { errors: ['Record not found.'] }, status: :not_found
       return
     end

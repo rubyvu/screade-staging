@@ -26,6 +26,7 @@ class ChatMembership < ApplicationRecord
   
   private
     def set_owner_role
+      return if self.chat.blank?
       self.role = 'owner' if self.user == self.chat.owner
     end
     

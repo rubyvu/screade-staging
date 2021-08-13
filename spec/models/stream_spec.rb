@@ -8,12 +8,12 @@ RSpec.describe Stream, type: :model do
   end
   
   it 'should have a valid factory' do
-    stream = FactoryBot.build(:stream, user: @user)
+    stream = FactoryBot.build(:stream, owner: @user)
     expect(stream.present?).to eq(true)
   end
   
   context 'associations' do
-    it { should belong_to(:user) }
+    it { should belong_to(:owner) }
     it { should have_many(:stream_comments).dependent(:destroy) }
     it { should have_many(:commenting_users) }
     it { should have_many(:lits).dependent(:destroy) }
@@ -24,7 +24,7 @@ RSpec.describe Stream, type: :model do
   
   context 'validations' do
     context 'associations' do
-      it { should validate_presence_of(:user) }
+      it { should validate_presence_of(:owner) }
     end
   
     context 'fields' do
