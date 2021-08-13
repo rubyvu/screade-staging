@@ -9,7 +9,7 @@
 POST
 
 ### API endpoint
-`/api/v1/stream/:stream_access_token/stream_comments`
+`/api/v1/streams/:stream_access_token/stream_comments`
 
 ### Request body
 ```

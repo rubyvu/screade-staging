@@ -9,7 +9,7 @@
 GET
 
 ### API endpoint
-`GET /api/v1/stream/:stream_access_token/stream_comments`
+`GET /api/v1/streams/:stream_access_token/stream_comments`
 
 ### Request body
 ```
@@ -23,7 +23,7 @@ GET
 ```
 HTTP code 200 :ok
 {
-  "stream_comment: [StreamComment]                                              (array of objects, required)
+  "stream_comments: [StreamComment]                                              (array of objects, required)
 }
 ```
 
