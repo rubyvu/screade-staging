@@ -70,4 +70,9 @@ $( document ).on('turbolinks:load', function() {
       }
     }
   })
+  
+  // Clear message input field after submit
+  $('#new_stream_comment').on('ajax:success', function() {
+    $('#stream_comment_message').val('')
+  })
 })
