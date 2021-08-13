@@ -8,7 +8,7 @@ class Api::V1::StreamsController < Api::V1::ApiController
       streams = Stream.where(owner: current_user, status: 'finished', is_private: true).page(params[:page]).per(30)
     else
       # All Streams from User subscription
-      streams = Stream.joins(:users).where( streams: { is_private: true }, users: { id: current_user.id } )
+      streams = Stream.includes(:users).where( streams: { is_private: true }, users: { id: current_user.id } )
                       .or(Stream.where(is_private: false, group_type: 'Topic', group_id: current_user.subscribed_topics))
                       .or(Stream.where(is_private: false, group_type: 'NewsCategory', group_id: current_user.subscribed_news_categories))
                       .where(status: ['in-progress', 'finished'])
