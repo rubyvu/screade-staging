@@ -64,7 +64,7 @@ class Stream < ApplicationRecord
   private
     def add_notification
       return if !self.is_private
-      CreateNewNotificationsJob.perform_later(self.id, self.class.name)
+      CreateNewNotificationsJob.perform_later(self.id, self.class.name) if self.status_previously_changed?(from: 'pending', to: 'in-progress')
     end
     
     def generate_access_token

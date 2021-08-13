@@ -22,6 +22,6 @@ class Api::V1::StreamLitsController < Api::V1::ApiController
   
   private
     def get_stream
-      @stream = Stream.find(params[:stream_access_token])
+      @stream = Stream.find_by(access_token: params[:stream_access_token])
     end
 end

@@ -147,7 +147,7 @@ Rails.application.routes.draw do
   
   resources :searches, only: [:index]
   resources :settings, only: [:edit, :update]
-  resources :streams, only: [:index, :show], param: :access_token do
+  resources :streams, only: [:index, :show, :destroy], param: :access_token do
     resources :stream_comments, only: [:create]
     
     resources :stream_lits, only: [:create] do

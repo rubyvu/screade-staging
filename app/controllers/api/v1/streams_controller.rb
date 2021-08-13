@@ -13,7 +13,7 @@ class Api::V1::StreamsController < Api::V1::ApiController
                       .or(Stream.where(is_private: false, group_type: 'NewsCategory', group_id: current_user.subscribed_news_categories))
                       .where(status: ['in-progress', 'finished'])
                       .where.not(owner: current_user)
-                      .page(params[:page]).per(30)
+                      .order(created_at: :desc).page(params[:page]).per(30)
     end
     
     streams_json = ActiveModel::Serializer::CollectionSerializer.new(streams, serializer: StreamSerializer).as_json

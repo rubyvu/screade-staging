@@ -13,7 +13,7 @@ class StreamsController < ApplicationController
                       .or(Stream.where(is_private: false, group_type: 'NewsCategory', group_id: current_user.subscribed_news_categories))
                       .where(status: ['in-progress', 'finished'])
                       .where.not(owner: current_user)
-                      .page(params[:page]).per(30)
+                      .order(created_at: :desc).page(params[:page]).per(30)
     end
   end
   
@@ -24,5 +24,12 @@ class StreamsController < ApplicationController
     
     @new_comment = StreamComment.new(stream: @stream, user: current_user)
     @stream_comments = @stream.stream_comments.order(created_at: :desc).limit(100)
+  end
+  
+  # DELETE /streams/:access_token
+  def destroy
+    @stream = Stream.find_by(access_token: params[:access_token], owner: current_user)
+    @stream.destroy
+    redirect_to streams_path(is_private: true)
   end
 end

@@ -14,13 +14,12 @@
   .streams-cards-wrapper
     - @streams.each do |stream|
       .streams-card value="#{stream.id}"
-      
-        - if stream.owner == current_user
-          .stream-header-panel
-            .state
-              = image_pack_tag('media/images/icons/ic_live_streaming.png') if stream.status == 'in-progress'
-            .actions
-              = link_to '', method: :delete, data: { confirm: 'Do you really want to delete this Stream?' } do
+        .stream-header-panel
+          .state
+            = image_pack_tag('media/images/icons/ic_live_streaming.png') if stream.status == 'in-progress'
+          .actions
+            - if stream.owner == current_user
+              = link_to stream_path(stream.access_token), method: :delete, data: { confirm: 'Do you really want to delete this Stream?' } do
                 = image_pack_tag('media/images/icons/ic_delete_object.png')
               
         .streams-image-wrapper
