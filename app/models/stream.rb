@@ -15,10 +15,10 @@ class Stream < ApplicationRecord
   # Callbacks
   before_validation :generate_access_token, on: :create
   after_update :start_in_progress_tracker
+  after_commit :add_notification, on: :create
   after_commit :create_aws_media, on: :create
   after_commit :remove_aws_media, on: :update
   before_destroy :check_for_status, prepend: true
-  # after_save :add_notification
   
   # File Uploader
   mount_uploader :image, StreamImageUploader
@@ -39,7 +39,7 @@ class Stream < ApplicationRecord
   has_many :views, as: :source, dependent: :destroy
   has_many :viewing_users, through: :views, source: :user
   # Notifications
-  # has_many :notifications, as: :source, dependent: :destroy
+  has_many :notifications, as: :source, dependent: :destroy
   
   # Association validations
   validates :owner, presence: true
@@ -63,7 +63,7 @@ class Stream < ApplicationRecord
   
   private
     def add_notification
-      return if !self.is_approved || Notification.where(source_id: self.id, source_type: 'Post', sender: self.user).present? || !self.is_notification
+      return if !self.is_private
       CreateNewNotificationsJob.perform_later(self.id, self.class.name)
     end
     

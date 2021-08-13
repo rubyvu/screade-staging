@@ -27,6 +27,8 @@ class NotificationSerializer < ActiveModel::Serializer
       EventSerializer.new(object.source).as_json
     when 'Post'
       PostSerializer.new(object.source, current_user: current_user).as_json
+    when 'Stream'
+      StreamSerializer.new(object.source, current_user: current_user).as_json
     when 'UserImage'
       UserImageSerializer.new(object.source).as_json
     when 'UserVideo'

@@ -19,6 +19,8 @@ class CreateNewNotificationsJob < ApplicationJob
       Tasks::NotificationTask.new_event(source_id)
     when 'Post'
       Tasks::NotificationTask.new_post(source_id)
+    when 'Stream'
+      Tasks::NotificationTask.new_stream(source_id)
     when 'UserImage'
       Tasks::NotificationTask.new_user_image(source_id)
     when 'UserVideo'

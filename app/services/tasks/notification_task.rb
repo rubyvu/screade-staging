@@ -156,6 +156,24 @@ module Tasks
       end
     end
     
+    def self.new_stream(id)
+      stream = Stream.find_by(id: id)
+      return if stream.blank?
+      
+      sender = stream.owner
+      stream.users.each do |user|
+        notificatiom_params = {
+          source_id: stream.id,
+          source_type: 'Stream',
+          sender_id: stream.owner,
+          recipient_id: user.id,
+          message: "#{sender.full_name} started a new stream"
+        }
+        
+        create_notification(notificatiom_params)
+      end
+    end
+    
     def self.new_user_image(id)
       user_image = UserImage.find_by(id: id)
       return if user_image.blank?

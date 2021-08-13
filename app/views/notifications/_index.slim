@@ -28,6 +28,8 @@
             = image_pack_tag('media/images/icons/notifications/ic_notification_replied_comment.png')
           - when 'Post'
             = image_pack_tag('media/images/icons/notifications/ic_notification_new_post.png')
+          - when 'Stream'
+            = image_pack_tag('media/images/icons/notifications/ic_notification_new_video.png')
       
       .body
         .header
@@ -35,12 +37,10 @@
             - if notification.is_user_type?
               span
                 = notification.sender.full_name
-            - elsif notification.source_type == 'ChatMembership' || notification.source_type == 'ChatMessage' || notification.source_type == 'ChatAudioRoom' || notification.source_type == 'ChatVideoRoom'
-            
+            - elsif ['BreakingNews', 'ChatMembership', 'ChatMessage', 'ChatAudioRoom', 'ChatVideoRoom', 'Stream'].include?(notification.source_type)
+              span
             - elsif notification.source_type == 'Comment'
               = notification.source.message
-            - elsif notification.source_type == 'BreakingNews'
-              
             - else
               = notification.source.title
             
