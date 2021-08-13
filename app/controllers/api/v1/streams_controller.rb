@@ -12,6 +12,7 @@ class Api::V1::StreamsController < Api::V1::ApiController
                       .or(Stream.where(is_private: false, group_type: 'Topic', group_id: current_user.subscribed_topics))
                       .or(Stream.where(is_private: false, group_type: 'NewsCategory', group_id: current_user.subscribed_news_categories))
                       .where(status: ['in-progress', 'finished'])
+                      .where.not(owner: current_user)
                       .page(params[:page]).per(30)
     end
     

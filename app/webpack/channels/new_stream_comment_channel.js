@@ -2,9 +2,9 @@ import consumer from "./consumer"
 import { chat_date, chat_time } from "./helpers/date_helper"
 
 $( document ).on('turbolinks:load', function() {
-  let pageRegexp = new RegExp('\/streams\/[a-z][0-9]+');
+  let pageRegexp = new RegExp('\/streams\/[a-zA-Z0-9]+');
   if (!window.location.pathname.match(pageRegexp)) { return }
-
+  
   if (!App.newStreamCommentChannel || App.newStreamCommentChannel.consumer.connection.disconnected) {
     let streamAccessToken = window.location.pathname.split('/')[2]
     App.newStreamCommentChannel = consumer.subscriptions.create({

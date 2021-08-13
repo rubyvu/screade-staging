@@ -1,7 +1,7 @@
 import consumer from "./consumer"
 
 $( document ).on('turbolinks:load', function() {
-  let pageRegexp = new RegExp('\/streams\/[a-z][0-9]+');
+  let pageRegexp = new RegExp('\/streams\/[a-zA-Z0-9]+');
   if (!window.location.pathname.match(pageRegexp)) { return }
   
   if (!App.StreamInfoChannel || App.StreamInfoChannel.consumer.connection.disconnected) {
@@ -19,7 +19,6 @@ $( document ).on('turbolinks:load', function() {
       },
       
       received(data) {
-        console.log(data);
         let litsCount = data.stream_info_json.formated_lits_count
         let viewsCount = data.stream_info_json.formated_views_count
         let streamCommentsCount = data.stream_info_json.formated_stream_comments_count
