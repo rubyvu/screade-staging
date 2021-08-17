@@ -13,7 +13,7 @@ class HomeController < ApplicationController
     
     # Trends
     @home[:trends] = []
-    (NewsArticle.order(lits_count: :desc).limit(6) + Stream.where(is_private: false).order(lits_count: :desc).limit(6) + Post.order(lits_count: :desc)).sort_by { |trend| -trend.lits_count }.first(6).each do |trend|
+    (NewsArticle.order(lits_count: :desc).limit(6) + Stream.where(is_private: false, status: ['in-progress', 'finished']).order(lits_count: :desc).limit(6) + Post.order(lits_count: :desc)).sort_by { |trend| -trend.lits_count }.first(6).each do |trend|
       trend_params = {}
       case trend.class.name
       when 'NewsArticle'

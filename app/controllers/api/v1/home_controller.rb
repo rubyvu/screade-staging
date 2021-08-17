@@ -40,7 +40,7 @@ class Api::V1::HomeController < Api::V1::ApiController
   
   # GET /api/v1/home/trends
   def trends
-    trends = (NewsArticle.order(lits_count: :desc).limit(6) + Stream.where(is_private: false).order(lits_count: :desc).limit(6) + Post.order(lits_count: :desc)).sort_by { |trend| -trend.lits_count }.first(6)
+    trends = (NewsArticle.order(lits_count: :desc).limit(6) + Stream.where(is_private: false, status: ['in-progress', 'finished']).order(lits_count: :desc).limit(6) + Post.order(lits_count: :desc)).sort_by { |trend| -trend.lits_count }.first(6)
     trends_json = ActiveModel::Serializer::CollectionSerializer.new(trends, serializer: TrendSerializer).as_json
     render json: { trends: trends_json }, status: :ok
   end
