@@ -1228,7 +1228,8 @@ CREATE TABLE public.streams (
     in_progress_at timestamp without time zone,
     stream_comments_count integer DEFAULT 0 NOT NULL,
     views_count integer DEFAULT 0 NOT NULL,
-    lits_count integer DEFAULT 0 NOT NULL
+    lits_count integer DEFAULT 0 NOT NULL,
+    in_progress_started_at timestamp without time zone DEFAULT '2021-08-17 09:54:35.241827'::timestamp without time zone
 );
 
 
@@ -2590,6 +2591,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210809142007'),
 ('20210810081300'),
 ('20210811112849'),
-('20210812103022');
+('20210812103022'),
+('20210817094641');
 
 

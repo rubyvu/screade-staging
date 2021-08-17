@@ -64,7 +64,7 @@ class Stream < ApplicationRecord
   private
     def add_notification
       return if !self.is_private
-      CreateNewNotificationsJob.perform_later(self.id, self.class.name) if self.status_previously_changed?(from: 'pending', to: 'in-progress')
+      CreateNewNotificationsJob.set(wait: 30.seconds).perform_later(self.id, self.class.name) if self.status_previously_changed?(from: 'pending', to: 'in-progress')
     end
     
     def generate_access_token
@@ -137,7 +137,9 @@ class Stream < ApplicationRecord
     end
     
     def start_in_progress_tracker
-      StartInProgressTrackerJob.perform_later(self.id) if self.status_previously_changed?(from: 'pending', to: 'in-progress')
+      return unless self.status_previously_changed?(from: 'pending', to: 'in-progress')
+      self.update_columns(in_progress_started_at: DateTime.current)
+      StartInProgressTrackerJob.perform_later(self.id)
     end
     
     def set_failed_status(error_message)
