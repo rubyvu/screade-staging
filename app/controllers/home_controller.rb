@@ -13,8 +13,18 @@ class HomeController < ApplicationController
     
     # Trends
     @home[:trends] = []
-    NewsArticle.left_joins(:lits).group(:id).order('COUNT(lits.id) DESC').limit(6).each do |trend|
-      @home[:trends] << { url: trend.url, title: trend.title, img_url: trend.img_url }
+    (NewsArticle.order(lits_count: :desc).limit(6) + Stream.where(is_private: false).order(lits_count: :desc).limit(6) + Post.order(lits_count: :desc)).sort_by { |trend| -trend.lits_count }.first(6).each do |trend|
+      trend_params = {}
+      case trend.class.name
+      when 'NewsArticle'
+        trend_params = { url: trend.url, title: trend.title, img_url: trend.img_url }
+      when 'Stream'
+        trend_params = { url: stream_path(trend.access_token), title: trend.title, img_url: trend.image.url }
+      when 'Post'
+        trend_params = { url: post_post_comments_path(post_id: trend.id), title: trend.title, img_url: trend.image.url }
+      end
+      
+      @home[:trends] << trend_params if trend_params.present?
     end
     
     # News articles
