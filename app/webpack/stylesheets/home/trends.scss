@@ -14,7 +14,7 @@
 .trend-card {
   display: inline-flex;
   align-items: center;
-  max-width: 200px;
+  width: 200px;
   margin: 12px 12px 12px 6px;
   background-color: $color-white;
   color: $color-black;
@@ -40,7 +40,8 @@
 }
 
 .trends-wrapper img.trend-image {
-  width: auto;
+  object-fit: cover;
+  width: 40px;
   height: 40px;
   margin:auto;
 }

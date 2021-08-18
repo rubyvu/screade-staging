@@ -147,8 +147,14 @@ Rails.application.routes.draw do
   
   resources :searches, only: [:index]
   resources :settings, only: [:edit, :update]
-  resources :streams, only: [:index, :show] do
+  resources :streams, only: [:index, :show, :destroy], param: :access_token do
     resources :stream_comments, only: [:create]
+    
+    resources :stream_lits, only: [:create] do
+      collection do
+        delete :destroy
+      end
+    end
   end
   resources :squad_requests, only: [:index, :create] do
     member do
@@ -316,6 +322,20 @@ Rails.application.routes.draw do
         member do
           post :accept
           post :decline
+        end
+      end
+      
+      resources :streams, only: [:index, :show, :create, :update, :destroy], param: :access_token do
+        member do
+          put :complete
+          put :in_progress
+        end
+        
+        resources :stream_comments, only: [:index, :create]
+        resources :stream_lits, only: [:create] do
+          collection do
+            delete :destroy
+          end
         end
       end
       

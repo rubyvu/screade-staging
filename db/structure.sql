@@ -1212,7 +1212,24 @@ CREATE TABLE public.streams (
     image character varying,
     image_hex character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    access_token character varying NOT NULL,
+    error_message character varying,
+    status character varying DEFAULT 'pending'::character varying NOT NULL,
+    rtmp_url character varying,
+    stream_url character varying,
+    video character varying,
+    video_hex character varying,
+    group_id integer,
+    group_type character varying,
+    channel_id character varying,
+    channel_input_id character varying,
+    channel_security_group_id character varying,
+    in_progress_at timestamp without time zone,
+    stream_comments_count integer DEFAULT 0 NOT NULL,
+    views_count integer DEFAULT 0 NOT NULL,
+    lits_count integer DEFAULT 0 NOT NULL,
+    in_progress_started_at timestamp without time zone DEFAULT '2021-08-17 09:54:35.241827'::timestamp without time zone
 );
 
 
@@ -1233,6 +1250,16 @@ CREATE SEQUENCE public.streams_id_seq
 --
 
 ALTER SEQUENCE public.streams_id_seq OWNED BY public.streams.id;
+
+
+--
+-- Name: streams_users; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.streams_users (
+    stream_id bigint NOT NULL,
+    user_id bigint NOT NULL
+);
 
 
 --
@@ -2305,10 +2332,24 @@ CREATE INDEX index_stream_comments_on_user_id ON public.stream_comments USING bt
 
 
 --
+-- Name: index_streams_on_status; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_streams_on_status ON public.streams USING btree (status);
+
+
+--
 -- Name: index_streams_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_streams_on_user_id ON public.streams USING btree (user_id);
+
+
+--
+-- Name: index_streams_users_on_stream_id_and_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_streams_users_on_stream_id_and_user_id ON public.streams_users USING btree (stream_id, user_id);
 
 
 --
@@ -2540,6 +2581,17 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210726143917'),
 ('20210727085203'),
 ('20210728125603'),
-('20210729132102');
+('20210729132102'),
+('20210805112619'),
+('20210805112742'),
+('20210805112813'),
+('20210805134812'),
+('20210809121132'),
+('20210809121315'),
+('20210809142007'),
+('20210810081300'),
+('20210811112849'),
+('20210812103022'),
+('20210817094641');
 
 

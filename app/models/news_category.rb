@@ -15,9 +15,12 @@ class NewsCategory < ApplicationRecord
   
   # Associations
   has_and_belongs_to_many :news_articles
+  has_and_belongs_to_many :streams
   has_many :topics, as: :parent, dependent: :destroy
   has_many :posts, as: :source
   has_many :post_groups, as: :group
+  # Streams
+  has_many :streams, as: :group
   # User Subscribed for NewsCategory
   has_many :user_topic_subscriptions, as: :source, dependent: :destroy
   has_many :subscribed_users, through: :user_topic_subscriptions, source: :user

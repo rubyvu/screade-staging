@@ -7,10 +7,12 @@ class ChatMembership < ApplicationRecord
   after_update :update_owner_role
   before_destroy :is_membership_can_be_removed?
   after_destroy :remove_chat
+  after_commit :add_notification, on: :create
   
   # Associations
   belongs_to :chat
   belongs_to :user
+  has_many :notifications, as: :source, dependent: :destroy
   
   # Associations validations
   validates :chat, presence: true
@@ -24,6 +26,7 @@ class ChatMembership < ApplicationRecord
   
   private
     def set_owner_role
+      return if self.chat.blank?
       self.role = 'owner' if self.user == self.chat.owner
     end
     
@@ -44,5 +47,10 @@ class ChatMembership < ApplicationRecord
     
     def remove_chat
       self.chat.destroy if self.chat.chat_memberships.count == 0
+    end
+    
+    def add_notification
+      return if self.chat.owner == self.user
+      CreateNewNotificationsJob.perform_later(self.id, self.class.name)
     end
 end

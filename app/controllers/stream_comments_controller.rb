@@ -1,8 +1,8 @@
 class StreamCommentsController < ApplicationController
   
-  # POST /streams/:stream_id/stream_comments
+  # POST /streams/:stream_access_token/stream_comments
   def create
-    stream = Stream.find(params[:stream_id])
+    stream = Stream.find_by!(access_token: params[:stream_access_token])
     stream_comment = StreamComment.new(stream_comments_params)
     
     stream_comment.stream = stream

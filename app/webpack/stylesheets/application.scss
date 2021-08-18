@@ -63,6 +63,7 @@ $grid-breakpoints: (
 @import '~bootstrap/scss/bootstrap'; // Custom bootstrap variables must be set or imported *before* bootstrap.
 @import 'bootstrap-datepicker/dist/css/bootstrap-datepicker.css';
 @import 'timepicker/jquery.timepicker.css';
+@import 'video.js/dist/video-js.css';
 
 /**************************************
 * Internal fonts:

@@ -47,6 +47,7 @@ class ChatMessage < ApplicationRecord
     end
     
     def increase_unread_messages_counter
+      return if self.chat.blank?
       # Set unread messages counter
       self.chat.chat_memberships.where.not(user: self.user).each do |chat_membership|
         chat_membership.update_columns(unread_messages_count: chat_membership.unread_messages_count+1)

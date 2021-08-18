@@ -14,6 +14,8 @@ class Topic < ApplicationRecord
   # Posts
   has_many :posts, as: :source, dependent: :destroy
   has_many :post_groups, as: :group
+  # Streams
+  has_many :streams, as: :group
   # User Subscribed for Topic
   has_many :user_topic_subscriptions, as: :source, dependent: :destroy
   has_many :subscribed_users, through: :user_topic_subscriptions, source: :user

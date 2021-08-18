@@ -1,3 +1,4 @@
 .content-comment-wrapper.content-stream
   = render 'streams/show', stream: @stream
-  = render '/streams/show_comments', comments: @stream_comments, new_comment: @new_comment
+  - if @stream.status == 'in-progress'
+    = render '/streams/show_comments', comments: @stream_comments, new_comment: @new_comment

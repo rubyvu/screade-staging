@@ -9,6 +9,8 @@ module NotificationHelper
       end
     when 'Event'
       link = events_path(date: object.source.start_date)
+    when 'ChatMembership'
+      link = chats_path()
     when 'ChatMessage'
       link = chats_path()
     when 'ChatAudioRoom'
@@ -31,6 +33,8 @@ module NotificationHelper
       link = post_post_comments_path(object.source)
     when 'SquadRequest'
       link = squad_requests_path
+    when 'Stream'
+      link = stream_path(access_token: object.source.access_token)
     when 'UserImage'
       link = images_user_image_path(username: object.sender.username)
     when 'UserVideo'
@@ -46,6 +50,14 @@ module NotificationHelper
       link = root_url
     when 'Event'
       link = events_url(date: object.source.start_date)
+    when 'ChatMembership'
+      link = chats_url()
+    when 'ChatMessage'
+      link = chats_url()
+    when 'ChatAudioRoom'
+      link = chats_url()
+    when 'ChatVideoRoom'
+      link = chats_url()
     when 'Comment'
       if object.source.source_type == 'NewsArticle'
         if object.source.comment_id.nil?
@@ -62,6 +74,8 @@ module NotificationHelper
       link = post_post_comments_url(object.source)
     when 'SquadRequest'
       link = squad_requests_url
+    when 'Stream'
+      link = stream_url(access_token: object.source.access_token)
     when 'UserImage'
       link = images_user_image_url(username: object.sender.username)
     when 'UserVideo'

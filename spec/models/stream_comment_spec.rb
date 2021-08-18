@@ -5,7 +5,7 @@ RSpec.describe StreamComment, type: :model do
     @country = Country.find_by(code: 'US') || FactoryBot.create(:country, code: 'US')
     @user_security_question = FactoryBot.create(:user_security_question)
     @user = FactoryBot.create(:user, country: @country, user_security_question: @user_security_question)
-    @stream = FactoryBot.build(:stream, user: @user)
+    @stream = FactoryBot.build(:stream, owner: @user)
   end
   
   it 'should have a valid factory' do

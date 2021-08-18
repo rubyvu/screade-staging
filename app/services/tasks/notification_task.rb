@@ -17,6 +17,21 @@ module Tasks
       end
     end
     
+    def self.new_chat_membership(id)
+      chat_membership = ChatMembership.find_by(id: id)
+      return if chat_membership.blank?
+      
+      notificatiom_params = {
+        source_id: chat_membership.id,
+        source_type: 'ChatMembership',
+        sender_id: chat_membership.chat.owner.id,
+        recipient_id: chat_membership.user.id,
+        message: "You were invited to the #{chat_membership.chat.name} Chat"
+      }
+      
+      create_notification(notificatiom_params)
+    end
+    
     def self.new_chat_message(id)
       chat_message = ChatMessage.find_by(id: id)
       return if chat_message.blank?
@@ -26,6 +41,7 @@ module Tasks
       usernames_list = chat_connections.map { |connection| connection.remove("chat_#{chat_message.chat.access_token}_").remove('_channel') }
       
       ChatMembership.joins(:user).where(chat: chat_message.chat, is_mute: false).where.not(user: { username: usernames_list}).each do |chat_membership|
+        next if chat_membership.user == chat_message.user
         # Check if User already get Notification from this Chat and it's unviewed
         next if ChatMessage.joins(:notifications).where(notifications: { source_type: 'ChatMessage', is_viewed: false, recipient: chat_membership.user }, chat_messages: { chat: chat_message.chat}).present?
         
@@ -50,7 +66,7 @@ module Tasks
       
       ChatMembership.joins(:user).where(chat: chat_audio_room.chat).where.not(user: { username: usernames_list}).each do |chat_membership|
         # Check if User already get Notification from this Chat and it's unviewed
-        next if ChatAudioRoom.joins(:notifications).where(notifications: { source_type: 'ChatAudioRoom', is_viewed: false, recipient: chat_membership.user }, chat_audio_rooms: { chat: chat_audio_room.chat }).present?
+        # next if ChatAudioRoom.joins(:notifications).where(notifications: { source_type: 'ChatAudioRoom', is_viewed: false, recipient: chat_membership.user }, chat_audio_rooms: { chat: chat_audio_room.chat }).present?
         
         notificatiom_params = {
           source_id: chat_audio_room.id,
@@ -72,7 +88,7 @@ module Tasks
       
       ChatMembership.joins(:user).where(chat: chat_video_room.chat).where.not(user: { username: usernames_list}).each do |chat_membership|
         # Check if User already get Notification from this Chat and it's unviewed
-        next if ChatVideoRoom.joins(:notifications).where(notifications: { source_type: 'ChatVideoRoom', is_viewed: false, recipient: chat_membership.user }, chat_video_rooms: { chat: chat_video_room.chat }).present?
+        # next if ChatVideoRoom.joins(:notifications).where(notifications: { source_type: 'ChatVideoRoom', is_viewed: false, recipient: chat_membership.user }, chat_video_rooms: { chat: chat_video_room.chat }).present?
         
         notificatiom_params = {
           source_id: chat_video_room.id,
@@ -134,6 +150,24 @@ module Tasks
           sender_id: sender.id,
           recipient_id: recipient.id,
           message: "#{sender.full_name} has new post"
+        }
+        
+        create_notification(notificatiom_params)
+      end
+    end
+    
+    def self.new_stream(id)
+      stream = Stream.find_by(id: id)
+      return if stream.blank?
+      
+      sender = stream.owner
+      stream.users.each do |user|
+        notificatiom_params = {
+          source_id: stream.id,
+          source_type: 'Stream',
+          sender_id: stream.owner,
+          recipient_id: user.id,
+          message: "#{sender.full_name} started a new stream"
         }
         
         create_notification(notificatiom_params)

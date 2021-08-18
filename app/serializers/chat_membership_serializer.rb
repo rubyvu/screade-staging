@@ -1,5 +1,9 @@
 class ChatMembershipSerializer < ActiveModel::Serializer
-    
+  attribute :chat_access_token
+  def chat_access_token
+    object.chat.access_token
+  end
+  
   attribute :id
   attribute :is_mute
   attribute :role
