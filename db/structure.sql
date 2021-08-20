@@ -1072,8 +1072,6 @@ CREATE TABLE public.posts (
     user_id integer NOT NULL,
     title character varying NOT NULL,
     description text NOT NULL,
-    image character varying,
-    image_hex character varying,
     is_notification boolean DEFAULT true,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
@@ -1398,8 +1396,6 @@ ALTER SEQUENCE public.topics_id_seq OWNED BY public.topics.id;
 
 CREATE TABLE public.user_images (
     id bigint NOT NULL,
-    file character varying,
-    file_hex character varying,
     user_id integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
@@ -2775,6 +2771,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210817125538'),
 ('20210820124906'),
 ('20210820133309'),
-('20210820135332');
+('20210820135332'),
+('20210820142828'),
+('20210820150506');
 
 

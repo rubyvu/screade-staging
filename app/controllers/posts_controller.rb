@@ -29,17 +29,27 @@ class PostsController < ApplicationController
   # POST /posts
   def create
     post = Post.new(post_params)
-    post.remote_image_url = @user_image&.file&.url
     post.user = current_user
     if post.save
+      # Attach UserImage file as Post image
+      if @user_image&.file_url.present?
+        user_image = URI.parse(@user_image.file_url).open
+        post.image.attach(io: user_image, filename: SecureRandom.hex(16))
+      end
+      
       redirect_to posts_path
     end
   end
   
   # PUT/PATCH /posts/:id
   def update
-    @post.remote_image_url = @user_image&.file&.url
     if @post.update(post_params)
+      # Attach UserImage file as Post image
+      if @user_image&.file_url.present?
+        user_image = URI.parse(@user_image.file_url).open
+        @post.image.attach(io: user_image, filename: SecureRandom.hex(16))
+      end
+      
       if @post.saved_changes[:is_notification].present?
         redirect_to post_post_comments_path(@post)
       else

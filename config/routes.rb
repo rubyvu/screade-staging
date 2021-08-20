@@ -164,15 +164,13 @@ Rails.application.routes.draw do
   end
   
   resources :topics, only: [:new, :create]
-  resources :user_images, only: [:update], param: :username, username: User::USERNAME_ROUTE_FORMAT do
+  resources :user_images, only: [:create, :update], param: :username, username: User::USERNAME_ROUTE_FORMAT do
     member do
       get :images
-      get :webhook
     end
     
     collection do
       delete :destroy
-      get :processed_urls
     end
   end
   

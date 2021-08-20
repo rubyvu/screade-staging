@@ -5,7 +5,7 @@ class UserImageSerializer < ActiveModel::Serializer
   attribute :is_private
   attribute :rectangle_160_160_url
   def rectangle_160_160_url
-    object.file.rectangle_160_160.url
+    object.file_160_160_url
   end
   
   attribute :rectangle_1024_768_url

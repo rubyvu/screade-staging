@@ -1,14 +1,16 @@
 $( document ).on('turbolinks:load', function() {
   // Upload UserImage UserVideo on file select
-  $("#user_image_uploader_image, #user_video_uploader_image").change(function(e) {
-    let file = this.files[0]
-    // Check that file size is less than 100MB
-    if (file.size >= 104857600) {
-      alert('Max file size is 100MB');
-      return
-    }
+  $("#new_user_image, #new_user_video").change(function(e) {
+    // console.log('this.files', this);
+    // let file = this.files[0]
+    // // Check that file size is less than 100MB
+    // if (file.size >= 104857600) {
+    //   alert('Max file size is 100MB');
+    //   return
+    // }
+    console.log();
     
-    this.form.submit();
+    this.submit();
     
     // Show spinner
     $('body').append('<div class="spinner-loading"></div>')

@@ -59,8 +59,8 @@
           - @posts.each do |post|
             .posts-card value="#{post.id}"
               .posts-image-wrapper
-                - if post.image.present?
-                  = image_tag(post.image.url, class: 'post-image', onerror: "this.error=null;this.src='#{asset_pack_path('media/images/placeholders/placeholder-news.png')}'")
+                - if post.image_url.present?
+                  = image_tag(post.image_url, class: 'post-image', onerror: "this.error=null;this.src='#{asset_pack_path('media/images/placeholders/placeholder-news.png')}'")
                 - else
                   = image_pack_tag('media/images/placeholders/placeholder-news.png', class: 'post-image')
                 
@@ -103,7 +103,7 @@
       .user-profile-assets
         - @images.each do |user_image|
           .image-wrapper
-            = image_tag(user_image.file.url, class: 'user-asset', data: { 'enlargeable': true })
+            = image_tag(user_image.file_url, class: 'user-asset', data: { 'enlargeable': true })
     - elsif @user == current_user
       .new-assets
         = link_to 'Your image library is empty', images_user_image_path(@user.username)

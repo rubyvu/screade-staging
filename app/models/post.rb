@@ -10,7 +10,7 @@ class Post < ApplicationRecord
   after_save :add_notification
   
   # File Uploader
-  mount_uploader :image, PostImageUploader
+  has_one_attached :image
   
   # Associations
   belongs_to :source, polymorphic: true
@@ -49,6 +49,10 @@ class Post < ApplicationRecord
   
   def is_viewed(user)
     user.present? && self.viewing_users.include?(user)
+  end
+  
+  def image_url
+    self.image.url if self.image.attached?
   end
   
   private
