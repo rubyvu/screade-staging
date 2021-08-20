@@ -67,8 +67,17 @@ class Api::V1::StreamsController < Api::V1::ApiController
   
   # PUT/PATCH /api/v1/streams/:access_token
   def update
-    @stream.status == 'finished' if stream_update_params[:video].present? && @stream.status == 'completed'
-    if @stream.update(stream_update_params)
+    if stream_update_params[:video].present? && @stream.status == 'completed'
+      begin
+        @stream.video.attach(stream_update_params[:video])
+        @stream.status = 'finished'
+      rescue
+        render json: { errors: ['Video is not exists.'] }, status: :unprocessable_entity
+        return
+      end
+    end
+      
+    if @stream.update(stream_update_params.except(:video))
       stream_json = StreamSerializer.new(@stream, current_user: current_user).as_json
       render json: { stream: stream_json }, status: :ok
     else
@@ -80,7 +89,16 @@ class Api::V1::StreamsController < Api::V1::ApiController
   def complete
     if @stream.update(status: 'completed')
       stream_json = StreamSerializer.new(@stream, current_user: current_user).as_json
-      render json: { stream: stream_json }, status: :ok
+      
+      # Create Direct upload url request
+      video_direct_url = DirectUpload.call(blob_params)
+      direct_upload_params = {
+        video_direct_upload_url: video_direct_url[:direct_upload][:url],
+        video_direct_upload_headers: video_direct_url[:direct_upload][:headers],
+        video_blob_id: video_direct_url[:blob_signed_id]
+      }
+      
+      render json: { stream: stream_json, direct_upload_params: direct_upload_params }, status: :ok
     else
       render json: { errors: @stream.errors.full_messages }, status: :unprocessable_entity
     end
@@ -114,5 +132,9 @@ class Api::V1::StreamsController < Api::V1::ApiController
     
     def stream_update_params
       params.require(:stream).permit(:image, :title, :video)
+    end
+    
+    def blob_params
+      params.require(:video).permit(:filename, :byte_size, :checksum, :content_type)
     end
 end

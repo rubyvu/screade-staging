@@ -20,9 +20,9 @@
         | To view this video please enable JavaScript, and consider upgrading to a
         | web browser that
     
-  - elsif stream.video.url.present?
+  - elsif stream.video.attached?
     video#my-video.video-js.vjs-default-skin.vjs-16-9.vjs-big-play-centered controls="" data-setup="{}"  poster="#{stream.image.url}" preload="auto"
-      source src="#{stream.video.url}" type="video/mp4"
+      source src="#{stream.video_url}" type="video/mp4"
       p.vjs-no-js
         | To view this video please enable JavaScript, and consider upgrading to a
         | web browser that

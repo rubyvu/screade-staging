@@ -61,7 +61,7 @@ class StreamSerializer < ActiveModel::Serializer
   
   attribute :video
   def video
-    object.video&.url
+    object.video_url
   end
   
   attribute :views_count
