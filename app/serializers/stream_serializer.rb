@@ -34,7 +34,7 @@ class StreamSerializer < ActiveModel::Serializer
   
   attribute :image
   def image
-    object&.image&.rectangle_300_250&.url
+    object&.image_url
   end
   
   attribute :lits_count

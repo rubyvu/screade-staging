@@ -6,7 +6,7 @@ class NewsCategory < ApplicationRecord
   DEFAULT_CATEGORIES = %w(business entertainment general health science sports technology)
   
   # Upploaders
-  mount_uploader :image, GroupIconUploader
+  has_one_attached :image
   
   # Callback
   before_destroy :skip_default_categories, prepend: true do
@@ -15,7 +15,6 @@ class NewsCategory < ApplicationRecord
   
   # Associations
   has_and_belongs_to_many :news_articles
-  has_and_belongs_to_many :streams
   has_many :topics, as: :parent, dependent: :destroy
   has_many :posts, as: :source
   has_many :post_groups, as: :group
@@ -42,6 +41,10 @@ class NewsCategory < ApplicationRecord
     self.title == 'news' ? 'general' : self.title
   end
   
+  def image_url
+    self.image.url if self.image.attached?
+  end
+  
   # Get All Approved Topics for NewsCategory
   def approved_nested_topics_ids
     get_children_topics_ids(self.topics.ids, 1)
@@ -49,7 +52,7 @@ class NewsCategory < ApplicationRecord
   
   private
     def general_as_news
-      errors.add(:title, 'already exists.') if self.title == 'news'
+      errors.add(:title, 'already exists.') if self.title == 'news' && self.new_record?
     end
     
     def skip_default_categories

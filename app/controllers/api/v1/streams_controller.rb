@@ -89,7 +89,7 @@ class Api::V1::StreamsController < Api::V1::ApiController
   def complete
     if @stream.update(status: 'completed')
       stream_json = StreamSerializer.new(@stream, current_user: current_user).as_json
-      render json: { stream: stream_json, direct_upload_params: direct_upload_params }, status: :ok
+      render json: { stream: stream_json }, status: :ok
     else
       render json: { errors: @stream.errors.full_messages }, status: :unprocessable_entity
     end

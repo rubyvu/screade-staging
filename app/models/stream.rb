@@ -22,7 +22,7 @@ class Stream < ApplicationRecord
   
   # File Uploader
   has_one_attached :video
-  mount_uploader :image, StreamImageUploader
+  has_one_attached :image
   
   # Associations
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
@@ -59,6 +59,10 @@ class Stream < ApplicationRecord
   
   def is_viewed(user)
     user.present? && self.viewing_users.include?(user)
+  end
+  
+  def image_url
+    self.image.url if self.image.attached?
   end
   
   def video_url

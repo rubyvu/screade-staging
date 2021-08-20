@@ -1,5 +1,6 @@
 class Api::V1::DirectUploadsController < Api::V1::ApiController
   
+  # GET /api/v1/direct_uploads/generate_link
   def generate_link
     # Create Direct upload url request
     direct_url = DirectUpload.call(file_params)

@@ -937,8 +937,7 @@ CREATE TABLE public.news_categories (
     id bigint NOT NULL,
     title character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    image character varying
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -1308,8 +1307,6 @@ CREATE TABLE public.streams (
     title character varying NOT NULL,
     is_private boolean DEFAULT true NOT NULL,
     user_id integer NOT NULL,
-    image character varying,
-    image_hex character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     access_token character varying NOT NULL,
@@ -1317,8 +1314,6 @@ CREATE TABLE public.streams (
     status character varying DEFAULT 'pending'::character varying NOT NULL,
     rtmp_url character varying,
     stream_url character varying,
-    video character varying,
-    video_hex character varying,
     group_id integer,
     group_type character varying,
     channel_id character varying,
@@ -2778,6 +2773,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210812103022'),
 ('20210817094641'),
 ('20210817125538'),
-('20210820124906');
+('20210820124906'),
+('20210820133309'),
+('20210820135332');
 
 

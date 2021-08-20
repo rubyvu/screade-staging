@@ -2,7 +2,7 @@ class NewsCategorySerializer < ActiveModel::Serializer
   attribute :id
   attribute :image
   def image
-    object.image.url
+    object.image_url
   end
   
   attribute :title

@@ -1,7 +1,8 @@
 ActiveAdmin.register NewsCategory, as: 'Group' do
   
   # Actions
-  actions :all, except: [:edit, :update]
+  # actions :all, except: [:edit, :update] TODO: return after deploy
+  actions :all
   
   # Filters
   filter :title
@@ -13,7 +14,7 @@ ActiveAdmin.register NewsCategory, as: 'Group' do
   index do
     column :id
     column :image do |news_category|
-      image_tag news_category.image.url
+      image_tag news_category.image_url if news_category.image_url.present?
     end
     column :title
     column :created_at do |news_category|
@@ -37,7 +38,7 @@ ActiveAdmin.register NewsCategory, as: 'Group' do
   
   form do |f|
     f.inputs do
-      f.input :image
+      f.input :image, as: :file, input_html: { direct_upload: true }
       f.input :title
     end
     f.actions
