@@ -2,7 +2,7 @@
   - if @chat_videos.present?
     - @chat_videos.each do |video|
       .image-card
-        = image_tag(video.file.thumb.url, data: {'image-url': video.file.thumb.url, 'video-id': video.id })
+        = image_tag(video.file_thumbnail_url, data: {'image-url': video.file_thumbnail_url, 'video-id': video.id })
   - else
     = link_to 'Your video library is empty', videos_user_video_path(current_user.username)
     

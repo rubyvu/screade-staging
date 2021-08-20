@@ -10,7 +10,7 @@ class UserImagesController < ApplicationController
     @image_uploader = UserImage.new if @user == current_user
   end
   
-  # PUT/PATCH /user_images/:id
+  # POST /user_images/
   def create
     user_image = UserImage.new(user_image_params)
     user_image.user = current_user

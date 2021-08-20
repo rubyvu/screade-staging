@@ -1,5 +1,5 @@
 class UserVideo < ApplicationRecord
-  mount_uploader :file, UserVideoUploader
+  has_one_attached :file
   
   # Constants
   VIDEO_RESOLUTIONS = %w(mp4)
@@ -14,6 +14,14 @@ class UserVideo < ApplicationRecord
   
   # Association validation
   validates :user, presence: true
+  
+  def file_url
+    self.file.url if self.file.attached?
+  end
+  
+  def file_thumbnail_url
+    self.file.preview(resize_to_limit: [300, 300]).processed if self.file.attached?
+  end
   
   private
     def add_notification

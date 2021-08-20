@@ -1524,8 +1524,6 @@ ALTER SEQUENCE public.user_topic_subscriptions_id_seq OWNED BY public.user_topic
 
 CREATE TABLE public.user_videos (
     id bigint NOT NULL,
-    file character varying,
-    file_hex character varying,
     user_id integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
@@ -2773,6 +2771,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210820133309'),
 ('20210820135332'),
 ('20210820142828'),
-('20210820150506');
+('20210820150506'),
+('20210820175846');
 
 

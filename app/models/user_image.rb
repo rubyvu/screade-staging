@@ -23,6 +23,10 @@ class UserImage < ApplicationRecord
     self.file.representation(resize_to_limit: [160, 160]).processed.url if self.file.attached?
   end
   
+  def file_1024_768_url
+    self.file.representation(resize_to_limit: [1024, 768]).processed.url if self.file.attached?
+  end
+  
   private
     def add_notification
       return if self.is_private

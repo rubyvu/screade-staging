@@ -174,15 +174,13 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :user_videos, only: [:update], param: :username, username: User::USERNAME_ROUTE_FORMAT do
+  resources :user_videos, only: [:create, :update], param: :username, username: User::USERNAME_ROUTE_FORMAT do
     member do
       get :videos
-      get :webhook
     end
     
     collection do
       delete :destroy
-      get :processed_urls
     end
   end
   
@@ -358,10 +356,10 @@ Rails.application.routes.draw do
         end
       end
       
-      resources :user_images, only: [:update]
+      resources :user_images, only: [:create, :update]
       resources :user_locations, only: [:index, :create]
       resources :user_security_questions, only: [:index]
-      resources :user_videos, only: [:update]
+      resources :user_videos, only: [:create, :update]
       resources :users, only: [:show], param: :username, username: User::USERNAME_ROUTE_FORMAT do
         resources :squad_members, only: [:index]
       end

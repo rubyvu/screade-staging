@@ -10,6 +10,6 @@ class UserImageSerializer < ActiveModel::Serializer
   
   attribute :rectangle_1024_768_url
   def rectangle_1024_768_url
-    object.file.rectangle_1024_768.url
+    object.file_1024_768_url
   end
 end

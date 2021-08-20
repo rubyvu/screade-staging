@@ -25,9 +25,14 @@ class Api::V1::PostsController < Api::V1::ApiController
   # POST /api/v1/posts
   def create
     post = Post.new(post_params)
-    post.remote_image_url = @user_image&.file&.url
     post.user = current_user
     if post.save
+      # Attach UserImage file as Post image
+      if @user_image&.file_url.present?
+        user_image = URI.parse(@user_image.file_url).open
+        post.image.attach(io: user_image, filename: SecureRandom.hex(16))
+      end
+      
       post_json = PostSerializer.new(post, current_user: current_user).as_json
       render json: { post: post_json }, status: :ok
     else
@@ -37,8 +42,13 @@ class Api::V1::PostsController < Api::V1::ApiController
   
   # PUT/PATCH /api/v1/posts/:id
   def update
-    @post.remote_image_url = @user_image&.file&.url
     if @post.update(post_params)
+      # Attach UserImage file as Post image
+      if @user_image&.file_url.present?
+        user_image = URI.parse(@user_image.file_url).open
+        @post.image.attach(io: user_image, filename: SecureRandom.hex(16))
+      end
+      
       post_json = PostSerializer.new(@post, current_user: current_user).as_json
       render json: { post: post_json }, status: :ok
     else
