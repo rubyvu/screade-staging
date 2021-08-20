@@ -2,7 +2,7 @@ class UserLocationSerializer < ActiveModel::Serializer
   
   attribute :profile_picture
   def profile_picture
-    object&.profile_picture&.square_320&.url || ActionController::Base.helpers.asset_pack_path('media/images/placeholders/placeholder-user-profile.png')
+    object&.profile_picture_url || ActionController::Base.helpers.asset_pack_path('media/images/placeholders/placeholder-user-profile.png')
   end
   
   attribute :username

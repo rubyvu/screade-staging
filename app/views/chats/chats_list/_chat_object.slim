@@ -2,8 +2,8 @@
   .photo
     - if chat.icon&.url
       = image_tag(chat.icon&.rectangle_150_150.url, class: 'profile-image')
-    - elsif chat.owner&.profile_picture&.url
-      = image_tag(chat.owner.profile_picture.square_320.url, class: 'profile-image')
+    - elsif chat.owner&.profile_picture_url
+      = image_tag(chat.owner.profile_picture_url, class: 'profile-image')
     - else
       = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
       

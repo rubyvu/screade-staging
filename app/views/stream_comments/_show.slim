@@ -1,8 +1,8 @@
 .comment-wrapper
   .comment-image-wrapper
     = link_to user_path(comment.user.username) do
-      - if comment.user.profile_picture.url
-        = image_tag(comment.user.profile_picture.square_320.url, class: 'profile-image')
+      - if comment.user.profile_picture_url
+        = image_tag(comment.user.profile_picture_url, class: 'profile-image')
       - else
         = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
     

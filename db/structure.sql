@@ -1328,7 +1328,7 @@ CREATE TABLE public.streams (
     stream_comments_count integer DEFAULT 0 NOT NULL,
     views_count integer DEFAULT 0 NOT NULL,
     lits_count integer DEFAULT 0 NOT NULL,
-    in_progress_started_at timestamp without time zone DEFAULT '2021-08-17 09:54:35.241827'::timestamp without time zone
+    in_progress_started_at timestamp without time zone DEFAULT '2021-08-20 12:51:57.301826'::timestamp without time zone
 );
 
 
@@ -1569,8 +1569,6 @@ CREATE TABLE public.users (
     id bigint NOT NULL,
     first_name character varying,
     last_name character varying,
-    profile_picture character varying,
-    profile_picture_hex character varying,
     phone_number character varying,
     birthday date,
     email character varying DEFAULT ''::character varying NOT NULL,
@@ -1586,8 +1584,6 @@ CREATE TABLE public.users (
     locked_at timestamp without time zone,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    banner_picture character varying,
-    banner_picture_hex character varying,
     username character varying NOT NULL,
     user_security_question_id integer NOT NULL,
     security_question_answer character varying NOT NULL,
@@ -2781,6 +2777,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210811112849'),
 ('20210812103022'),
 ('20210817094641'),
-('20210817125538');
+('20210817125538'),
+('20210820124906');
 
 

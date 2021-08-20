@@ -1,8 +1,8 @@
 .user-profile-wrapper
   .user-profile-header
     .user-profile-banner-wrapper
-      - if @user.banner_picture.url.present?
-        = image_tag(@user.banner_picture.url, class: 'user-profile-banner')
+      - if @user.banner_picture_url.present?
+        = image_tag(@user.banner_picture_url, class: 'user-profile-banner')
       - else
         = image_pack_tag('media/images/placeholders/placeholder-banner-profile.png', class: 'user-profile-banner')
       
@@ -11,8 +11,8 @@
           = image_pack_tag('media/images/icons/ic_edit.png', class: 'user-profile-edit')
         
     .user-profile-avatar-wrapper
-      - if @user.profile_picture.url
-        = image_tag(@user.profile_picture.square_320.url)
+      - if @user.profile_picture_url
+        = image_tag(@user.profile_picture_url)
       - else
         = image_pack_tag('media/images/placeholders/placeholder-user-profile.png')
     

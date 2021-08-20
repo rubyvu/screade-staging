@@ -13,8 +13,8 @@ class User < ApplicationRecord
   USERNAME_ROUTE_FORMAT = /[^\/]+/  # Alow .(dot) in username for URL
   
   # File Uploader
-  mount_uploader :profile_picture, AvatarUploader
-  mount_uploader :banner_picture, BannerUploader
+  has_one_attached :profile_picture
+  has_one_attached :banner_picture
   
   # Callbacks
   after_commit :set_user_settings, on: [:create]
@@ -85,6 +85,14 @@ class User < ApplicationRecord
   
   def username=(value)
     super(value&.downcase&.strip)
+  end
+  
+  def profile_picture_url
+    self.profile_picture.representation(resize_to_limit: [320, 320]).processed.url if self.profile_picture.attached?
+  end
+  
+  def banner_picture_url
+    self.banner_picture.representation(resize_to_limit: [300, 250]).processed.url if self.banner_picture.attached?
   end
   
   def is_group_subscription(group)

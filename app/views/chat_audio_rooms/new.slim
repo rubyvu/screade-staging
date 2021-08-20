@@ -5,8 +5,8 @@
 .audio-chat-content#audio-chat-content
   .audio-main-content-wrapper
     .main-content.self-user
-      - if current_user.profile_picture.url
-        = image_tag(current_user.profile_picture.square_320.url, class: 'user-icon')
+      - if current_user.profile_picture_url
+        = image_tag(current_user.profile_picture_url, class: 'user-icon')
       - else
         = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'user-icon')
         

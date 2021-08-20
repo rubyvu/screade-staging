@@ -246,6 +246,12 @@ Rails.application.routes.draw do
         end
       end
       
+      resources :direct_uploads do
+        collection do
+          get :generate_link
+        end
+      end
+      
       resources :events, only: [:index, :create, :update, :destroy]
       resources :forgot_password, only: [:create] do
         collection do

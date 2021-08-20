@@ -2,8 +2,8 @@
   .message-wrapper
     .photo-wrapper
       .photo
-        - if chat_message.user.profile_picture.url
-          = image_tag(chat_message.user.profile_picture.square_320.url, class: 'profile-image')
+        - if chat_message.user.profile_picture_url
+          = image_tag(chat_message.user.profile_picture_url, class: 'profile-image')
         - else
           = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
     

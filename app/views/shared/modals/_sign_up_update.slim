@@ -11,14 +11,14 @@
         .global-errors
         = form_for resource, url: current_user_index_path(), namespace: 'sign_up_update', method: :put do |f|
           
-          = f.file_field :banner_picture, accept: 'image/png, image/jpeg', class: 'sign-up-user-image'
+          = f.file_field :banner_picture, direct_upload: true, accept: 'image/png, image/jpeg', class: 'sign-up-user-image'
           
           .banner-image-mask#banner-image-mask
             img#banner-image.user-banner-image src=''
             = image_pack_tag 'media/images/icons/ic_add_banner.png', class: 'icon-add-banner', id: 'icon-add-banner'
               
           .profile-wrapper
-            = f.file_field :profile_picture, accept: 'image/png, image/jpeg', class: 'sign-up-user-image'
+            = f.file_field :profile_picture, direct_upload: true, accept: 'image/png, image/jpeg', class: 'sign-up-user-image'
             
             .profile-image-mask#profile-image-mask
               img#profile-image.user-profile-image src=''
