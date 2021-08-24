@@ -1,8 +1,7 @@
 ActiveAdmin.register NewsCategory, as: 'Group' do
   
   # Actions
-  # actions :all, except: [:edit, :update] TODO: return after deploy
-  actions :all
+  actions :all, except: [:edit, :update]
   
   # Filters
   filter :title
