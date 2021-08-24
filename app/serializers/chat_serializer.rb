@@ -13,7 +13,7 @@ class ChatSerializer < ActiveModel::Serializer
   
   attribute :icon
   def icon
-    object&.icon&.rectangle_150_150&.url
+    object&.icon_url
   end
   
   attribute :last_message

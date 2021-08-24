@@ -6,9 +6,9 @@ class ChatMessage < ApplicationRecord
   ROOM_SOURCE_TYPES = %w(ChatVideoRoom ChatAudioRoom)
   
   # File Uploader
-  mount_uploader :image, ChatImageUploader
-  mount_uploader :video, ChatVideoUploader
-  mount_uploader :audio_record, ChatAudioUploader
+  has_one_attached :image
+  has_one_attached :video
+  has_one_attached :audio_record
   
   # Callbacks
   after_validation :increase_unread_messages_counter, on: :create
@@ -32,6 +32,22 @@ class ChatMessage < ApplicationRecord
   validates :message_type, presence: true, inclusion: { in: ChatMessage::TYPES_LIST }
   validate :type_content_is_present
   validate :chat_membership
+  
+  def image_url
+    self.image.representation(resize_to_limit: [300, 300]).processed.url if self.image.attached?
+  end
+  
+  def video_url
+    self.video.url if self.video.attached?
+  end
+  
+  def video_thumbnail_url
+    self.video.preview(resize_to_limit: [300, 300]).processed.url if self.video.attached?
+  end
+  
+  def audio_record_url
+    self.audio_record.url if self.audio_record.attached?
+  end
   
   private
     # Validations
@@ -67,8 +83,6 @@ class ChatMessage < ApplicationRecord
     
     def broadcast_chat_message
       # Broadcast message
-      return if message_type == 'audio' # Audio saved on Carrierwave uploader. Bug https://github.com/carrierwaveuploader/carrierwave-mongoid/issues/129
-      
       render_message_template = ApplicationController.renderer.render(partial: 'chat_messages/message_to_broadcast', locals: { chat_message: self })
       
       self.chat.chat_memberships.each do |chat_membership|

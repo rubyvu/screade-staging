@@ -1,6 +1,5 @@
 class UserVideoSerializer < ActiveModel::Serializer
   
-  attribute :file_hex
   attribute :file_thumbnail
   def file_thumbnail
     object.file_thumbnail_url

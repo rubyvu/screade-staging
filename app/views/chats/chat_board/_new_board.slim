@@ -2,8 +2,8 @@
 .chat-info
   .main-info
     .photo
-      - if @chat.icon&.url
-        = image_tag(@chat.icon&.rectangle_150_150.url, class: 'profile-image')
+      - if @chat.icon_url.present?
+        = image_tag(@chat.icon_url, class: 'profile-image')
       - elsif @chat.owner&.profile_picture_url
         = image_tag(@chat.owner.profile_picture_url, class: 'profile-image')
       - else

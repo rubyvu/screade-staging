@@ -21,24 +21,24 @@ class ChatMessageSerializer < ActiveModel::Serializer
     case object.message_type
     when 'image'
       if object.image.present?
-        object.image.url
+        object.image_url
       elsif object.asset_source.present?
-        object.asset_source.file.url
+        object.asset_source&.file_url
       else
         nil
       end
     when 'video'
       if object.video.present?
-        object.video.url
+        object.video_url
       elsif object.asset_source.present?
-        object.asset_source.file.url
+        object.asset_source&.file_url
       else
         nil
       end
     when 'text'
       object.text
     when 'audio'
-      object.audio_record.url
+      object.audio_record_url
     when 'video-room'
       ChatVideoRoomSerializer.new(object.chat_room_source).as_json
     when 'audio-room'

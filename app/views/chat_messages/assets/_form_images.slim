@@ -1,8 +1,9 @@
 .post-images-wrapper
   - if chat_images.present?
     - chat_images.each do |image|
-      .image-card
-        = image_tag(image.file_160_160_url, data: {'image-url': image.file.url, 'image-id': image.id })
+      - if image.file_url
+        .image-card
+          = image_tag(image.file_160_160_url, data: {'image-url': image.file_url, 'image-id': image.id })
   - else
     = link_to 'Your image library is empty', images_user_image_path(current_user.username)
 

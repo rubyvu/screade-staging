@@ -1,22 +1,20 @@
 .user-profile-assets-wrapper
   .user-profile-assets.full-list
     - @videos.each do |user_video|
-      .image-wrapper.custom-size.video
-        - if user_video.file_url.present?
+      - if user_video.file_url.present?
+        .image-wrapper.custom-size.video
           = image_tag(user_video.file_thumbnail_url, class: 'user-asset video', data: { 'video-url': user_video.file_url, 'video-loaded': user_video.file_url.present?, 'video-id': user_video.id })
-        - else
-          = image_tag(user_video.file_url, class: 'user-asset video', data: { 'video-loaded': user_video.file_url.present?, 'video-id': user_video.id })
-        
-        - if user_video.user == current_user
-          - if user_video.is_private
-            = link_to user_video_path(id: user_video.id, user_video: { is_private: false}), class: 'update-asset', method: :put, data: { confirm: 'Do you really want make this Video Public?' } do
-              = image_pack_tag('media/images/icons/ic_private.png')
-          - else
-            = link_to user_video_path(id: user_video.id, user_video: { is_private: true}), class: 'update-asset', method: :put, data: { confirm: 'Do you really want make this Video Private?' } do
-              = image_pack_tag('media/images/icons/ic_public.png')
-              
-          = link_to user_videos_path(id: user_video.id), class: 'destroy-asset', method: :delete, data: { confirm: 'Do you really want to delete this Video?' }  do
-            = image_pack_tag('media/images/icons/ic_delete_object.png')
+          
+          - if user_video.user == current_user
+            - if user_video.is_private
+              = link_to user_video_path(id: user_video.id, user_video: { is_private: false}), class: 'update-asset', method: :put, data: { confirm: 'Do you really want make this Video Public?' } do
+                = image_pack_tag('media/images/icons/ic_private.png')
+            - else
+              = link_to user_video_path(id: user_video.id, user_video: { is_private: true}), class: 'update-asset', method: :put, data: { confirm: 'Do you really want make this Video Private?' } do
+                = image_pack_tag('media/images/icons/ic_public.png')
+                
+            = link_to user_videos_path(id: user_video.id), class: 'destroy-asset', method: :delete, data: { confirm: 'Do you really want to delete this Video?' }  do
+              = image_pack_tag('media/images/icons/ic_delete_object.png')
         
 .mt-4.d-flex.justify-content-end
     = render 'form', image_uploader: @video_uploader unless @video_uploader.nil?

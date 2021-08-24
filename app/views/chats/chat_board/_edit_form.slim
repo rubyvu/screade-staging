@@ -5,7 +5,7 @@
     
   .material-field
     = f.label 'Group icon'
-    = f.file_field :icon, class: 'form-control', style: 'display: none', accept: 'image/png, image/jpeg'
+    = f.file_field :icon, direct_upload: true, class: 'form-control', style: 'display: none', accept: 'image/png, image/jpeg'
     
     .chat-icon-mask#edit-icon-mask
       - if @chat.icon.present?

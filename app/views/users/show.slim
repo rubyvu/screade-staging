@@ -102,6 +102,7 @@
       
       .user-profile-assets
         - @images.each do |user_image|
+          - next if user_image.file_url.blank?
           .image-wrapper
             = image_tag(user_image.file_url, class: 'user-asset', data: { 'enlargeable': true })
     - elsif @user == current_user
@@ -119,8 +120,9 @@
       
       .user-profile-assets
         - @videos.each do |user_video|
-          .image-wrapper.video
-            = image_tag(user_video.file_thumbnail_url, class: 'user-asset', data: { 'video-id': user_video.id, 'video-url': user_video.file_url })
+          - if user_video.file_url.present?
+            .image-wrapper.video
+              = image_tag(user_video.file_thumbnail_url, class: 'user-asset', data: { 'video-id': user_video.id, 'video-url': user_video.file_url })
     - elsif @user == current_user
       .new-assets
         = link_to 'Your video library is empty', videos_user_video_path(@user.username)

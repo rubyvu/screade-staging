@@ -502,12 +502,6 @@ CREATE TABLE public.chat_messages (
     user_id integer NOT NULL,
     message_type character varying NOT NULL,
     text character varying,
-    image character varying,
-    image_hex character varying,
-    video character varying,
-    video_hex character varying,
-    audio_record character varying,
-    audio_record_hex character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     asset_source_id integer,
@@ -578,8 +572,6 @@ ALTER SEQUENCE public.chat_video_rooms_id_seq OWNED BY public.chat_video_rooms.i
 CREATE TABLE public.chats (
     id bigint NOT NULL,
     name character varying,
-    icon character varying,
-    icon_hex character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     owner_id integer NOT NULL,
@@ -2772,6 +2764,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210820135332'),
 ('20210820142828'),
 ('20210820150506'),
-('20210820175846');
+('20210820175846'),
+('20210820185235'),
+('20210820193107');
 
 
