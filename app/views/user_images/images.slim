@@ -1,8 +1,9 @@
 .user-profile-assets-wrapper
   .user-profile-assets.full-list
     - @images.each do |user_image|
+      - next if user_image.file_url.blank?
       .image-wrapper.custom-size
-        = image_tag(user_image.file.url, class: 'user-asset', data: { 'enlargeable': true, 'image-loaded': user_image.file.present?, 'image-id': user_image.id })
+        = image_tag(user_image.file_url, class: 'user-asset', data: { 'enlargeable': true, 'image-loaded': user_image.file_url.present?, 'image-id': user_image.id })
         
         - if user_image.user == current_user
           - if user_image.is_private

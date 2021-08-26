@@ -1,5 +1,5 @@
 class UserImage < ApplicationRecord
-  mount_uploader :file, UserImageUploader
+  has_one_attached :file
   
   # Constants
   IMAGE_RESOLUTIONS = %w(png jpeg jpg)
@@ -14,6 +14,18 @@ class UserImage < ApplicationRecord
   
   # Association validation
   validates :user, presence: true
+  
+  def file_url
+    self.file.url if self.file.attached?
+  end
+  
+  def file_160_160_url
+    self.file.representation(resize_to_limit: [160, 160]).processed.url if self.file.attached?
+  end
+  
+  def file_1024_768_url
+    self.file.representation(resize_to_limit: [1024, 768]).processed.url if self.file.attached?
+  end
   
   private
     def add_notification

@@ -1,7 +1,7 @@
 class Chat < ApplicationRecord
   
   # File Uploader
-  mount_uploader :icon, ChatIconUploader
+  has_one_attached :icon
   
   # Callbacks
   before_validation :generate_access_token, on: :create
@@ -32,6 +32,10 @@ class Chat < ApplicationRecord
     self.chat_messages.order(id: :desc).first
   end
   
+  def icon_url
+    self.icon.url if self.icon.attached?
+  end
+  
   private
     def set_default_chat_name
       self.name = owner.full_name if self.name.blank? && owner.present?
@@ -51,7 +55,9 @@ class Chat < ApplicationRecord
     # Broadcast Chat State
     def broadcast_chat_state
       render_chat_state_template = ApplicationController.renderer.render(partial: 'chats/chats_list/chat_object', locals: { chat: self, is_message_counter: false })
-      ActionCable.server.broadcast "chat_state_channel", chat_json: ChatSerializer.new(self).as_json, chat_html: render_chat_state_template
+      self.chat_memberships.each do |chat_membership|
+        ActionCable.server.broadcast "#{chat_membership.user.username}_chat_state_channel", chat_json: ChatSerializer.new(self).as_json, chat_html: render_chat_state_template
+      end
     end
     
     def broadcast_new_user_chat

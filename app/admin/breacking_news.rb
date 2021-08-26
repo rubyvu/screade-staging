@@ -27,8 +27,8 @@ ActiveAdmin.register BreakingNews do
         end
         
         column 'Id' do |post|
-          if post.image.present?
-            image_tag post.image.url, class: 'admin-index-image'
+          if post.image_url.present?
+            image_tag post.image_url, class: 'admin-index-image'
           else
             image_pack_tag('media/images/placeholders/placeholder-news.png', class: 'admin-index-image')
           end

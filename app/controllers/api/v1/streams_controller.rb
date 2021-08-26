@@ -67,8 +67,17 @@ class Api::V1::StreamsController < Api::V1::ApiController
   
   # PUT/PATCH /api/v1/streams/:access_token
   def update
-    @stream.status == 'finished' if stream_update_params[:video].present? && @stream.status == 'completed'
-    if @stream.update(stream_update_params)
+    if stream_update_params[:video].present? && @stream.status == 'completed'
+      begin
+        @stream.video.attach(stream_update_params[:video])
+        @stream.status = 'finished'
+      rescue
+        render json: { errors: ['Video is not exists.'] }, status: :unprocessable_entity
+        return
+      end
+    end
+      
+    if @stream.update(stream_update_params.except(:video))
       stream_json = StreamSerializer.new(@stream, current_user: current_user).as_json
       render json: { stream: stream_json }, status: :ok
     else

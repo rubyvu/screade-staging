@@ -15,7 +15,6 @@ class ChatMessagesController < ApplicationController
     @chat_message.chat = @chat
     @chat_message.user = current_user
     
-    @chat_message.audio_record = @audio_record if @audio_record.present?
     @chat_message.asset_source = @user_image if @user_image.present?
     @chat_message.asset_source = @user_video if @user_video.present?
     

@@ -13,8 +13,8 @@ ActiveAdmin.register Post do
   index do
     column :id
     column :image do |post|
-      if post.image.present?
-        image_tag post.image.url, class: 'admin-index-image'
+      if post.image_url.present?
+        image_tag post.image_url, class: 'admin-index-image'
       else
         image_pack_tag('media/images/placeholders/placeholder-news.png', class: 'admin-index-image')
       end
@@ -53,7 +53,7 @@ ActiveAdmin.register Post do
     
     f.inputs do
       if object.new_record? || object.user.username == 'admin.screade'
-        f.input :image, input_html: { accept: 'image/png, image/jpeg' }
+        f.input :image, as: :file, input_html: { direct_upload: true, accept: 'image/png, image/jpeg' }
         f.input :title
         f.input :description
         

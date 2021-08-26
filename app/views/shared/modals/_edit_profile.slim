@@ -10,7 +10,7 @@
         .global-errors
         = form_for current_user, url: current_user_index_path(), namespace: 'update_profile', method: :put do |f|
           
-          = f.file_field :banner_picture, accept: 'image/png, image/jpeg', class: 'sign-up-user-image'
+          = f.file_field :banner_picture, direct_upload: true, accept: 'image/png, image/jpeg', class: 'sign-up-user-image'
           
           .banner-image-mask#edit-banner-image-mask
             - if current_user.banner_picture.present?
@@ -21,11 +21,11 @@
               = image_pack_tag 'media/images/icons/ic_add_banner.png', class: 'icon-add-banner', id: 'icon-add-banner'
               
           .profile-wrapper
-            = f.file_field :profile_picture, accept: 'image/png, image/jpeg', class: 'sign-up-user-image'
+            = f.file_field :profile_picture, direct_upload: true, accept: 'image/png, image/jpeg', class: 'sign-up-user-image'
             
             .profile-image-mask#edit-profile-image-mask
-              - if current_user.profile_picture.present?
-                img#profile-image.user-profile-image style= "display: inline;" src="#{current_user.profile_picture.square_320.url}"
+              - if current_user.profile_picture_url.present?
+                img#profile-image.user-profile-image style= "display: inline;" src="#{current_user.profile_picture_url}"
                 = image_pack_tag 'media/images/icons/btn_add_photo.png', class: 'icon-add-profile', id: 'icon-add-profile', style: 'display:none;'
               - else
                 img#profile-image.user-profile-image src=''

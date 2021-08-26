@@ -10,7 +10,7 @@ class Stream < ApplicationRecord
   # Constants
   STATUS_LIST = %w(pending in-progress completed finished failed)
   GROUP_TYPES = %w(NewsCategory Topic)
-  VIDEO_RESOLUTIONS = %w(mp4)
+  # VIDEO_RESOLUTIONS = %w(mp4)
   
   # Callbacks
   before_validation :generate_access_token, on: :create
@@ -21,8 +21,8 @@ class Stream < ApplicationRecord
   before_destroy :check_for_status, prepend: true
   
   # File Uploader
-  mount_uploader :image, StreamImageUploader
-  mount_uploader :video, StreamVideoUploader
+  has_one_attached :video
+  has_one_attached :image
   
   # Associations
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
@@ -59,6 +59,14 @@ class Stream < ApplicationRecord
   
   def is_viewed(user)
     user.present? && self.viewing_users.include?(user)
+  end
+  
+  def image_url
+    self.image.url if self.image.attached?
+  end
+  
+  def video_url
+    self.video.url if self.video.attached?
   end
   
   private

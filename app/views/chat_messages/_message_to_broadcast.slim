@@ -2,8 +2,8 @@
   .message-wrapper
     .photo-wrapper
       .photo
-        - if chat_message.user.profile_picture.url
-          = image_tag(chat_message.user.profile_picture.square_320.url, class: 'profile-image')
+        - if chat_message.user.profile_picture_url
+          = image_tag(chat_message.user.profile_picture_url, class: 'profile-image')
         - else
           = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
     
@@ -20,22 +20,22 @@
         - when 'image'
           .image
             - if chat_message.image.present?
-              = image_tag(chat_message.image.url)
-            - elsif chat_message.asset_source.present?
-              = image_tag(chat_message.asset_source.file.url)
+              = image_tag(chat_message.image_url)
+            - elsif chat_message.asset_source&.file_url.present?
+              = image_tag(chat_message.asset_source.file_url)
             - else
               = image_pack_tag('media/images/placeholders/placeholder-news.png')
               
         - when 'video'
           .video
             - if chat_message.video.present?
-              video controls="" width="350"
-                source src="#{chat_message.video.url}" type="video/mp4"
+              video controls="" width="350" height="250" preload="none"
+                source src="#{chat_message.video_url}" type="video/mp4"
                   span Sorry, your browser doesn't support embedded videos.
                     
-            - elsif chat_message.asset_source.present?
+            - elsif chat_message.asset_source&.file_url.present?
               video controls="" width="350" height="250" preload="none"
-                source src="#{chat_message.asset_source.file.url}" type="video/mp4"
+                source src="#{chat_message.asset_source&.file_url}" type="video/mp4"
                   span Sorry, your browser doesn't support embedded videos.
             - else
               span Video record cannot be played.
@@ -44,7 +44,7 @@
           .audio
             - if chat_message.audio_record.present?
               audio controls="" preload="none"
-                source src="#{chat_message.audio_record.url}" type="audio/wav"
+                source src="#{chat_message.audio_record_url}" type="audio/wav"
                 span Your browser does not support the audio element.
                 
             - else

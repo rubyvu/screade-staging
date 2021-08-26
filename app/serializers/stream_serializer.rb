@@ -34,7 +34,7 @@ class StreamSerializer < ActiveModel::Serializer
   
   attribute :image
   def image
-    object&.image&.rectangle_300_250&.url
+    object&.image_url
   end
   
   attribute :lits_count
@@ -61,7 +61,7 @@ class StreamSerializer < ActiveModel::Serializer
   
   attribute :video
   def video
-    object.video&.url
+    object.video_url
   end
   
   attribute :views_count

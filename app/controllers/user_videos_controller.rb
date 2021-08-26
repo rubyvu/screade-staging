@@ -1,30 +1,21 @@
 class UserVideosController < ApplicationController
-  before_action :set_user, only: [:videos, :webhook]
+  before_action :set_user, only: [:videos]
   
   # GET /user_videos/:username/videos
   def videos
     options = {}
     options[:is_private] = false if @user != current_user
     @videos = @user.user_videos.where(options).order(updated_at: :desc).page(params[:page]).per(24)
-    
-    if @user == current_user
-      @video_uploader = UserVideo.new.file
-      @video_uploader.success_action_redirect = webhook_user_video_url(username: params[:username])
-      @video_uploader.policy(enforce_utf8: false)
-    else
-      @video_uploader = nil
-    end
+    @video_uploader = nil
+    @video_uploader = UserVideo.new if @user == current_user
   end
   
-  # GET /user_videos/:username/webhook
-  def webhook
-    key = params[:key]
-    if key.present? && UserVideo::VIDEO_RESOLUTIONS.include?(key.split('.').last)
-      new_user_video = UserVideo.create(user: current_user)
-      CreateUserAssetsJob.perform_later('UserVideo', new_user_video.id, key)
-    end
-    
-    redirect_to videos_user_video_path(username: params[:username])
+  # POST /user_videos/
+  def create
+    user_video = UserVideo.new(user_video_params)
+    user_video.user = current_user
+    user_video.save
+    redirect_to videos_user_video_path(username: current_user.username)
   end
   
   # PUT/PATCH /user_videos/:id
@@ -41,19 +32,12 @@ class UserVideosController < ApplicationController
     redirect_to videos_user_video_path(username: current_user.username)
   end
   
-  # GET /user_videos/processed_urls
-  def processed_urls
-    user_videos = UserVideo.where(id: params[:ids])
-    videos_json = ActiveModel::Serializer::CollectionSerializer.new(user_videos, serializer: UserVideoSerializer).as_json
-    render json: { videos: videos_json }, status: :ok
-  end
-  
   private
     def set_user
       @user = User.find_by!(username: params[:username])
     end
     
     def user_video_params
-      params.require(:user_video).permit(:is_private)
+      params.require(:user_video).permit(:file, :is_private)
     end
 end

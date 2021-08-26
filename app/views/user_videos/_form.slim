@@ -1,8 +1,8 @@
-= direct_upload_form_for @video_uploader do |f|
-  = f.file_field :image, accept: 'video/mp4', class: 'upload-user-asset'
+= form_for @video_uploader do |f|
+  = f.file_field :file, direct_upload: true, accept: 'video/mp4', class: 'upload-user-asset'
   
   #container-floating-wrapper
     #container-floating
-      = f.label :image do
+      = f.label :file do
         #floating-button
           p.plus #{image_pack_tag('media/images/icons/ic_plus.png')} Add Video

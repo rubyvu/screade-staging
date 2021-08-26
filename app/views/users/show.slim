@@ -1,8 +1,8 @@
 .user-profile-wrapper
   .user-profile-header
     .user-profile-banner-wrapper
-      - if @user.banner_picture.url.present?
-        = image_tag(@user.banner_picture.url, class: 'user-profile-banner')
+      - if @user.banner_picture_url.present?
+        = image_tag(@user.banner_picture_url, class: 'user-profile-banner')
       - else
         = image_pack_tag('media/images/placeholders/placeholder-banner-profile.png', class: 'user-profile-banner')
       
@@ -11,8 +11,8 @@
           = image_pack_tag('media/images/icons/ic_edit.png', class: 'user-profile-edit')
         
     .user-profile-avatar-wrapper
-      - if @user.profile_picture.url
-        = image_tag(@user.profile_picture.square_320.url)
+      - if @user.profile_picture_url
+        = image_tag(@user.profile_picture_url)
       - else
         = image_pack_tag('media/images/placeholders/placeholder-user-profile.png')
     
@@ -59,8 +59,8 @@
           - @posts.each do |post|
             .posts-card value="#{post.id}"
               .posts-image-wrapper
-                - if post.image.present?
-                  = image_tag(post.image.url, class: 'post-image', onerror: "this.error=null;this.src='#{asset_pack_path('media/images/placeholders/placeholder-news.png')}'")
+                - if post.image_url.present?
+                  = image_tag(post.image_url, class: 'post-image', onerror: "this.error=null;this.src='#{asset_pack_path('media/images/placeholders/placeholder-news.png')}'")
                 - else
                   = image_pack_tag('media/images/placeholders/placeholder-news.png', class: 'post-image')
                 
@@ -102,8 +102,9 @@
       
       .user-profile-assets
         - @images.each do |user_image|
+          - next if user_image.file_url.blank?
           .image-wrapper
-            = image_tag(user_image.file.url, class: 'user-asset', data: { 'enlargeable': true })
+            = image_tag(user_image.file_url, class: 'user-asset', data: { 'enlargeable': true })
     - elsif @user == current_user
       .new-assets
         = link_to 'Your image library is empty', images_user_image_path(@user.username)
@@ -119,8 +120,9 @@
       
       .user-profile-assets
         - @videos.each do |user_video|
-          .image-wrapper.video
-            = image_tag(user_video.file.thumb.url, class: 'user-asset', data: { 'video-id': user_video.id, 'video-url': user_video.file.url })
+          - if user_video.file_url.present?
+            .image-wrapper.video
+              = image_tag(user_video.file_thumbnail_url, class: 'user-asset', data: { 'video-id': user_video.id, 'video-url': user_video.file_url })
     - elsif @user == current_user
       .new-assets
         = link_to 'Your video library is empty', videos_user_video_path(@user.username)

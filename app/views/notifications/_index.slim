@@ -5,8 +5,8 @@
     = link_to notification_link_path(notification), class: 'dropdown-item notification', data: { id: notification.id } do
       - if notification.is_user_type?
         .notification-image
-          - if notification.sender.profile_picture.url
-            = image_tag(notification.sender.profile_picture.square_320.url, class: 'profile-image')
+          - if notification.sender.profile_picture_url
+            = image_tag(notification.sender.profile_picture_url, class: 'profile-image')
           - else
             = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
       - else

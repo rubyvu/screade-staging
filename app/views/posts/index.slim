@@ -17,8 +17,8 @@
                 = image_pack_tag('media/images/icons/ic_delete_object.png')
               
         .posts-image-wrapper
-          - if post.image.present?
-            = image_tag(post.image.url, class: 'post-image', onerror: "this.error=null;this.src='#{asset_pack_path('media/images/placeholders/placeholder-news.png')}'")
+          - if post.image_url.present?
+            = image_tag(post.image_url, class: 'post-image', onerror: "this.error=null;this.src='#{asset_pack_path('media/images/placeholders/placeholder-news.png')}'")
           - else
             = image_pack_tag('media/images/placeholders/placeholder-news.png', class: 'post-image')
           

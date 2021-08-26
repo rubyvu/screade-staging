@@ -2,7 +2,7 @@ class UserSerializer < ActiveModel::Serializer
   
   attribute :banner_picture
   def banner_picture
-    object&.banner_picture&.rectangle_300_250.url
+    object&.banner_picture_url
   end
   
   attribute :birthday
@@ -44,7 +44,7 @@ class UserSerializer < ActiveModel::Serializer
   
   attribute :profile_picture
   def profile_picture
-    object.profile_picture.square_320.url
+    object.profile_picture_url
   end
   
   attribute :squad_members_count

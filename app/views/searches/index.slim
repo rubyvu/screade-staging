@@ -8,8 +8,8 @@ h5.mt-4.mb-4 Search results
     - @search_result[:users_top].each do |user|
       .search-result-card
         = link_to user_path(user.username), class: 'search-title' do
-          - if user.profile_picture.url
-            = image_tag(user.profile_picture.square_320.url, class: 'profile-image')
+          - if user.profile_picture_url
+            = image_tag(user.profile_picture_url, class: 'profile-image')
           - else
             = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
             

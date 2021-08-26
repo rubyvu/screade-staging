@@ -2,8 +2,8 @@
   .post-info-wrapper
     .user-info-wrapper
       = link_to user_path(post.user.username) do
-        - if post.user.profile_picture.url
-          = image_tag(post.user.profile_picture.square_320.url, class: 'profile-image')
+        - if post.user.profile_picture_url
+          = image_tag(post.user.profile_picture_url, class: 'profile-image')
         - else
           = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
           
@@ -14,9 +14,9 @@
     - if !post.is_approved
       p.post-status On approve
   
-  - if post.image.present?
+  - if post.image_url.present?
     .full-image-wrapper
-      = image_tag(post.image.url, class: '', onerror: "this.error=null;this.src='#{asset_pack_path('media/images/placeholders/placeholder-news.png')}'")
+      = image_tag(post.image_url, class: '', onerror: "this.error=null;this.src='#{asset_pack_path('media/images/placeholders/placeholder-news.png')}'")
   - else
     = image_pack_tag('media/images/placeholders/placeholder-news.png', class: 'url-full-image')
     

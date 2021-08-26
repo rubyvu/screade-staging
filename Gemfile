@@ -63,9 +63,7 @@ gem 'aws-sdk-medialive'
 gem 'aws-sdk-mediastore'
 
 # File uploading
-gem 'carrierwave'
-gem 'carrierwave_direct'
-gem 'carrierwave-video-thumbnailer'
+gem 'image_processing', '1.2'
 gem 'mimemagic', '0.3.7'
 
 # Image processor for uploaded images with Carrierwave

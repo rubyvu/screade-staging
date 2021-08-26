@@ -2,8 +2,8 @@
   .stream-info-wrapper
     .user-info-wrapper
       = link_to user_path(stream.owner.username) do
-        - if stream.owner.profile_picture.url
-          = image_tag(stream.owner.profile_picture.square_320.url, class: 'profile-image')
+        - if stream.owner.profile_picture_url
+          = image_tag(stream.owner.profile_picture_url, class: 'profile-image')
         - else
           = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
           
@@ -13,16 +13,16 @@
   
   - if stream.status == 'in-progress'
   
-    video#my-video.video-js.vjs-default-skin.vjs-16-9.vjs-big-play-centered controls="" data-setup="{}" height="500px" poster="#{stream.image.url}" preload="auto" width="100%"
+    video#my-video.video-js.vjs-default-skin.vjs-16-9.vjs-big-play-centered controls="" data-setup="{}" height="500px" poster="#{stream.image_url}" preload="auto" width="100%"
       source src="#{stream.stream_url}" type="application/x-mpegURL"
       
       p.vjs-no-js
         | To view this video please enable JavaScript, and consider upgrading to a
         | web browser that
     
-  - elsif stream.video.url.present?
-    video#my-video.video-js.vjs-default-skin.vjs-16-9.vjs-big-play-centered controls="" data-setup="{}"  poster="#{stream.image.url}" preload="auto"
-      source src="#{stream.video.url}" type="video/mp4"
+  - elsif stream.video.attached?
+    video#my-video.video-js.vjs-default-skin.vjs-16-9.vjs-big-play-centered controls="" data-setup="{}"  poster="#{stream.image_url}" preload="auto"
+      source src="#{stream.video_url}" type="video/mp4"
       p.vjs-no-js
         | To view this video please enable JavaScript, and consider upgrading to a
         | web browser that

@@ -9,8 +9,8 @@
         .photo
           - squad_request.requestor == @user ? user = squad_request.receiver : user = squad_request.requestor
           = link_to user_path(user.username) do
-            - if user.profile_picture.url
-              = image_tag(user.profile_picture.square_320.url, class: 'profile-image md')
+            - if user.profile_picture_url
+              = image_tag(user.profile_picture_url, class: 'profile-image md')
             - else
               = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image md')
             

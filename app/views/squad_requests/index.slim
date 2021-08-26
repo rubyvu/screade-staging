@@ -7,8 +7,8 @@
     .squad-request-card
         .photo
           = link_to user_path(squad_request.requestor.username) do
-            - if squad_request.requestor.profile_picture.url
-              = image_tag(squad_request.requestor.profile_picture.square_320.url, class: 'profile-image md')
+            - if squad_request.requestor.profile_picture_url
+              = image_tag(squad_request.requestor.profile_picture_url, class: 'profile-image md')
             - else
               = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image md')
             

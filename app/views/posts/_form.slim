@@ -9,8 +9,8 @@
      = f.text_field :image_id, class: 'post-form-image'
      
      .post-form-image-mask#post-form-image-mask
-       - if post.image.present?
-         img#post-image.post-photo-image style= "display: inline;" src="#{post.image.url}"
+       - if post.image_url.present?
+         img#post-image.post-photo-image style= "display: inline;" src="#{post.image_url}"
          = image_pack_tag 'media/images/icons/ic_add_photo.png', class: 'icon-add-photo', id: 'icon-add-photo', style: 'display:none;'
        - else
          img#post-image.post-photo-image src=""
@@ -29,7 +29,7 @@
       - else
         - group = NewsCategory.find_by(title: 'general')
         = f.hidden_field :source, as: :text_field, value: "NewsCategory:#{group&.id}", required: true
-        = f.text_field :virtual_source, as: :text_field, value: group.title&.capitalize, class: 'form-control', readonly: true, required: true
+        = f.text_field :virtual_source, as: :text_field, value: group&.title&.capitalize, class: 'form-control', readonly: true, required: true
     
     .actions
       = f.submit 'Submit', class: 'btn btn-primary w-100'

@@ -23,8 +23,8 @@
                 = image_pack_tag('media/images/icons/ic_delete_object.png')
               
         .streams-image-wrapper
-          - if stream.image.present?
-            = image_tag(stream.image.url, class: 'stream-image', onerror: "this.error=null;this.src='#{asset_pack_path('media/images/placeholders/placeholder-news.png')}'")
+          - if stream.image_url.present?
+            = image_tag(stream.image_url, class: 'stream-image', onerror: "this.error=null;this.src='#{asset_pack_path('media/images/placeholders/placeholder-news.png')}'")
           - else
             = image_pack_tag('media/images/placeholders/placeholder-news.png', class: 'stream-image')
           

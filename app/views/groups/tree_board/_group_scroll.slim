@@ -5,7 +5,7 @@
       li.group-wrapper.root-level.noselect id="#{group_identifier}-#{group.class.name}-#{group.id}"
         .main-content class="#{current_user.is_group_subscription(group) && group_identifier == 'group-wrapper' ? 'active' : ''}" data-type="NewsCategory" id="#{group.id}" data-group-title="#{group.title.capitalize}"
           .title-wrapper
-            = image_tag group.image.url, class: 'main'
+            = image_tag group.image_url, class: 'main' if group.image_url.present?
             p #{group.title.capitalize}
           
           .counter-dropdown-wrapper
