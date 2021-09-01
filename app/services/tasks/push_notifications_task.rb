@@ -10,6 +10,9 @@ module Tasks
       
       fcm_client = FCM.new(ENV['FCM_PUSH_NOTIFICATION_KEY'])
       
+      sound = 'default'
+      sound = 'phone_bell.wav' if ['ChatVideoRoom', 'ChatAudioRoom'].include?(notification.source_type)
+      
       # Push Notification params
       options = {
         priority: 'high',
@@ -20,7 +23,7 @@ module Tasks
           title: "New #{notification.source_type}".titleize.humanize,
           body: notification.message,
           badge: notification.recipient.received_notifications.unviewed.count,
-          sound: 'default'
+          sound: sound
         }
       }
       

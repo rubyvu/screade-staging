@@ -34,7 +34,7 @@ class ChatVideoRoom < ApplicationRecord
     def add_notification
       CreateNewNotificationsJob.perform_later(self.id, self.class.name)
     end
-  
+    
     def set_chat_name
       unique_name = "video-#{self.chat.access_token}-#{SecureRandom.hex(8)}"
       ChatVideoRoom.exists?(name: unique_name) ? set_chat_name : self.name = unique_name
