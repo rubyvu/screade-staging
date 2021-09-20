@@ -25,7 +25,7 @@ gem 'activeadmin'
 gem 'slim-rails'
 
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem 'webpacker', '~> 5.2.1'
+gem 'webpacker', '~> 5.4.3'
 
 # Brings Rails named routes to javascript
 gem 'js-routes'

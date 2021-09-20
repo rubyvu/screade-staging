@@ -28,7 +28,7 @@ class Api::V1::StreamsController < Api::V1::ApiController
       render json: { errors: ['Record not found.'] }, status: :not_found
       return
     end
-      
+    
     View.find_or_create_by(source: stream, user: current_user)
     stream_json = StreamSerializer.new(stream, current_user: current_user).as_json
     render json: { stream: stream_json }, status: :ok
