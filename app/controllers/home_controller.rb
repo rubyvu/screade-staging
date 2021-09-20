@@ -28,7 +28,7 @@ class HomeController < ApplicationController
     end
     
     # News articles
-    news_category = NewsCategory.find_by(title: 'business')
+    news_category = NewsCategory.find_by(title: 'general')
     
     # News articles
     @home[:is_national] = params[:is_national].blank? || params[:is_national].to_s.downcase == "true"
