@@ -36,9 +36,6 @@ gem 'jbuilder', '~> 2.10.1'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.16'
 
-# Use Active Storage variant
-# gem 'image_processing', '~> 1.2'
-
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
@@ -59,10 +56,8 @@ gem 'que-scheduler'
 # AWS S3 adapter for Carrierwave
 gem 'fog-aws'
 gem 'aws-sdk-s3'
-gem 'aws-sdk-medialive'
-gem 'aws-sdk-mediastore'
 
-# File uploading
+# File uploads
 gem 'image_processing', '1.2'
 gem 'mimemagic', '0.3.7'
 
@@ -96,8 +91,12 @@ gem 'fcm'
 
 # Twilio audio/video call
 gem 'twilio-ruby'
+
 # Wrap link
 gem 'rails_autolink'
+
+# Video Streaming
+gem 'mux_ruby'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

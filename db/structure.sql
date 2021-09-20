@@ -1301,19 +1301,16 @@ CREATE TABLE public.streams (
     updated_at timestamp(6) without time zone NOT NULL,
     access_token character varying NOT NULL,
     error_message character varying,
-    status character varying DEFAULT 'pending'::character varying NOT NULL,
-    rtmp_url character varying,
-    stream_url character varying,
+    status character varying DEFAULT 'in-progress'::character varying NOT NULL,
     group_id integer,
     group_type character varying,
-    channel_id character varying,
-    channel_input_id character varying,
-    channel_security_group_id character varying,
-    in_progress_at timestamp without time zone,
     stream_comments_count integer DEFAULT 0 NOT NULL,
     views_count integer DEFAULT 0 NOT NULL,
     lits_count integer DEFAULT 0 NOT NULL,
-    in_progress_started_at timestamp without time zone DEFAULT '2021-08-20 12:51:57.301826'::timestamp without time zone
+    in_progress_started_at timestamp without time zone DEFAULT '2021-08-20 12:51:57.301826'::timestamp without time zone,
+    mux_stream_id character varying,
+    mux_stream_key character varying,
+    mux_playback_id character varying
 );
 
 
@@ -2766,6 +2763,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210820150506'),
 ('20210820175846'),
 ('20210820185235'),
-('20210820193107');
+('20210820193107'),
+('20210920092601'),
+('20210920173519'),
+('20210920180019'),
+('20210920182325');
 
 

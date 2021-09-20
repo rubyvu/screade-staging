@@ -1,5 +1,5 @@
 class Api::V1::StreamsController < Api::V1::ApiController
-  before_action :get_stream, only: [:update, :complete, :destroy, :in_progress]
+  before_action :get_stream, only: [:update, :complete, :destroy]
   
   # GET /api/v1/streams
   def index
@@ -35,12 +35,25 @@ class Api::V1::StreamsController < Api::V1::ApiController
   
   # POST /api/v1/streams
   def create
-    if Stream.exists?(owner: current_user, status: ['pending', 'in-progress'])
-      render json: { errors: 'You can create only one stream at a time.' }, status: :unprocessable_entity
-      return
-    end
+    # API Client Init
+    live_api = MuxRuby::LiveStreamsApi.new
     
-    stream = Stream.new(owner: current_user, title: stream_params[:title], is_private: stream_params[:is_private])
+    # Create the Live Stream
+    create_asset_request = MuxRuby::CreateAssetRequest.new
+    create_asset_request.playback_policy = [MuxRuby::PlaybackPolicy::PUBLIC]
+    create_live_stream_request = MuxRuby::CreateLiveStreamRequest.new
+    create_live_stream_request.new_asset_settings = create_asset_request
+    create_live_stream_request.playback_policy = [MuxRuby::PlaybackPolicy::PUBLIC]
+    mux_stream = live_api.create_live_stream(create_live_stream_request)
+    
+    stream = Stream.new(
+      owner: current_user,
+      title: stream_params[:title],
+      is_private: stream_params[:is_private],
+      mux_stream_id: mux_stream.data.id,
+      mux_stream_key: mux_stream.data.stream_key,
+      mux_playback_id: mux_stream.data.playback_ids.first.id
+    )
     
     # Set params for publick/private Streams
     if stream.is_private
@@ -48,14 +61,13 @@ class Api::V1::StreamsController < Api::V1::ApiController
     else
       group_type = stream_params[:group_type]
       group_id = stream_params[:group_id]
-    
+      
       if group_type == 'NewsCategory'
         stream.group = NewsCategory.find_by(id: group_id)
       elsif group_type == 'Topic'
         stream.group = Topic.find_by(id: group_id)
       end
     end
-    
     
     if stream.save
       stream_json = StreamSerializer.new(stream, current_user: current_user).as_json
@@ -72,11 +84,11 @@ class Api::V1::StreamsController < Api::V1::ApiController
         @stream.video.attach(stream_update_params[:video])
         @stream.status = 'finished'
       rescue
-        render json: { errors: ['Video is not exists.'] }, status: :unprocessable_entity
+        render json: { errors: ['Can not attach Video.'] }, status: :unprocessable_entity
         return
       end
     end
-      
+    
     if @stream.update(stream_update_params.except(:video))
       stream_json = StreamSerializer.new(@stream, current_user: current_user).as_json
       render json: { stream: stream_json }, status: :ok
@@ -99,17 +111,6 @@ class Api::V1::StreamsController < Api::V1::ApiController
   def destroy
     @stream.destroy
     render json: { success: true }, status: :ok
-  end
-  
-  # PUT /api/v1/streams/:access_token/in_progress
-  def in_progress
-    if @stream.status == 'in-progress'
-      @stream.update_columns(in_progress_at: DateTime.current)
-      stream_json = StreamSerializer.new(@stream, current_user: current_user).as_json
-      render json: { stream: stream_json }, status: :ok
-    else
-      render json: { success: false }, status: :unprocessable_entity
-    end
   end
   
   private

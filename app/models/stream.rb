@@ -1,23 +1,18 @@
 class Stream < ApplicationRecord
   
   # Statuses
-  # pending     - New Stream was created and waiting for running in AWS Media Live
   # in-progress - Stream is running in AWS Medialive and waiting video from client
   # completed   - Client is successfully end video streaming, wait for Video file to save, stop and clear AWS dependencies
   # finished    - Client is successfully saved stream Video, now it can be show in Stream list (status updated in StreamVideoUploader callback)
   # failed       - Error occurred while AWS services deploying, stream will be stopped, error will be added to object.error_message field, all AWS dependencies will be cleared
   
   # Constants
-  STATUS_LIST = %w(pending in-progress completed finished failed)
+  STATUS_LIST = %w(in-progress completed finished failed)
   GROUP_TYPES = %w(NewsCategory Topic)
-  # VIDEO_RESOLUTIONS = %w(mp4)
   
   # Callbacks
   before_validation :generate_access_token, on: :create
-  after_update :start_in_progress_tracker
   after_commit :add_notification
-  after_commit :create_aws_media, on: :create
-  after_commit :remove_aws_media, on: :update
   before_destroy :check_for_status, prepend: true
   
   # File Uploader
@@ -69,10 +64,14 @@ class Stream < ApplicationRecord
     self.video.url if self.video.attached?
   end
   
+  def playback_url
+    self.mux_playback_id ? "https://stream.mux.com/#{self.mux_playback_id}.m3u8" : nil
+  end
+  
   private
     def add_notification
       return if !self.is_private
-      CreateNewNotificationsJob.set(wait: 30.seconds).perform_later(self.id, self.class.name) if self.status_previously_changed?(from: 'pending', to: 'in-progress')
+      CreateNewNotificationsJob.set(wait: 30.seconds).perform_later(self.id, self.class.name)
     end
     
     def generate_access_token
@@ -80,83 +79,9 @@ class Stream < ApplicationRecord
       Stream.exists?(access_token: new_token) ? generate_access_token : self.access_token = new_token
     end
     
-    def create_aws_media
-      puts "===== Start AWS requsts"
-      input_security_group = Tasks::AwsMediaLiveApi.get_input_security_group
-      if input_security_group.blank?
-        set_failed_status('Input security group cannot be created.')
-        return
-      end
-      
-      puts "===== 1 Security group created"
-      channel_input_to_attach = Tasks::AwsMediaLiveApi.create_input(self.access_token, input_security_group)
-      puts "ISG: #{input_security_group}"
-      if input_security_group.blank?
-        set_failed_status('Channel Input cannot be created.')
-        return
-      end
-      
-      puts "===== 2 Input channel created"
-      channel = Tasks::AwsMediaLiveApi.create_channel(self.access_token, channel_input_to_attach)
-      if channel.blank?
-        set_failed_status('Channel cannot be created.')
-        return
-      end
-      
-      puts "===== 3 GET channel ID and input ID"
-      channel_id = channel.id
-      channel_input_id = channel['input_attachments'][0]['input_id']
-      if channel_input_id.blank?
-        set_failed_status('Channel ID should be present.')
-        return
-      end
-      
-      puts "===== 4 GET RTMP URL"
-      input_rtmp_url = Tasks::AwsMediaLiveApi.get_input_url(channel_input_id.to_s)
-      if input_rtmp_url.blank?
-        set_failed_status('Input attachments should be present.')
-        return
-      end
-      
-      puts "===== 5 Done"
-      # Save chanel data
-      aws_channel_params = {
-        channel_id: channel_id,
-        channel_input_id: channel_input_id,
-        channel_security_group_id: input_security_group[:id],
-        rtmp_url: input_rtmp_url,
-        stream_url: "https://#{ENV['AWS_STREAM_CLOUD_FRONT_DOMAIN_NAME']}/#{self.access_token}/index.m3u8"
-      }
-      self.update_columns(aws_channel_params)
-      
-      # Start Stream Chanel
-      StartStreamChannelsJob.perform_later(self.id)
-    end
-    
-    def remove_aws_media
-      return if ['completed', 'failed'].exclude?(self.status) && self.channel_id.present?
-      # Delete attached input and Channel from AWS services
-      
-      # Run Channel stopping proccess
-      Tasks::AwsMediaLiveApi.channel_stop(self.channel_id)
-      
-      # Delete Stream Chanel for AWS service
-      DeleteStreamChannelsJob.perform_later(self.id)
-    end
-    
-    def start_in_progress_tracker
-      return unless self.status_previously_changed?(from: 'pending', to: 'in-progress')
-      self.update_columns(in_progress_started_at: DateTime.current)
-      StartInProgressTrackerJob.perform_later(self.id)
-    end
-    
-    def set_failed_status(error_message)
-      self.update(status: 'failed', error_message: error_message)
-    end
-    
     def check_for_status
       if ['completed', 'finished'].exclude?(self.status)
-        errors.add(:base, "Cannot delete Stream that not finished")
+        errors.add(:base, "Cannot delete Stream that's not finished")
         throw :abort
       end
     end

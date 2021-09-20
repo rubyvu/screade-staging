@@ -17,7 +17,7 @@ module Tasks
       grant = Twilio::JWT::AccessToken::VideoGrant.new
       # grant.room = room_sid
       token.add_grant(grant)
-
+      
       # Generate the token
       token.to_jwt
     end

@@ -1,8 +1,5 @@
 class StreamSerializer < ActiveModel::Serializer
   attribute :access_token
-  attribute :channel_id
-  attribute :channel_input_id
-  attribute :channel_security_group_id
   
   attribute :created_at
   def created_at
@@ -48,8 +45,8 @@ class StreamSerializer < ActiveModel::Serializer
     UserProfileSerializer.new(object.owner, current_user: current_user).as_json
   end
   
+  attribute :playback_url
   attribute :status
-  attribute :stream_url
   
   attribute :stream_comments_count
   def stream_comments_count
@@ -57,6 +54,15 @@ class StreamSerializer < ActiveModel::Serializer
   end
   
   attribute :rtmp_url
+  def rtmp_url
+    current_user = instance_options[:current_user]
+    if object.owner == current_user && object.mux_stream_key
+      "rtmps://global-live.mux.com:443/app/#{object.mux_stream_key}"
+    else
+      nil
+    end
+  end
+  
   attribute :title
   
   attribute :video

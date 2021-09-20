@@ -12,14 +12,13 @@
         span #{comment_timestamp(stream.created_at)}
   
   - if stream.status == 'in-progress'
-  
+    
     video#my-video.video-js.vjs-default-skin.vjs-16-9.vjs-big-play-centered controls="" data-setup="{}" height="500px" poster="#{stream.image_url}" preload="auto" width="100%"
-      source src="#{stream.stream_url}" type="application/x-mpegURL"
-      
+      source src="#{stream.playback_url}" type="application/x-mpegURL"
       p.vjs-no-js
         | To view this video please enable JavaScript, and consider upgrading to a
         | web browser that
-    
+        
   - elsif stream.video.attached?
     video#my-video.video-js.vjs-default-skin.vjs-16-9.vjs-big-play-centered controls="" data-setup="{}"  poster="#{stream.image_url}" preload="auto"
       source src="#{stream.video_url}" type="video/mp4"

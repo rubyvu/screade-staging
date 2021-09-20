@@ -1,9 +1,6 @@
 class UserVideo < ApplicationRecord
   has_one_attached :file
   
-  # Constants
-  VIDEO_RESOLUTIONS = %w(mp4)
-  
   # Callbacks
   after_save :add_notification
   
