@@ -1,10 +1,10 @@
 class Stream < ApplicationRecord
   
   # Statuses
-  # in-progress - Stream is running in AWS Medialive and waiting video from client
-  # completed   - Client is successfully end video streaming, wait for Video file to save, stop and clear AWS dependencies
+  # in-progress - Stream is running on mux.com and awaiting for video from client
+  # completed   - Client has successfully ended video streaming, waited for Video file to save, stopped the stream and disabled stream on mux.com
   # finished    - Client is successfully saved stream Video, now it can be show in Stream list (status updated in StreamVideoUploader callback)
-  # failed       - Error occurred while AWS services deploying, stream will be stopped, error will be added to object.error_message field, all AWS dependencies will be cleared
+  # failed      - Error occurred while AWS services deploying, stream will be stopped, error will be added to object.error_message field, all AWS dependencies will be cleared
   
   # Constants
   STATUS_LIST = %w(in-progress completed finished failed)

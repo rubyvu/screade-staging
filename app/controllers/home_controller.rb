@@ -31,7 +31,7 @@ class HomeController < ApplicationController
     news_category = NewsCategory.find_by(title: 'general')
     
     # News articles
-    @home[:is_national] = params[:is_national].blank? || params[:is_national].to_s.downcase == "true"
+    @home[:is_national] = params[:is_national].blank? || params[:is_national].to_s.downcase == 'true'
     
     # Get Country
     country = current_user&.country || Country.find_by(code: current_location) || Country.find_by(code: 'US')

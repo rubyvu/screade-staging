@@ -101,6 +101,8 @@ class Api::V1::StreamsController < Api::V1::ApiController
   # PUT/PATCH /api/v1/streams/:access_token/complete
   def complete
     if @stream.update(status: 'completed')
+      DisableMuxStreamJob.perform_later(@stream.id)
+      DeleteMuxStreamJob.set(wait: 5.minutes).perform_later(@stream.id)
       stream_json = StreamSerializer.new(@stream, current_user: current_user).as_json
       render json: { stream: stream_json }, status: :ok
     else
