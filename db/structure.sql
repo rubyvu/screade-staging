@@ -1307,7 +1307,6 @@ CREATE TABLE public.streams (
     stream_comments_count integer DEFAULT 0 NOT NULL,
     views_count integer DEFAULT 0 NOT NULL,
     lits_count integer DEFAULT 0 NOT NULL,
-    in_progress_started_at timestamp without time zone DEFAULT '2021-08-20 12:51:57.301826'::timestamp without time zone,
     mux_stream_id character varying,
     mux_stream_key character varying,
     mux_playback_id character varying
@@ -2767,6 +2766,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210920092601'),
 ('20210920173519'),
 ('20210920180019'),
-('20210920182325');
+('20210920182325'),
+('20210920183713');
 
 

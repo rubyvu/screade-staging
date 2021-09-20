@@ -11,7 +11,7 @@ class StreamsController < ApplicationController
       @streams = Stream.includes(:users).where( streams: { is_private: true }, users: { id: current_user.id } )
                       .or(Stream.where(is_private: false, group_type: 'Topic', group_id: current_user.subscribed_topics))
                       .or(Stream.where(is_private: false, group_type: 'NewsCategory', group_id: current_user.subscribed_news_categories))
-                      .where('(streams.in_progress_started_at < ? AND streams.status = ?) OR streams.status = ?', 30.seconds.ago, 'in-progress', 'finished')
+                      .where('(streams.created_at < ? AND streams.status = ?) OR streams.status = ?', 30.seconds.ago, 'in-progress', 'finished')
                       .where.not(owner: current_user)
                       .order(created_at: :desc).page(params[:page]).per(30)
     end
