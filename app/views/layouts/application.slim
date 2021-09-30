@@ -116,4 +116,5 @@ html
     = render 'shared/modals/forgot_password/security_question'
     = render 'shared/modals/forgot_password/restore'
     = render 'shared/modals/about_us'
-    = render 'shared/ads/propeller_banner' if Rails.env.production?
+    
+  = render 'shared/ads/propeller' if Rails.env.production?
