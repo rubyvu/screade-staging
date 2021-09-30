@@ -12,10 +12,6 @@ html
     = stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     
-    // AddSense
-    - if Rails.env.production?
-      script async="" data-ad-client="ca-pub-6870429523010770" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-      
     script src="https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&libraries=&v=weekly" async=""
     
   body
@@ -120,3 +116,4 @@ html
     = render 'shared/modals/forgot_password/security_question'
     = render 'shared/modals/forgot_password/restore'
     = render 'shared/modals/about_us'
+    = render 'shared/ads/propeller_banner' if Rails.env.production?
