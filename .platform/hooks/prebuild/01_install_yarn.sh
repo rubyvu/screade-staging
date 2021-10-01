@@ -1,15 +1,26 @@
 #!/bin/bash
 
-# Install Node JS
-echo "Installing Node JS..."
-curl --silent --location https://rpm.nodesource.com/setup_14.x | sudo bash -
-yum -y install nodejs
+# Install NVM if it is not installed yet
+if nvm -v; then
+  echo "NVM is already installed."
+else
+  echo "Installing NVM..."
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+  source ~/.bashrc
+fi
+
+# Install NodeJS if it is not installed yet
+if node -v; then
+  echo "NodeJS is already installed."
+else
+  echo "Installing NodeJS..."
+  nvm install 14.18.0
+fi
 
 # Install Yarn if it is not installed yet
 if yarn -v; then
   echo "Yarn is already installed."
 else
   echo "Installing Yarn..."
-  wget https://dl.yarnpkg.com/rpm/yarn.repo -O /etc/yum.repos.d/yarn.repo
-  yum -y install yarn
+  npm install --global yarn
 fi
