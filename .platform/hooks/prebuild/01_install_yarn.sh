@@ -1,9 +1,8 @@
-#!/usr/bin/env bash
-set -xe
+#!/bin/bash
 
 # Install Node JS
 echo "Installing Node JS..."
-curl --silent --location https://rpm.nodesource.com/setup_15.x | sudo bash -
+curl --silent --location https://rpm.nodesource.com/setup_14.x | sudo bash -
 yum -y install nodejs
 
 # Install Yarn if it is not installed yet
