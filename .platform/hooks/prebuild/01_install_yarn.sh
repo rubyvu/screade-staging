@@ -9,12 +9,13 @@ else
   source ~/.bashrc
 fi
 
-# Install NodeJS if it is not installed yet
-if node -v; then
-  echo "NodeJS is already installed."
+read node_version _ <<< $(node -v)
+if [ "$node_version" == "v14.18.0" ]; then
+  echo "Node is already installed."
 else
   echo "Installing NodeJS..."
   nvm install 14.18.0
+  nvm alias default 14.18.0
 fi
 
 # Install Yarn if it is not installed yet
