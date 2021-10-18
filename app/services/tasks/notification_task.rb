@@ -170,7 +170,9 @@ module Tasks
           message: "#{sender.full_name} started a new stream"
         }
         
-        create_notification(notificatiom_params)
+        if Notification.where?(source_id: stream.id, source_type: 'Stream', recipient_id: user.id).blank?
+          create_notification(notificatiom_params)
+        end
       end
     end
     
