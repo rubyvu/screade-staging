@@ -2400,10 +2400,24 @@ CREATE INDEX index_news_articles_categories_on_ids ON public.news_articles_categ
 
 
 --
+-- Name: index_news_articles_on_country_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_news_articles_on_country_id ON public.news_articles USING btree (country_id);
+
+
+--
 -- Name: index_news_articles_on_detected_language; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_news_articles_on_detected_language ON public.news_articles USING btree (detected_language);
+
+
+--
+-- Name: index_news_articles_on_lits_count; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_news_articles_on_lits_count ON public.news_articles USING btree (lits_count);
 
 
 --
@@ -2767,6 +2781,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210920173519'),
 ('20210920180019'),
 ('20210920182325'),
-('20210920183713');
+('20210920183713'),
+('20211027071929'),
+('20211027072240');
 
 

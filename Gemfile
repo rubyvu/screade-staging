@@ -129,6 +129,9 @@ group :development do
   
   # Generate PDF schema of the database
   gem 'rails-erd'
+  
+  # Catch N+1 queries
+  gem 'bullet'
 end
 
 group :test do
