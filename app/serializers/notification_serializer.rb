@@ -39,9 +39,6 @@ class NotificationSerializer < ActiveModel::Serializer
   end
   
   attribute :source_type
-  def source_type
-    object.source_type
-  end
   
   attribute :user
   def user
