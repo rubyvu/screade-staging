@@ -4,10 +4,16 @@ class ChatMembershipSerializer < ActiveModel::Serializer
     object.chat.access_token
   end
   
+  attribute :chat_name
+  def chat_name
+    object.chat.name
+  end
+  
   attribute :id
   attribute :is_mute
   attribute :role
   attribute :unread_messages_count
+  
   attribute :user
   def user
     UserProfileSerializer.new(object.user).as_json

@@ -4,6 +4,11 @@ class ChatMessageSerializer < ActiveModel::Serializer
     object.chat.access_token
   end
   
+  attribute :chat_name
+  def chat_name
+    object.chat.name
+  end
+  
   attribute :created_at
   def created_at
     object.created_at.strftime('%Y-%m-%d %H:%M:%S %z')
