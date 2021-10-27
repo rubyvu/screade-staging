@@ -26,5 +26,5 @@
 ### How to run a Rails console?
 
 ```
-export $(cat /opt/elasticbeanstalk/deployment/env | xargs) && bundle exec rails c
+cd /var/app/current && export $(cat /opt/elasticbeanstalk/deployment/env | xargs) && bundle exec rails c
 ```
