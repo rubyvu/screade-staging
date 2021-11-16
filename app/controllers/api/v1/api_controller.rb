@@ -24,7 +24,7 @@ class Api::V1::ApiController < ActionController::Base
     errors.each do |error|
       errors_array << { "#{error.attribute}": "#{error.message}"}
     end
-     
+    
     errors_array
   end
   

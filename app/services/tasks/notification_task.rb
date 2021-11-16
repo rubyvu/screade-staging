@@ -6,14 +6,14 @@ module Tasks
       return if breaking_news.blank?
       
       User.joins(:setting).where(settings: { is_notification: true }).find_each do |recipient|
-        notificatiom_params = {
+        notification_params = {
           source_id: breaking_news.id,
           source_type: 'BreakingNews',
           recipient_id: recipient.id,
           message: "Breaking News is changed"
         }
         
-        create_notification(notificatiom_params)
+        create_notification(notification_params)
       end
     end
     
@@ -21,7 +21,7 @@ module Tasks
       chat_membership = ChatMembership.find_by(id: id)
       return if chat_membership.blank?
       
-      notificatiom_params = {
+      notification_params = {
         source_id: chat_membership.id,
         source_type: 'ChatMembership',
         sender_id: chat_membership.chat.owner.id,
@@ -29,7 +29,7 @@ module Tasks
         message: "You were invited to the #{chat_membership.chat.name} Chat"
       }
       
-      create_notification(notificatiom_params)
+      create_notification(notification_params)
     end
     
     def self.new_chat_message(id)
@@ -45,7 +45,7 @@ module Tasks
         # Check if User already get Notification from this Chat and it's unviewed
         next if ChatMessage.joins(:notifications).where(notifications: { source_type: 'ChatMessage', is_viewed: false, recipient: chat_membership.user }, chat_messages: { chat: chat_message.chat}).present?
         
-        notificatiom_params = {
+        notification_params = {
           source_id: chat_message.id,
           source_type: 'ChatMessage',
           sender_id: chat_message.user.id,
@@ -53,7 +53,7 @@ module Tasks
           message: "New message in #{chat_message.chat.name} chat"
         }
         
-        create_notification(notificatiom_params) if notificatiom_params[:message].present?
+        create_notification(notification_params) if notification_params[:message].present?
       end
     end
     
@@ -68,14 +68,14 @@ module Tasks
         # Check if User already get Notification from this Chat and it's unviewed
         # next if ChatAudioRoom.joins(:notifications).where(notifications: { source_type: 'ChatAudioRoom', is_viewed: false, recipient: chat_membership.user }, chat_audio_rooms: { chat: chat_audio_room.chat }).present?
         
-        notificatiom_params = {
+        notification_params = {
           source_id: chat_audio_room.id,
           source_type: 'ChatAudioRoom',
           recipient_id: chat_membership.user.id,
           message: "New Audio Call in #{chat_audio_room.chat.name} chat"
         }
         
-        create_notification(notificatiom_params) if notificatiom_params[:message].present?
+        create_notification(notification_params) if notification_params[:message].present?
       end
     end
     
@@ -90,14 +90,14 @@ module Tasks
         # Check if User already get Notification from this Chat and it's unviewed
         # next if ChatVideoRoom.joins(:notifications).where(notifications: { source_type: 'ChatVideoRoom', is_viewed: false, recipient: chat_membership.user }, chat_video_rooms: { chat: chat_video_room.chat }).present?
         
-        notificatiom_params = {
+        notification_params = {
           source_id: chat_video_room.id,
           source_type: 'ChatVideoRoom',
           recipient_id: chat_membership.user.id,
           message: "New Video Call in #{chat_video_room.chat.name} chat"
         }
         
-        create_notification(notificatiom_params) if notificatiom_params[:message].present?
+        create_notification(notification_params) if notification_params[:message].present?
       end
     end
     
@@ -105,32 +105,32 @@ module Tasks
       comment = Comment.find_by(id: id)
       return if comment.blank?
       
-      notificatiom_params = { source_id: comment.id, source_type: 'Comment' }
+      notification_params = { source_id: comment.id, source_type: 'Comment' }
       if comment.comment_id.present? # Replied Comment
-        notificatiom_params[:recipient_id] = comment.comment.user.id
-        notificatiom_params[:sender_id] = comment.user.id
-        notificatiom_params[:message] = "#{comment.user.full_name} has replied to your comment"
+        notification_params[:recipient_id] = comment.comment.user.id
+        notification_params[:sender_id] = comment.user.id
+        notification_params[:message] = "#{comment.user.full_name} has replied to your comment"
       elsif comment.source_type == 'Post' # Comment for Post
-        notificatiom_params[:recipient_id] = comment.source.user.id
-        notificatiom_params[:sender_id] = comment.user.id
-        notificatiom_params[:message] = "#{comment.user.full_name} commented on your Post"
+        notification_params[:recipient_id] = comment.source.user.id
+        notification_params[:sender_id] = comment.user.id
+        notification_params[:message] = "#{comment.user.full_name} commented on your Post"
       end
       
-      create_notification(notificatiom_params) if notificatiom_params[:message].present?
+      create_notification(notification_params) if notification_params[:message].present?
     end
     
     def self.new_event(id)
       event = Event.find_by(id: id)
       return if event.blank?
       
-      notificatiom_params = {
+      notification_params = {
         source_id: event.id,
         source_type: 'Event',
         recipient_id: event.user.id,
         message: "#{event.title} starts very soon"
       }
       
-      create_notification(notificatiom_params)
+      create_notification(notification_params)
     end
     
     def self.new_post(id)
@@ -144,7 +144,7 @@ module Tasks
         recipient = User.find_by(id: recipient_id)
         next unless recipient.setting.is_posts
         
-        notificatiom_params = {
+        notification_params = {
           source_id: post.id,
           source_type: 'Post',
           sender_id: sender.id,
@@ -152,7 +152,7 @@ module Tasks
           message: "#{sender.full_name} has new post"
         }
         
-        create_notification(notificatiom_params)
+        create_notification(notification_params)
       end
     end
     
@@ -162,7 +162,7 @@ module Tasks
       
       sender = stream.owner
       stream.users.each do |user|
-        notificatiom_params = {
+        notification_params = {
           source_id: stream.id,
           source_type: 'Stream',
           sender_id: stream.owner,
@@ -170,8 +170,8 @@ module Tasks
           message: "#{sender.full_name} started a new stream"
         }
         
-        if Notification.where?(source_id: stream.id, source_type: 'Stream', recipient_id: user.id).blank?
-          create_notification(notificatiom_params)
+        unless Notification.exists?(source_id: stream.id, source_type: 'Stream', recipient_id: user.id)
+          create_notification(notification_params)
         end
       end
     end
@@ -187,7 +187,7 @@ module Tasks
         recipient = User.find_by(id: recipient_id)
         next unless recipient.setting.is_images
         
-        notificatiom_params = {
+        notification_params = {
           source_id: user_image.id,
           source_type: 'UserImage',
           sender_id: sender.id,
@@ -195,7 +195,7 @@ module Tasks
           message: "#{sender.full_name} has uploaded new Image"
         }
         
-        create_notification(notificatiom_params)
+        create_notification(notification_params)
       end
     end
     
@@ -210,7 +210,7 @@ module Tasks
         recipient = User.find_by(id: recipient_id)
         next unless recipient.setting.is_videos
         
-        notificatiom_params = {
+        notification_params = {
           source_id: user_video.id,
           source_type: 'UserVideo',
           sender_id: sender.id,
@@ -218,7 +218,7 @@ module Tasks
           message: "#{sender.full_name} has uploaded new Video"
         }
         
-        create_notification(notificatiom_params)
+        create_notification(notification_params)
       end
     end
     
@@ -226,7 +226,7 @@ module Tasks
       squad_request = SquadRequest.find_by(id: id)
       return if squad_request.blank?
       
-      notificatiom_params = {
+      notification_params = {
         source_id: squad_request.id,
         source_type: 'SquadRequest',
         sender_id: squad_request.requestor.id,
@@ -234,12 +234,12 @@ module Tasks
         message: "#{squad_request.requestor.full_name} want to join to your Squad"
       }
       
-      create_notification(notificatiom_params)
+      create_notification(notification_params)
     end
     
     private
-      def self.create_notification(notificatiom_params)
-        notification = Notification.create!(notificatiom_params)
+      def self.create_notification(notification_params)
+        notification = Notification.create!(notification_params)
         NotificationChannel.broadcast_to(notification.recipient, bage_counter: notification.recipient.received_notifications.count)
       end
   end
