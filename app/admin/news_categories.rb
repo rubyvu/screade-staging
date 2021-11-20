@@ -42,5 +42,4 @@ ActiveAdmin.register NewsCategory, as: 'Group' do
     end
     f.actions
   end
-  
 end

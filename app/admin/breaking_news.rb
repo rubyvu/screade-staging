@@ -19,7 +19,7 @@ ActiveAdmin.register BreakingNews do
       row :created_at
       row :updated_at
     end
-  
+    
     panel 'Admin Posts' do
       table_for Post.where(user: User.find_by(username: 'admin.screade')).order(updated_at: :asc) do
         column 'Id' do |post|

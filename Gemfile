@@ -20,6 +20,7 @@ gem 'redis'
 
 # Admin panel
 gem 'activeadmin'
+gem 'activeadmin_addons'
 
 # HTML template engine
 gem 'slim-rails'
