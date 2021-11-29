@@ -15,8 +15,7 @@ class ChatMembership < ApplicationRecord
   has_many :notifications, as: :source, dependent: :destroy
   
   # Associations validations
-  validates :chat, presence: true
-  validates :user, presence: true, uniqueness: { scope: [:chat_id, :user_id] }
+  validates :user_id, uniqueness: { scope: :chat_id }
   
   # Fields validations
   validates :role, presence: true, inclusion: { in: ChatMembership::ROLES_LIST }

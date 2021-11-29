@@ -7,25 +7,23 @@ RSpec.describe ChatMembership, type: :model do
     @user_owner = FactoryBot.create(:user, country: @country, user_security_question: @user_security_question)
     @user_default = FactoryBot.create(:user, country: @country, user_security_question: @user_security_question)
     @chat = FactoryBot.create(:chat, owner: @user_owner)
-    @chat_membership = FactoryBot.create(:chat_membership, chat: @chat, user: @user_owner)
+    @chat_membership = FactoryBot.build(:chat_membership, chat: @chat, user: @user_owner)
   end
   
   it 'should have a valid factory' do
-    expect(@chat_membership).to be_valid
+    expect(@chat_membership.valid?).to eq(true)
   end
   
   context 'associations' do
-    it { should belong_to(:chat) }
-    it { should belong_to(:user) }
+    it { should belong_to(:chat).required }
+    it { should belong_to(:user).required }
   end
   
   context 'validations' do
     subject { @chat_membership }
     
     context 'associations' do
-      it { should validate_presence_of(:chat) }
-      it { should validate_presence_of(:user) }
-      it { should validate_uniqueness_of(:user).scoped_to([:chat_id, :user_id]) }
+      it { should validate_uniqueness_of(:user_id).scoped_to(:chat_id) }
     end
     
     context 'fields' do
