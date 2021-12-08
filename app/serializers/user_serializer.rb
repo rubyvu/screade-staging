@@ -22,6 +22,7 @@ class UserSerializer < ActiveModel::Serializer
   
   attribute :email
   attribute :first_name
+  attribute :id
   
   attribute :is_confirmed
   def is_confirmed

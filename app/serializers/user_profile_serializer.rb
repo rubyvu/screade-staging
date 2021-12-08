@@ -22,6 +22,8 @@ class UserProfileSerializer < ActiveModel::Serializer
     Setting.get_setting(object).font_style
   end
   
+  attribute :id
+  
   attribute :is_images
   def is_images
     Setting.get_setting(object).is_images
