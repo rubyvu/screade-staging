@@ -30,6 +30,6 @@ class UserImage < ApplicationRecord
   private
     def add_notification
       return if self.is_private
-      CreateNewNotificationsJob.perform_later(self.id, self.class.name)
+      CreateNewNotificationJob.perform_later(self.id, self.class.name)
     end
 end

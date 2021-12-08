@@ -21,7 +21,6 @@ RSpec.describe NewsArticle, type: :model do
     it { is_expected.to have_many(:shared_records) }
     it { is_expected.to have_many(:views).dependent(:destroy) }
     it { is_expected.to have_many(:viewing_users) }
-    
   end
   
   context 'validations' do

@@ -156,6 +156,30 @@ module Tasks
       end
     end
     
+    def self.new_shared_record(id)
+      shared_record = SharedRecord.find_by(id: id)
+      return unless shared_record
+      
+      sender = shared_record.sender
+      recipients_ids = shared_record.users.ids
+      
+      recipients_ids.each do |recipient_id|
+        recipient = User.find_by(id: recipient_id)
+        next unless recipient
+        
+        notification_params = {
+          source_id: shared_record.shareable_id,
+          source_type: shared_record.shareable_type,
+          sender_id: sender.id,
+          recipient_id: recipient.id,
+          is_shared: true,
+          message: "#{sender.full_name} has shared #{shared_record.shareable_type.titleize} with you"
+        }
+        
+        create_notification(notification_params)
+      end
+    end
+    
     def self.new_stream(id)
       stream = Stream.find_by(id: id)
       return if stream.blank?

@@ -73,7 +73,7 @@ class ChatMessage < ApplicationRecord
     # Calbacks
     def add_notification
       return if self.chat_room_source.present?
-      CreateNewNotificationsJob.perform_later(self.id, self.class.name)
+      CreateNewNotificationJob.perform_later(self.id, self.class.name)
     end
     
     def upload_asset

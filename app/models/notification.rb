@@ -1,7 +1,7 @@
 class Notification < ApplicationRecord
   
   # Constants
-  SOURCE_TYPES = %w(BreakingNews ChatMembership ChatMessage ChatVideoRoom ChatAudioRoom Comment Event Post SquadRequest Stream UserImage UserVideo)
+  SOURCE_TYPES = %w(BreakingNews ChatMembership ChatMessage ChatVideoRoom ChatAudioRoom Comment Event NewsArticle Post SquadRequest Stream UserImage UserVideo)
   
   # Callbacks
   after_create :send_email_notification

@@ -32,7 +32,7 @@ class ChatVideoRoom < ApplicationRecord
   
   private
     def add_notification
-      CreateNewNotificationsJob.perform_later(self.id, self.class.name)
+      CreateNewNotificationJob.perform_later(self.id, self.class.name)
     end
     
     def set_chat_name

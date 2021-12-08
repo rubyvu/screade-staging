@@ -34,7 +34,7 @@ class Comment < ApplicationRecord
     def add_notification
       # Do not send notification to yourself
       return if (self.comment_id.present? && self.comment.user == self.user) || (self.source_type == 'Post' && self.source.user == self.user)
-      CreateNewNotificationsJob.perform_later(self.id, self.class.name)
+      CreateNewNotificationJob.perform_later(self.id, self.class.name)
     end
     
     def replied_comment_only_for_comment

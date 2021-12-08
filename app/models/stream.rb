@@ -71,7 +71,7 @@ class Stream < ApplicationRecord
   private
     def add_notification
       return if !self.is_private
-      CreateNewNotificationsJob.set(wait: 30.seconds).perform_later(self.id, self.class.name)
+      CreateNewNotificationJob.set(wait: 30.seconds).perform_later(self.id, self.class.name)
     end
     
     def generate_access_token

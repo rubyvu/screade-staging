@@ -2,13 +2,22 @@ class SharedRecord < ApplicationRecord
   # Constants
   SHAREABLE_TYPES = %w(Comment NewsArticle Post)
   
+  # Callbacks
+  after_commit :add_notification, on: :create
+  
   # Association
   belongs_to :sender, foreign_key: :sender_id, class_name: 'User'
   belongs_to :shareable, polymorphic: true
   has_and_belongs_to_many :users
   
-  # Association validation
+  # Associations Validations
   validates :shareable_type, presence: true, inclusion: { in: SharedRecord::SHAREABLE_TYPES }
   
-  # Validations
+  # Fields Validations
+  
+  private
+    def add_notification
+      return unless sender && shareable && users.count > 0
+      CreateNewNotificationJob.perform_later(self.id, self.class.name)
+    end
 end

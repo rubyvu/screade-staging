@@ -17,7 +17,7 @@ class SquadRequest < ApplicationRecord
   private
     def add_notification
       return if self.accepted_at.present? || self.declined_at.present? # New Squad request
-      CreateNewNotificationsJob.perform_later(self.id, self.class.name)
+      CreateNewNotificationJob.perform_later(self.id, self.class.name)
     end
     
     def receiver_as_requestor

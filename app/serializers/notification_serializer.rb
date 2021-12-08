@@ -1,15 +1,19 @@
 class NotificationSerializer < ActiveModel::Serializer
+  
   attribute :created_at
   def created_at
     object.created_at.strftime('%Y-%m-%d %H:%M:%S %z')
   end
   
   attribute :id
+  attribute :is_shared
   attribute :is_viewed
   attribute :message
+  
   attribute :source
   def source
     current_user = instance_options[:current_user]
+    
     case object.source_type
     when 'BreakingNews'
       BreakingNewsSerializer.new(object.source).as_json
@@ -25,6 +29,8 @@ class NotificationSerializer < ActiveModel::Serializer
       CommentSerializer.new(object.source, current_user: current_user).as_json
     when 'Event'
       EventSerializer.new(object.source).as_json
+    when 'NewsArticle'
+      NewsArticleSerializer.new(object.source, current_user: current_user).as_json
     when 'Post'
       PostSerializer.new(object.source, current_user: current_user).as_json
     when 'Stream'

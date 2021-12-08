@@ -1,4 +1,4 @@
-class CreateNewNotificationsJob < ApplicationJob
+class CreateNewNotificationJob < ApplicationJob
   
   def run(source_id, source_type)
     case source_type
@@ -18,6 +18,8 @@ class CreateNewNotificationsJob < ApplicationJob
       Tasks::NotificationTask.new_event(source_id)
     when 'Post'
       Tasks::NotificationTask.new_post(source_id)
+    when 'SharedRecord'
+      Tasks::NotificationTask.new_shared_record(source_id)
     when 'Stream'
       Tasks::NotificationTask.new_stream(source_id)
     when 'UserImage'

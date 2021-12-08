@@ -999,7 +999,8 @@ CREATE TABLE public.notifications (
     message character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    sender_id integer
+    sender_id integer,
+    is_shared boolean DEFAULT false
 );
 
 
@@ -2850,6 +2851,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211027071929'),
 ('20211027072240'),
 ('20211208084155'),
-('20211208100321');
+('20211208100321'),
+('20211208220921');
 
 

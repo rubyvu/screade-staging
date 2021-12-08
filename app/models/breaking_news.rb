@@ -14,8 +14,7 @@ class BreakingNews < ApplicationRecord
   
   private
     def add_notification
-      return if self.post.blank?
-      return unless self.saved_change_to_post_id?
-      CreateNewNotificationsJob.perform_later(self.id, self.class.name)
+      return unless self.post && self.saved_change_to_post_id?
+      CreateNewNotificationJob.perform_later(self.id, self.class.name)
     end
 end

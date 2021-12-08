@@ -50,6 +50,6 @@ class ChatMembership < ApplicationRecord
     
     def add_notification
       return if self.chat.owner == self.user
-      CreateNewNotificationsJob.perform_later(self.id, self.class.name)
+      CreateNewNotificationJob.perform_later(self.id, self.class.name)
     end
 end
