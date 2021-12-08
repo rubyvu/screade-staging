@@ -13,10 +13,11 @@ RSpec.describe Comment, type: :model do
   end
   
   context 'associations' do
-    it { should have_many(:replied_comments).class_name('Comment').with_foreign_key(:comment_id).dependent(:destroy) }
-    it { should belong_to(:user) }
-    it { should belong_to(:source) }
-    it { should belong_to(:comment).optional }
+    it { is_expected.to have_many(:replied_comments).class_name('Comment').with_foreign_key(:comment_id).dependent(:destroy) }
+    it { is_expected.to belong_to(:user) }
+    it { is_expected.to have_many(:shared_records) }
+    it { is_expected.to belong_to(:source) }
+    it { is_expected.to belong_to(:comment).optional }
   end
   
   context 'validations' do
@@ -26,9 +27,9 @@ RSpec.describe Comment, type: :model do
     end
     
     context 'fields' do
-      it { should validate_presence_of(:message) }
-      it { should validate_presence_of(:source_id) }
-      it { should validate_presence_of(:source_type) }
+      it { is_expected.to validate_presence_of(:message) }
+      it { is_expected.to validate_presence_of(:source_id) }
+      it { is_expected.to validate_presence_of(:source_type) }
     end
   end
   

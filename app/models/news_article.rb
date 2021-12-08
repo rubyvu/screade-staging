@@ -13,6 +13,8 @@ class NewsArticle < ApplicationRecord
   ## Lits
   has_many :lits, as: :source, dependent: :destroy
   has_many :liting_users, through: :lits, source: :user
+  ## Sharing
+  has_many :shared_records, as: :shareable
   ## Views
   has_many :views, as: :source, dependent: :destroy
   has_many :viewing_users, through: :views, source: :user

@@ -7,8 +7,12 @@ class Comment < ApplicationRecord
   # Associations
   has_many :replied_comments, class_name: 'Comment', foreign_key: :comment_id, dependent: :destroy
   belongs_to :comment, class_name: 'Comment', foreign_key: :comment_id, optional: true
+  ## Sharing
+  has_many :shared_records, as: :shareable
+  
   belongs_to :source, polymorphic: true, counter_cache: :comments_count
   belongs_to :user
+  
   ## Lits
   has_many :lits, as: :source, dependent: :destroy
   has_many :liting_users, through: :lits, source: :user

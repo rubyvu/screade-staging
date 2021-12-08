@@ -33,8 +33,26 @@ class Api::V1::CommentsController < Api::V1::ApiController
     render json: { comment: comment_json }, status: :ok
   end
   
+  # POST /api/v1/comments/:id/share
+  def share
+    shared_record = SharedRecord.new(shared_record_params)
+    shared_record.sender = current_user
+    shared_record.shareable = @comment
+    
+    if shared_record.save
+      shared_record_json = SharedRecordSerializer.new(shared_record).as_json
+      render json: { shared_record: shared_record_json }, status: :created
+    else
+      render json: { errors: shared_record.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+  
   private
     def get_comment
       @comment = Comment.find(params[:id])
+    end
+    
+    def shared_record_params
+      params.require(:shared_record).permit(user_ids: [])
     end
 end

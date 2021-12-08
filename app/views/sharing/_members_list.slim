@@ -17,11 +17,6 @@
           .member-name
             = user.full_name
           .member-is-checked
-            label class="big-checkbox-lable"
-              - if !@chat.new_record? && @chat.chat_memberships.exists?(user_id: user.id)
-                input type="checkbox" id="checkbox-member-#{user.username}" data-username="#{user.username}" checked='true'
-                
-              - else
-                input type="checkbox" id="checkbox-member-#{user.username}" data-username="#{user.username}"
-                
+            label class='big-checkbox-lable'
+              input type='checkbox' id="checkbox-member-#{user.username}" data-username="#{user.username}"
               .checkmark

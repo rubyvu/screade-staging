@@ -55,7 +55,8 @@ class User < ApplicationRecord
   has_many :subscribed_news_categories, through: :user_topic_subscriptions, source: :source, source_type: 'NewsCategory'
   has_many :subscribed_topics, through: :user_topic_subscriptions, source: :source, source_type: 'Topic'
   # Suggested Topics
-  has_many :suggested_topics, class_name: 'Topic', foreign_key: :suggester_id, dependent: :nullify
+  has_many :suggested_topics, foreign_key: :suggester_id, class_name: 'Topic', dependent: :nullify
+  has_many :sent_shared_records, foreign_key: :sender_id, class_name: 'SharedRecord', dependent: :destroy
   # Languages
   has_and_belongs_to_many :languages
   has_and_belongs_to_many :streams

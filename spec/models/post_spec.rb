@@ -15,29 +15,29 @@ RSpec.describe Post, type: :model do
   end
   
   context 'associations' do
-    it { should belong_to(:source) }
-    it { should belong_to(:user) }
-    it { should have_many(:comments).dependent(:destroy) }
-    it { should have_many(:commenting_users) }
-    it { should have_many(:lits).dependent(:destroy) }
-    it { should have_many(:liting_users) }
-    it { should have_many(:post_groups) }
-    it { should have_many(:views).dependent(:destroy) }
-    it { should have_many(:viewing_users) }
+    it { is_expected.to belong_to(:source) }
+    it { is_expected.to belong_to(:user) }
+    it { is_expected.to have_many(:comments).dependent(:destroy) }
+    it { is_expected.to have_many(:commenting_users) }
+    it { is_expected.to have_many(:lits).dependent(:destroy) }
+    it { is_expected.to have_many(:liting_users) }
+    it { is_expected.to have_many(:post_groups) }
+    it { is_expected.to have_many(:views).dependent(:destroy) }
+    it { is_expected.to have_many(:viewing_users) }
+    it { is_expected.to have_many(:shared_records) }
   end
   
   context 'validations' do
     context 'associations' do
-      it { should validate_presence_of(:user) }
+      it { is_expected.to validate_presence_of(:user) }
     end
-  
+    
     context 'fields' do
-      it { should validate_presence_of(:title) }
-      it { should validate_presence_of(:description) }
-      it { should validate_presence_of(:source_id) }
-      it { should validate_presence_of(:source_type) }
-      it { should validate_inclusion_of(:source_type).in_array(Post::SOURCE_TYPES) }
+      it { is_expected.to validate_presence_of(:title) }
+      it { is_expected.to validate_presence_of(:description) }
+      it { is_expected.to validate_presence_of(:source_id) }
+      it { is_expected.to validate_presence_of(:source_type) }
+      it { is_expected.to validate_inclusion_of(:source_type).in_array(Post::SOURCE_TYPES) }
     end
   end
-  
 end

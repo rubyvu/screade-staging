@@ -1222,6 +1222,49 @@ ALTER SEQUENCE public.settings_id_seq OWNED BY public.settings.id;
 
 
 --
+-- Name: shared_records; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.shared_records (
+    id bigint NOT NULL,
+    sender_id bigint NOT NULL,
+    shareable_id bigint NOT NULL,
+    shareable_type character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: shared_records_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.shared_records_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: shared_records_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.shared_records_id_seq OWNED BY public.shared_records.id;
+
+
+--
+-- Name: shared_records_users; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.shared_records_users (
+    shared_record_id bigint NOT NULL,
+    user_id bigint NOT NULL
+);
+
+
+--
 -- Name: squad_requests; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1799,6 +1842,13 @@ ALTER TABLE ONLY public.settings ALTER COLUMN id SET DEFAULT nextval('public.set
 
 
 --
+-- Name: shared_records id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.shared_records ALTER COLUMN id SET DEFAULT nextval('public.shared_records_id_seq'::regclass);
+
+
+--
 -- Name: squad_requests id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2113,6 +2163,14 @@ ALTER TABLE ONLY public.schema_migrations
 
 ALTER TABLE ONLY public.settings
     ADD CONSTRAINT settings_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: shared_records shared_records_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.shared_records
+    ADD CONSTRAINT shared_records_pkey PRIMARY KEY (id);
 
 
 --
@@ -2477,6 +2535,13 @@ CREATE INDEX index_settings_on_user_id ON public.settings USING btree (user_id);
 
 
 --
+-- Name: index_shared_records_on_shareable_id_and_shareable_type; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_shared_records_on_shareable_id_and_shareable_type ON public.shared_records USING btree (shareable_id, shareable_type);
+
+
+--
 -- Name: index_squad_requests_on_receiver_id_and_requestor_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2783,6 +2848,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210920182325'),
 ('20210920183713'),
 ('20211027071929'),
-('20211027072240');
+('20211027072240'),
+('20211208084155'),
+('20211208100321');
 
 

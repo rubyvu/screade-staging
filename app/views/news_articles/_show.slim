@@ -7,11 +7,11 @@
     - news_article.topics.each do |topic|
       span.title-main-wrapper
         = topic.title.capitalize
-    
+        
     - if current_user
       span.title-main-wrapper.new
         = link_to '+ Topic', search_news_article_path(news_article), remote: true
-  
+        
   - if news_article.img_url.present?
     = image_tag(news_article.img_url, class: 'url-full-image', onerror: "this.error=null;this.src='#{asset_pack_path('media/images/placeholders/placeholder-news.png')}'")
   - else
@@ -26,7 +26,10 @@
       .info-panel-value-wrapper.pointer-disable
         i class=(news_article.is_commented(current_user) ? "ic comment reverse active" : "ic comment reverse")
         span.info-panel-value.color-black #{counter_measurement(news_article.comments.count)}
-    
+        
+      .info-panel-value-wrapper
+        = link_to 'Share', sharing_index_path, remote: true
+        
   .news-article-text
     .news-article-title
       = news_article.title
@@ -34,3 +37,4 @@
       = news_article.description
       
 = render 'news_articles/search'
+= render 'shared/modals/share_to_members'

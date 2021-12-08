@@ -1,7 +1,7 @@
 class Api::V1::NewsArticlesController < Api::V1::ApiController
   skip_before_action :authenticate, only: [:show]
-  before_action :authenticate, only: [:show, :lit, :view, :unlit], if: :is_device_token?
-  before_action :get_article, only: [:groups, :lit, :show, :view, :unlit]
+  before_action :authenticate, only: [:show, :lit, :view, :unlit, :share], if: :is_device_token?
+  before_action :get_article, only: [:groups, :lit, :show, :view, :unlit, :share]
   
   # GET /api/v1/news_articles/:id
   def show
@@ -57,7 +57,21 @@ class Api::V1::NewsArticlesController < Api::V1::ApiController
     news_article.topics << topic
     render json: { success: true }, status: :ok
   end
+  
+  # POST /api/v1/news_articles/:id/share
+  def share
+    shared_record = SharedRecord.new(shared_record_params)
+    shared_record.sender = current_user
+    shared_record.shareable = @news_article
     
+    if shared_record.save
+      shared_record_json = SharedRecordSerializer.new(shared_record).as_json
+      render json: { shared_record: shared_record_json }, status: :created
+    else
+      render json: { errors: shared_record.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+  
   private
     def get_article
       @news_article = NewsArticle.find(params[:id])
@@ -65,5 +79,9 @@ class Api::V1::NewsArticlesController < Api::V1::ApiController
     
     def news_article_subscription_params
       params.require(:news_article_subscription).permit(:topic_id)
+    end
+    
+    def shared_record_params
+      params.require(:shared_record).permit(user_ids: [])
     end
 end

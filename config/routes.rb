@@ -146,6 +146,7 @@ Rails.application.routes.draw do
   end
   
   resources :searches, only: [:index]
+  resources :sharing, only: [:index]
   resources :settings, only: [:edit, :update]
   resources :streams, only: [:index, :show, :destroy], param: :access_token do
     resources :stream_comments, only: [:create]
@@ -226,6 +227,7 @@ Rails.application.routes.draw do
           get :reply_comments
           post :lit
           delete :unlit
+          post :share
         end
       end
       
@@ -279,6 +281,7 @@ Rails.application.routes.draw do
           post :lit
           post :view
           delete :unlit
+          post :share
         end
       end
       
@@ -311,6 +314,8 @@ Rails.application.routes.draw do
             delete :destroy
           end
         end
+        
+        post :share, on: :member
       end
       
       resources :post_groups, only: [:index]

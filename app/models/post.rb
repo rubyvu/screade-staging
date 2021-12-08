@@ -29,6 +29,8 @@ class Post < ApplicationRecord
   has_many :notifications, as: :source, dependent: :destroy
   # Extra Group assiciation
   has_many :post_groups, dependent: :destroy
+  ## Sharing
+  has_many :shared_records, as: :shareable
   
   # Association validations
   validates :user, presence: true

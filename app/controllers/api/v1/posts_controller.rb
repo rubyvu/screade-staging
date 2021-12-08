@@ -1,5 +1,5 @@
 class Api::V1::PostsController < Api::V1::ApiController
-  before_action :get_post, only: [:show, :update, :destroy]
+  before_action :get_post, only: [:show, :update, :destroy, :share]
   before_action :get_user_image, only: [:create, :update]
   
   # GET /api/v1/posts
@@ -62,6 +62,20 @@ class Api::V1::PostsController < Api::V1::ApiController
     render json: { success: true }, status: :ok
   end
   
+  # POST /api/v1/posts/:id/share
+  def share
+    shared_record = SharedRecord.new(shared_record_params)
+    shared_record.sender = current_user
+    shared_record.shareable = @post
+    
+    if shared_record.save
+      shared_record_json = SharedRecordSerializer.new(shared_record).as_json
+      render json: { shared_record: shared_record_json }, status: :created
+    else
+      render json: { errors: shared_record.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+  
   private
     def get_post
       @post = Post.find(params[:id])
@@ -71,9 +85,7 @@ class Api::V1::PostsController < Api::V1::ApiController
       @user_image = current_user.user_images.find_by(id: params[:post][:image_id])
     end
     
-    def post_params
-      strong_params = params.require(:post).permit(:image_id, :is_notification, :title, :description, :source_type, :source_id)
-      strong_params.delete(:image_id)
-      strong_params
+    def shared_record_params
+      params.require(:shared_record).permit(user_ids: [])
     end
 end
