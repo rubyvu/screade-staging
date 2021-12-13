@@ -8,12 +8,11 @@
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  invited_by_user_id :bigint           not null
-#  user_id            :bigint
 #
 # Indexes
 #
 #  index_invitations_on_invited_by_user_id  (invited_by_user_id)
-#  index_invitations_on_user_id             (user_id)
+#  index_invitations_on_token               (token) UNIQUE
 #
 FactoryBot.define do
   factory :invitation do

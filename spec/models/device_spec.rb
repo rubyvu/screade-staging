@@ -67,7 +67,7 @@ RSpec.describe Device, type: :model do
   end
   
   context 'callbacks' do
-    it 'should generate new :access_token only on creation of Device' do
+    it 'should generate new :access_token on #create' do
       device = FactoryBot.create(:device, owner: @owner)
       access_token = device.access_token
       device.update(name: 'any')

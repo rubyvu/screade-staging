@@ -240,6 +240,7 @@ Rails.application.routes.draw do
       
       resources :contact_us_requests, only: [:create]
       resources :countries, only: [:index]
+      
       resources :current_user, only: [] do
         collection do
           get :info
@@ -258,6 +259,7 @@ Rails.application.routes.draw do
       end
       
       resources :events, only: [:index, :create, :update, :destroy]
+      
       resources :forgot_password, only: [:create] do
         collection do
           get :security_question
@@ -280,6 +282,7 @@ Rails.application.routes.draw do
         end
       end
       
+      resources :invitations, only: [:create]
       resources :languages, only: [:index]
       
       resources :news_articles, only: [:show] do

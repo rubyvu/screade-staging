@@ -792,7 +792,6 @@ CREATE TABLE public.invitations (
     id bigint NOT NULL,
     email character varying NOT NULL,
     token character varying NOT NULL,
-    user_id bigint,
     invited_by_user_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
@@ -2488,10 +2487,10 @@ CREATE INDEX index_invitations_on_invited_by_user_id ON public.invitations USING
 
 
 --
--- Name: index_invitations_on_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_invitations_on_token; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_invitations_on_user_id ON public.invitations USING btree (user_id);
+CREATE UNIQUE INDEX index_invitations_on_token ON public.invitations USING btree (token);
 
 
 --
