@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: user_videos
+#
+#  id         :bigint           not null, primary key
+#  is_private :boolean          default(TRUE)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  user_id    :integer          not null
+#
 class UserVideoSerializer < ActiveModel::Serializer
   
   attribute :file_thumbnail

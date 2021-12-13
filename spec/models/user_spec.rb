@@ -1,3 +1,41 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                        :bigint           not null, primary key
+#  birthday                  :date
+#  blocked_at                :datetime
+#  blocked_comment           :string
+#  confirmation_sent_at      :datetime
+#  confirmation_token        :string
+#  confirmed_at              :datetime
+#  email                     :string           default(""), not null
+#  encrypted_password        :string           default(""), not null
+#  failed_attempts           :integer          default(0), not null
+#  first_name                :string
+#  last_name                 :string
+#  locked_at                 :datetime
+#  middle_name               :string
+#  phone_number              :string
+#  remember_created_at       :datetime
+#  reset_password_sent_at    :datetime
+#  reset_password_token      :string
+#  security_question_answer  :string           not null
+#  unconfirmed_email         :string
+#  username                  :string           not null
+#  created_at                :datetime         not null
+#  updated_at                :datetime         not null
+#  country_id                :integer          not null
+#  invited_by_user_id        :bigint
+#  user_security_question_id :integer          not null
+#
+# Indexes
+#
+#  index_users_on_confirmation_token    (confirmation_token) UNIQUE
+#  index_users_on_email                 (email) UNIQUE
+#  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+#  index_users_on_username              (username) UNIQUE
+#
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
@@ -6,8 +44,9 @@ RSpec.describe User, type: :model do
     @user_security_question = FactoryBot.create(:user_security_question)
   end
   
-  it 'should have a valid factory' do
-    expect(FactoryBot.build(:user, country: @country, user_security_question: @user_security_question)).to be_valid
+  it 'is expected to have a valid factory' do
+    user = FactoryBot.build(:user, country: @country, user_security_question: @user_security_question)
+    expect(user.valid?).to eq(true)
   end
   
   context 'associations' do
@@ -27,6 +66,8 @@ RSpec.describe User, type: :model do
       it { is_expected.to have_many(:squad_requests_as_requestor).dependent(:destroy) }
       it { is_expected.to have_many(:comments).dependent(:destroy) }
       it { is_expected.to have_many(:commented_news_articles) }
+      it { is_expected.to have_many(:invitations).with_foreign_key(:invited_by_user_id).class_name('Invitation').dependent(:destroy) }
+      it { is_expected.to belong_to(:invited_by_user).with_foreign_key(:invited_by_user_id).class_name('User').optional }
       it { is_expected.to have_many(:lits).dependent(:destroy) }
       it { is_expected.to have_many(:lited_news_articles) }
       it { is_expected.to have_many(:views).dependent(:destroy) }
@@ -39,8 +80,9 @@ RSpec.describe User, type: :model do
     end
     
     context 'fields' do
-      it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
       it { is_expected.to validate_presence_of(:email) }
+      it { is_expected.to validate_length_of(:email).is_at_most(100) }
+      it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
       it { is_expected.to validate_presence_of(:password) }
       it { is_expected.to validate_presence_of(:security_question_answer) }
       it { is_expected.to validate_presence_of(:username) }

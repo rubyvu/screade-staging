@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: settings
+#
+#  id                  :bigint           not null, primary key
+#  font_family         :string
+#  font_style          :string
+#  is_current_location :boolean          default(FALSE), not null
+#  is_email            :boolean
+#  is_images           :boolean          default(TRUE)
+#  is_notification     :boolean          default(TRUE)
+#  is_posts            :boolean          default(TRUE)
+#  is_videos           :boolean          default(TRUE)
+#  user_id             :integer          not null
+#
+# Indexes
+#
+#  index_settings_on_user_id  (user_id)
+#
 class Setting < ApplicationRecord
   # Constants
   FONT_FAMILIES = ['roboto', 'vivaldi', 'times-new-roman', 'broadway']

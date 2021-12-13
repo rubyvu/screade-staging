@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: user_topic_subscriptions
+#
+#  id          :bigint           not null, primary key
+#  source_type :string           not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  source_id   :integer          not null
+#  user_id     :integer          not null
+#
+# Indexes
+#
+#  index_user_topic_subscriptions_on_user_and_source  (user_id,source_id,source_type) UNIQUE
+#
 require 'rails_helper'
 
 RSpec.describe UserTopicSubscription, type: :model do

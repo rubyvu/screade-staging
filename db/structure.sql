@@ -785,6 +785,40 @@ ALTER SEQUENCE public.events_id_seq OWNED BY public.events.id;
 
 
 --
+-- Name: invitations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.invitations (
+    id bigint NOT NULL,
+    email character varying NOT NULL,
+    token character varying NOT NULL,
+    user_id bigint,
+    invited_by_user_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: invitations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.invitations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: invitations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.invitations_id_seq OWNED BY public.invitations.id;
+
+
+--
 -- Name: languages; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1611,7 +1645,8 @@ CREATE TABLE public.users (
     country_id integer NOT NULL,
     middle_name character varying,
     blocked_at timestamp without time zone,
-    blocked_comment character varying
+    blocked_comment character varying,
+    invited_by_user_id bigint
 );
 
 
@@ -1770,6 +1805,13 @@ ALTER TABLE ONLY public.devices ALTER COLUMN id SET DEFAULT nextval('public.devi
 --
 
 ALTER TABLE ONLY public.events ALTER COLUMN id SET DEFAULT nextval('public.events_id_seq'::regclass);
+
+
+--
+-- Name: invitations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invitations ALTER COLUMN id SET DEFAULT nextval('public.invitations_id_seq'::regclass);
 
 
 --
@@ -2052,6 +2094,14 @@ ALTER TABLE ONLY public.devices
 
 ALTER TABLE ONLY public.events
     ADD CONSTRAINT events_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: invitations invitations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invitations
+    ADD CONSTRAINT invitations_pkey PRIMARY KEY (id);
 
 
 --
@@ -2428,6 +2478,20 @@ CREATE INDEX index_devices_on_push_token ON public.devices USING btree (push_tok
 --
 
 CREATE INDEX index_events_on_user_id ON public.events USING btree (user_id);
+
+
+--
+-- Name: index_invitations_on_invited_by_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_invitations_on_invited_by_user_id ON public.invitations USING btree (invited_by_user_id);
+
+
+--
+-- Name: index_invitations_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_invitations_on_user_id ON public.invitations USING btree (user_id);
 
 
 --
@@ -2852,6 +2916,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211027072240'),
 ('20211208084155'),
 ('20211208100321'),
-('20211208220921');
+('20211208220921'),
+('20211213194957'),
+('20211213202217');
 
 

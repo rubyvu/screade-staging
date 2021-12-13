@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: user_images
+#
+#  id         :bigint           not null, primary key
+#  is_private :boolean          default(TRUE)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  user_id    :integer          not null
+#
 class UserImage < ApplicationRecord
   has_one_attached :file
   

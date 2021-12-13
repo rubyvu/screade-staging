@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: countries
+#
+#  id               :bigint           not null, primary key
+#  code             :string           not null
+#  is_national_news :boolean          default(FALSE)
+#  title            :string           not null
+#
+# Indexes
+#
+#  index_countries_on_code  (code) UNIQUE
+#
 class Country < ApplicationRecord
   # Constants
   COUNTRIES_WITH_NATIONAL_NEWS = %w(AE AR AT AU BE BG BR CA CH CN CO CU CZ DE EG FR GB GR HK HU ID IE IL IN IT JP KR LT LV MA MX MY NG NL NO NZ PH PL PT RO RS RU SA SE SG SI SK TH TR TW UA US VE ZA)

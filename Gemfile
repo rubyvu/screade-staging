@@ -139,4 +139,7 @@ group :development do
   
   # Catch N+1 queries
   gem 'bullet'
+  
+  # Annotations for ActiveRecord
+  gem 'annotate'
 end

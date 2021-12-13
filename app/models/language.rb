@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: languages
+#
+#  id         :bigint           not null, primary key
+#  code       :string           not null
+#  title      :string           not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_languages_on_code  (code) UNIQUE
+#
 class Language < ApplicationRecord
   # Constants
   LANGUAGES_FOR_WORLD_NEWS = %w(AR DE EN ES FR HE IT NL NO PT RU SE UD ZH)
