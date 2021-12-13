@@ -19,6 +19,25 @@ $( document ).on('turbolinks:load', function() {
     e.currentTarget.submit();
   })
   
+  // On NewsArticle share
+  $('#modal-share-to-members').on('submit', 'form#share_record', function(event) {
+    // Stop form execution
+    event.preventDefault()
+    
+    let checkedMembers = $("[id^=checkbox-member-]:checked")
+    if (checkedMembers.length > 0) {
+      $("#shared_record_user_ids_").remove()
+      
+      checkedMembers.each(function() {
+        let userID = $(this).attr('data-id')
+        $(event.target).append(`<input type='hidden' name='shared_record[user_ids][]' id='shared_record_user_ids_' value=${userID}>`)
+      })
+    }
+    
+    // Resume defaul form execution
+    event.currentTarget.submit()
+  })
+  
   // On Chat update(this script duplicated in app/views/chats/show.js.erb for partial reload case)
   $('#modal-add-chat-member').on('submit', '[id^=edit_chat]', function(e) {
     let checkedMembers = $("[id^=checkbox-member-]:checked")

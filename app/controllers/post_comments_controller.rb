@@ -15,7 +15,7 @@ class PostCommentsController < ApplicationController
     new_comment.user = current_user
     new_comment.save
     if new_comment.comment.present?
-      redirect_to post_post_comment_reply_comments_path(post_id: @post.id, post_comment_id: new_comment.comment.id )
+      redirect_to post_post_comment_reply_comments_path(post_id: @post.id, post_comment_id: new_comment.comment.id)
     else
       redirect_to post_post_comments_path(@post)
     end

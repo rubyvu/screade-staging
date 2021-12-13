@@ -1,2 +1,5 @@
 web: rails s -p ${1:-3000} -b ${LOCAL_IP:-127.0.0.1} -e ${RACK_ENV:-development}
+
 webpacker: ./bin/webpack-dev-server
+
+worker: bundle exec que -q default

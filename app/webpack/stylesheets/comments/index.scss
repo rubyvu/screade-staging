@@ -91,9 +91,11 @@
       }
       
       .comment-reply-wrapper {
+        display: inline-flex;
+        align-items: center;
+        
         a.comment-reply {
           font-size: 12px;
-          margin-top: 10px;
         }
       }
     }

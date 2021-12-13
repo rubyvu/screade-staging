@@ -42,7 +42,7 @@ class NewsArticlesController < ApplicationController
     new_comment.user = current_user
     new_comment.save
     if new_comment.comment.present?
-      redirect_to news_article_comment_reply_comments_path(news_article_id: @news_article.id, comment_id: new_comment.comment.id )
+      redirect_to news_article_comment_reply_comments_path(news_article_id: @news_article.id, comment_id: new_comment.comment.id)
     else
       redirect_to comments_news_article_path(@news_article)
     end

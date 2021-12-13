@@ -29,6 +29,8 @@ module NotificationHelper
       else
         link = ''
       end
+    when 'NewsArticle'
+      link = comments_news_article_path(object.source)
     when 'Post'
       link = post_post_comments_path(object.source)
     when 'SquadRequest'

@@ -19,17 +19,21 @@
     
   .news-info-panel value="#{news_article.id}"
     .info-panel
-      .div class="#{ current_user ? 'info-panel-value-wrapper' : 'info-panel-value-wrapper pointer-disable' }"
-        i class=(news_article.is_lited(current_user) ? "ic lit active reverse" : "ic lit reverse")
+      div class="#{ current_user ? 'info-panel-value-wrapper' : 'info-panel-value-wrapper pointer-disable' }"
+        i class=(news_article.is_lited(current_user) ? 'ic lit active reverse' : 'ic lit reverse')
         span.info-panel-value.color-black #{counter_measurement(news_article.lits.count)}
         
       .info-panel-value-wrapper.pointer-disable
-        i class=(news_article.is_commented(current_user) ? "ic comment reverse active" : "ic comment reverse")
+        i class=(news_article.is_commented(current_user) ? 'ic comment reverse active' : 'ic comment reverse')
         span.info-panel-value.color-black #{counter_measurement(news_article.comments.count)}
-        
-      .info-panel-value-wrapper
-        = link_to 'Share', sharing_index_path, remote: true
-        
+      
+      div class="#{ current_user ? 'info-panel-value-wrapper' : 'info-panel-value-wrapper pointer-disable' }"
+        - if current_user
+          = link_to shared_records_path(news_article_id: news_article.id), remote: true
+            i.ic.share.reverse
+        - else
+          i.ic.share.reverse
+          
   .news-article-text
     .news-article-title
       = news_article.title

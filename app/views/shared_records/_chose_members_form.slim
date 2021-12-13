@@ -1,0 +1,8 @@
+= render 'shared_records/members_list', squad_members: @squad_members
+
+.my-3
+  = form_with url: shared_records_path, remote: true, authenticity_token: true, id: 'share_record', html: { method: :post } do |f|
+    = hidden_field_tag 'shared_record[user_ids][]', []
+    = hidden_field_tag 'shared_record[shareable_id]', @shareable.id
+    = hidden_field_tag 'shared_record[shareable_type]', @shareable.class.name
+    = f.submit 'Share', class: 'btn btn-primary w-100'

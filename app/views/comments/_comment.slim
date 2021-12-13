@@ -11,7 +11,7 @@
         = image_tag(comment.user.profile_picture_url, class: 'profile-image')
       - else
         = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
-    
+        
   .comment-content-wrapper value="#{comment.id}"
     .comment-user-name
       = comment.user.full_name
@@ -20,10 +20,10 @@
     .comment-date
       = comment_timestamp(comment.created_at)
       
-      .div class="#{ current_user ? 'comment-lit' : 'comment-lit pointer-disable' }"
+      div class="#{ current_user ? 'comment-lit' : 'comment-lit pointer-disable' }"
         span.info-panel-value.color-black #{counter_measurement(comment.lits.size)}
-        i class=(comment.is_lited(current_user) ? "ic lit active reverse" : "ic lit reverse")
-        
+        i class=(comment.is_lited(current_user) ? 'ic lit active reverse' : 'ic lit reverse')
+          
     // Reply show/hide
     - if comment.comment_id.blank?
       .comment-reply-wrapper
@@ -33,3 +33,9 @@
         - elsif comment.source_type == 'Post'
           - url = post_post_comments_path
           = link_to comment.replied_comments.count == 0 ? 'REPLY' : "#{comment.replied_comments.count} REPLIES", post_post_comment_reply_comments_path(post_id: comment.source.id, post_comment_id: comment.id), class: 'comment-reply'
+          
+        - if current_user
+          = link_to shared_records_path(comment_id: comment.id), remote: true
+            i.ic.share.reverse
+        - else
+          i.ic.share.reverse

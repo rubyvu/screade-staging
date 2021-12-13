@@ -30,7 +30,7 @@
             = image_pack_tag('media/images/icons/notifications/ic_notification_new_post.png')
           - when 'Stream'
             = image_pack_tag('media/images/icons/notifications/ic_notification_new_video.png')
-      
+            
       .body
         .header
           .title
@@ -43,10 +43,10 @@
               = notification.source.message
             - else
               = notification.source.title
-            
+              
           .date
             = comment_timestamp(notification.created_at)
-          
+            
         .message
           - case notification.source_type
           - when 'UserImage'
@@ -55,6 +55,6 @@
           - when 'UserVideo'
             .icon
               = image_pack_tag('media/images/icons/notifications/ic_notification_new_video.png')
-          
+              
           .text
             = notification.message

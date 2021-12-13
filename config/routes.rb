@@ -66,6 +66,7 @@ Rails.application.routes.draw do
   end
   
   resources :chat_memberships, only: [:update, :destroy]
+  
   resources :comments, only: [] do
     member do
       post :lit
@@ -74,6 +75,7 @@ Rails.application.routes.draw do
   end
   
   resources :contact_us_requests, only: [:new, :create]
+  
   resources :current_user, only: [] do
     collection do
       put :update
@@ -82,6 +84,7 @@ Rails.application.routes.draw do
   end
   
   resources :events, only: [:index, :edit, :create, :update, :destroy]
+  
   resources :fonts, only: [] do
     collection do
       get :customize
@@ -97,7 +100,9 @@ Rails.application.routes.draw do
       delete :unsubscribe
     end
   end
+  
   resources :home, only: [:index]
+  
   resources :legal_documents, only: [] do
     collection do
       get :terms_and_services
@@ -105,6 +110,7 @@ Rails.application.routes.draw do
   end
   
   resources :maps, only: [:index]
+  
   resources :news_articles, only: [] do
     resources :comments, only: [] do
       get :reply_comments
@@ -122,6 +128,7 @@ Rails.application.routes.draw do
   end
   
   resources :news_categories, only: [:show]
+  
   resources :forgot_password, only: [] do
     collection do
       post :security_question
@@ -129,6 +136,7 @@ Rails.application.routes.draw do
   end
   
   resources :notifications, only: [:index, :update]
+  
   resources :posts do
     resources :post_comments, only: [:index, :create] do
       get :reply_comments
@@ -140,14 +148,13 @@ Rails.application.routes.draw do
       end
     end
     
-    collection do
-      get :user_images
-    end
+    get :user_images, on: :collection
   end
   
   resources :searches, only: [:index]
-  resources :sharing, only: [:index]
+  resources :shared_records, only: [:index, :create]
   resources :settings, only: [:edit, :update]
+  
   resources :streams, only: [:index, :show, :destroy], param: :access_token do
     resources :stream_comments, only: [:create]
     
@@ -274,6 +281,7 @@ Rails.application.routes.draw do
       end
       
       resources :languages, only: [:index]
+      
       resources :news_articles, only: [:show] do
         resources :news_article_comments, only: [:index, :create]
         

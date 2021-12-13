@@ -27,7 +27,7 @@
               a #{post.title}
             - else
               = link_to post.title, post_post_comments_path(post)
-          
+              
           . class="#{post.is_approved ? 'post-info-panel' : 'post-info-panel on-approve'}"
             .div class="info-panel-value-wrapper"
               - if post.is_lited(current_user)

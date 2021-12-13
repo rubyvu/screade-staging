@@ -1,6 +1,0 @@
-= render 'sharing/members_list', squad_members: @squad_members
-
-.my-3
-  /= form_for @chat, url: update_members_chat_path(@chat.access_token), remote: true, authenticity_token: true, html: { method: :put } do |f|
-    = hidden_field_tag "chat_membership[usernames][]", []
-    = f.submit 'Share', class: 'btn btn-primary w-100'

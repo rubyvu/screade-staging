@@ -100,6 +100,16 @@ i.ic.review.active:after {
   content: url('../images/icons/ic_review_done.png');
 }
 
+// Share
+i.ic.share:after {
+  content: url('../images/icons/ic_share.svg');
+}
+
+i.ic.share.reverse:after {
+  content: url('../images/icons/ic_share_reverse.svg');
+}
+
+
 /* Chat */
 i.ic-button.call-end:after {
   content: url('../images/icons/chat_calls/ic_call_end.png');
