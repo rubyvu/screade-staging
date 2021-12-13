@@ -13,6 +13,7 @@
 #  encrypted_password        :string           default(""), not null
 #  failed_attempts           :integer          default(0), not null
 #  first_name                :string
+#  hide_invitation_popup     :boolean          default(FALSE)
 #  last_name                 :string
 #  locked_at                 :datetime
 #  middle_name               :string
@@ -84,6 +85,11 @@ class UserSerializer < ActiveModel::Serializer
   attribute :profile_picture
   def profile_picture
     object.profile_picture_url
+  end
+  
+  attribute :show_invitation_popup
+  def show_invitation_popup
+    object.created_at > 7.days.ago && !object.hide_invitation_popup
   end
   
   attribute :squad_members_count

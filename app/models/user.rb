@@ -13,6 +13,7 @@
 #  encrypted_password        :string           default(""), not null
 #  failed_attempts           :integer          default(0), not null
 #  first_name                :string
+#  hide_invitation_popup     :boolean          default(FALSE)
 #  last_name                 :string
 #  locked_at                 :datetime
 #  middle_name               :string

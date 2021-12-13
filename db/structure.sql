@@ -1645,7 +1645,8 @@ CREATE TABLE public.users (
     middle_name character varying,
     blocked_at timestamp without time zone,
     blocked_comment character varying,
-    invited_by_user_id bigint
+    invited_by_user_id bigint,
+    hide_invitation_popup boolean DEFAULT false
 );
 
 
@@ -2917,6 +2918,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211208100321'),
 ('20211208220921'),
 ('20211213194957'),
-('20211213202217');
+('20211213202217'),
+('20211213224122');
 
 

@@ -282,7 +282,10 @@ Rails.application.routes.draw do
         end
       end
       
-      resources :invitations, only: [:create]
+      resources :invitations, only: [:create] do
+        post :hide_popup, on: :collection
+      end
+      
       resources :languages, only: [:index]
       
       resources :news_articles, only: [:show] do

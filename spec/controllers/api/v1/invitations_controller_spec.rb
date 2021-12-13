@@ -10,12 +10,21 @@ RSpec.describe Api::V1::InvitationsController, type: :controller do
         format: 'json'
       )
     end
+    
+    # POST /api/v1/invitations/hide_popup
+    it 'is expected to route POST /api/v1/invitations/hide_popup to /api/v1/invitations#hide_popup' do
+      expect(post: '/api/v1/invitations/hide_popup').to route_to(
+        controller: 'api/v1/invitations',
+        action: 'hide_popup',
+        format: 'json'
+      )
+    end
   end
   
-  describe 'POST #share' do
+  describe 'POST #create' do
     context 'with valid parameters' do
       before :all do
-        country = Country.find_by(code: 'US') || FactoryBot.create(:country)
+        country = Country.first || FactoryBot.create(:country)
         user_security_question = FactoryBot.create(:user_security_question)
         @user = FactoryBot.create(:user, country: country, user_security_question: user_security_question)
         @device = FactoryBot.create(:device, owner: @user)
@@ -52,6 +61,49 @@ RSpec.describe Api::V1::InvitationsController, type: :controller do
         new_invitations = Invitation.order(id: :desc).limit(3)
         invited_by_user_ids = new_invitations.pluck(:invited_by_user_id).uniq
         expect(invited_by_user_ids).to match_array([@user.id])
+      end
+    end
+  end
+  
+  describe 'POST #hide_popup' do
+    context 'with valid parameters' do
+      before :all do
+        @country = Country.find_by(code: 'US') || FactoryBot.create(:country)
+        @user_security_question = FactoryBot.create(:user_security_question)
+      end
+      
+      before :each do
+        @user = FactoryBot.create(:user, country: @country, user_security_question: @user_security_question)
+        device = FactoryBot.create(:device, owner: @user)
+        
+        request.headers['X-Device-Token'] = device.access_token
+        post :hide_popup
+      end
+      
+      it 'is expected to return :ok (200) HTTP status code' do
+        expect(response.status).to eq(200)
+      end
+      
+      it 'is expected to have application/json content type' do
+        expect(response.content_type).to eq('application/json; charset=utf-8')
+      end
+      
+      it 'is expected to have current_user' do
+        expect(subject.current_user).to eq(@user)
+      end
+      
+      it 'is expected to toggle :hide_invitation_popup on current_user' do
+        expect(@user.hide_invitation_popup).to eq(false)
+        expect(@user.reload.hide_invitation_popup).to eq(true)
+      end
+      
+      it 'is expected to change :show_invitation_popup in JSON for :user' do
+        response_json = JSON.parse(response.body)
+        expect(response_json.key?('user')).to eq(true)
+        
+        user_json = response_json['user']
+        expect(user_json.key?('show_invitation_popup')).to eq(true)
+        expect(user_json['show_invitation_popup']).to eq(false)
       end
     end
   end
