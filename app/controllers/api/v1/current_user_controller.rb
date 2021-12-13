@@ -22,7 +22,7 @@ class Api::V1::CurrentUserController < Api::V1::ApiController
       render json: { errors: ['User email has been already confirmed.'] }, status: :unprocessable_entity
       return
     end
-      
+    
     current_user.send_confirmation_instructions
     render json: { success: true }, status: :ok
   end

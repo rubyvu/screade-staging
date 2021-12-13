@@ -21,12 +21,15 @@ RSpec.describe Api::V1::InvitationsController, type: :controller do
     end
   end
   
+  before :all do
+    @country = Country.first || FactoryBot.create(:country)
+    @user_security_question = FactoryBot.create(:user_security_question)
+  end
+  
   describe 'POST #create' do
     context 'with valid parameters' do
       before :all do
-        country = Country.first || FactoryBot.create(:country)
-        user_security_question = FactoryBot.create(:user_security_question)
-        @user = FactoryBot.create(:user, country: country, user_security_question: user_security_question)
+        @user = FactoryBot.create(:user, country: @country, user_security_question: @user_security_question)
         @device = FactoryBot.create(:device, owner: @user)
       end
       
@@ -67,11 +70,6 @@ RSpec.describe Api::V1::InvitationsController, type: :controller do
   
   describe 'POST #hide_popup' do
     context 'with valid parameters' do
-      before :all do
-        @country = Country.find_by(code: 'US') || FactoryBot.create(:country)
-        @user_security_question = FactoryBot.create(:user_security_question)
-      end
-      
       before :each do
         @user = FactoryBot.create(:user, country: @country, user_security_question: @user_security_question)
         device = FactoryBot.create(:device, owner: @user)

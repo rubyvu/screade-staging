@@ -89,7 +89,9 @@ class UserSerializer < ActiveModel::Serializer
   
   attribute :show_invitation_popup
   def show_invitation_popup
-    object.created_at > 7.days.ago && !object.hide_invitation_popup
+    return false if object.hide_invitation_popup
+    
+    object.created_at <= 7.days.ago
   end
   
   attribute :squad_members_count
