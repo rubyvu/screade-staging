@@ -1456,6 +1456,41 @@ ALTER SEQUENCE public.topics_id_seq OWNED BY public.topics.id;
 
 
 --
+-- Name: translations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.translations (
+    id bigint NOT NULL,
+    translatable_id bigint NOT NULL,
+    translatable_type character varying NOT NULL,
+    language_id bigint NOT NULL,
+    field_name character varying NOT NULL,
+    result text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: translations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.translations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: translations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.translations_id_seq OWNED BY public.translations.id;
+
+
+--
 -- Name: user_images; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1920,6 +1955,13 @@ ALTER TABLE ONLY public.topics ALTER COLUMN id SET DEFAULT nextval('public.topic
 
 
 --
+-- Name: translations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.translations ALTER COLUMN id SET DEFAULT nextval('public.translations_id_seq'::regclass);
+
+
+--
 -- Name: user_images id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2254,6 +2296,14 @@ ALTER TABLE ONLY public.streams
 
 ALTER TABLE ONLY public.topics
     ADD CONSTRAINT topics_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: translations translations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.translations
+    ADD CONSTRAINT translations_pkey PRIMARY KEY (id);
 
 
 --
@@ -2754,6 +2804,13 @@ CREATE UNIQUE INDEX que_scheduler_job_in_que_jobs_unique_index ON public.que_job
 
 
 --
+-- Name: translations_unique_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX translations_unique_index ON public.translations USING btree (translatable_id, translatable_type, language_id, field_name);
+
+
+--
 -- Name: que_jobs que_job_notify; Type: TRIGGER; Schema: public; Owner: -
 --
 
@@ -2919,6 +2976,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211208220921'),
 ('20211213194957'),
 ('20211213202217'),
-('20211213224122');
+('20211213224122'),
+('20211215101252');
 
 

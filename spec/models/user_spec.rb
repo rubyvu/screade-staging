@@ -41,7 +41,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   before :all do
-    @country = Country.find_by(code: 'US') || FactoryBot.create(:country, code: 'US')
+    @country = Country.first || FactoryBot.create(:country)
     @user_security_question = FactoryBot.create(:user_security_question)
   end
   
