@@ -365,6 +365,7 @@ Rails.application.routes.draw do
       end
       
       resources :topics, only: [:index, :show, :create]
+      
       resources :user_assets, only: [:images],  param: :username, username: User::USERNAME_ROUTE_FORMAT do
         collection do
           get :upload_url
@@ -379,6 +380,7 @@ Rails.application.routes.draw do
         end
       end
       
+      resources :user_blocks, only: [:index, :create, :destroy]
       resources :user_images, only: [:create, :update]
       resources :user_locations, only: [:index, :create]
       resources :user_security_questions, only: [:index]

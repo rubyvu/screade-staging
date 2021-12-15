@@ -89,6 +89,9 @@ class User < ApplicationRecord
   ## Views
   has_many :views, dependent: :destroy
   has_many :viewed_news_articles, through: :views, source: :source, source_type: 'NewsArticle'
+  ## UserBlocks
+  has_many :user_blocks_as_blocked, foreign_key: :blocked_user_id, class_name: 'UserBlock', dependent: :destroy
+  has_many :user_blocks_as_blocker, foreign_key: :blocker_user_id, class_name: 'UserBlock', dependent: :destroy
   ## Images and Videos
   has_many :user_images, dependent: :destroy
   has_many :user_videos, dependent: :destroy

@@ -1491,6 +1491,38 @@ ALTER SEQUENCE public.translations_id_seq OWNED BY public.translations.id;
 
 
 --
+-- Name: user_blocks; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.user_blocks (
+    id bigint NOT NULL,
+    blocker_user_id bigint NOT NULL,
+    blocked_user_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: user_blocks_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.user_blocks_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: user_blocks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.user_blocks_id_seq OWNED BY public.user_blocks.id;
+
+
+--
 -- Name: user_images; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1962,6 +1994,13 @@ ALTER TABLE ONLY public.translations ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: user_blocks id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_blocks ALTER COLUMN id SET DEFAULT nextval('public.user_blocks_id_seq'::regclass);
+
+
+--
 -- Name: user_images id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2304,6 +2343,14 @@ ALTER TABLE ONLY public.topics
 
 ALTER TABLE ONLY public.translations
     ADD CONSTRAINT translations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_blocks user_blocks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_blocks
+    ADD CONSTRAINT user_blocks_pkey PRIMARY KEY (id);
 
 
 --
@@ -2699,6 +2746,13 @@ CREATE INDEX index_topics_on_parent_id ON public.topics USING btree (parent_id);
 
 
 --
+-- Name: index_user_blocks_on_blocker_user_id_and_blocked_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_user_blocks_on_blocker_user_id_and_blocked_user_id ON public.user_blocks USING btree (blocker_user_id, blocked_user_id);
+
+
+--
 -- Name: index_user_locations_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2977,6 +3031,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211213194957'),
 ('20211213202217'),
 ('20211213224122'),
-('20211215101252');
+('20211215101252'),
+('20211215130033');
 
 

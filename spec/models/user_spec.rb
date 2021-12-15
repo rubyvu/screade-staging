@@ -75,6 +75,8 @@ RSpec.describe User, type: :model do
       it { is_expected.to have_many(:viewed_news_articles) }
       it { is_expected.to have_many(:sent_shared_records).with_foreign_key(:sender_id).class_name('SharedRecord').dependent(:destroy) }
       it { is_expected.to have_many(:suggested_topics).dependent(:nullify) }
+      it { is_expected.to have_many(:user_blocks_as_blocked).with_foreign_key(:blocked_user_id).class_name('UserBlock').dependent(:destroy) }
+      it { is_expected.to have_many(:user_blocks_as_blocker).with_foreign_key(:blocker_user_id).class_name('UserBlock').dependent(:destroy) }
       it { is_expected.to have_many(:user_images).dependent(:destroy) }
       it { is_expected.to have_many(:user_videos).dependent(:destroy) }
       it { is_expected.to have_and_belong_to_many(:languages) }
@@ -92,17 +94,17 @@ RSpec.describe User, type: :model do
   end
   
   context 'normalization' do
-    it 'should downcase and cleanup :email' do
+    it 'is expected to downcase and cleanup :email' do
       user = FactoryBot.build(:user, email: '  ExaMple@gmail.com ')
       expect(user.email).to eq('example@gmail.com')
     end
     
-    it 'should capitalize and cleanup :first_name' do
+    it 'is expected to capitalize and cleanup :first_name' do
       user = FactoryBot.build(:user, first_name: '  Darth ')
       expect(user.first_name).to eq('Darth')
     end
     
-    it 'should capitalize and cleanup :last_name' do
+    it 'is expected to capitalize and cleanup :last_name' do
       user = FactoryBot.build(:user, last_name: '  Vader ')
       expect(user.last_name).to eq('Vader')
     end

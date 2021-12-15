@@ -93,7 +93,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         expect(subject.current_user).to eq(@sender)
       end
       
-      it 'is expected to have :show_invitation_popup in JSON set to true' do
+      it 'is expected to return translated :title and :description in JSON' do
         response_json = JSON.parse(response.body)
         expect(response_json.key?('post')).to eq(true)
         
