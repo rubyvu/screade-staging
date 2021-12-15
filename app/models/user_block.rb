@@ -22,6 +22,7 @@ class UserBlock < ApplicationRecord
   belongs_to :blocked, foreign_key: :blocked_user_id, class_name: 'User'
   
   # Associations validations
+  validates :blocker_user_id, uniqueness: { scope: :blocked_user_id }
   
   # Fields validations
 end

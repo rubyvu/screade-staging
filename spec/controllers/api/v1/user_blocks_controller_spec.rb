@@ -75,7 +75,43 @@ RSpec.describe Api::V1::UserBlocksController, type: :controller do
   end
   
   describe 'POST #create' do
-    context 'with valid parameters' do
+    context 'with existing UserBlock' do
+      before :each do
+        UserBlock.where(blocker: @user1, blocked: @user2).first_or_create
+        @user_blocks_before_request = UserBlock.count
+        
+        request.headers['X-Device-Token'] = @device.access_token
+        user_block_params = { blocked_user_id: @user2 }
+        post :create, params: { user_block: user_block_params }
+      end
+      
+      it 'is expected to return :created (201) HTTP status code' do
+        expect(response.status).to eq(201)
+      end
+      
+      it 'is expected to have application/json content type' do
+        expect(response.content_type).to eq('application/json; charset=utf-8')
+      end
+      
+      it 'is expected to have current_user' do
+        expect(subject.current_user).to eq(@user1)
+      end
+      
+      it 'is expected NOT to create a new UserBlock' do
+        expect(UserBlock.count).to eq(@user_blocks_before_request)
+      end
+      
+      it 'is expected to return UserBlock' do
+        response_json = JSON.parse(response.body)
+        expect(response_json.key?('user_block')).to eq(true)
+        
+        user_block_json = response_json['user_block']
+        expect(user_block_json.key?('id')).to eq(true)
+        expect(user_block_json.key?('blocked_user')).to eq(true)
+      end
+    end
+    
+    context 'WITHOUT existing UserBlock' do
       before :each do
         UserBlock.where(blocker: @user1, blocked: @user2).destroy_all
         @user_blocks_before_request = UserBlock.count

@@ -33,9 +33,10 @@ RSpec.describe UserBlock, type: :model do
   end
   
   context 'validations' do
-    subject { FactoryBot.build(:user, country: @country, user_security_question: @user_security_question) }
+    subject { FactoryBot.build(:user_block, blocked: @blocked, blocker: @blocker) }
     
     context 'associations' do
+      it { is_expected.to validate_uniqueness_of(:blocker_user_id).scoped_to(:blocked_user_id) }
     end
     
     context 'fields' do
