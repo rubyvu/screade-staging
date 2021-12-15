@@ -1,5 +1,5 @@
 class Api::V1::PostsController < Api::V1::ApiController
-  before_action :get_post, only: [:show, :update, :destroy, :share]
+  before_action :get_post, only: [:show, :update, :destroy, :share, :translate]
   before_action :get_user_image, only: [:create, :update]
   
   # GET /api/v1/posts
@@ -74,6 +74,16 @@ class Api::V1::PostsController < Api::V1::ApiController
     else
       render json: { errors: shared_record.errors.full_messages }, status: :unprocessable_entity
     end
+  end
+  
+  # POST /api/v1/posts/:id/translate
+  def translate
+    post_translation = {
+      title: "Translation for '#{@post.title}'",
+      description: "Translation for '#{@post.description}'"
+    }
+    
+    render json: { post: post_translation }, status: :ok
   end
   
   private

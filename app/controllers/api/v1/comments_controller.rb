@@ -47,6 +47,15 @@ class Api::V1::CommentsController < Api::V1::ApiController
     end
   end
   
+  # POST /api/v1/comments/:id/translate
+  def translate
+    comment_translation = {
+      message: "Translation for '#{@comment.message}'"
+    }
+    
+    render json: { comment: comment_translation }, status: :ok
+  end
+  
   private
     def get_comment
       @comment = Comment.find(params[:id])

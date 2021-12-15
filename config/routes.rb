@@ -229,12 +229,14 @@ Rails.application.routes.draw do
       end
       
       resources :chat_memberships, only: [:update, :destroy]
+      
       resources :comments, only: [:show] do
         member do
           get :reply_comments
           post :lit
           delete :unlit
           post :share
+          post :translate
         end
       end
       
@@ -329,7 +331,10 @@ Rails.application.routes.draw do
           end
         end
         
-        post :share, on: :member
+        member do
+          post :share
+          post :translate
+        end
       end
       
       resources :post_groups, only: [:index]

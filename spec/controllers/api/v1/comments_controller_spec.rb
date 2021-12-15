@@ -11,22 +11,32 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
         format: 'json'
       )
     end
+    
+    # POST /api/v1/comments/:id/translate
+    it 'is expected to route POST /api/v1/comments/:id/translate to /api/v1/comments#translate' do
+      expect(post: '/api/v1/comments/COMMENT_ID/translate').to route_to(
+        controller: 'api/v1/comments',
+        action: 'translate',
+        id: 'COMMENT_ID',
+        format: 'json'
+      )
+    end
+  end
+  
+  before :all do
+    country = Country.find_by(code: 'US') || FactoryBot.create(:country)
+    user_security_question = FactoryBot.create(:user_security_question)
+    @sender = FactoryBot.create(:user, country: country, user_security_question: user_security_question)
+    @device = FactoryBot.create(:device, owner: @sender)
+    
+    @users = FactoryBot.create_list(:user, 3, country: country, user_security_question: user_security_question)
+    
+    news_article = FactoryBot.create(:news_article, country: country)
+    @comment = FactoryBot.create(:comment, user: @sender, source: news_article)
   end
   
   describe 'POST #share' do
     context 'with valid parameters' do
-      before :all do
-        country = Country.find_by(code: 'US') || FactoryBot.create(:country)
-        user_security_question = FactoryBot.create(:user_security_question)
-        @sender = FactoryBot.create(:user, country: country, user_security_question: user_security_question)
-        @device = FactoryBot.create(:device, owner: @sender)
-        
-        @users = FactoryBot.create_list(:user, 3, country: country, user_security_question: user_security_question)
-        
-        news_article = FactoryBot.create(:news_article, country: country)
-        @comment = FactoryBot.create(:comment, user: @sender, source: news_article)
-      end
-      
       before :each do
         @count_of_shared_records_before_request = SharedRecord.count
         request.headers['X-Device-Token'] = @device.access_token
@@ -59,6 +69,35 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
       it 'is expected to associate Comment with a new SharedRecord' do
         new_shared_record = SharedRecord.order(id: :desc).first
         expect(new_shared_record.shareable).to eq(@comment)
+      end
+    end
+  end
+  
+  describe 'POST #translate' do
+    context 'with valid parameters' do
+      before :each do
+        request.headers['X-Device-Token'] = @device.access_token
+        post :translate, params: { id: @comment.id }
+      end
+      
+      it 'is expected to return :ok (200) HTTP status code' do
+        expect(response.status).to eq(200)
+      end
+      
+      it 'is expected to have application/json content type' do
+        expect(response.content_type).to eq('application/json; charset=utf-8')
+      end
+      
+      it 'is expected to have current_user' do
+        expect(subject.current_user).to eq(@sender)
+      end
+      
+      it 'is expected to have :show_invitation_popup in JSON set to true' do
+        response_json = JSON.parse(response.body)
+        expect(response_json.key?('comment')).to eq(true)
+        
+        comment_json = response_json['comment']
+        expect(comment_json.key?('message')).to eq(true)
       end
     end
   end
