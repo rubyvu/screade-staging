@@ -6,7 +6,7 @@ class Api::V1::UserBlocksController < Api::V1::ApiController
     render json: { user_blocks: user_blocks_json }, status: :ok
   end
   
-  # POST /api/v1/user_blocks/:id
+  # POST /api/v1/user_blocks
   def create
     user_block = UserBlock.new(user_block_params)
     user_block.blocker = current_user

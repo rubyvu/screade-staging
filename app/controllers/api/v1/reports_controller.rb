@@ -1,6 +1,6 @@
 class Api::V1::ReportsController < Api::V1::ApiController
   
-  # POST /api/v1/reports/:id
+  # POST /api/v1/reports
   def create
     report = Report.new(report_params)
     report.reporter = current_user
