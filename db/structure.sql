@@ -1210,6 +1210,39 @@ WITH (fillfactor='90');
 
 
 --
+-- Name: reports; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.reports (
+    id bigint NOT NULL,
+    reporter_user_id bigint NOT NULL,
+    reported_user_id bigint NOT NULL,
+    details text NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: reports_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.reports_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: reports_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.reports_id_seq OWNED BY public.reports.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1945,6 +1978,13 @@ ALTER TABLE ONLY public.que_jobs ALTER COLUMN id SET DEFAULT nextval('public.que
 
 
 --
+-- Name: reports id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.reports ALTER COLUMN id SET DEFAULT nextval('public.reports_id_seq'::regclass);
+
+
+--
 -- Name: settings id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2279,6 +2319,14 @@ ALTER TABLE ONLY public.que_scheduler_audit
 
 ALTER TABLE ONLY public.que_values
     ADD CONSTRAINT que_values_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: reports reports_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.reports
+    ADD CONSTRAINT reports_pkey PRIMARY KEY (id);
 
 
 --
@@ -2690,6 +2738,20 @@ CREATE INDEX index_post_groups_on_post_id ON public.post_groups USING btree (pos
 
 
 --
+-- Name: index_reports_on_reported_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_reports_on_reported_user_id ON public.reports USING btree (reported_user_id);
+
+
+--
+-- Name: index_reports_on_reporter_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_reports_on_reporter_user_id ON public.reports USING btree (reporter_user_id);
+
+
+--
 -- Name: index_settings_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3032,6 +3094,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211213202217'),
 ('20211213224122'),
 ('20211215101252'),
-('20211215130033');
+('20211215130033'),
+('20211215143721');
 
 

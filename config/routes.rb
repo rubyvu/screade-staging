@@ -338,7 +338,9 @@ Rails.application.routes.draw do
       end
       
       resources :post_groups, only: [:index]
+      resources :reports, only: [:create]
       resources :searches, only: [:index]
+      
       resources :settings, only: [:index] do
         collection do
           put :update

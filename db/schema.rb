@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_27_072240) do
+ActiveRecord::Schema.define(version: 2021_12_15_143721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -186,6 +186,16 @@ ActiveRecord::Schema.define(version: 2021_10_27_072240) do
     t.index ["user_id"], name: "index_events_on_user_id"
   end
 
+  create_table "invitations", force: :cascade do |t|
+    t.string "email", null: false
+    t.string "token", null: false
+    t.bigint "invited_by_user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["invited_by_user_id"], name: "index_invitations_on_invited_by_user_id"
+    t.index ["token"], name: "index_invitations_on_token", unique: true
+  end
+
   create_table "languages", force: :cascade do |t|
     t.string "code", null: false
     t.string "title", null: false
@@ -269,6 +279,7 @@ ActiveRecord::Schema.define(version: 2021_10_27_072240) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "sender_id"
+    t.boolean "is_shared", default: false
     t.index ["recipient_id"], name: "index_notifications_on_recipient_id"
   end
 
@@ -352,6 +363,16 @@ ActiveRecord::Schema.define(version: 2021_10_27_072240) do
     t.check_constraint "jsonb_typeof(value) = 'object'::text", name: "valid_value"
   end
 
+  create_table "reports", force: :cascade do |t|
+    t.bigint "reporter_user_id", null: false
+    t.bigint "reported_user_id", null: false
+    t.text "details", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["reported_user_id"], name: "index_reports_on_reported_user_id"
+    t.index ["reporter_user_id"], name: "index_reports_on_reporter_user_id"
+  end
+
   create_table "settings", force: :cascade do |t|
     t.string "font_family"
     t.string "font_style"
@@ -363,6 +384,20 @@ ActiveRecord::Schema.define(version: 2021_10_27_072240) do
     t.boolean "is_email"
     t.boolean "is_current_location", default: false, null: false
     t.index ["user_id"], name: "index_settings_on_user_id"
+  end
+
+  create_table "shared_records", force: :cascade do |t|
+    t.bigint "sender_id", null: false
+    t.bigint "shareable_id", null: false
+    t.string "shareable_type", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["shareable_id", "shareable_type"], name: "index_shared_records_on_shareable_id_and_shareable_type"
+  end
+
+  create_table "shared_records_users", id: false, force: :cascade do |t|
+    t.bigint "shared_record_id", null: false
+    t.bigint "user_id", null: false
   end
 
   create_table "squad_requests", force: :cascade do |t|
@@ -421,6 +456,25 @@ ActiveRecord::Schema.define(version: 2021_10_27_072240) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "suggester_id"
     t.index ["parent_id"], name: "index_topics_on_parent_id"
+  end
+
+  create_table "translations", force: :cascade do |t|
+    t.bigint "translatable_id", null: false
+    t.string "translatable_type", null: false
+    t.bigint "language_id", null: false
+    t.string "field_name", null: false
+    t.text "result"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["translatable_id", "translatable_type", "language_id", "field_name"], name: "translations_unique_index"
+  end
+
+  create_table "user_blocks", force: :cascade do |t|
+    t.bigint "blocker_user_id", null: false
+    t.bigint "blocked_user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["blocker_user_id", "blocked_user_id"], name: "index_user_blocks_on_blocker_user_id_and_blocked_user_id", unique: true
   end
 
   create_table "user_images", force: :cascade do |t|
@@ -486,6 +540,8 @@ ActiveRecord::Schema.define(version: 2021_10_27_072240) do
     t.string "middle_name"
     t.datetime "blocked_at"
     t.string "blocked_comment"
+    t.bigint "invited_by_user_id"
+    t.boolean "hide_invitation_popup", default: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

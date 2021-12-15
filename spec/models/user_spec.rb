@@ -71,6 +71,8 @@ RSpec.describe User, type: :model do
       it { is_expected.to belong_to(:invited_by_user).with_foreign_key(:invited_by_user_id).class_name('User').optional }
       it { is_expected.to have_many(:lits).dependent(:destroy) }
       it { is_expected.to have_many(:lited_news_articles) }
+      it { is_expected.to have_many(:reports_as_reported).with_foreign_key(:reported_user_id).class_name('Report').dependent(:nullify) }
+      it { is_expected.to have_many(:reports_as_reporter).with_foreign_key(:reporter_user_id).class_name('Report').dependent(:nullify) }
       it { is_expected.to have_many(:views).dependent(:destroy) }
       it { is_expected.to have_many(:viewed_news_articles) }
       it { is_expected.to have_many(:sent_shared_records).with_foreign_key(:sender_id).class_name('SharedRecord').dependent(:destroy) }

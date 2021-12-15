@@ -17,5 +17,6 @@
 #
 FactoryBot.define do
   factory :translation do
+    result { Faker::Lorem.paragraph }
   end
 end

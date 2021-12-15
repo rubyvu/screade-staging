@@ -86,6 +86,9 @@ class User < ApplicationRecord
   ## Lits
   has_many :lits, dependent: :destroy
   has_many :lited_news_articles, through: :lits, source: :source, source_type: 'NewsArticle'
+  ## reports
+  has_many :reports_as_reported, foreign_key: :reported_user_id, class_name: 'Report', dependent: :nullify
+  has_many :reports_as_reporter, foreign_key: :reporter_user_id, class_name: 'Report', dependent: :nullify
   ## Views
   has_many :views, dependent: :destroy
   has_many :viewed_news_articles, through: :views, source: :source, source_type: 'NewsArticle'
