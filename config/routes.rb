@@ -215,10 +215,6 @@ Rails.application.routes.draw do
         resources :chat_audio_rooms, only: [:create]
         resources :chat_video_rooms, only: [:create]
         resources :chat_messages, only: [:index, :create]
-        member do
-          put :update_members
-        end
-        
         resources :chat_memberships, only: [:index] do
           collection do
             get :chat_users
@@ -226,6 +222,9 @@ Rails.application.routes.draw do
             put :unread_messages
           end
         end
+        
+        put :update_members, on: :member
+        post :direct_message, on: :collection
       end
       
       resources :chat_memberships, only: [:update, :destroy]

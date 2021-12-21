@@ -1746,7 +1746,8 @@ CREATE TABLE public.users (
     blocked_at timestamp without time zone,
     blocked_comment character varying,
     invited_by_user_id bigint,
-    hide_invitation_popup boolean DEFAULT false
+    hide_invitation_popup boolean DEFAULT false,
+    allow_direct_messages boolean DEFAULT true
 );
 
 
@@ -3095,6 +3096,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211213224122'),
 ('20211215101252'),
 ('20211215130033'),
-('20211215143721');
+('20211215143721'),
+('20211221104150');
 
 

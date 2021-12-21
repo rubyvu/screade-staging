@@ -3,6 +3,7 @@
 # Table name: users
 #
 #  id                        :bigint           not null, primary key
+#  allow_direct_messages     :boolean          default(TRUE)
 #  birthday                  :date
 #  blocked_at                :datetime
 #  blocked_comment           :string
@@ -38,6 +39,8 @@
 #  index_users_on_username              (username) UNIQUE
 #
 class UserSerializer < ActiveModel::Serializer
+  
+  attribute :allow_direct_messages
   
   attribute :banner_picture
   def banner_picture

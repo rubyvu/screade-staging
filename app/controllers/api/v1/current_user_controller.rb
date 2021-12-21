@@ -81,7 +81,7 @@ class Api::V1::CurrentUserController < Api::V1::ApiController
   
   private
     def user_params
-      strong_params = params.require(:user).permit(:banner_picture, :birthday, :country_code, :email, :first_name, :last_name, :middle_name, :phone_number, :profile_picture, language_ids: [])
+      strong_params = params.require(:user).permit(:allow_direct_messages, :banner_picture, :birthday, :country_code, :email, :first_name, :last_name, :middle_name, :phone_number, :profile_picture, language_ids: [])
       
       # Change country_code to id
       country_code = strong_params[:country_code]

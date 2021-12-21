@@ -1,5 +1,7 @@
 class UserProfileSerializer < ActiveModel::Serializer
   
+  attribute :allow_direct_messages
+  
   attribute :banner_picture
   def banner_picture
     object&.banner_picture_url

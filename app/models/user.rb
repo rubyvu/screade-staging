@@ -3,6 +3,7 @@
 # Table name: users
 #
 #  id                        :bigint           not null, primary key
+#  allow_direct_messages     :boolean          default(TRUE)
 #  birthday                  :date
 #  blocked_at                :datetime
 #  blocked_comment           :string

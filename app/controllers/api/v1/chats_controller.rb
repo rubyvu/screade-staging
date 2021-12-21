@@ -63,6 +63,40 @@ class Api::V1::ChatsController < Api::V1::ApiController
     render json: { chat: chat_json }, status: :ok
   end
   
+  # POST /api/v1/chats/direct_message
+  def direct_message
+    recipient_id = params.require(:user_id)
+    
+    dm_chat_ids = Chat.joins(:chat_memberships).group('chats.id').having('COUNT(chat_memberships.id) = 2').ids
+    
+    current_user_chats_ids = ChatMembership.where(user: current_user, chat_id: dm_chat_ids).pluck(:chat_id)
+    recipient_chats_ids = ChatMembership.where(user_id: recipient_id, chat_id: dm_chat_ids).pluck(:chat_id)
+    latest_dm_chat_id = current_user_chats_ids.intersection(recipient_chats_ids).max
+    
+    chat = Chat.find_by(id: latest_dm_chat_id)
+    
+    if chat
+      chat_json = ChatSerializer.new(chat, current_user: current_user).as_json
+      return render json: { chat: chat_json }, status: :ok
+    end
+    
+    # Initialize new Chat
+    chat = Chat.new(owner: current_user)
+    
+    # Initialize ChatMembership for Owner
+    chat.chat_memberships.build(user: current_user)
+    
+    # Initialize ChatMembership for recipient
+    chat.chat_memberships.build(user_id: recipient_id)
+    
+    if chat.save
+      chat_json = ChatSerializer.new(chat, current_user: current_user).as_json
+      render json: { chat: chat_json }, status: :ok
+    else
+      render json: { errors: chat.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+  
   private
     def get_chat
       @chat = Chat.find_by!(access_token: params[:access_token])
