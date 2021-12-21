@@ -22,10 +22,10 @@ RSpec.describe Api::V1::UserBlocksController, type: :controller do
     
     # DELETE /api/v1/user_blocks/:id
     it 'is expected to route DELETE /api/v1/user_blocks to /api/v1/user_blocks#destroy' do
-      expect(delete: '/api/v1/user_blocks/UB_ID').to route_to(
+      expect(delete: '/api/v1/user_blocks/USER_ID').to route_to(
         controller: 'api/v1/user_blocks',
         action: 'destroy',
-        id: 'UB_ID',
+        user_id: 'USER_ID',
         format: 'json'
       )
     end
@@ -155,7 +155,7 @@ RSpec.describe Api::V1::UserBlocksController, type: :controller do
         @user_blocks_before_request = UserBlock.count
         
         request.headers['X-Device-Token'] = @device.access_token
-        delete :destroy, params: { id: user_block.id }
+        delete :destroy, params: { user_id: @user2.id }
       end
       
       it 'is expected to return :ok (200) HTTP status code' do

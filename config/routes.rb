@@ -382,7 +382,7 @@ Rails.application.routes.draw do
         end
       end
       
-      resources :user_blocks, only: [:index, :create, :destroy]
+      resources :user_blocks, only: [:index, :create, :destroy], param: :user_id
       resources :user_images, only: [:create, :update]
       resources :user_locations, only: [:index, :create]
       resources :user_security_questions, only: [:index]

@@ -16,9 +16,10 @@ class Api::V1::UserBlocksController < Api::V1::ApiController
     render json: { user_block: user_block_json }, status: :created
   end
   
-  # DELETE /api/v1/user_blocks/:id
+  # DELETE /api/v1/user_blocks/:user_id
   def destroy
-    user_block = UserBlock.find(params[:id])
+    blocked = User.find(params[:user_id])
+    user_block = UserBlock.find_by!(blocker: current_user, blocked: blocked)
     user_block_json = UserBlockSerializer.new(user_block, current_user: current_user).as_json
     
     user_block.destroy
