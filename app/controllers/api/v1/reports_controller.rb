@@ -6,7 +6,7 @@ class Api::V1::ReportsController < Api::V1::ApiController
     report.reporter = current_user
     
     if report.save
-      report_json = ReportSerializer.new(report).as_json
+      report_json = ReportSerializer.new(report, current_user: current_user).as_json
       render json: { report: report_json }, status: :created
     else
       render json: { errors: report.errors }, status: :unprocessable_entity

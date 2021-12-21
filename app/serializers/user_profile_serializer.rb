@@ -24,6 +24,12 @@ class UserProfileSerializer < ActiveModel::Serializer
   
   attribute :id
   
+  attribute :is_blocked
+  def is_blocked
+    current_user = instance_options[:current_user]
+    UserBlock.exists?(blocker: current_user, blocked: object)
+  end
+  
   attribute :is_images
   def is_images
     Setting.get_setting(object).is_images

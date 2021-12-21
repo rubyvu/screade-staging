@@ -24,7 +24,7 @@ class ChatMembershipsController < ApplicationController
     audio_room = @chat.chat_audio_rooms.find_by!(status: 'in-progress')
     participant_usernames = audio_room.participants.map { |participant| participant[1] }
     users = User.where(username: participant_usernames)
-    audio_room_members = ActiveModel::Serializer::CollectionSerializer.new(users, serializer: UserProfileSerializer).as_json
+    audio_room_members = ActiveModel::Serializer::CollectionSerializer.new(users, serializer: UserProfileSerializer, current_user: current_user).as_json
     render json: { audio_room_members: audio_room_members }, status: :ok
   end
   
@@ -33,7 +33,7 @@ class ChatMembershipsController < ApplicationController
     video_room = @chat.chat_video_rooms.find_by!(status: 'in-progress')
     participant_usernames = video_room.participants.map { |participant| participant[1] }
     users = User.where(username: participant_usernames)
-    video_room_members = ActiveModel::Serializer::CollectionSerializer.new(users, serializer: UserProfileSerializer).as_json
+    video_room_members = ActiveModel::Serializer::CollectionSerializer.new(users, serializer: UserProfileSerializer, current_user: current_user).as_json
     render json: { video_room_members: video_room_members }, status: :ok
   end
   
@@ -73,7 +73,7 @@ class ChatMembershipsController < ApplicationController
     
     # Clear unread message counter
     chat_membership.update_columns(unread_messages_count: 0)
-    chat_membership_json = ChatMembershipSerializer.new(chat_membership).as_json
+    chat_membership_json = ChatMembershipSerializer.new(chat_membership, current_user: current_user).as_json
     render json: { chat_membership: chat_membership_json }, status: :ok
   end
   
@@ -87,7 +87,7 @@ class ChatMembershipsController < ApplicationController
     
     # Clear unread message counter
     chat_membership.update_columns(is_mute: !chat_membership.is_mute)
-    chat_membership_json = ChatMembershipSerializer.new(chat_membership).as_json
+    chat_membership_json = ChatMembershipSerializer.new(chat_membership, current_user: current_user).as_json
     render json: { chat_membership: chat_membership_json }, status: :ok
   end
   

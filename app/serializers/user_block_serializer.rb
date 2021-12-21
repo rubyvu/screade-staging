@@ -17,6 +17,7 @@ class UserBlockSerializer < ActiveModel::Serializer
   
   attribute :blocked_user
   def blocked_user
-    UserProfileSerializer.new(object.blocked).as_json
+    current_user = instance_options[:current_user]
+    UserProfileSerializer.new(object.blocked, current_user: current_user).as_json
   end
 end

@@ -19,7 +19,8 @@ class ChatSerializer < ActiveModel::Serializer
   
   attribute :chat_memberships
   def chat_memberships
-    ActiveModel::Serializer::CollectionSerializer.new(object.chat_memberships, serializer: ChatMembershipSerializer).as_json
+    current_user = instance_options[:current_user]
+    ActiveModel::Serializer::CollectionSerializer.new(object.chat_memberships, serializer: ChatMembershipSerializer, current_user: current_user).as_json
   end
   
   attribute :created_at
@@ -34,13 +35,16 @@ class ChatSerializer < ActiveModel::Serializer
   
   attribute :last_message
   def last_message
-    ChatMessageSerializer.new(object.last_message).as_json if object.chat_messages.present?
+    current_user = instance_options[:current_user]
+    ChatMessageSerializer.new(object.last_message, current_user: current_user).as_json if object.chat_messages.present?
   end
   
   attribute :name
+  
   attribute :owner
   def owner
-    UserProfileSerializer.new(object.owner).as_json
+    current_user = instance_options[:current_user]
+    UserProfileSerializer.new(object.owner, current_user: current_user).as_json
   end
   
   attribute :updated_at

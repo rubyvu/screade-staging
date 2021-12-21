@@ -18,7 +18,7 @@ class Api::V1::SearchesController < Api::V1::ApiController
     users_top, news_articles_top, posts_top, news_category_top, topic_top = Searchkick.multi_search([users, news_articles, posts, news_category, topic])
     groups_top = (news_category_top.to_a + topic_top.to_a)
     
-    users_top_json = ActiveModel::Serializer::CollectionSerializer.new(users_top.to_a, serializer: UserProfileSerializer).as_json
+    users_top_json = ActiveModel::Serializer::CollectionSerializer.new(users_top.to_a, serializer: UserProfileSerializer, current_user: current_user).as_json
     news_articles_top_json = ActiveModel::Serializer::CollectionSerializer.new(news_articles_top.to_a, serializer: NewsArticleSerializer).as_json
     posts_top_json = ActiveModel::Serializer::CollectionSerializer.new(posts_top.to_a, serializer: PostSerializer).as_json
     groups_top_json = ActiveModel::Serializer::CollectionSerializer.new(groups_top, serializer: GroupSerializer).as_json

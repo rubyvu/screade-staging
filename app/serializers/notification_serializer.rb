@@ -41,9 +41,9 @@ class NotificationSerializer < ActiveModel::Serializer
     when 'ChatVideoRoom'
       ChatVideoRoomSerializer.new(object.source).as_json
     when 'ChatMembership'
-      ChatMembershipSerializer.new(object.source).as_json
+      ChatMembershipSerializer.new(object.source, current_user: current_user).as_json
     when 'ChatMessage'
-      ChatMessageSerializer.new(object.source).as_json
+      ChatMessageSerializer.new(object.source, current_user: current_user).as_json
     when 'Comment'
       CommentSerializer.new(object.source, current_user: current_user).as_json
     when 'Event'
@@ -67,6 +67,7 @@ class NotificationSerializer < ActiveModel::Serializer
   
   attribute :user
   def user
-    object.sender.present? ? UserProfileSerializer.new(object.sender).as_json : nil
+    current_user = instance_options[:current_user]
+    object.sender.present? ? UserProfileSerializer.new(object.sender, current_user: current_user).as_json : nil
   end
 end

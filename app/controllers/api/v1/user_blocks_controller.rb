@@ -2,7 +2,7 @@ class Api::V1::UserBlocksController < Api::V1::ApiController
   
   # GET /api/v1/user_blocks
   def index
-    user_blocks_json = ActiveModel::Serializer::CollectionSerializer.new(current_user.user_blocks_as_blocker, serializer: UserBlockSerializer).as_json
+    user_blocks_json = ActiveModel::Serializer::CollectionSerializer.new(current_user.user_blocks_as_blocker, serializer: UserBlockSerializer, current_user: current_user).as_json
     render json: { user_blocks: user_blocks_json }, status: :ok
   end
   
@@ -12,14 +12,14 @@ class Api::V1::UserBlocksController < Api::V1::ApiController
     user_block.blocker = current_user
     user_block.save
     
-    user_block_json = UserBlockSerializer.new(user_block).as_json
+    user_block_json = UserBlockSerializer.new(user_block, current_user: current_user).as_json
     render json: { user_block: user_block_json }, status: :created
   end
   
   # DELETE /api/v1/user_blocks/:id
   def destroy
     user_block = UserBlock.find(params[:id])
-    user_block_json = UserBlockSerializer.new(user_block).as_json
+    user_block_json = UserBlockSerializer.new(user_block, current_user: current_user).as_json
     
     user_block.destroy
     render json: { user_block: user_block_json }, status: :ok

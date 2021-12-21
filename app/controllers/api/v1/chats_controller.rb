@@ -5,7 +5,7 @@ class Api::V1::ChatsController < Api::V1::ApiController
   # GET /api/v1/chats
   def index
     @chats = Chat.joins(:chat_memberships).where(chat_memberships: { user: current_user }).order(updated_at: :desc).page(params[:page]).per(30)
-    chats_json = ActiveModel::Serializer::CollectionSerializer.new(@chats, serializer: ChatSerializer).as_json
+    chats_json = ActiveModel::Serializer::CollectionSerializer.new(@chats, serializer: ChatSerializer, current_user: current_user).as_json
     render json: { chats: chats_json }, status: :ok
   end
   
@@ -14,7 +14,7 @@ class Api::V1::ChatsController < Api::V1::ApiController
     # Clear unread message counter
     @current_user_membership.update_columns(unread_messages_count: 0)
     
-    chat_json = ChatSerializer.new(@chat).as_json
+    chat_json = ChatSerializer.new(@chat, current_user: current_user).as_json
     render json: { chat: chat_json }, status: :ok
   end
   
@@ -32,7 +32,7 @@ class Api::V1::ChatsController < Api::V1::ApiController
     end
     
     if chat.save
-      chat_json = ChatSerializer.new(chat).as_json
+      chat_json = ChatSerializer.new(chat, current_user: current_user).as_json
       render json: { chat: chat_json }, status: :ok
     else
       render json: { errors: chat.errors.full_messages }, status: :unprocessable_entity
@@ -42,7 +42,7 @@ class Api::V1::ChatsController < Api::V1::ApiController
   # PUT/PATCH /api/v1/chats/:access_token
   def update
     if @chat.update(chat_params)
-      chat_json = ChatSerializer.new(@chat).as_json
+      chat_json = ChatSerializer.new(@chat, current_user: current_user).as_json
       render json: { chat: chat_json }, status: :ok
     else
       render json: { errors: @chat.errors.full_messages }, status: :unprocessable_entity
@@ -59,7 +59,7 @@ class Api::V1::ChatsController < Api::V1::ApiController
       ChatMembership.create(chat: @chat, user: user)
     end
     
-    chat_json = ChatSerializer.new(@chat).as_json
+    chat_json = ChatSerializer.new(@chat, current_user: current_user).as_json
     render json: { chat: chat_json }, status: :ok
   end
   

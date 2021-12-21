@@ -6,7 +6,7 @@ class Api::V1::ChatMessagesController < Api::V1::ApiController
   # GET /api/v1/chats/:chat_access_token/chat_messages
   def index
     chat_messages = @chat.chat_messages.order(created_at: :desc).order(created_at: :desc).page(params[:page]).per(30)
-    chat_messages_json = ActiveModel::Serializer::CollectionSerializer.new(chat_messages, serializer: ChatMessageSerializer).as_json
+    chat_messages_json = ActiveModel::Serializer::CollectionSerializer.new(chat_messages, serializer: ChatMessageSerializer, current_user: current_user).as_json
     render json: { chat_messages: chat_messages_json }, status: :ok
   end
   
@@ -22,7 +22,7 @@ class Api::V1::ChatMessagesController < Api::V1::ApiController
     chat_message.asset_source = @user_video if @user_video.present?
     
     if chat_message.save
-      chat_message_json = ChatMessageSerializer.new(chat_message).as_json
+      chat_message_json = ChatMessageSerializer.new(chat_message, current_user: current_user).as_json
       render json: { chat_message: chat_message_json }, status: :ok
     else
       render json: { errors: chat_message.error.full_messages }, status: :unprocessable_entity

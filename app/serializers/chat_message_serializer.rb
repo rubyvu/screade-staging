@@ -75,6 +75,7 @@ class ChatMessageSerializer < ActiveModel::Serializer
   
   attribute :user
   def user
-    UserProfileSerializer.new(object.user).as_json
+    current_user = instance_options[:current_user]
+    UserProfileSerializer.new(object.user, current_user: current_user).as_json
   end
 end

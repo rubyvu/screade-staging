@@ -20,6 +20,7 @@ class ReportSerializer < ActiveModel::Serializer
   
   attribute :reported_user
   def reported_user
-    UserProfileSerializer.new(object.reported).as_json
+    current_user = instance_options[:current_user]
+    UserProfileSerializer.new(object.reported, current_user: current_user).as_json
   end
 end
