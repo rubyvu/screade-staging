@@ -7,6 +7,16 @@ class Api::V1::CommentsController < Api::V1::ApiController
     render json: { comment: comment_json }, status: :ok
   end
   
+  # DELETE /api/v1/comments/:id
+  def destroy
+    unless @comment.user == current_user
+      return render json: { success: false }, status: :forbidden
+    end
+    
+    @comment.destroy
+    render json: { success: true }, status: :ok
+  end
+  
   # GET /api/v1/comments/:id/reply_comments
   def reply_comments
     comments_json = ActiveModel::Serializer::CollectionSerializer.new(@comment.replied_comments.order(created_at: :desc).page(params[:page]).per(30), serializer: CommentSerializer, current_user: current_user).as_json

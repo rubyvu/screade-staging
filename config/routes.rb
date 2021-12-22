@@ -229,7 +229,7 @@ Rails.application.routes.draw do
       
       resources :chat_memberships, only: [:update, :destroy]
       
-      resources :comments, only: [:show] do
+      resources :comments, only: [:show, :destroy] do
         member do
           get :reply_comments
           post :lit

@@ -21,6 +21,16 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
         format: 'json'
       )
     end
+    
+    # DELETE /api/v1/comments/:id
+    it 'is expected to route DELETE /api/v1/comments/:id to /api/v1/comments#destroy' do
+      expect(delete: '/api/v1/comments/COMMENT_ID').to route_to(
+        controller: 'api/v1/comments',
+        action: 'destroy',
+        id: 'COMMENT_ID',
+        format: 'json'
+      )
+    end
   end
   
   before :all do
@@ -31,8 +41,8 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
     
     @users = FactoryBot.create_list(:user, 3, country: country, user_security_question: user_security_question)
     
-    news_article = FactoryBot.create(:news_article, country: country)
-    @comment = FactoryBot.create(:comment, user: @sender, source: news_article)
+    @news_article = FactoryBot.create(:news_article, country: country)
+    @comment = FactoryBot.create(:comment, user: @sender, source: @news_article)
   end
   
   describe 'POST #share' do
@@ -98,6 +108,70 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
         
         comment_json = response_json['comment']
         expect(comment_json.key?('message')).to eq(true)
+      end
+    end
+  end
+  
+  describe 'DELETE #destroy' do
+    context 'current_user is owner' do
+      before :each do
+        @comment_to_delete = FactoryBot.create(:comment, user: @sender, source: @news_article)
+        @comments_before_request = Comment.count
+        
+        request.headers['X-Device-Token'] = @device.access_token
+        delete :destroy, params: { id: @comment_to_delete.id }
+      end
+      
+      it 'is expected to return :ok (200) HTTP status code' do
+        expect(response.status).to eq(200)
+      end
+      
+      it 'is expected to have application/json content type' do
+        expect(response.content_type).to eq('application/json; charset=utf-8')
+      end
+      
+      it 'is expected to have current_user' do
+        expect(subject.current_user).to eq(@sender)
+      end
+      
+      it 'is expected to delete Post' do
+        expect(Comment.count).to eq(@comments_before_request - 1)
+      end
+      
+      it 'is expected to return :success in JSON' do
+        response_json = JSON.parse(response.body)
+        expect(response_json.key?('success')).to eq(true)
+      end
+    end
+    
+    context 'current_user is NOT owner' do
+      before :each do
+        @comment_to_delete = FactoryBot.create(:comment, user: @users.first, source: @news_article)
+        @comments_before_request = Comment.count
+        
+        request.headers['X-Device-Token'] = @device.access_token
+        delete :destroy, params: { id: @comment_to_delete.id }
+      end
+      
+      it 'is expected to return :forbidden (403) HTTP status code' do
+        expect(response.status).to eq(403)
+      end
+      
+      it 'is expected to have application/json content type' do
+        expect(response.content_type).to eq('application/json; charset=utf-8')
+      end
+      
+      it 'is expected to have current_user' do
+        expect(subject.current_user).to eq(@sender)
+      end
+      
+      it 'is expected to NOT delete Post' do
+        expect(Comment.count).to eq(@comments_before_request)
+      end
+      
+      it 'is expected to return :success in JSON' do
+        response_json = JSON.parse(response.body)
+        expect(response_json.key?('success')).to eq(true)
       end
     end
   end
