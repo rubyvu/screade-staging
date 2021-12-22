@@ -17,7 +17,7 @@ class Api::V1::CommentsController < Api::V1::ApiController
     render json: { success: true }, status: :ok
   end
   
-  # GET /api/v1/posts/:id/lits
+  # GET /api/v1/comments/:id/lits
   def lits
     lits_json = ActiveModel::Serializer::CollectionSerializer.new(@comment.lits, serializer: LitSerializer, current_user: current_user).as_json
     render json: { lits: lits_json }, status: :ok
