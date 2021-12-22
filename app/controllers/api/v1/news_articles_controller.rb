@@ -1,12 +1,18 @@
 class Api::V1::NewsArticlesController < Api::V1::ApiController
   skip_before_action :authenticate, only: [:show]
-  before_action :authenticate, only: [:show, :lit, :view, :unlit, :share], if: :is_device_token?
-  before_action :get_article, only: [:groups, :lit, :show, :view, :unlit, :share]
+  before_action :authenticate, only: [:show, :lits, :lit, :view, :unlit, :share], if: :is_device_token?
+  before_action :get_article, only: [:lits, :lit, :groups, :show, :view, :unlit, :share]
   
   # GET /api/v1/news_articles/:id
   def show
     news_article_json = NewsArticleSerializer.new(@news_article, current_user: current_user).as_json
     render json: { news_article: news_article_json }, status: :ok
+  end
+  
+  # GET /api/v1/news_articles/:id/lits
+  def lits
+    lits_json = ActiveModel::Serializer::CollectionSerializer.new(@news_article.lits, serializer: LitSerializer, current_user: current_user).as_json
+    render json: { lits: lits_json }, status: :ok
   end
   
   # POST /api/v1/news_articles/:id/lit

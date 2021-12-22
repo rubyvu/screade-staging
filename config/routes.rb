@@ -293,15 +293,11 @@ Rails.application.routes.draw do
         resources :news_article_comments, only: [:index, :create]
         
         member do
+          get :lits
           post :lit
           post :view
           delete :unlit
           post :share
-        end
-      end
-      
-      resources :news_articles, only: [] do
-        member do
           get :groups
           post :topic_subscription
         end
