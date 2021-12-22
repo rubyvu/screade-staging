@@ -2,6 +2,16 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::CommentsController, type: :controller do
   describe 'routing' do
+    # GET /api/v1/comments/:id/lits
+    it 'is expected to route POST /api/v1/comments/:id/lits to /api/v1/comments#lits' do
+      expect(get: '/api/v1/comments/COMMENT_ID/lits').to route_to(
+        controller: 'api/v1/comments',
+        action: 'lits',
+        id: 'COMMENT_ID',
+        format: 'json'
+      )
+    end
+    
     # POST /api/v1/comments/:id/share
     it 'is expected to route POST /api/v1/comments/:id/share to /api/v1/comments#share' do
       expect(post: '/api/v1/comments/COMMENT_ID/share').to route_to(
@@ -43,6 +53,38 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
     
     @news_article = FactoryBot.create(:news_article, country: country)
     @comment = FactoryBot.create(:comment, user: @sender, source: @news_article)
+    @users.each do |user|
+      Lit.create(source: @comment, user: user)
+    end
+  end
+  
+  describe 'GET #lits' do
+    context 'with valid parameters' do
+      before :each do
+        request.headers['X-Device-Token'] = @device.access_token
+        get :lits, params: { id: @comment.id }
+      end
+      
+      it 'is expected to return :ok (200) HTTP status code' do
+        expect(response.status).to eq(200)
+      end
+      
+      it 'is expected to have application/json content type' do
+        expect(response.content_type).to eq('application/json; charset=utf-8')
+      end
+      
+      it 'is expected to have current_user' do
+        expect(subject.current_user).to eq(@sender)
+      end
+      
+      it 'is expected to return Lits for NewsArticle' do
+        response_json = JSON.parse(response.body)
+        expect(response_json.key?('lits')).to eq(true)
+        
+        lits_json = response_json['lits']
+        expect(lits_json.count).to eq(3)
+      end
+    end
   end
   
   describe 'POST #share' do

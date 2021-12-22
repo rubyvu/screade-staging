@@ -231,6 +231,7 @@ Rails.application.routes.draw do
       
       resources :comments, only: [:show, :destroy] do
         member do
+          get :lits
           get :reply_comments
           post :lit
           delete :unlit
