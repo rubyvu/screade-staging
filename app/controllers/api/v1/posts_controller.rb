@@ -58,6 +58,10 @@ class Api::V1::PostsController < Api::V1::ApiController
   
   # DELETE /api/v1/posts/:id
   def destroy
+    unless @post.user == current_user
+      return render json: { success: false }, status: :forbidden
+    end
+    
     @post.destroy
     render json: { success: true }, status: :ok
   end

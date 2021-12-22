@@ -21,6 +21,16 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         format: 'json'
       )
     end
+    
+    # DELETE /api/v1/posts/:id
+    it 'is expected to route DELETE /api/v1/posts/:id to /api/v1/posts#destroy' do
+      expect(delete: '/api/v1/posts/POST_ID').to route_to(
+        controller: 'api/v1/posts',
+        action: 'destroy',
+        id: 'POST_ID',
+        format: 'json'
+      )
+    end
   end
   
   before :all do
@@ -32,8 +42,8 @@ RSpec.describe Api::V1::PostsController, type: :controller do
     @users = FactoryBot.create_list(:user, 3, country: country, user_security_question: user_security_question)
     
     news_category = FactoryBot.create(:news_category)
-    topic = FactoryBot.create(:topic, parent: news_category)
-    @post = FactoryBot.create(:post, source: topic, user: @sender)
+    @topic = FactoryBot.create(:topic, parent: news_category)
+    @post = FactoryBot.create(:post, source: @topic, user: @sender)
   end
   
   describe 'POST #share' do
@@ -100,6 +110,70 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         post_json = response_json['post']
         expect(post_json.key?('title')).to eq(true)
         expect(post_json.key?('description')).to eq(true)
+      end
+    end
+  end
+  
+  describe 'DELETE #destroy' do
+    context 'current_user is owner' do
+      before :each do
+        @post_to_delete = FactoryBot.create(:post, source: @topic, user: @sender)
+        @posts_before_request = Post.count
+        
+        request.headers['X-Device-Token'] = @device.access_token
+        delete :destroy, params: { id: @post_to_delete.id }
+      end
+      
+      it 'is expected to return :ok (200) HTTP status code' do
+        expect(response.status).to eq(200)
+      end
+      
+      it 'is expected to have application/json content type' do
+        expect(response.content_type).to eq('application/json; charset=utf-8')
+      end
+      
+      it 'is expected to have current_user' do
+        expect(subject.current_user).to eq(@sender)
+      end
+      
+      it 'is expected to delete Post' do
+        expect(Post.count).to eq(@posts_before_request - 1)
+      end
+      
+      it 'is expected to return :success in JSON' do
+        response_json = JSON.parse(response.body)
+        expect(response_json.key?('success')).to eq(true)
+      end
+    end
+    
+    context 'current_user is NOT owner' do
+      before :each do
+        @post_to_delete = FactoryBot.create(:post, source: @topic, user: @users.first)
+        @posts_before_request = Post.count
+        
+        request.headers['X-Device-Token'] = @device.access_token
+        delete :destroy, params: { id: @post_to_delete.id }
+      end
+      
+      it 'is expected to return :forbidden (403) HTTP status code' do
+        expect(response.status).to eq(403)
+      end
+      
+      it 'is expected to have application/json content type' do
+        expect(response.content_type).to eq('application/json; charset=utf-8')
+      end
+      
+      it 'is expected to have current_user' do
+        expect(subject.current_user).to eq(@sender)
+      end
+      
+      it 'is expected to NOT delete Post' do
+        expect(Post.count).to eq(@posts_before_request)
+      end
+      
+      it 'is expected to return :success in JSON' do
+        response_json = JSON.parse(response.body)
+        expect(response_json.key?('success')).to eq(true)
       end
     end
   end
