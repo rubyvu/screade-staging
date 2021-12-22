@@ -1,5 +1,5 @@
 class Api::V1::PostsController < Api::V1::ApiController
-  before_action :get_post, only: [:show, :update, :destroy, :share, :translate]
+  before_action :get_post, only: [:show, :update, :destroy, :lits, :share, :translate]
   before_action :get_user_image, only: [:create, :update]
   
   # GET /api/v1/posts
@@ -64,6 +64,12 @@ class Api::V1::PostsController < Api::V1::ApiController
     
     @post.destroy
     render json: { success: true }, status: :ok
+  end
+  
+  # GET /api/v1/posts/:id/lits
+  def lits
+    lits_json = ActiveModel::Serializer::CollectionSerializer.new(@post.lits, serializer: LitSerializer, current_user: current_user).as_json
+    render json: { lits: lits_json }, status: :ok
   end
   
   # POST /api/v1/posts/:id/share

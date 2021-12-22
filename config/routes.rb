@@ -327,6 +327,7 @@ Rails.application.routes.draw do
         end
         
         member do
+          get :lits
           post :share
           post :translate
         end
