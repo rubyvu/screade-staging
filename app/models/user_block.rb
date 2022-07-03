@@ -16,6 +16,7 @@ class UserBlock < ApplicationRecord
   # Constants
   
   # Callbacks
+  after_commit :clean_up_relations, on: :create
   
   # Associations
   belongs_to :blocker, foreign_key: :blocker_user_id, class_name: 'User'
@@ -25,4 +26,11 @@ class UserBlock < ApplicationRecord
   validates :blocker_user_id, uniqueness: { scope: :blocked_user_id }
   
   # Fields validations
+  
+  private
+    def clean_up_relations
+      service = UserBlockService.new(self)
+      service.remove_from_squad
+      service.remove_one_on_one_chats
+    end
 end

@@ -73,5 +73,28 @@ RSpec.describe Device, type: :model do
       device.update(name: 'any')
       expect(device.access_token).to eq(access_token)
     end
+    
+    it 'should remove the same :push_token from other Devices on #create' do
+      push_token = 'UNIQUE_PUSH_TOKEN'
+      device1 = FactoryBot.create(:device, owner: @owner, push_token: push_token)
+      expect(device1.push_token).to eq(push_token)
+      
+      device2 = FactoryBot.create(:device, owner: @owner, push_token: push_token)
+      expect(device1.reload.push_token).to eq(nil)
+      expect(device2.push_token).to eq(push_token)
+    end
+    
+    it 'should remove the same :push_token from other Devices on #update' do
+      push_token = 'UNIQUE_PUSH_TOKEN'
+      device1 = FactoryBot.create(:device, owner: @owner, push_token: push_token)
+      expect(device1.push_token).to eq(push_token)
+      
+      device2 = FactoryBot.create(:device, owner: @owner)
+      expect(device2.push_token).to eq(nil)
+      
+      device2.update(push_token: push_token)
+      expect(device1.reload.push_token).to eq(nil)
+      expect(device2.reload.push_token).to eq(push_token)
+    end
   end
 end

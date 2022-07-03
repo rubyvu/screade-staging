@@ -2,8 +2,17 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::PostsController, type: :controller do
   describe 'routing' do
+    # POST /api/v1/posts
+    it 'is expected to route POST /api/v1/posts to /api/v1/posts#create' do
+      expect(post: '/api/v1/posts').to route_to(
+        controller: 'api/v1/posts',
+        action: 'create',
+        format: 'json'
+      )
+    end
+    
     # GET /api/v1/posts/:id/lits
-    it 'is expected to route POST /api/v1/posts/:id/lits to /api/v1/posts#lits' do
+    it 'is expected to route GET /api/v1/posts/:id/lits to /api/v1/posts#lits' do
       expect(get: '/api/v1/posts/POST_ID/lits').to route_to(
         controller: 'api/v1/posts',
         action: 'lits',
@@ -56,6 +65,117 @@ RSpec.describe Api::V1::PostsController, type: :controller do
     @post = FactoryBot.create(:post, source: @topic, user: @sender)
     @users.each do |user|
       Lit.create(source: @post, user: user)
+    end
+  end
+  
+  describe 'POST #create' do
+    context 'WITHOUT attachments' do
+      before :each do
+        post_params = {
+          title: Faker::Lorem.characters(number: 10),
+          description: Faker::Lorem.characters(number: 50),
+          source_type: 'Topic',
+          source_id: @topic.id
+        }
+        
+        request.headers['X-Device-Token'] = @device.access_token
+        post :create, params: { post: post_params }
+      end
+      
+      it 'is expected to return :ok (200) HTTP status code' do
+        expect(response.status).to eq(200)
+      end
+      
+      it 'is expected to have application/json content type' do
+        expect(response.content_type).to eq('application/json; charset=utf-8')
+      end
+      
+      it 'is expected to have current_user' do
+        expect(subject.current_user).to eq(@sender)
+      end
+      
+      it 'is expected to return Post in response' do
+        response_json = JSON.parse(response.body)
+        expect(response_json.key?('post')).to eq(true)
+      end
+    end
+    
+    context 'with attached UserImage' do
+      before :each do
+        filename = 'sample.jpg'
+        file_path = Rails.root.join('spec', 'support', 'sample_files', filename)
+        file = File.open(file_path)
+        user_image = UserImage.new(is_private: false, user: @sender)
+        user_image.file.attach(io: file, filename: filename)
+        user_image.save!
+        
+        post_params = {
+          title: Faker::Lorem.characters(number: 10),
+          description: Faker::Lorem.characters(number: 50),
+          source_type: 'Topic',
+          source_id: @topic.id,
+          image_id: user_image.id
+        }
+        
+        request.headers['X-Device-Token'] = @device.access_token
+        post :create, params: { post: post_params }
+      end
+      
+      it 'is expected to return :ok (200) HTTP status code' do
+        expect(response.status).to eq(200)
+      end
+      
+      it 'is expected to have application/json content type' do
+        expect(response.content_type).to eq('application/json; charset=utf-8')
+      end
+      
+      it 'is expected to have current_user' do
+        expect(subject.current_user).to eq(@sender)
+      end
+      
+      it 'is expected to return Post in response' do
+        response_json = JSON.parse(response.body)
+        expect(response_json.key?('post')).to eq(true)
+      end
+    end
+    
+    context 'with attached UserVideo' do
+      before :each do
+        filename = 'sample.mp4'
+        file_path = Rails.root.join('spec', 'support', 'sample_files', filename)
+        file = File.open(file_path)
+        user_video = UserVideo.new(is_private: false, user: @sender)
+        user_video.file.attach(io: file, filename: filename)
+        user_video.save!
+        
+        post_params = {
+          title: Faker::Lorem.characters(number: 10),
+          description: Faker::Lorem.characters(number: 50),
+          source_type: 'Topic',
+          source_id: @topic.id,
+          video_id: user_video.id
+        }
+        
+        request.headers['X-Device-Token'] = @device.access_token
+        post :create, params: { post: post_params }
+      end
+      
+      it 'is expected to return :ok (200) HTTP status code' do
+        expect(response.status).to eq(200)
+      end
+      
+      it 'is expected to have application/json content type' do
+        expect(response.content_type).to eq('application/json; charset=utf-8')
+      end
+      
+      it 'is expected to have current_user' do
+        expect(subject.current_user).to eq(@sender)
+      end
+      
+      it 'is expected to return Post in response' do
+        response_json = JSON.parse(response.body)
+        expect(response_json.key?('post')).to eq(true)
+      end
     end
   end
   

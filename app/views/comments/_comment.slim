@@ -12,18 +12,23 @@
       - else
         = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
         
-  .comment-content-wrapper value="#{comment.id}"
+  .comment-content-wrapper value="#{comment.id}" id="comment-#{comment.id}"
     .comment-user-name
       = comment.user.full_name
     .comment-text
-      = comment.message
+      .original = comment.message
+      .translation
     .comment-date
       = comment_timestamp(comment.created_at)
       
       div class="#{ current_user ? 'comment-lit' : 'comment-lit pointer-disable' }"
-        span.info-panel-value.color-black #{counter_measurement(comment.lits.size)}
+        = link_to lits_comment_path(comment), remote: true do
+          span.info-panel-value.color-black #{counter_measurement(comment.lits.size)}
         i class=(comment.is_lited(current_user) ? 'ic lit active reverse' : 'ic lit reverse')
-          
+        
+      div
+        = link_to 'Translate', '#', class: 'translate-comment', data: { id: "#{comment.id}" }
+        
     // Reply show/hide
     - if comment.comment_id.blank?
       .comment-reply-wrapper
@@ -34,8 +39,10 @@
           - url = post_post_comments_path
           = link_to comment.replied_comments.count == 0 ? 'REPLY' : "#{comment.replied_comments.count} REPLIES", post_post_comment_reply_comments_path(post_id: comment.source.id, post_comment_id: comment.id), class: 'comment-reply'
           
-        - if current_user
-          = link_to shared_records_path(comment_id: comment.id), remote: true
-            i.ic.share.reverse
-        - else
-          i.ic.share.reverse
+    - if current_user
+      = link_to shared_records_path(comment_id: comment.id), class: 'm-left-5'
+        i.ic.share.reverse
+        
+      - if comment.user == current_user
+        = link_to comment_path(comment), method: :delete, data: { confirm: 'Are you sure that you want to delete this Comment?' }, class: 'm-left-5'
+          i.ic.delete.reverse

@@ -16,6 +16,8 @@
 #
 class Chat < ApplicationRecord
   
+  attr_accessor :is_destroying
+  
   # File Uploader
   has_one_attached :icon
   
@@ -50,6 +52,11 @@ class Chat < ApplicationRecord
   
   def icon_url
     self.icon.url if self.icon.attached?
+  end
+  
+  def destroy
+    self.is_destroying = true
+    super
   end
   
   private

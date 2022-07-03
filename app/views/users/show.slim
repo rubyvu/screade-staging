@@ -7,15 +7,18 @@
         = image_pack_tag('media/images/placeholders/placeholder-banner-profile.png', class: 'user-profile-banner')
       
       - if @user == current_user
-        = link_to '', data: { toggle: "modal", target: "#modal-edit-profile" } do
+        = link_to '', data: { toggle: 'modal', target: '#modal-edit-profile' } do
           = image_pack_tag('media/images/icons/ic_edit.png', class: 'user-profile-edit')
-        
+      - else
+        = link_to '', data: { toggle: 'modal', target: '#modal-profile-menu' } do
+          = image_pack_tag('media/images/icons/ic_three_dots_vertical_white.svg', class: 'user-profile-edit')
+          
     .user-profile-avatar-wrapper
       - if @user.profile_picture_url
         = image_tag(@user.profile_picture_url)
       - else
         = image_pack_tag('media/images/placeholders/placeholder-user-profile.png')
-    
+        
     .user-profile-name.fonts-styling class="#{@user.setting.font_family} #{@user.setting.font_style}"
       h5 #{@user.full_name}
     .info-panel
@@ -76,7 +79,8 @@
                       = link_to post_post_lits_path(post), method: :post, remote: true, id: "post-lit-#{post.id}" do
                         i.ic.lit
                         
-                    span.info-panel-value #{counter_measurement(post.lits.size)}
+                    = link_to lits_post_path(post), remote: true do
+                      span.info-panel-value #{counter_measurement(post.lits.size)}
                     
                   .info-panel-value-wrapper
                     = link_to post_post_comments_path(post), class: 'comment-link-icon' do
@@ -120,7 +124,7 @@
       
       .user-profile-assets
         - @videos.each do |user_video|
-          - if user_video.file_url.present?
+          - if user_video.file_thumbnail_url
             .image-wrapper.video
               = image_tag(user_video.file_thumbnail_url, class: 'user-asset', data: { 'video-id': user_video.id, 'video-url': user_video.file_url })
     - elsif @user == current_user
@@ -131,5 +135,10 @@
       .new-assets
         h6 No Videos
           
-= render './shared/video_player/player', video_player_id: 'user-assets-video-palyer'
-= render 'shared/modals/edit_profile'
+= render './shared/video_player/player', video_player_id: 'user-assets-video-player'
+
+- if @user == current_user
+  = render 'shared/modals/edit_profile'
+- else
+  = render 'shared/modals/profile_menu'
+  = render 'shared/modals/report_profile'

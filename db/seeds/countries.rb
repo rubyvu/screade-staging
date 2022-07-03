@@ -29,6 +29,7 @@ default_languages = [
   { code: 'NO', title: 'Norwegian', countries: ['NO', 'SE'] },
   { code: 'PT', title: 'Portuguese', countries: ['BR', 'PT'] },
   { code: 'RU', title: 'Russian', countries: ['RU', 'UA'] },
+  { code: 'UK', title: 'Ukrainian', countries: ['UA'] },
   { code: 'SE', title: 'Northern Sami', countries: ['NO', 'SE'] },
   { code: 'ZH', title: 'Chinese', countries: ['CN', 'HK', 'TW'] }
 ]
@@ -53,4 +54,3 @@ Country.joins("LEFT JOIN countries_languages ON countries.id = countries_languag
   next if country.languages.count > 0
   country.languages << english_language
 end
-      

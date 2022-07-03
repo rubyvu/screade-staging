@@ -60,17 +60,18 @@ Rails.application.routes.draw do
       end
     end
     
-    member do
-      put :update_members
-    end
+    post :direct_message, on: :collection
+    put :update_members, on: :member
   end
   
   resources :chat_memberships, only: [:update, :destroy]
   
-  resources :comments, only: [] do
+  resources :comments, only: [:destroy] do
     member do
+      get :lits
       post :lit
       delete :unlit
+      get :translate
     end
   end
   
@@ -82,6 +83,8 @@ Rails.application.routes.draw do
       patch :update
     end
   end
+  
+  resources :download_apps, only: [:index]
   
   resources :events, only: [:index, :edit, :create, :update, :destroy]
   
@@ -101,7 +104,13 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :home, only: [:index]
+  resources :home, only: [:index] do
+    put :theme, on: :collection
+  end
+  
+  resources :invitations, only: [:create] do
+    post :hide_popup, on: :collection
+  end
   
   resources :legal_documents, only: [] do
     collection do
@@ -119,6 +128,7 @@ Rails.application.routes.draw do
     member do
       get :comments
       get :search
+      get :lits
       post :lit
       post :create_comment
       post :view
@@ -148,9 +158,15 @@ Rails.application.routes.draw do
       end
     end
     
+    member do
+      get :lits
+      get :translate
+    end
+    
     get :user_images, on: :collection
   end
   
+  resources :reports, only: [:create]
   resources :searches, only: [:index]
   resources :shared_records, only: [:index, :create]
   resources :settings, only: [:edit, :update]
@@ -172,6 +188,8 @@ Rails.application.routes.draw do
   end
   
   resources :topics, only: [:new, :create]
+  resources :user_blocks, only: [:create, :destroy], param: :user_id
+  
   resources :user_images, only: [:create, :update], param: :username, username: User::USERNAME_ROUTE_FORMAT do
     member do
       get :images
@@ -196,7 +214,7 @@ Rails.application.routes.draw do
     collection do
       patch :change_password
     end
-  
+    
     resources :squad_members, only: [:index]
   end
   

@@ -38,17 +38,29 @@
             justify-content: space-between;
             
             .title {
-              span { font-size: 16px; font-weight: normal; }
+              span {
+                font-size: 16px;
+                font-weight: normal;
+                color: $color-text-primary;
+              }
             }
             
             .timestamp {
-              span { font-size: 12px; font-weight: normal; }
+              span {
+                font-size: 12px;
+                font-weight: normal;
+                color: $color-text-secondary;
+              }
             }
           }
             
           .body {
             .message {
-              span { font-size: 14px; font-weight: normal; }
+              span {
+                font-size: 14px;
+                font-weight: normal;
+                color: $color-text-secondary;
+              }
             }
           }
         }

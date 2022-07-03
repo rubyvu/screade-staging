@@ -23,6 +23,7 @@ RSpec.describe ChatMembership, type: :model do
     @country = Country.find_by(code: 'US') || FactoryBot.create(:country, code: 'US')
     @user_security_question = FactoryBot.create(:user_security_question)
     @user_owner = FactoryBot.create(:user, country: @country, user_security_question: @user_security_question)
+    @user2 = FactoryBot.create(:user, country: @country, user_security_question: @user_security_question)
     @user_default = FactoryBot.create(:user, country: @country, user_security_question: @user_security_question)
     @chat = FactoryBot.create(:chat, owner: @user_owner)
     @chat_membership = FactoryBot.build(:chat_membership, chat: @chat, user: @user_owner)
@@ -33,20 +34,20 @@ RSpec.describe ChatMembership, type: :model do
   end
   
   context 'associations' do
-    it { should belong_to(:chat).required }
-    it { should belong_to(:user).required }
+    it { is_expected.to belong_to(:chat).required }
+    it { is_expected.to belong_to(:user).required }
   end
   
   context 'validations' do
-    subject { @chat_membership }
+    subject { FactoryBot.build(:chat_membership, chat: @chat, user: @user2) }
     
     context 'associations' do
-      it { should validate_uniqueness_of(:user_id).scoped_to(:chat_id) }
+      it { is_expected.to validate_uniqueness_of(:user_id).scoped_to(:chat_id) }
     end
     
     context 'fields' do
-      it { should validate_presence_of(:role) }
-      it { should validate_inclusion_of(:role).in_array(ChatMembership::ROLES_LIST) }
+      it { is_expected.to validate_presence_of(:role) }
+      it { is_expected.to validate_inclusion_of(:role).in_array(ChatMembership::ROLES_LIST) }
     end
     
     context 'custom' do

@@ -74,7 +74,10 @@ class ChatMessage < ApplicationRecord
   private
     # Validations
     def type_content_is_present
-      return if (self.message_type == 'image' && self.asset_source.present?) || (self.message_type == 'video' && self.asset_source.present?) || (self.message_type == 'text' && self.text.present?) || (self.message_type == 'audio' && self.audio_record.present?)
+      return if self.message_type == 'image' && (self.asset_source.present? || self.image.attached?)
+      return if self.message_type == 'video' && (self.asset_source.present? || self.video.attached?)
+      return if (self.message_type == 'text' && self.text.present?)
+      return if (self.message_type == 'audio' && self.audio_record.present?)
       return if (self.message_type == 'audio-room' && self.chat_room_source.present?) || (self.message_type == 'video-room' && self.chat_room_source.present?)
       errors.add(:base, 'Message type should be present.')
     end

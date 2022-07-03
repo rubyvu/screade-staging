@@ -1,18 +1,6 @@
 /**************************************
 * Variables:
 **************************************/
-// Colors
-$color-blue: #3F51B5;
-$color-light-blue: #D4D7ED;
-$color-cadet-blue: #EAF1FF;
-$color-dark-cadet-blue: #808BD0;
-$color-black: #000000;
-$color-red: #DA100B;
-$color-grey: #9C9C9C;
-$color-light-grey: #EBF0F3;
-$color-dark-grey: #272727;
-$color-green: #11933B;
-$color-white: #FFFFFF;
 
 // Sizes
 $max-body-width: 1440px;
@@ -56,6 +44,7 @@ $grid-breakpoints: (
 @import './groups/index';
 @import './maps/index';
 @import './streams/index';
+@import './download_apps/index';
 
 /**************************************
 * Import stylesheets from node modules:
@@ -85,6 +74,14 @@ html, body {
     background-color: $color-dark-grey;
     padding: 0;
   }
+}
+
+body {
+  background-color: $color-background-main;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: $color-text-primary;
 }
 
 // Prevent text from selection

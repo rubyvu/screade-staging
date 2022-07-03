@@ -1,0 +1,35 @@
+.modal.fade.overflow-auto#modal-blocked-users aria-hidden='true' aria-labelledby='myLargeModalLabel' role='dialog' tabindex='-1'
+  .modal-dialog.modal-dialog-centered.modal-lg
+    .modal-content
+      .modal-header
+        .step-wrapper
+          h4.modal-title Blocked Users
+        button.close aria-label='Close' data-dismiss='modal' type='button'
+          = image_pack_tag('media/images/icons/ic_close.png')
+          
+      .modal-body
+        - if current_user
+          .chat-member-wrapper
+            - current_user.user_blocks_as_blocker.each do |user_block|
+              - user = user_block.blocked
+              
+              .chat-member-card
+                .photo
+                  = link_to user_path(user.username), target: :_blank, data: { type: 'modal-link' } do
+                    - if user.profile_picture_url
+                      = image_tag(user.profile_picture_url, class: 'profile-image')
+                    - else
+                      = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
+                      
+                .content
+                  .member-name
+                    = user.full_name
+                    
+                  .member-role-control
+                    .member-delete
+                      = link_to user_block_path(user_id: user.id), class: 'dropdown-item', method: :delete, data: { confirm: 'Do you really want to "unblock" this User?' }
+                        = image_pack_tag('media/images/icons/ic_cancel.png')
+                        
+      .modal-footer
+        p.m-auto
+          span.mx-2

@@ -44,7 +44,7 @@
         = link_to chat_membership_path(@chat.get_membership(current_user)), class: 'dropdown-item', id: 'delete-chat-membership', method: :delete, data: { confirm: 'Are you realy want to exit from this group?' }, remote: true  do
           = image_pack_tag('media/images/icons/ic_chat_leave_group.png')
           span Leave group
-      
+          
 // Chat Messages
 = render 'chat_messages/index'
 = render 'chat_messages/new'

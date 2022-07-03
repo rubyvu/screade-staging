@@ -27,7 +27,7 @@ class UserVideo < ApplicationRecord
   end
   
   def file_thumbnail_url
-    self.file.preview(resize_to_limit: [300, 300]).processed.url if self.file.attached?
+    (self.file.attached? && self.file.previewable?) ? self.file.preview(resize_to_limit: [300, 300]).processed.url : nil
   end
   
   private

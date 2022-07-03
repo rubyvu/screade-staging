@@ -1,5 +1,5 @@
 import moment from 'moment';
-import "flag-icon-css/css/flag-icon.css"
+import 'flag-icon-css/css/flag-icon.css'
 
 $( document ).on('turbolinks:load', function() {
   // Update user birthday date
@@ -24,14 +24,36 @@ $( document ).on('turbolinks:load', function() {
   })
   
   // Show modal User password input
-  $("#show-password-icon").on('click', function() {
-    let input = $(".modal #sign_in_user_password")
-    if (input.attr("type") === "password") {
-      $(this).css("opacity", 1)
-      input.attr("type", "text");
+  $('#show-password-icon').on('click', function() {
+    let input = $('.modal #sign_in_user_password')
+    if (input.attr('type') === 'password') {
+      $(this).css('opacity', 1)
+      input.attr('type', 'text')
     } else {
-      $(this).css("opacity", 0.4)
-      input.attr("type", "password");
+      $(this).css('opacity', 0.4)
+      input.attr('type', 'password')
+    }
+  })
+  
+  $('#show-sign-up-user-password').on('click', function() {
+    let input = $('.modal #sign_up_user_password')
+    if (input.attr('type') === 'password') {
+      $(this).css('opacity', 1)
+      input.attr('type', 'text')
+    } else {
+      $(this).css('opacity', 0.4)
+      input.attr('type', 'password')
+    }
+  })
+  
+  $('#show-sign-up-user-password-confirmation').on('click', function() {
+    let input = $('.modal #sign_up_user_password_confirmation')
+    if (input.attr('type') === 'password') {
+      $(this).css('opacity', 1)
+      input.attr('type', 'text')
+    } else {
+      $(this).css('opacity', 0.4)
+      input.attr('type', 'password')
     }
   })
   

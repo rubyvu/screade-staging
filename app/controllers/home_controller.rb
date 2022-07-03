@@ -3,6 +3,10 @@ class HomeController < ApplicationController
   
   # GET /home
   def index
+    if params[:invitation_token]
+      sign_out(current_user) if current_user
+    end
+    
     @home = {}
     
     # News Categories
@@ -49,5 +53,16 @@ class HomeController < ApplicationController
     end
     
     @home[:news_articles] = NewsArticle.joins(:news_categories).where(news_articles: { country: Country.find_by(code: 'US')}, news_categories: { id: news_category.id } ).page(params[:page]).per(16) if @home[:news_articles].blank?
+  end
+  
+  # PUT /home/theme
+  def theme
+    puts "=> params[:theme] #{params[:theme]}"
+    if params[:theme] == 'dark'
+      cookies[:theme] = 'dark'
+    else
+      cookies[:theme] = 'light'
+    end
+    redirect_to(request.referrer || root_path)
   end
 end

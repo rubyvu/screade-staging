@@ -55,17 +55,18 @@
         max-width: 118px;
         overflow: hidden;
         text-overflow: ellipsis;
+        color: $color-text-secondary;
       }
       
       .comment-date {
         margin-top: 4px;
-        color: $color-grey;
+        color: $color-text-secondary;
         font-size: 12px;
         line-height: 16px;
       }
       
       .comment-text {
-        color: $color-grey;
+        color: $color-text-primary;
         font-size: 14px;
         max-width: 200px;
         word-wrap: break-word;

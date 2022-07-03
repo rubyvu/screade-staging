@@ -96,6 +96,18 @@ RSpec.describe User, type: :model do
     end
   end
   
+  context 'callbacks' do
+    it 'is expected to create SquadRequest' do
+      user1 = FactoryBot.create(:user, country: @country, user_security_question: @user_security_question)
+      user2 = FactoryBot.create(:user, country: @country, user_security_question: @user_security_question, invited_by_user: user1)
+      
+      squad_request = SquadRequest.find_by(requestor: user1, receiver: user2)
+      expect(squad_request).not_to eq(nil)
+      expect(squad_request.accepted_at).not_to eq(nil)
+      expect(squad_request.declined_at).to eq(nil)
+    end
+  end
+  
   context 'normalization' do
     it 'is expected to downcase and cleanup :email' do
       user = FactoryBot.build(:user, email: '  ExaMple@gmail.com ')

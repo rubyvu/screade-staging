@@ -23,7 +23,7 @@ class ChatMembership < ApplicationRecord
   # Callbacks
   before_validation :set_owner_role, on: :create
   after_update :update_owner_role
-  before_destroy :is_membership_can_be_removed?
+  before_destroy :can_membership_be_removed?
   after_destroy :remove_chat
   after_commit :add_notification, on: :create
   
@@ -55,7 +55,9 @@ class ChatMembership < ApplicationRecord
       self.chat.update_columns(owner_id: self.user.id)
     end
     
-    def is_membership_can_be_removed?
+    def can_membership_be_removed?
+      return if self.chat.is_destroying
+      
       if self.role == 'owner' && self.chat.chat_memberships.count > 1
         errors.add(:base, 'You must assign a new Owner before leaving.')
         throw :abort

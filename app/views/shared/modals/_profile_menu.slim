@@ -1,0 +1,23 @@
+.modal.fade.overflow-auto#modal-profile-menu aria-hidden='true' aria-labelledby='myLargeModalLabel' role='dialog' tabindex='-1' data-backdrop='static' data-keyboard='false'
+  .modal-dialog.modal-dialog-centered.modal-lg
+    .modal-content
+      .modal-header
+        h4.modal-title = @user.full_name
+        button.close aria-label='Close' data-dismiss='modal' type='button'
+          = image_pack_tag('media/images/icons/ic_close.png')
+          
+      .modal-body
+        ul.profile-menu
+          - if @user.allow_direct_messages && !UserBlock.exists?(blocker: @user, blocked: current_user)
+            li
+              = link_to 'Send Message', direct_message_chats_path(user_id: @user.id), method: :post
+              
+          li
+            = link_to 'Report User', '', data: { toggle: 'modal', target: '#modal-report-profile' }
+          li
+            - if UserBlock.exists?(blocker: current_user, blocked: @user)
+              = link_to 'Unblock User', user_block_path(user_id: @user.id), method: :delete, data: { confirm: 'Do you really want to "unblock" this User?' }
+            - else
+              = link_to 'Block User', user_blocks_path(user_id: @user.id), method: :post, data: { confirm: 'Do you really want to "block" this User?' }
+              
+      .modal-footer

@@ -29,6 +29,9 @@ class NewsArticle < ApplicationRecord
   # Search
   searchkick word_middle: [:title]
   
+  # Hooks
+  after_commit :tag_news_article, on: :create
+  
   # Associations
   belongs_to :country
   belongs_to :news_source, optional: true
@@ -84,4 +87,9 @@ class NewsArticle < ApplicationRecord
   def group_subscription_counts(group)
     self.news_categories.where(id: group.id).count + self.topics.where(id: group.approved_nested_topics_ids).count
   end
+  
+  private
+    def tag_news_article
+      TagNewsArticlesJob.perform_later(self.id)
+    end
 end

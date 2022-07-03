@@ -10,11 +10,11 @@
             = image_tag(chat_membership.user.profile_picture_url, class: 'profile-image')
           - else
             = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
-          
+            
       .content
         .member-name
           = chat_membership.user.full_name
-        
+          
         .member-role-control class="#{current_user_membership.role == 'user' ? 'user' : '' }"
           .member-role-select
             - if @chat.owner == current_user && chat_membership.role == 'owner'

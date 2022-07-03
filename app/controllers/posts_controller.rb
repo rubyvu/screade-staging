@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :get_post, only: [:edit, :update, :destroy]
+  before_action :get_post, only: [:edit, :update, :destroy, :lits]
   before_action :get_groups, only: [:new, :edit]
   before_action :get_user_image, only: [:create, :update]
   protect_from_forgery except: [:update]
@@ -64,6 +64,20 @@ class PostsController < ApplicationController
   def destroy
     @post.destroy
     redirect_to posts_path
+  end
+  
+  # GET /posts/:id/lits
+  def lits
+    respond_to do |format|
+      format.js { render 'lits', layout: false }
+    end
+  end
+  
+  # GET /posts/:id/translate
+  def translate
+    @post = Post.find_by!(id: params[:id])
+    post_translation = PostsService.new(@post).translate_for(current_user)
+    render json: { post: post_translation }, status: :ok
   end
   
   # GET /posts/user_images

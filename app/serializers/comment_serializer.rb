@@ -2,19 +2,21 @@
 #
 # Table name: comments
 #
-#  id          :bigint           not null, primary key
-#  lits_count  :integer          default(0), not null
-#  message     :text
-#  source_type :string           not null
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  comment_id  :integer
-#  source_id   :integer          not null
-#  user_id     :integer          not null
+#  id                :bigint           not null, primary key
+#  detected_language :string
+#  lits_count        :integer          default(0), not null
+#  message           :text
+#  source_type       :string           not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  comment_id        :integer
+#  source_id         :integer          not null
+#  user_id           :integer          not null
 #
 # Indexes
 #
-#  index_comments_on_source_id  (source_id)
+#  index_comments_on_detected_language  (detected_language)
+#  index_comments_on_source_id          (source_id)
 #
 class CommentSerializer < ActiveModel::Serializer
   attribute :id

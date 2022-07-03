@@ -37,7 +37,8 @@
                 = link_to post_post_lits_path(post), method: :post, remote: true, id: "post-lit-#{post.id}" do
                   i.ic.lit
                   
-              span.info-panel-value #{counter_measurement(post.lits.size)}
+              = link_to lits_post_path(post), remote: true do
+                span.info-panel-value #{counter_measurement(post.lits.size)}
               
             .info-panel-value-wrapper
               = link_to post_post_comments_path(post), class: 'comment-link-icon' do

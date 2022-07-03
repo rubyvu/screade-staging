@@ -7,7 +7,7 @@ $( document ).on('turbolinks:load', function() {
     }
     
     let src = $(this).find('img').attr('data-video-url');
-    let videoPlayer = $('#user-assets-video-palyer')
+    let videoPlayer = $('#user-assets-video-player')
     
     videoPlayer.parent().show()
     // Set imageUrl to Videoplayer
@@ -18,7 +18,7 @@ $( document ).on('turbolinks:load', function() {
   })
 
   $('.video-player-bg').click(function(){
-    let videoPlayer = $('#user-assets-video-palyer')
+    let videoPlayer = $('#user-assets-video-player')
     videoPlayer.parent().hide()
     videoPlayer.attr('src', '')
     videoPlayer.empty()

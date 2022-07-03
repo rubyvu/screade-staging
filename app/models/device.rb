@@ -23,6 +23,7 @@ class Device < ApplicationRecord
   
   # Callbacks
   before_validation :generate_access_token, on: :create
+  after_commit :remove_push_token_from_others, on: [:create, :update]
   
   # Associations
   belongs_to :owner, class_name: 'User', foreign_key: 'owner_id'
@@ -39,5 +40,11 @@ class Device < ApplicationRecord
     def generate_access_token
       new_token = SecureRandom.hex(16)
       Device.exists?(access_token: new_token) ? generate_access_token : self.access_token = new_token
+    end
+    
+    def remove_push_token_from_others
+      return unless self.push_token
+      
+      Device.where(push_token: self.push_token).where.not(id: self.id).update_all(push_token: nil)
     end
 end

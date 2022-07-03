@@ -19,6 +19,7 @@ class Invitation < ApplicationRecord
   
   # Callbacks
   before_validation :generate_token, on: :create
+  after_commit :notify_via_email, on: :create
   
   # Associations
   belongs_to :invited_by_user, class_name: 'User', foreign_key: :invited_by_user_id
@@ -35,5 +36,9 @@ class Invitation < ApplicationRecord
       generate_token if Invitation.exists?(token: new_token)
       
       self.token = new_token
+    end
+    
+    def notify_via_email
+      SendInvitationEmailJob.perform_later(self.id)
     end
 end

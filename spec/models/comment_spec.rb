@@ -2,19 +2,21 @@
 #
 # Table name: comments
 #
-#  id          :bigint           not null, primary key
-#  lits_count  :integer          default(0), not null
-#  message     :text
-#  source_type :string           not null
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  comment_id  :integer
-#  source_id   :integer          not null
-#  user_id     :integer          not null
+#  id                :bigint           not null, primary key
+#  detected_language :string
+#  lits_count        :integer          default(0), not null
+#  message           :text
+#  source_type       :string           not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  comment_id        :integer
+#  source_id         :integer          not null
+#  user_id           :integer          not null
 #
 # Indexes
 #
-#  index_comments_on_source_id  (source_id)
+#  index_comments_on_detected_language  (detected_language)
+#  index_comments_on_source_id          (source_id)
 #
 require 'rails_helper'
 
@@ -31,11 +33,12 @@ RSpec.describe Comment, type: :model do
   end
   
   context 'associations' do
+    it { is_expected.to belong_to(:comment).optional }
     it { is_expected.to have_many(:replied_comments).class_name('Comment').with_foreign_key(:comment_id).dependent(:destroy) }
-    it { is_expected.to belong_to(:user) }
     it { is_expected.to have_many(:shared_records) }
     it { is_expected.to belong_to(:source) }
-    it { is_expected.to belong_to(:comment).optional }
+    it { is_expected.to have_many(:translations) }
+    it { is_expected.to belong_to(:user) }
   end
   
   context 'validations' do
@@ -142,6 +145,21 @@ RSpec.describe Comment, type: :model do
       expect(invalid_comment.valid?).to eq(false)
       expect(invalid_comment.errors.full_messages.first).to eq('You can create reply only from parent comment.')
     end
-    
+  end
+  
+  describe 'hooks' do
+    it 'is expected to delete :message Translations if :message was changed' do
+      comment = FactoryBot.create(:comment, user: @user, source: @news_article)
+      language1 = Language.find_by(code: 'EN')
+      language2 = Language.find_by(code: 'DE')
+      message_translation1 = FactoryBot.create(:translation, language: language1, translatable: comment, field_name: 'message')
+      message_translation2 = FactoryBot.create(:translation, language: language2, translatable: comment, field_name: 'message')
+      
+      expect(comment.translations.count).to eq(2)
+      
+      comment.update(message: Faker::Lorem.characters(number: 50))
+      
+      expect(comment.translations.count).to eq(0)
+    end
   end
 end

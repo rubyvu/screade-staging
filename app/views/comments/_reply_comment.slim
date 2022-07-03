@@ -12,17 +12,22 @@
       - else
         = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
         
-  .comment-content-wrapper.replied value="#{comment.id}"
+  .comment-content-wrapper.replied value="#{comment.id}" id="comment-#{comment.id}"
     .comment-user-name
       = comment.user.full_name
     .comment-text
-      = comment.message
+      .original = comment.message
+      .translation
     .comment-date
       = comment_timestamp(comment.created_at)
       
-      .div class="#{ current_user ? 'comment-lit' : 'comment-lit pointer-disable' }"
-        span.info-panel-value.color-black #{counter_measurement(comment.lits.size)}
+      div class="#{ current_user ? 'comment-lit' : 'comment-lit pointer-disable' }"
+        = link_to lits_comment_path(comment), remote: true do
+          span.info-panel-value.color-black #{counter_measurement(comment.lits.size)}
         i class=(comment.is_lited(current_user) ? "ic lit active reverse" : "ic lit reverse")
+        
+      div
+        = link_to 'Translate', '#', class: 'translate-comment', data: { id: "#{comment.id}" }
         
     // Reply show/hide
     - if comment.comment_id.blank?

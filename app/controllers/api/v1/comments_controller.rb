@@ -65,10 +65,7 @@ class Api::V1::CommentsController < Api::V1::ApiController
   
   # POST /api/v1/comments/:id/translate
   def translate
-    comment_translation = {
-      message: "Translation for '#{@comment.message}'"
-    }
-    
+    comment_translation = CommentsService.new(@comment).translate_for(current_user)
     render json: { comment: comment_translation }, status: :ok
   end
   

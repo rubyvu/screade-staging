@@ -611,7 +611,8 @@ CREATE TABLE public.comments (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     lits_count integer DEFAULT 0 NOT NULL,
-    comment_id integer
+    comment_id integer,
+    detected_language character varying
 );
 
 
@@ -1106,7 +1107,8 @@ CREATE TABLE public.posts (
     views_count integer DEFAULT 0 NOT NULL,
     source_id integer NOT NULL,
     source_type character varying NOT NULL,
-    is_approved boolean DEFAULT true
+    is_approved boolean DEFAULT true,
+    detected_language character varying
 );
 
 
@@ -2578,6 +2580,13 @@ CREATE INDEX index_chats_on_owner_id ON public.chats USING btree (owner_id);
 
 
 --
+-- Name: index_comments_on_detected_language; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_comments_on_detected_language ON public.comments USING btree (detected_language);
+
+
+--
 -- Name: index_comments_on_source_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2736,6 +2745,13 @@ CREATE INDEX index_notifications_on_recipient_id ON public.notifications USING b
 --
 
 CREATE INDEX index_post_groups_on_post_id ON public.post_groups USING btree (post_id);
+
+
+--
+-- Name: index_posts_on_detected_language; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_posts_on_detected_language ON public.posts USING btree (detected_language);
 
 
 --
@@ -3097,6 +3113,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211215101252'),
 ('20211215130033'),
 ('20211215143721'),
-('20211221104150');
+('20211221104150'),
+('20220111211621'),
+('20220111211750'),
+('20220111212655');
 
 

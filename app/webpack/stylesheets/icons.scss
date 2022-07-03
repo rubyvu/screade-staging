@@ -29,7 +29,9 @@
     font-size: 14px;
     font-weight: 500;
     
-    &.color-black { color: $color-black; }
+    &.color-black {
+      color: $color-text-primary;
+    }
   }
   
   // Link block for info-panel
@@ -40,6 +42,7 @@
 
 // Icons
 i.ic {
+  display: inline-block;
   height: 20px;
   width: 20px;
 }
@@ -47,6 +50,10 @@ i.ic {
 i.ic-button {
   height: 32px;
   width: 32px;
+}
+
+.m-left-5 {
+  margin-left: 5px;
 }
 
 /* Lit */
@@ -109,6 +116,15 @@ i.ic.share.reverse:after {
   content: url('../images/icons/ic_share_reverse.svg');
 }
 
+// Translate
+i.ic.delete.reverse:after {
+  content: url('../images/icons/ic_translate_reverse.svg');
+}
+
+// Delete
+i.ic.delete.reverse:after {
+  content: url('../images/icons/ic_delete_reverse.svg');
+}
 
 /* Chat */
 i.ic-button.call-end:after {

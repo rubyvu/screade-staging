@@ -39,8 +39,10 @@ class Api::V1::GroupsController < Api::V1::ApiController
                           .or(Post.where(source_type: 'NewsCategory', source_id: news_category_posts_ids, is_approved: true))
                           .order(id: :desc).limit(1000).ids
                           
+    blocked_user_ids = UserBlock.where(blocker: current_user).pluck(:blocked_user_id)
     comments = Comment.where('((source_type = ? AND source_id IN (?) AND comment_id IS NULL) OR (comment_id IN (?))) AND (user_id != ?)', 'NewsArticle', source_ids, current_user.comments.ids, current_user.id)
                       .or(Comment.where(source_type: 'Post', source_id: post_source_ids, comment_id: nil).where.not(user: current_user))
+                      .where.not(user_id: blocked_user_ids)
                       .order(id: :desc).page(params[:page]).per(30)
                       
     comments_json = ActiveModel::Serializer::CollectionSerializer.new(comments, current_user: current_user).as_json

@@ -10,6 +10,20 @@ RSpec.describe Api::V1::CurrentUserController, type: :controller do
         format: 'json'
       )
     end
+    
+    # PUT/PATCH /api/v1/current_user
+    it 'is expected to route PUT/PATCH /api/v1/current_user to /api/v1/current_user#update' do
+      expect(put: '/api/v1/current_user').to route_to(
+        controller: 'api/v1/current_user',
+        action: 'update',
+        format: 'json'
+      )
+      expect(patch: '/api/v1/current_user').to route_to(
+        controller: 'api/v1/current_user',
+        action: 'update',
+        format: 'json'
+      )
+    end
   end
   
   before :all do
@@ -171,6 +185,39 @@ RSpec.describe Api::V1::CurrentUserController, type: :controller do
           expect(user_json.key?('show_invitation_popup')).to eq(true)
           expect(user_json['show_invitation_popup']).to eq(false)
         end
+      end
+    end
+  end
+  
+  describe 'PUT #update' do
+    context 'is expected to change :username' do
+      before :each do
+        @user = FactoryBot.create(:user, country: @country, user_security_question: @user_security_question, hide_invitation_popup: true)
+        @device = FactoryBot.create(:device, owner: @user)
+        @old_username = @user.username
+        @new_username = "#{@old_username}_new"
+        user_params = { username: @new_username }
+        
+        request.headers['X-Device-Token'] = @device.access_token
+        put :update, params: { user: user_params }
+      end
+      
+      it 'is expected to return :ok (200) HTTP status code' do
+        expect(response.status).to eq(200)
+      end
+      
+      it 'is expected to have application/json content type' do
+        expect(response.content_type).to eq('application/json; charset=utf-8')
+      end
+      
+      it 'is expected to have current_user' do
+        expect(subject.current_user).to eq(@user)
+      end
+      
+      it 'is expected to update :username for current_user' do
+        @user.reload
+        expect(@user.username).not_to eq(@old_username)
+        expect(@user.username).to eq(@new_username)
       end
     end
   end

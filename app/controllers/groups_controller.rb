@@ -73,9 +73,11 @@ class GroupsController < ApplicationController
                             .or(Post.where(source_type: 'NewsCategory', source_id: news_category_posts_ids, is_approved: true))
                             .order(id: :desc).limit(1000).ids
                             
+      blocked_user_ids = UserBlock.where(blocker: current_user).pluck(:blocked_user_id)
       @comments = Comment.where(source_type: 'NewsArticle', source_id: source_ids, comment_id: nil).where.not(user: current_user)
                           .or(Comment.where(source_type: 'Post', source_id: post_source_ids, comment_id: nil).where.not(user: current_user))
                           .or(Comment.where(comment_id: current_user.comments.ids).where.not(user: current_user))
+                          .where.not(user_id: blocked_user_ids)
                           .order(created_at: :desc).limit(100)
     end
 end

@@ -84,6 +84,35 @@ class ChatsController < ApplicationController
     end
   end
   
+  # POST /chats/direct_message
+  def direct_message
+    recipient_id = params.require(:user_id)
+    
+    dm_chat_ids = Chat.joins(:chat_memberships).group('chats.id').having('COUNT(chat_memberships.id) = 2').ids
+    
+    current_user_chats_ids = ChatMembership.where(user: current_user, chat_id: dm_chat_ids).pluck(:chat_id)
+    recipient_chats_ids = ChatMembership.where(user_id: recipient_id, chat_id: dm_chat_ids).pluck(:chat_id)
+    latest_dm_chat_id = current_user_chats_ids.intersection(recipient_chats_ids).max
+    
+    @chat = Chat.find_by(id: latest_dm_chat_id)
+    
+    if @chat
+      return redirect_to chats_path(chat_access_token: @chat.access_token)
+    end
+    
+    # Initialize new Chat
+    @chat = Chat.new(owner: current_user)
+    
+    # Initialize ChatMembership for Owner
+    @chat.chat_memberships.build(user: current_user)
+    
+    # Initialize ChatMembership for recipient
+    @chat.chat_memberships.build(user_id: recipient_id)
+    
+    @chat.save
+    redirect_to chats_path(chat_access_token: @chat.access_token)
+  end
+  
   private
     def get_chat
       @chat = Chat.find_by!(access_token: params[:access_token])

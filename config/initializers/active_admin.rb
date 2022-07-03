@@ -5,19 +5,19 @@ ActiveAdmin.setup do |config|
   # for each of the active admin pages.
   #
   config.site_title = "Screade"
-
+  
   # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.
   #
   # config.site_title_link = "/"
-
+  
   # Set an optional image to be displayed for the header
   # instead of a string (overrides :site_title)
   #
   # Note: Aim for an image that's 21px high so it fits in the header.
   #
   # config.site_title_image = "logo.png"
-
+  
   # == Default Namespace
   #
   # Set the default namespace each administration resource
@@ -45,7 +45,7 @@ ActiveAdmin.setup do |config|
   #
   # This will ONLY change the title for the admin section. Other
   # namespaces will continue to use the main "site_title" configuration.
-
+  
   # == User Authentication
   #
   # Active Admin will automatically call an authentication
@@ -55,7 +55,7 @@ ActiveAdmin.setup do |config|
   # This setting changes the method which Active Admin calls
   # within the application controller.
   config.authentication_method = :authenticate_admin_user!
-
+  
   # == User Authorization
   #
   # Active Admin will automatically call an authorization
@@ -63,27 +63,27 @@ ActiveAdmin.setup do |config|
   # ensure that there is a user with proper rights. You can use
   # CanCanAdapter or make your own. Please refer to documentation.
   # config.authorization_adapter = ActiveAdmin::CanCanAdapter
-
+  
   # In case you prefer Pundit over other solutions you can here pass
   # the name of default policy class. This policy will be used in every
   # case when Pundit is unable to find suitable policy.
   # config.pundit_default_policy = "MyDefaultPunditPolicy"
-
+  
   # If you wish to maintain a separate set of Pundit policies for admin
   # resources, you may set a namespace here that Pundit will search
   # within when looking for a resource's policy.
   # config.pundit_policy_namespace = :admin
-
+  
   # You can customize your CanCan Ability class name here.
   # config.cancan_ability_class = "Ability"
-
+  
   # You can specify a method to be called on unauthorized access.
   # This is necessary in order to prevent a redirect loop which happens
   # because, by default, user gets redirected to Dashboard. If user
   # doesn't have access to Dashboard, he'll end up in a redirect loop.
   # Method provided here should be defined in application_controller.rb.
   # config.on_unauthorized_access = :access_denied
-
+  
   # == Current User
   #
   # Active Admin will associate actions with the current
@@ -92,7 +92,7 @@ ActiveAdmin.setup do |config|
   # This setting changes the method which Active Admin calls
   # (within the application controller) to return the currently logged in user.
   config.current_user_method = :current_admin_user
-
+  
   # == Logging Out
   #
   # Active Admin displays a logout link on each screen. These
@@ -104,13 +104,13 @@ ActiveAdmin.setup do |config|
   #
   # Default:
   config.logout_link_path = :destroy_admin_user_session_path
-
+  
   # This setting changes the http method used when rendering the
   # link. For example :get, :delete, :put, etc..
   #
   # Default:
   # config.logout_link_method = :get
-
+  
   # == Root
   #
   # Set the action to call for the root path. You can set different
@@ -118,7 +118,7 @@ ActiveAdmin.setup do |config|
   #
   # Default:
   # config.root_to = 'dashboard#index'
-
+  
   # == Admin Comments
   #
   # This allows your users to comment on any resource registered with Active Admin.
@@ -127,7 +127,7 @@ ActiveAdmin.setup do |config|
   config.comments = false
   #
   # You can change the name under which comments are registered:
-  # config.comments_registration_name = 'AdminComment'
+  config.comments_registration_name = 'AdminComment'
   #
   # You can change the order for the comments and you can change the column
   # to be used for ordering:
@@ -138,27 +138,27 @@ ActiveAdmin.setup do |config|
   #
   # You can customize the comment menu:
   # config.comments_menu = { parent: 'Admin', priority: 1 }
-
+  
   # == Batch Actions
   #
   # Enable and disable Batch Actions
   #
   config.batch_actions = true
-
+  
   # == Controller Filters
   #
   # You can add before, after and around filters to all of your
   # Active Admin resources and pages from here.
   #
   # config.before_action :do_something_awesome
-
+  
   # == Attribute Filters
   #
   # You can exclude possibly sensitive model attributes from being displayed,
   # added to forms, or exported by default by ActiveAdmin
   #
   config.filter_attributes = [:encrypted_password, :password, :password_confirmation]
-
+  
   # == Localize Date/Time Format
   #
   # Set the localize format to display dates and times.
@@ -169,38 +169,38 @@ ActiveAdmin.setup do |config|
   # available formats in your application.
   #
   config.localize_format = :long
-
+  
   # == Setting a Favicon
   #
   # config.favicon = 'favicon.ico'
-
+  
   # == Meta Tags
   #
   # Add additional meta tags to the head element of active admin pages.
   #
   # Add tags to all pages logged in users see:
   #   config.meta_tags = { author: 'My Company' }
-
+  
   # By default, sign up/sign in/recover password pages are excluded
   # from showing up in search engine results by adding a robots meta
   # tag. You can reset the hash of meta tags included in logged out
   # pages:
   #   config.meta_tags_for_logged_out_pages = {}
-
+  
   # == Removing Breadcrumbs
   #
   # Breadcrumbs are enabled by default. You can customize them for individual
   # resources or you can disable them globally from here.
   #
   # config.breadcrumb = false
-
+  
   # == Create Another Checkbox
   #
   # Create another checkbox is disabled by default. You can customize it for individual
   # resources or you can enable them globally from here.
   #
   # config.create_another = true
-
+  
   # == Register Stylesheets & Javascripts
   #
   # We recommend using the built in Active Admin layout and loading
@@ -215,7 +215,7 @@ ActiveAdmin.setup do |config|
   #
   # To load a javascript file:
   #   config.register_javascript 'my_javascript.js'
-
+  
   # == CSV options
   #
   # Set the CSV builder separator
@@ -223,7 +223,7 @@ ActiveAdmin.setup do |config|
   #
   # Force the use of quotes
   # config.csv_options = { force_quotes: true }
-
+  
   # == Menu System
   #
   # You can add a navigation menu to be used in your application, or configure a provided menu
@@ -244,7 +244,7 @@ ActiveAdmin.setup do |config|
   #       menu.add label: "My Great Website", url: "http://www.mygreatwebsite.com", html_options: { target: :blank }
   #     end
   #   end
-
+  
   # == Download Links
   #
   # You can disable download links on resource listing pages,
@@ -265,7 +265,7 @@ ActiveAdmin.setup do |config|
   #     admin.download_links = proc { can?(:view_download_links) }
   #
   #   end
-
+  
   # == Pagination
   #
   # Pagination is enabled by default for all resources.
@@ -276,7 +276,7 @@ ActiveAdmin.setup do |config|
   # You can control the max per page count too.
   #
   # config.max_per_page = 10_000
-
+  
   # == Filters
   #
   # By default the index screen includes a "Filters" sidebar on the right
@@ -292,7 +292,7 @@ ActiveAdmin.setup do |config|
   # of those filters by default here.
   #
   # config.include_default_association_filters = true
-
+  
   # config.maximum_association_filter_arity = 256 # default value of :unlimited will change to 256 in a future version
   # config.filter_columns_for_large_association = [
   #    :display_name,
@@ -304,28 +304,28 @@ ActiveAdmin.setup do |config|
   #    :email,
   #  ]
   # config.filter_method_for_large_association = '_starts_with'
-
+  
   # == Head
   #
   # You can add your own content to the site head like analytics. Make sure
   # you only pass content you trust.
   #
   # config.head = ''.html_safe
-
+  
   # == Footer
   #
   # By default, the footer shows the current Active Admin version. You can
   # override the content of the footer here.
   #
   # config.footer = 'my custom footer text'
-
+  
   # == Sorting
   #
   # By default ActiveAdmin::OrderClause is used for sorting logic
   # You can inherit it with own class and inject it for all resources
   #
   # config.order_clause = MyOrderClause
-
+  
   # == Webpacker
   #
   # By default, Active Admin uses Sprocket's asset pipeline.

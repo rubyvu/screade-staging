@@ -7,7 +7,7 @@ ruby '2.7.2'
 gem 'airbrake'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails'
+gem 'rails', '6.1.6'
 
 # Use PostgreSQL as the database for Active Record
 gem 'pg', '1.2.3'
@@ -85,6 +85,7 @@ gem 'cld'
 
 # Global Search
 gem 'searchkick'
+gem 'opensearch-ruby'
 gem 'faraday_middleware-aws-sigv4'
 
 # Firebase Cloud Messaging
@@ -98,6 +99,14 @@ gem 'rails_autolink'
 
 # Video Streaming
 gem 'mux_ruby'
+
+# Google Translate
+gem 'google-cloud-translate'
+
+# CSS inliner for emails
+gem 'premailer-rails'
+
+gem 'sass-rails'
 
 group :development, :test do
   # Tests

@@ -5,16 +5,22 @@ html
     
     meta charset='UTF-8'
     meta name='viewport' content='width = device-width, initial-scale = 1.0, minimum-scale = 1, maximum-scale = 1, user-scalable = no'
-    meta name='propeller' content='02e623513d2818e29c841eedb79fbdae'
+    meta name='hilltopads-site-verification' content='fdeb879866d8384607e21af42882a7a5a73c976d'
     
     = csrf_meta_tags
     = csp_meta_tag
-    = stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
-    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     
+    - if cookies[:theme] == 'dark'
+      = javascript_pack_tag 'application_dark', 'data-turbolinks-track': 'reload'
+      = stylesheet_pack_tag 'application_dark', media: 'all', 'data-turbolinks-track': 'reload'
+    - else
+      = javascript_pack_tag 'application_light', 'data-turbolinks-track': 'reload'
+      = stylesheet_pack_tag 'application_light', media: 'all', 'data-turbolinks-track': 'reload'
+      
     script src="https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&libraries=&v=weekly" async=""
     
-  body
+  - theme_class = cookies[:theme] || 'light'
+  body class="#{theme_class}"
     nav.navbar.navbar-expand-lg.navbar-light
       = link_to root_path do
         = image_pack_tag('media/images/screade-logo-main.png', id: 'navbar-logo')
@@ -39,23 +45,27 @@ html
               = link_to 'Videos', videos_user_video_path(current_user.username), class: 'nav-link'
             li.nav-item
               = link_to 'Streams', streams_path, class: 'nav-link'
-              
           - else
             li.nav-item
-              = link_to 'Groups', '#', class: 'nav-link', data: { toggle: "modal", target: "#modal-sign-in-or-sign-up" }
+              = link_to 'Groups', '#', class: 'nav-link', data: { toggle: 'modal', target: '#modal-sign-in-or-sign-up' }
             li.nav-item
-              = link_to 'Events', '#', class: 'nav-link', data: { toggle: "modal", target: "#modal-sign-in-or-sign-up" }
+              = link_to 'Events', '#', class: 'nav-link', data: { toggle: 'modal', target: '#modal-sign-in-or-sign-up' }
             li.nav-item
-              = link_to 'Images', '#', class: 'nav-link', data: { toggle: "modal", target: "#modal-sign-in-or-sign-up" }
+              = link_to 'Images', '#', class: 'nav-link', data: { toggle: 'modal', target: '#modal-sign-in-or-sign-up' }
             li.nav-item
-              = link_to 'Posts', '#', class: 'nav-link', data: { toggle: "modal", target: "#modal-sign-in-or-sign-up" }
+              = link_to 'Posts', '#', class: 'nav-link', data: { toggle: 'modal', target: '#modal-sign-in-or-sign-up' }
             li.nav-item
-              = link_to 'Map', '#', class: 'nav-link', data: { toggle: "modal", target: "#modal-sign-in-or-sign-up" }
+              = link_to 'Map', '#', class: 'nav-link', data: { toggle: 'modal', target: '#modal-sign-in-or-sign-up' }
             li.nav-item
-              = link_to 'Video', '#', class: 'nav-link', data: { toggle: "modal", target: "#modal-sign-in-or-sign-up" }
+              = link_to 'Video', '#', class: 'nav-link', data: { toggle: 'modal', target: '#modal-sign-in-or-sign-up' }
             li.nav-item
-              = link_to 'Streams', '#', class: 'nav-link', data: { toggle: "modal", target: "#modal-sign-in-or-sign-up" }
-            
+              = link_to 'Streams', '#', class: 'nav-link', data: { toggle: 'modal', target: '#modal-sign-in-or-sign-up' }
+              
+          = form_with url: theme_home_index_path, method: :put do |f|
+            label.switch
+              = f.check_box :theme, { checked: (cookies[:theme] == 'dark'), onchange: 'this.form.submit();' }, checked_value = 'dark', unchecked_value = 'light'
+              span.slider.default.round
+              
         - if current_user
           .navbar-control-panel
             // Hide search
@@ -65,7 +75,7 @@ html
             #navbar-search-active
               = form_tag searches_path, method: :get, id: 'global-search-form' do
                 .input-group.search
-                  = text_field_tag :search_input, nil, required: true, minlength: 2, autofocus: false, autocomplete: 'off', placeholder: "Search", class: 'form-control'
+                  = text_field_tag :search_input, nil, required: true, minlength: 2, autofocus: false, autocomplete: 'off', placeholder: 'Search', class: 'form-control'
                   
                   .input-group-append
                     .input-group-text
@@ -77,24 +87,27 @@ html
               = link_to chats_path do
                 = image_pack_tag('media/images/icons/ic_dialog.png')
             .navbar-icon-wrappers.dropdown
-              a.dropdown-toggle#dropdown-notification data-toggle="dropdown"
+              a.dropdown-toggle#dropdown-notification data-toggle='dropdown'
                 = image_pack_tag('media/images/icons/ic_notification.png')
                 
               i.notification-bage#notification-bage class="#{current_user.received_notifications.unviewed.present? ? 'active' : ''}"
-              .dropdown-menu.dropdown-menu-right aria-labelledby="dropdown-notification"
+              .dropdown-menu.dropdown-menu-right aria-labelledby='dropdown-notification'
                 #notifications-list-placeholder
                 
             .navbar-icon-wrappers.dropdown
-              a.dropdown-toggle#dropdownMenuButton data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+              a.dropdown-toggle#dropdownMenuButton data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'
                 = image_pack_tag('media/images/icons/ic_settings.png')
-              .dropdown-menu.dropdown-menu-right aria-labelledby="dropdownMenuButton"
+              .dropdown-menu.dropdown-menu-right aria-labelledby='dropdownMenuButton'
                 = link_to 'Customize', customize_fonts_path, class: 'dropdown-item'
                 = link_to 'Notifications Settings', edit_setting_path(current_user.setting), class: 'dropdown-item'
+                = link_to 'Direct Message Settings', edit_setting_path(current_user.setting, direct_messages: true), class: 'dropdown-item'
                 = link_to 'Change Password', edit_user_path(current_user.username), class: 'dropdown-item'
                 = link_to 'Contact Us', new_contact_us_request_path, class: 'dropdown-item'
+                = link_to 'Invite Friends', '', class: 'dropdown-item', data: { toggle: 'modal', target: '#modal-invite-friends' }
+                = link_to 'Blocked Users', '', class: 'dropdown-item', data: { toggle: 'modal', target: '#modal-blocked-users' }
                 = link_to 'Privacy Policy & Terms of Use', terms_and_services_legal_documents_path, class: 'dropdown-item'
-                = link_to "About Us", '', class: 'dropdown-item', data: { toggle: "modal", target: "#modal-about-us" }
-                = link_to "Sign Out", destroy_user_session_path, method: :delete, class: 'dropdown-item no-border text-danger'
+                = link_to 'About Us', '', class: 'dropdown-item', data: { toggle: 'modal', target: '#modal-about-us' }
+                = link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'dropdown-item no-border text-danger'
                 
             .d-inline-flex.ml-1
               = link_to user_path(current_user.username) do
@@ -104,17 +117,24 @@ html
                   = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
         - else
           .div
-            = link_to "Sign Up", '', class: 'btn btn-link my-2 my-sm-0', data: { toggle: "modal", target: "#modal-sign-up" }
-            = link_to "Sign In", '', class: 'btn btn-primary my-2 my-sm-0', data: { toggle: "modal", target: "#modal-sign-in" }
+            = link_to 'Sign Up', '', class: 'btn btn-link my-2 my-sm-0', data: { toggle: 'modal', target: '#modal-sign-up' }
+            = link_to 'Sign In', '', class: 'btn btn-primary my-2 my-sm-0', data: { toggle: 'modal', target: '#modal-sign-in' }
             
     = yield
     
+    - if current_user && current_user.created_at <= 7.days.ago && current_user.hide_invitation_popup == false
+      #show-invite-friends
+      
+    - if params[:invitation_token]
+      #show-sign-up-invite
+      
     = render 'shared/modals/sign_in'
     = render 'shared/modals/sign_up'
     = render 'shared/modals/sign_in_or_up'
     = render 'shared/modals/sign_up_update'
+    = render 'shared/modals/invite_friends'
+    = render 'shared/modals/blocked_users'
     = render 'shared/modals/forgot_password/security_question'
     = render 'shared/modals/forgot_password/restore'
     = render 'shared/modals/about_us'
-    
-  = render 'shared/ads/propeller' if Rails.env.production?
+    = render 'shared/modals/lits'

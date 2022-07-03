@@ -1,0 +1,22 @@
+.modal.fade.overflow-auto#modal-report-profile aria-hidden='true' aria-labelledby='myLargeModalLabel' role='dialog' tabindex='-1' data-backdrop='static' data-keyboard='false'
+  .modal-dialog.modal-dialog-centered.modal-lg
+    .modal-content
+      .modal-header
+        h4.modal-title Report #{@user.full_name}
+        button.close aria-label='Close' data-dismiss='modal' type='button'
+          = image_pack_tag('media/images/icons/ic_close.png')
+          
+      .modal-body
+        = form_with scope: :report, url: reports_path, method: :post do |f|
+          = f.hidden_field :reported_user_id, value: @user.id
+          
+          .row
+            .col
+              .material-field
+                = f.label 'Report Details'
+                = f.text_area :details, class: 'form-control', rows: 6, required: true
+                
+          .actions
+            = f.submit 'Submit', class: 'btn btn-primary w-100'
+            
+      .modal-footer

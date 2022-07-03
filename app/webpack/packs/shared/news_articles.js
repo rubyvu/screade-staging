@@ -37,11 +37,11 @@ $( document ).on('turbolinks:load', function() {
   }
   
   // News Articles Lits for on Home and NewsArticles Comments pages
-  $('.news-info-panel .ic.lit, .info-panel .ic.lit').parent().on('click', function() {
-    const iconObject = $(this)
+  $('.news-info-panel .ic.lit, .info-panel .ic.lit').on('click', function() {
+    const iconObject = $(this).parent()
     
     // Do not send request if icon disabled
-    if ( $(this).hasClass('pointer-disable') ) { return }
+    if ( iconObject.hasClass('pointer-disable') ) { return }
     
     var articleId = ''
     // Get Article ID from Home or NewsArticles Comments pages
@@ -51,29 +51,30 @@ $( document ).on('turbolinks:load', function() {
       articleId = iconObject.parents('.news-info-panel:first').attr('value');
     }
     
-    var litCounter = +(iconObject.children('span').text())
+    const litCounterTag = iconObject.find('a span')
+    const litCounter = +litCounterTag.text()
     
-    if ( iconObject.children('.ic').hasClass('active') ) {
+    if (iconObject.children('.ic').hasClass('active')) {
       $.ajax({
-        type: "DELETE",
+        type: 'DELETE',
         url: window.location.origin + '/news_articles/' + articleId + '/unlit'
-      }).done(function( data ) {
-        if ( data.success ) {
+      }).done(function(data) {
+        if (data.success) {
           iconObject.children('.ic').removeClass('active')
-          if ( litCounter <= 999 ) {
-            iconObject.children('span').text(litCounter-1)
+          if (litCounter <= 999) {
+            litCounterTag.text(litCounter - 1)
           }
          }
       });
     } else {
       $.ajax({
-        type: "POST",
+        type: 'POST',
         url: window.location.origin + '/news_articles/' + articleId + '/lit'
-      }).done(function( data ) {
-        if ( data.success ) {
+      }).done(function(data) {
+        if (data.success) {
           iconObject.children('.ic').addClass('active')
-          if ( litCounter < 999 ) {
-            iconObject.children('span').text(litCounter+1)
+          if (litCounter < 999) {
+            litCounterTag.text(litCounter + 1)
           }
         }
       });
@@ -81,44 +82,46 @@ $( document ).on('turbolinks:load', function() {
   })
   
   // Comment lits
-  $('.comment-lit .ic.lit').parent().on('click', function() {
-    const iconObject = $(this)
+  $('.comment-lit .ic.lit').on('click', function() {
+    const iconObject = $(this).parent()
     
     // Do not send request if icon disabled
-    if ( $(this).hasClass('pointer-disable') ) { return }
+    if (iconObject.hasClass('pointer-disable')) { return }
     
     var commentId = ''
+    
     // Get Comment ID
-    if ( $('.comment-wrapper').length > 0 ) {
+    if ($('.comment-wrapper').length > 0) {
       commentId = iconObject.parents('.comment-content-wrapper:first').attr('value');
     }
     
-    var litCounter = +(iconObject.children('span').text())
+    const litCounterTag = iconObject.find('a span')
+    const litCounter = +litCounterTag.text()
     
-    if ( iconObject.children('.ic').hasClass('active') ) {
+    if (iconObject.children('.ic').hasClass('active')) {
       $.ajax({
-        type: "DELETE",
+        type: 'DELETE',
         url: window.location.origin + '/comments/' + commentId + '/unlit'
-      }).done(function( data ) {
-        if ( data.success ) {
+      }).done(function(data) {
+        if (data.success) {
           iconObject.children('.ic').removeClass('active')
-          if ( litCounter <= 999 ) {
-            iconObject.children('span').text(litCounter-1)
+          if (litCounter <= 999) {
+            litCounterTag.text(litCounter-1)
           }
          }
       });
     } else {
       $.ajax({
-        type: "POST",
+        type: 'POST',
         url: window.location.origin + '/comments/' + commentId + '/lit'
-      }).done(function( data ) {
-        if ( data.success ) {
+      }).done(function(data) {
+        if (data.success) {
           iconObject.children('.ic').addClass('active')
-          if ( litCounter < 999 ) {
-            iconObject.children('span').text(litCounter+1)
+          if (litCounter < 999) {
+            litCounterTag.text(litCounter+1)
           }
         }
-      });
+      })
     }
   })
   

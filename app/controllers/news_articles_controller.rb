@@ -1,6 +1,13 @@
 class NewsArticlesController < ApplicationController
   skip_before_action :authenticate_user!, only: [:comments]
-  before_action :get_article, only: [:comments, :create_comment, :lit, :search, :view, :unlit]
+  before_action :get_article, only: [:lits, :comments, :create_comment, :lit, :search, :view, :unlit]
+  
+  # GET /news_articles/:id/lits
+  def lits
+    respond_to do |format|
+      format.js { render 'lits', layout: false }
+    end
+  end
   
   # POST /news_articles/:id/lit
   def lit

@@ -1,7 +1,10 @@
 // Material field
 .material-field {
   margin: 12px 0px;
-  label { margin: 0; }
+  label {
+    margin: 0;
+    color: $color-text-secondary;
+  }
   input { padding: 0; }
   span.select2-container { display: block; }
   span.select2-container .select2-selection__rendered { padding-left: 0;}
@@ -14,25 +17,36 @@
   &.dropdown { margin: 0 0 24px 0; }
 }
 
-form .form-control {
-  border: none;
-  border-radius: 0;
-  border-bottom: 1px solid $color-light-grey;
-  padding: 0.375rem 0.7rem;
+form {
+  .form-control {
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid $color-light-grey;
+    padding: 0.375rem 0.7rem;
+    color: $color-text-primary;
+    background-color: $color-background-main;
+    
+    &.chat-select {
+      border: 1px solid $color-light-grey;
+      padding: 0.375rem;
+      border-radius: 4px;
+    }
+  }
   
-  &.chat-select {
-    border: 1px solid $color-light-grey;
-    padding: 0.375rem;
-    border-radius: 4px;
+  .form-control:focus {
+    color: $color-text-primary;
+    background-color: $color-background-main;
   }
 }
 
-form select.form-control { padding: 0.375rem 0rem; }
+form select.form-control {
+  padding: 0.375rem 0rem;
+}
 
 // Input placeholder color and size Chrome, Firefox, Opera, Safari 10.1+
 .form-control::placeholder {
   font-size: 14px;
-  color: $color-grey;
+  color: $color-text-secondary;
 }
 
 // Input placeholder color and size Internet Explorer 10-11
@@ -67,7 +81,7 @@ form select.form-control { padding: 0.375rem 0rem; }
   border: none;
   border-bottom: 1px solid $color-light-grey;
   border-radius: 0;
-  background-color: $color-white;
+  background-color: $color-background-main;
   padding: 0.375rem 0.25rem 0.375rem 0rem;
   
   &.submit-button {
@@ -94,8 +108,8 @@ input[type=number] {
 
 // Input is disabled
 input.form-control:disabled, input.form-control[readonly] {
-  background-color: $color-white;
-  color: $color-grey
+  background-color: $color-background-main;
+  color: $color-text-secondary;
 }
 
 // Custom Radiobox
@@ -205,7 +219,9 @@ input[type='radio']:checked:after {
 }
 
 /* When the checkbox is checked, add a blue background */
-.big-checkbox-lable input:checked ~ .checkmark { background-color: $color-blue; }
+.big-checkbox-lable input:checked ~ .checkmark {
+  background-color: $color-blue;
+}
 
 /* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {

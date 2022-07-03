@@ -26,13 +26,8 @@ ActiveAdmin.register Post do
     column :user
     column :created_at
     column :updated_at
-    # actions
-    actions defaults: false do |post|
-      links = ''.html_safe
-      links += link_to t('active_admin.edit'), edit_admin_post_path(post), class: "member_link view_link"
-      links += link_to t('active_admin.delete'), admin_post_path(post), method: :delete, confirm: I18n.t('active_admin.delete_confirmation'), class: "member_link delete_link" if post.user.username == 'admin.screade'
-      links
-    end
+    
+    actions
   end
   
   form do |f|

@@ -4,7 +4,7 @@ class DirectUpload < BaseService
     @expiration_time = options[:expiration_time] || 10.minutes
     @folder = options[:folder]
   end
-
+  
   def call
     blob = create_blob
     response = signed_url(blob)

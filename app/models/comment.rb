@@ -2,25 +2,28 @@
 #
 # Table name: comments
 #
-#  id          :bigint           not null, primary key
-#  lits_count  :integer          default(0), not null
-#  message     :text
-#  source_type :string           not null
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  comment_id  :integer
-#  source_id   :integer          not null
-#  user_id     :integer          not null
+#  id                :bigint           not null, primary key
+#  detected_language :string
+#  lits_count        :integer          default(0), not null
+#  message           :text
+#  source_type       :string           not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  comment_id        :integer
+#  source_id         :integer          not null
+#  user_id           :integer          not null
 #
 # Indexes
 #
-#  index_comments_on_source_id  (source_id)
+#  index_comments_on_detected_language  (detected_language)
+#  index_comments_on_source_id          (source_id)
 #
 class Comment < ApplicationRecord
   SOURCE_TYPES = %w(NewsArticle Post)
   
   # Callbacks
   after_create :add_notification
+  after_save :delete_message_translations, if: :saved_change_to_message?
   
   # Associations
   has_many :replied_comments, class_name: 'Comment', foreign_key: :comment_id, dependent: :destroy
@@ -36,6 +39,8 @@ class Comment < ApplicationRecord
   has_many :liting_users, through: :lits, source: :user
   # Notifications
   has_many :notifications, as: :source, dependent: :destroy
+  ## Translations
+  has_many :translations, as: :translatable
   
   # Field validations
   validates :message, presence: true
@@ -58,5 +63,9 @@ class Comment < ApplicationRecord
     def replied_comment_only_for_comment
       return if self.comment.blank?
       self.errors.add(:base, 'You can create reply only from parent comment.') if self.comment.comment.present?
+    end
+    
+    def delete_message_translations
+      Translation.where(translatable: self, field_name: 'message').destroy_all
     end
 end

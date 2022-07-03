@@ -54,8 +54,6 @@ module Tasks
           case detected_language_code
           when 'ZH-TW'
             article_attr[:detected_language] = 'ZH'
-          when 'UK'
-            article_attr[:detected_language] = 'UA'
           else
             article_attr[:detected_language] = detected_language[:code].upcase
           end

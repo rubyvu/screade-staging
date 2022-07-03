@@ -1,0 +1,70 @@
+.download-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 101px 68px 135px;
+  
+  @media (max-width: map-get($grid-breakpoints, 'lg')) {
+    padding: 101px 0 135px;
+    
+    .download-app-wrapper {
+      margin-right: 15px;
+    }
+  }
+  
+  @media (max-width: 991px) {
+    flex-direction: column;
+    padding: 50px 0 50px;
+    
+    .download-app-wrapper {
+      max-width: 100%;
+      margin-right: 0;
+    }
+    
+    .download_app_image {
+      margin-top: 30px;
+    }
+  }
+  
+  @media (max-width: map-get($grid-breakpoints, 'md')) {
+    .download-wrapper {
+      width: 100%;
+    }
+    
+    .download_app_image img.download_app_image {
+      max-width: 100%;
+    }
+  }
+}
+
+.download-app-wrapper {
+  max-width: 564px;
+  width: 100%;
+  margin-right: 68px;
+  
+  h4 {
+    margin-bottom: 24px;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 32px;
+    color: $color-text-primary;
+    opacity: 0.87;
+  }
+  
+  p {
+    margin-bottom: 54px;
+    color: $color-text-primary;
+    font-size: 16px;
+    line-height: 24px;
+    opacity: 0.6;
+  }
+}
+
+.download-mobile-apps-wrapper {
+  display: flex;
+  flex-direction: column;
+  
+  a {
+    margin-bottom: 24px;
+  }
+}

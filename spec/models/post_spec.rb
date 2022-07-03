@@ -2,19 +2,24 @@
 #
 # Table name: posts
 #
-#  id              :bigint           not null, primary key
-#  comments_count  :integer          default(0), not null
-#  description     :text             not null
-#  is_approved     :boolean          default(TRUE)
-#  is_notification :boolean          default(TRUE)
-#  lits_count      :integer          default(0), not null
-#  source_type     :string           not null
-#  title           :string           not null
-#  views_count     :integer          default(0), not null
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  source_id       :integer          not null
-#  user_id         :integer          not null
+#  id                :bigint           not null, primary key
+#  comments_count    :integer          default(0), not null
+#  description       :text             not null
+#  detected_language :string
+#  is_approved       :boolean          default(TRUE)
+#  is_notification   :boolean          default(TRUE)
+#  lits_count        :integer          default(0), not null
+#  source_type       :string           not null
+#  title             :string           not null
+#  views_count       :integer          default(0), not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  source_id         :integer          not null
+#  user_id           :integer          not null
+#
+# Indexes
+#
+#  index_posts_on_detected_language  (detected_language)
 #
 require 'rails_helper'
 
@@ -40,9 +45,10 @@ RSpec.describe Post, type: :model do
     it { is_expected.to have_many(:lits).dependent(:destroy) }
     it { is_expected.to have_many(:liting_users) }
     it { is_expected.to have_many(:post_groups) }
+    it { is_expected.to have_many(:shared_records) }
+    it { is_expected.to have_many(:translations) }
     it { is_expected.to have_many(:views).dependent(:destroy) }
     it { is_expected.to have_many(:viewing_users) }
-    it { is_expected.to have_many(:shared_records) }
   end
   
   context 'validations' do
@@ -56,6 +62,36 @@ RSpec.describe Post, type: :model do
       it { is_expected.to validate_presence_of(:source_id) }
       it { is_expected.to validate_presence_of(:source_type) }
       it { is_expected.to validate_inclusion_of(:source_type).in_array(Post::SOURCE_TYPES) }
+    end
+  end
+  
+  describe 'hooks' do
+    it 'is expected to delete :title Translations if :title was changed' do
+      post = FactoryBot.create(:post, source: @topic, user: @user)
+      language = Language.find_by(code: 'EN')
+      title_translation = FactoryBot.create(:translation, language: language, translatable: post, field_name: 'title')
+      description_translation = FactoryBot.create(:translation, language: language, translatable: post, field_name: 'description')
+      
+      expect(post.translations.count).to eq(2)
+      
+      post.update(title: Faker::Lorem.characters(number: 10))
+      
+      expect(Translation.find_by(id: title_translation.id)).to eq(nil)
+      expect(Translation.find_by(id: description_translation.id)).to eq(description_translation)
+    end
+    
+    it 'is expected to delete :description Translations if :description was changed' do
+      post = FactoryBot.create(:post, source: @topic, user: @user)
+      language = Language.find_by(code: 'EN')
+      title_translation = FactoryBot.create(:translation, language: language, translatable: post, field_name: 'title')
+      description_translation = FactoryBot.create(:translation, language: language, translatable: post, field_name: 'description')
+      
+      expect(post.translations.count).to eq(2)
+      
+      post.update(description: Faker::Lorem.characters(number: 50))
+      
+      expect(Translation.find_by(id: title_translation.id)).to eq(title_translation)
+      expect(Translation.find_by(id: description_translation.id)).to eq(nil)
     end
   end
 end

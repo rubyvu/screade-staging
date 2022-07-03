@@ -35,7 +35,7 @@
     .group-wrapper ul { display: none; }
     .group-wrapper input:checked ~ ul { display: block; }
     .group-wrapper input[type=checkbox] { display: none; }
-  
+    
     .group-wrapper {
       cursor: pointer;
       width: 100%;
@@ -72,6 +72,7 @@
             padding-left: 12px;
             font-size: 14px;
             font-weight: 500;
+            color: $color-text-primary;
           }
           
           a.new-element {
@@ -87,8 +88,9 @@
           display: flex;
           align-items: center;
           height: 40px;
+          
           span.counter {
-            color: $color-grey;
+            color: $color-text-secondary;
             margin-right: 18px
           }
           

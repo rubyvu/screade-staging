@@ -1,0 +1,7 @@
+h2 Your invitation to Screade®
+
+p #{@invitation.invited_by_user.greeting} has invited you to join Screade®
+
+p Please follow the link below to create your free account!
+- sign_up_url = root_url(invitation_token: @invitation.token)
+= link_to sign_up_url, sign_up_url

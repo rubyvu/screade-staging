@@ -57,7 +57,8 @@ class User < ApplicationRecord
   has_one_attached :banner_picture
   
   # Callbacks
-  after_commit :set_user_settings, on: [:create]
+  after_commit :set_user_settings, on: :create
+  after_commit :accept_squad_request, on: :create
   before_validation :block_user
   
   # Associations
@@ -135,6 +136,20 @@ class User < ApplicationRecord
   
   def username=(value)
     super(value&.downcase&.strip)
+  end
+  
+  # Helpers
+  
+  def greeting
+    if first_name && last_name
+      "#{first_name} #{last_name} (#{username})"
+    else
+      "#{email} (#{username})"
+    end
+  end
+  
+  def translation_language
+    languages.first || Language.find_by(code: 'EN')
   end
   
   def profile_picture_url
@@ -230,6 +245,12 @@ class User < ApplicationRecord
     def set_user_settings
       return if self.setting.present?
       Setting.get_setting(self)
+    end
+    
+    def accept_squad_request
+      return unless self.invited_by_user
+      
+      SquadRequest.create(requestor: self.invited_by_user, receiver: self, accepted_at: DateTime.current)
     end
     
     def block_user

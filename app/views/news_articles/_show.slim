@@ -21,12 +21,13 @@
     .info-panel
       div class="#{ current_user ? 'info-panel-value-wrapper' : 'info-panel-value-wrapper pointer-disable' }"
         i class=(news_article.is_lited(current_user) ? 'ic lit active reverse' : 'ic lit reverse')
-        span.info-panel-value.color-black #{counter_measurement(news_article.lits.count)}
-        
+        = link_to lits_news_article_path(news_article), remote: true do
+          span.info-panel-value.color-black #{counter_measurement(news_article.lits.count)}
+          
       .info-panel-value-wrapper.pointer-disable
         i class=(news_article.is_commented(current_user) ? 'ic comment reverse active' : 'ic comment reverse')
         span.info-panel-value.color-black #{counter_measurement(news_article.comments.count)}
-      
+        
       div class="#{ current_user ? 'info-panel-value-wrapper' : 'info-panel-value-wrapper pointer-disable' }"
         - if current_user
           = link_to shared_records_path(news_article_id: news_article.id), remote: true

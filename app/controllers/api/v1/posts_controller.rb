@@ -1,6 +1,7 @@
 class Api::V1::PostsController < Api::V1::ApiController
   before_action :get_post, only: [:show, :update, :destroy, :lits, :share, :translate]
   before_action :get_user_image, only: [:create, :update]
+  before_action :get_user_video, only: [:create, :update]
   
   # GET /api/v1/posts
   def index
@@ -26,11 +27,20 @@ class Api::V1::PostsController < Api::V1::ApiController
   def create
     post = Post.new(post_params)
     post.user = current_user
+    
     if post.save
       # Attach UserImage file as Post image
-      if @user_image&.file_url.present?
-        user_image = URI.parse(@user_image.file_url).open
-        post.image.attach(io: user_image, filename: SecureRandom.hex(16))
+      if @user_image&.file&.attached?
+        @user_image.file.open do |file|
+          post.image.attach(io: file, filename: SecureRandom.hex(16))
+        end
+      end
+      
+      # Attach UserVideo file as Post video
+      if @user_video&.file&.attached?
+        @user_video.file.open do |file|
+          post.video.attach(io: file, filename: SecureRandom.hex(16))
+        end
       end
       
       post_json = PostSerializer.new(post, current_user: current_user).as_json
@@ -44,9 +54,17 @@ class Api::V1::PostsController < Api::V1::ApiController
   def update
     if @post.update(post_params)
       # Attach UserImage file as Post image
-      if @user_image&.file_url.present?
-        user_image = URI.parse(@user_image.file_url).open
-        @post.image.attach(io: user_image, filename: SecureRandom.hex(16))
+      if @user_image&.file&.attached?
+        @user_image.file.open do |file|
+          post.image.attach(io: file, filename: SecureRandom.hex(16))
+        end
+      end
+      
+      # Attach UserVideo file as Post video
+      if @user_video&.file&.attached?
+        @user_video.file.open do |file|
+          post.video.attach(io: file, filename: SecureRandom.hex(16))
+        end
       end
       
       post_json = PostSerializer.new(@post, current_user: current_user).as_json
@@ -88,11 +106,7 @@ class Api::V1::PostsController < Api::V1::ApiController
   
   # POST /api/v1/posts/:id/translate
   def translate
-    post_translation = {
-      title: "Translation for '#{@post.title}'",
-      description: "Translation for '#{@post.description}'"
-    }
-    
+    post_translation = PostsService.new(@post).translate_for(current_user)
     render json: { post: post_translation }, status: :ok
   end
   
@@ -105,7 +119,18 @@ class Api::V1::PostsController < Api::V1::ApiController
       @user_image = current_user.user_images.find_by(id: params[:post][:image_id])
     end
     
+    def get_user_video
+      @user_video = current_user.user_videos.find_by(id: params[:post][:video_id])
+    end
+    
     def shared_record_params
       params.require(:shared_record).permit(user_ids: [])
+    end
+    
+    def post_params
+      strong_params = params.require(:post).permit(:image_id, :video_id, :title, :description, :source_type, :source_id)
+      strong_params.delete(:image_id)
+      strong_params.delete(:video_id)
+      strong_params
     end
 end

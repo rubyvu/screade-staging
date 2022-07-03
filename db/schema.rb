@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_15_143721) do
+ActiveRecord::Schema.define(version: 2022_01_11_212655) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -132,6 +132,8 @@ ActiveRecord::Schema.define(version: 2021_12_15_143721) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "lits_count", default: 0, null: false
     t.integer "comment_id"
+    t.string "detected_language"
+    t.index ["detected_language"], name: "index_comments_on_detected_language"
     t.index ["source_id"], name: "index_comments_on_source_id"
   end
 
@@ -305,6 +307,8 @@ ActiveRecord::Schema.define(version: 2021_12_15_143721) do
     t.integer "source_id", null: false
     t.string "source_type", null: false
     t.boolean "is_approved", default: true
+    t.string "detected_language"
+    t.index ["detected_language"], name: "index_posts_on_detected_language"
   end
 
   create_table "que_jobs", comment: "4", force: :cascade do |t|
@@ -542,6 +546,7 @@ ActiveRecord::Schema.define(version: 2021_12_15_143721) do
     t.string "blocked_comment"
     t.bigint "invited_by_user_id"
     t.boolean "hide_invitation_popup", default: false
+    t.boolean "allow_direct_messages", default: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

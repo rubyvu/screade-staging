@@ -16,7 +16,27 @@ class NewsCategory < ApplicationRecord
   searchkick text_middle: [:title]
   
   # Constants
-  DEFAULT_CATEGORIES = %w(business entertainment general health science sports technology)
+  DEFAULT_CATEGORIES = %w(business entertainment general health science sports technology news).freeze
+  ADDITIONAL_CATEGORIES = [
+    'Antiques',
+    'Automobiles',
+    'Beauty',
+    'Books',
+    "Craft's",
+    'Do it Yourself (DIY)',
+    'Electronics',
+    'Fashion',
+    'Finance',
+    'Fitness',
+    'Food',
+    'Gaming',
+    'Opinions',
+    'Parenting',
+    'Pets',
+    'Romance',
+    'Religion',
+    'Travel'
+  ].freeze
   
   # Upploaders
   has_one_attached :image
@@ -29,7 +49,7 @@ class NewsCategory < ApplicationRecord
   # Associations
   has_and_belongs_to_many :news_articles
   has_many :topics, as: :parent, dependent: :destroy
-  has_many :posts, as: :source
+  has_many :posts, as: :source, dependent: :destroy
   has_many :post_groups, as: :group
   # Streams
   has_many :streams, as: :group
@@ -69,7 +89,7 @@ class NewsCategory < ApplicationRecord
     end
     
     def skip_default_categories
-      errors.add(:base, 'The default category cannot be destroyed') if NewsCategory::DEFAULT_CATEGORIES.append('news').include?(self.title)
+      errors.add(:base, 'The default category cannot be destroyed') if NewsCategory::DEFAULT_CATEGORIES.include?(self.title)
     end
     
     def get_children_topics_ids(topic_ids, nesting_position)
