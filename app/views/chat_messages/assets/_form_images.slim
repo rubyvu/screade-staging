@@ -11,3 +11,8 @@
   = f.hidden_field :message_type, value: 'image'
   = hidden_field_tag 'chat_message[image_id]'
   = f.submit "Save", style: "display: none;"
+
+= form_for ChatMessage.new, url: chat_chat_messages_path(@chat.access_token), remote: true, authenticity_token: true, html: { method: :post, id: :chat_message_image_direct_upload } do |f|
+  = f.hidden_field :message_type, value: 'image'
+  = f.file_field :image, direct_upload: true, accept: 'image/png, image/jpeg'
+  = f.submit 'Upload'

@@ -7,9 +7,9 @@
 .news-categories-list .category-element {
   display: inline-block;
   margin: 16px 50px 16px 0px;
-  
+
   &.active {
-    a { color: $color-blue; }
+    a { color: $theme-color-primary; }
   }
 }
 

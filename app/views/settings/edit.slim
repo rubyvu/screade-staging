@@ -1,54 +1,61 @@
 .d-width-wrapper
   h4.mb-5
-      - if params[:direct_messages]
-        = form_for current_user, url: current_user_index_path, method: :put do |f|
-          .section-wrapper
-            h1.section-title Direct Messages
-            
-            .section-element
-              .section-element-lable Enable Direct Messages
-              label.switch
-                = f.check_box :allow_direct_messages
-                span.slider.default.round
-                
-          = f.submit 'Submit', class: 'btn btn-primary w-100 mt-4'
+    - if params[:tab] == 'direct-messages'
+      = form_for current_user, url: current_user_index_path, method: :put do |f|
+        .section-wrapper
+          h1.section-title Direct Messages
           
-      - else
-        = form_for @setting, url: setting_path(@setting) do |f|
-          .section-wrapper
-            h1.section-title Notification types
-            
-            .section-element
-              .section-element-lable Email
-              label.switch
-                = f.check_box :is_email
-                span.slider.default.round
-                
-            .section-element
-              .section-element-lable Notification
-              label.switch
-                = f.check_box :is_notification
-                span.slider.default.round
-                
-          .section-wrapper
-            h1.section-title Notify me about
-            
-            .section-element
-              .section-element-lable Posts
-              label.switch
-                = f.check_box :is_posts
-                span.slider.default.round
-                
-            .section-element
-              .section-element-lable Images
-              label.switch
-                = f.check_box :is_images
-                span.slider.default.round
-                
-            .section-element
-              .section-element-lable Videos
-              label.switch
-                = f.check_box :is_videos
-                span.slider.default.round
-                
-          = f.submit 'Submit', class: 'btn btn-primary w-100 mt-4'
+          .section-element
+            .section-element-lable Enable Direct Messages
+            label.switch
+              = f.check_box :allow_direct_messages
+              span.slider.default.round
+              
+        = f.submit 'Submit', class: 'btn btn-primary w-100 mt-4'
+    - elsif params[:tab] == 'redirect'
+      = form_for @setting, url: setting_path(@setting) do |f|
+        .section-wrapper
+          .form-group
+            = f.label :sign_in_redirect_location, 'After Sign In Redirect To'
+            = f.select :sign_in_redirect_location, Setting::REDIRECT_LOCATIONS, {}, { class: 'form-control' }
+        = f.submit 'Save', class: 'btn btn-primary w-100 mt-4'
+        
+    - else
+      = form_for @setting, url: setting_path(@setting) do |f|
+        .section-wrapper
+          h1.section-title Notification types
+          
+          .section-element
+            .section-element-lable Email
+            label.switch
+              = f.check_box :is_email
+              span.slider.default.round
+              
+          .section-element
+            .section-element-lable Notification
+            label.switch
+              = f.check_box :is_notification
+              span.slider.default.round
+              
+        .section-wrapper
+          h1.section-title Notify me about
+          
+          .section-element
+            .section-element-lable Posts
+            label.switch
+              = f.check_box :is_posts
+              span.slider.default.round
+              
+          .section-element
+            .section-element-lable Images
+            label.switch
+              = f.check_box :is_images
+              span.slider.default.round
+              
+          .section-element
+            .section-element-lable Videos
+            label.switch
+              = f.check_box :is_videos
+              span.slider.default.round
+              
+        = f.submit 'Submit', class: 'btn btn-primary w-100 mt-4'

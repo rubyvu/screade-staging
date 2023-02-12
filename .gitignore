@@ -4,9 +4,6 @@
 # Mac OS X files
 .DS_Store
 
-# Ignore local API requests file
-api_requests.txt
-
 # Ignore application configuration (Figaro gem for using ENV variables)
 /config/application.yml
 
@@ -16,8 +13,9 @@ api_requests.txt
 !.elasticbeanstalk/*.global.yml
 
 # Don't include uploads and precompiled assets
-/public/uploads
 /public/assets
+/public/uploads
+/public/sitemaps
 
 # Standard .gitignore file for Ruby on Rails from github.com
 *.rbc

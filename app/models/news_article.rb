@@ -23,6 +23,7 @@
 #  index_news_articles_on_country_id         (country_id)
 #  index_news_articles_on_detected_language  (detected_language)
 #  index_news_articles_on_lits_count         (lits_count)
+#  index_news_articles_on_published_at       (published_at)
 #  index_news_articles_on_url                (url) UNIQUE
 #
 class NewsArticle < ApplicationRecord

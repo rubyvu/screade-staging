@@ -1,5 +1,5 @@
 get_news_articles_job:
-  cron: "0 */1 * * *" # Run every hour
+  cron: "0 */6 * * *" # Run every 6 hours
   class: Schedule::GetNewsArticlesJob
   queue: schedule
   schedule_type: default
@@ -10,3 +10,9 @@ send_events_notifications_job:
   queue: schedule
   schedule_type: default
   priority: 1
+  
+generate_sitemap_job:
+  cron: "0 4 * * *" # Run at 4 AM everyday
+  class: Schedule::GenerateSitemapJob
+  queue: schedule
+  schedule_type: default

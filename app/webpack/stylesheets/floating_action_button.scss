@@ -28,7 +28,7 @@
   width: 140px;
   height: 48px;
   border-radius: 28px;
-  background: $color-blue;
+  background-color: $theme-color-primary;
   bottom: 0;
   right: 0;
   cursor: pointer;
@@ -50,7 +50,7 @@
   font-size: 16px;
   animation: plus-out 0.3s;
   transition: all 0.3s;
-  
+
   img {
     margin-right: 4px;
   }

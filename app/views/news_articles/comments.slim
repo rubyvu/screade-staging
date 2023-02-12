@@ -1,3 +1,9 @@
+- categories = @news_article.news_categories.pluck(:title)
+- topics = @news_article.topics.pluck(:title)
+- set_meta_tags title: @news_article.title,
+                description: @news_article.description,
+                keywords: (categories + topics).join(', ')
+
 .content-comment-wrapper
   = render 'show', news_article: @news_article
   = render '/comments/index', comments: @comments

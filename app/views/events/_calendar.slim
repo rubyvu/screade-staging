@@ -1,13 +1,13 @@
 .calendar
   .month
     = link_to events_path(date: date[:current_date].prev_month), class: 'nav' do
-      = image_pack_tag 'media/images/icons/ic_arrow_left.png'
+      = image_pack_tag 'media/images/icons/ic_arrow_left.png', class: 'theme-color-icon'
     = link_to events_path do
       | #{date[:month]}
       span.year #{date[:year]}
     = link_to events_path(date: date[:current_date].next_month), class: 'nav' do
-      = image_pack_tag 'media/images/icons/ic_arrow_right.png'
-      
+      = image_pack_tag 'media/images/icons/ic_arrow_right.png', class: 'theme-color-icon'
+
   .days
     span M
     span T

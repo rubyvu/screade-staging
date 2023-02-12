@@ -2,14 +2,23 @@ $('#chat-images-form-placeholder').empty().append("<%= j render partial: 'chat_m
 
 $('#chat-images-form-placeholder').on('click', '.image-card', function() {
   $('#chat_message_image_id').val($(this).find('img').data('imageId'))
-  
+
   $('#chat-images-form-placeholder #new_chat_message').find("input[type=submit]").click()
   $('#modal-chat-assets').modal('hide')
 })
 
 $('#chat-videos-form-placeholder').on('click', '.image-card', function() {
   $('#chat_message_video_id').val($(this).find('img').data('videoId'))
-  
+
   $('#chat-videos-form-placeholder #new_chat_message').find("input[type=submit]").click()
+  $('#modal-chat-assets').modal('hide')
+})
+
+<%# Hide form after direct upload %>
+$('#chat_message_image_direct_upload').on("ajax:success", function(event, data, status, xhr) {
+  $('#modal-chat-assets').modal('hide')
+})
+
+$('#chat_message_video_direct_upload').on("ajax:success", function(event, data, status, xhr) {
   $('#modal-chat-assets').modal('hide')
 })

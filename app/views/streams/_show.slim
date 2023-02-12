@@ -10,9 +10,8 @@
       .user-info
         span #{stream.owner.full_name}
         span #{comment_timestamp(stream.created_at)}
-  
+        
   - if stream.status == 'in-progress'
-    
     video#my-video.video-js.vjs-default-skin.vjs-16-9.vjs-big-play-centered controls="" data-setup="{}" height="500px" poster="#{stream.image_url}" preload="auto" width="100%"
       source src="#{stream.playback_url}" type="application/x-mpegURL"
       p.vjs-no-js
@@ -30,8 +29,7 @@
     = image_pack_tag('media/images/placeholders/placeholder-news.png', class: 'url-full-image')
     
   = render 'streams/info_panel', stream: stream
-        
+  
   .stream-text
     .stream-title
       = stream.title
-      

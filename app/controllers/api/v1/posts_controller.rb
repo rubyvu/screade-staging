@@ -56,21 +56,21 @@ class Api::V1::PostsController < Api::V1::ApiController
       # Attach UserImage file as Post image
       if @user_image&.file&.attached?
         @user_image.file.open do |file|
-          post.image.attach(io: file, filename: SecureRandom.hex(16))
+          @post.image.attach(io: file, filename: SecureRandom.hex(16))
         end
       end
       
       # Attach UserVideo file as Post video
       if @user_video&.file&.attached?
         @user_video.file.open do |file|
-          post.video.attach(io: file, filename: SecureRandom.hex(16))
+          @post.video.attach(io: file, filename: SecureRandom.hex(16))
         end
       end
       
       post_json = PostSerializer.new(@post, current_user: current_user).as_json
       render json: { post: post_json }, status: :ok
     else
-      render json: { errors: post.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @post.errors.full_messages }, status: :unprocessable_entity
     end
   end
   

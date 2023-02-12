@@ -1,0 +1,12 @@
+// Dark 2 (blue)
+@import 'all';
+
+$color-background-main: #000000;
+$color-text-primary: $color-white;
+$color-text-secondary: $color-grey;
+$color-background-subscription: $color-dark-grey;
+$box-shadow-color: rgba(255, 255, 255, 0.12);
+$theme-color-primary: #3A7BD5;
+$theme-svg-filter: invert(63%) sepia(74%) saturate(5488%) hue-rotate(198deg) brightness(90%) contrast(84%);
+
+$ic-dropdown-arrow: 'ic_dropdown_arrow_reverse.png'

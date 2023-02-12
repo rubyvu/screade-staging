@@ -106,7 +106,12 @@ gem 'google-cloud-translate'
 # CSS inliner for emails
 gem 'premailer-rails'
 
+# SASS/SCSS
 gem 'sass-rails'
+
+# Generate sitemaps for SEO
+gem 'meta-tags'
+gem 'sitemap_generator'
 
 group :development, :test do
   # Tests

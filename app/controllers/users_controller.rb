@@ -14,8 +14,30 @@ class UsersController < ApplicationController
     @user = current_user
   end
   
+  # PATCH /users/change_username
+  def change_username
+    @tab = 'username'
+    @user = current_user
+    new_username = user_params[:username]
+    
+    if User.exists?(username: new_username)
+      flash[:error] = ['Username is already taken']
+      render 'edit'
+      return
+    end
+    
+    if @user.update(username: new_username)
+      bypass_sign_in(@user)
+      redirect_to root_path
+    else
+      flash[:error] = @user.errors.full_messages
+      render 'edit'
+    end
+  end
+  
   # PATCH /users/change_password
   def change_password
+    @tab = 'password'
     @user = current_user
     old_password = user_params[:old_password]
     password = user_params[:password]
@@ -48,6 +70,6 @@ class UsersController < ApplicationController
     end
     
     def user_params
-      params.require(:user).permit(:old_password, :password, :password_confirmation)
+      params.require(:user).permit(:old_password, :password, :password_confirmation, :username)
     end
 end

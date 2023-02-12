@@ -1,0 +1,12 @@
+// Dark 5 (violet)
+@import 'all';
+
+$color-background-main: #000000;
+$color-text-primary: $color-white;
+$color-text-secondary: $color-grey;
+$color-background-subscription: $color-dark-grey;
+$box-shadow-color: rgba(255, 255, 255, 0.12);
+$theme-color-primary: #8E54E9;
+$theme-svg-filter: invert(55%) sepia(56%) saturate(7324%) hue-rotate(242deg) brightness(94%) contrast(94%);
+
+$ic-dropdown-arrow: 'ic_dropdown_arrow_reverse.png'

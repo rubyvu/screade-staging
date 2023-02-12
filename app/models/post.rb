@@ -24,24 +24,24 @@
 class Post < ApplicationRecord
   # Search
   searchkick text_middle: [:title]
-  
+
   # Constants
   SOURCE_TYPES = %w(NewsCategory Topic)
-  
+
   # Callbacks
   after_save :update_associated_groups
   after_save :add_notification
   after_save :delete_title_translations, if: :saved_change_to_title?
   after_save :delete_description_translations, if: :saved_change_to_description?
-  
+
   # File Uploader
   has_one_attached :image
   has_one_attached :video
-  
+
   # Associations
   belongs_to :source, polymorphic: true
   belongs_to :user
-  
+
   ## Comments
   has_many :comments, as: :source, dependent: :destroy
   has_many :commenting_users, through: :comments, source: :user
@@ -59,57 +59,61 @@ class Post < ApplicationRecord
   has_many :shared_records, as: :shareable
   ## Translations
   has_many :translations, as: :translatable
-  
+
   # Association validations
   validates :user, presence: true
-  
+
   # Fields validations
   validates :title, presence: true
   validates :description, presence: true
   validates :source_id, presence: true
   validates :source_type, presence: true, inclusion: { in: Post::SOURCE_TYPES }
-  
+
   def is_lited(user)
     user.present? && self.liting_users.include?(user)
   end
-  
+
   def is_commented(user)
     user.present? && self.commenting_users.include?(user)
   end
-  
+
   def is_viewed(user)
     user.present? && self.viewing_users.include?(user)
   end
-  
+
   def image_url
     self.image.url if self.image.attached?
   end
-  
+
+  def video_thumbnail
+    video.preview(resize_to_limit: [300, 300]).processed if video.attached?
+  end
+
   private
     def add_notification
       return if !self.is_approved || Notification.where(source_id: self.id, source_type: 'Post', sender: self.user).present? || !self.is_notification
       CreateNewNotificationJob.perform_later(self.id, self.class.name)
     end
-    
+
     def update_associated_groups
       return unless saved_change_to_source_id? || saved_change_to_source_type?
-      
+
       # Clear old associations
       self.post_groups.destroy_all
-      
+
       # Create new associations
       associate_topic_with_post(self.source)
     end
-    
+
     def associate_topic_with_post(group)
       PostGroup.create(group: group, post: self)
       associate_topic_with_post(group.parent) if group.class.name == 'Topic'
     end
-    
+
     def delete_title_translations
       Translation.where(translatable: self, field_name: 'title').destroy_all
     end
-    
+
     def delete_description_translations
       Translation.where(translatable: self, field_name: 'description').destroy_all
     end

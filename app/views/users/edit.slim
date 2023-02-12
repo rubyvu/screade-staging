@@ -1,1 +1,4 @@
-= render 'users/change_password', user: @user
+- if params[:tab] == 'username' || @tab == 'username'
+  = render 'users/change_username', user: @user
+- else
+  = render 'users/change_password', user: @user

@@ -3,7 +3,7 @@
     display: flex;
     padding: 4px 20px;
     width: 100%;
-    
+
     .message-wrapper {
       display: flex;
       .photo-wrapper {
@@ -11,7 +11,7 @@
         align-items: flex-end;
         .photo {}
       }
-      
+
       .content-wrapper {
         display: flex;
         flex-direction: column;
@@ -27,15 +27,15 @@
             font-size: 16px;
           }
         }
-        
+
         .body {
           word-break: break-all;
-          
+
           .text {
             color: $color-black;
             font-size: 16px;
           }
-          
+
           .image {
             display: flex;
             justify-content: center;
@@ -44,7 +44,7 @@
             img { height: 100%; }
           }
         }
-        
+
         .footer {
           .date {
             display: flex;
@@ -54,7 +54,7 @@
           }
         }
       }
-      
+
       .content-wrapper:before {
         content: "";
         width: 10px;
@@ -65,7 +65,7 @@
         bottom: 0;
         border-radius: 0 0 0 1px;
       }
-      
+
       .content-wrapper:after {
         content: "";
         position: absolute;
@@ -78,7 +78,7 @@
       }
     }
   }
-  
+
   .message-date-box {
     display: flex;
     align-items: center;
@@ -93,23 +93,23 @@
 // Owner ChatMessage style
 .chat-message-board .message-box-wrapper.message-owner {
   justify-content: flex-end;
-  
+
   .message-wrapper {
     .content-wrapper {
-      background-color: $color-blue;
+      background-color: $theme-color-primary;
       border-radius: 4px 4px 0px 4px;
       padding: 8px 12px 4px 12px;
     }
-    
+
     .photo-wrapper { display: none; }
     .header { display: none }
-    
+
     .body {
       .text {
         color: $color-white;
         font-size: 16px;
       }
-      
+
       .video-room, .audio-room {
         color: $color-white;
         a {
@@ -117,7 +117,7 @@
         }
       }
     }
-    
+
     .content-wrapper:before, .content-wrapper:after { content: none; }
   }
 }

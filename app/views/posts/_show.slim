@@ -6,20 +6,23 @@
           = image_tag(post.user.profile_picture_url, class: 'profile-image')
         - else
           = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
-          
+
       .user-info
         span #{post.user.full_name}
         span #{comment_timestamp(post.created_at)}
-        
+
     - if !post.is_approved
       p.post-status On approve
-      
-  - if post.image_url.present?
+
+  - if post.video.attached?
+    .full-image-wrapper.video
+      = image_tag(post.video_thumbnail, class: 'user-asset video', data: { 'video-url': post.video.url, 'video-loaded': post.video.attached?, 'video-id': post.video.id })
+  - elsif post.image.attached?
     .full-image-wrapper
       = image_tag(post.image_url, class: '', onerror: "this.error=null;this.src='#{asset_pack_path('media/images/placeholders/placeholder-news.png')}'")
   - else
     = image_pack_tag('media/images/placeholders/placeholder-news.png', class: 'url-full-image')
-    
+
   .post-info-panel
     .info-actions
       div class='info-panel-value-wrapper'
@@ -29,28 +32,28 @@
         - else
           = link_to post_post_lits_path(post), method: :post, remote: true, id: "post-lit-#{post.id}" do
             i.ic.lit.reverse
-            
+
         = link_to lits_post_path(post), remote: true do
           span.info-panel-value.color-black #{counter_measurement(post.lits.size)}
-          
+
       .info-panel-value-wrapper.pointer-disable
         i class=(post.is_commented(current_user) ? 'ic comment reverse active' : 'ic comment reverse')
         span.info-panel-value.color-black #{counter_measurement(post.comments.size)}
-        
+
       .info-panel-value-wrapper.pointer-disable
         i class=(post.is_viewed(current_user) ? 'ic view reverse' : 'ic view reverse')
         span.info-panel-value.color-black #{counter_measurement(post.views.size)}
-        
+
       div class="#{ current_user ? 'info-panel-value-wrapper' : 'info-panel-value-wrapper pointer-disable' }"
         - if current_user
           = link_to shared_records_path(post_id: post.id), remote: true
             i.ic.share.reverse
         - else
           i.ic.share.reverse
-          
+
       div
         = link_to 'Translate', '#', class: 'translate-post', data: { id: "#{post.id}" }
-        
+
   .post-text id="post-#{post.id}"
     .post-title
       .original = post.title
@@ -58,5 +61,6 @@
     .post-description
       .original = auto_link(post.description&.gsub(/\n/, '<br>').html_safe, html: { target: '_blank' })
       .translation
-      
+
 = render 'shared/modals/share_to_members'
+= render './shared/video_player/player', video_player_id: 'user-assets-video-player'

@@ -1,0 +1,12 @@
+// Dark 4 (green)
+@import 'all';
+
+$color-background-main: #000000;
+$color-text-primary: $color-white;
+$color-text-secondary: $color-grey;
+$color-background-subscription: $color-dark-grey;
+$box-shadow-color: rgba(255, 255, 255, 0.12);
+$theme-color-primary: #16A085;
+$theme-svg-filter: invert(49%) sepia(12%) saturate(3720%) hue-rotate(124deg) brightness(96%) contrast(83%);
+
+$ic-dropdown-arrow: 'ic_dropdown_arrow_reverse.png'

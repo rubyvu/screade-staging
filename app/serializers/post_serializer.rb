@@ -82,6 +82,11 @@ class PostSerializer < ActiveModel::Serializer
     object.video.url
   end
   
+  attribute :video_thumbnail_url
+  def video_thumbnail_url
+    object.video.preview(resize_to_limit: [300, 300]).processed.url if object.video.attached?
+  end
+  
   attribute :views_count
   def views_count
     object.views.count

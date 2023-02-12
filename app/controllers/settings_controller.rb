@@ -5,7 +5,7 @@ class SettingsController < ApplicationController
     @setting = Setting.get_setting(current_user)
   end
   
-  # PUT/PATCH /settings
+  # PUT/PATCH /settings/:id
   def update
     settings = current_user.setting
     if settings.id != params[:id].to_i
@@ -27,6 +27,6 @@ class SettingsController < ApplicationController
   
   private
     def settings_params
-      params.require(:setting).permit(:font_family, :font_style, :is_current_location, :is_notification, :is_email, :is_images, :is_videos, :is_posts)
+      params.require(:setting).permit(:font_family, :font_style, :is_current_location, :is_notification, :is_email, :is_images, :is_videos, :is_posts, :sign_in_redirect_location)
     end
 end

@@ -14,18 +14,18 @@
   border: 1px solid $color-light-grey;
   border-radius: 4px;
   display: flex;
-  
+
   // Chats list
   .chat-objects-wrapper {
     min-width: 300px;
     max-width: 300px;
     overflow-y: scroll;
-    
+
     .chat-element {
       padding: 16px 0 0 0;
       display: flex;
       text-decoration: none;
-      
+
       .photo {
         display: flex;
         align-items: center;
@@ -33,7 +33,7 @@
         margin-left: 20px;
         margin-bottom: 15px;
       }
-      
+
       .content {
         display: flex;
         flex-direction: column;
@@ -45,12 +45,12 @@
         // Content in one line
         overflow: hidden;
         white-space: nowrap;
-        
+
         .header {
           display: flex;
           flex-direction: row;
           justify-content: space-between;
-          
+
           .title {
             width: 70%;
             font-size: 16px;
@@ -59,28 +59,28 @@
             white-space: nowrap;
             text-overflow: ellipsis;
           }
-            
+
           .date {
             font-size: 12px;
             color: $color-grey;
             white-space: normal;
           }
         }
-        
+
         .message {
           display: flex;
           align-items: center;
           justify-content: space-between;
           margin-bottom: 12px;
-          
+
           .icon {
             margin-right: 6px;
             height: 18px;
             width: auto;
-            
+
             img { display: flex; height: 100%; }
           }
-          
+
           .text {
             word-break: break-all;
             width: 90%;
@@ -90,7 +90,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
           }
-          
+
           .unread-messages-count {
             display: flex;
             justify-content: center;
@@ -101,14 +101,14 @@
             border-radius: 100%;
             color: $color-white;
             font-size: 10px;
-            
+
             &.no-values {
               span { display: none }
             }
-            
+
             &.no-messages { display: none }
           }
-          
+
           &.active-room {
             .text span { color: $color-green }
             .icon img {
@@ -116,7 +116,7 @@
               filter: hue-rotate(290deg);
             }
           }
-          
+
           &.inactive-room {
             .text span { color: $color-red }
             .icon img {
@@ -126,17 +126,19 @@
           }
         }
       }
-      
+
     }
-    
-    .chat-element:hover { background: $color-light-grey; }
+
+    .chat-element:hover {
+      background: $color-background-subscription;
+    }
   }
-  
+
   // Chat board with messages
   .chat-board-wrapper {
     border-left: 1px solid $color-light-grey;
     width: 100%;
-    
+
     .no-chat-info {
       height: 100%;
       display: flex;
@@ -144,7 +146,7 @@
       justify-content: center;
       flex-direction: column;
       align-items: center;
-      
+
       span {
         text-align: center;
         height: 20px;
@@ -152,7 +154,7 @@
         padding: 0 12px;
       }
     }
-    
+
     .chat-info {
       display: flex;
       align-items: center;
@@ -160,18 +162,18 @@
       width: 100%;
       height: 56px;
       border-bottom: 1px solid $color-light-grey;
-      
+
       .dropdown-toggle::after { display: none !important; }
-      
+
       .main-info {
         display: flex;
         align-items: center;
         height: 100%;
-        
+
         .photo {
           margin-left: 20px;
         }
-        
+
         .title {
           display: flex;
           align-items: center;
@@ -184,29 +186,29 @@
           -ms-overflow-style: none;  /* IE and Edge */
           scrollbar-width: none;  /* Firefox */
         }
-        
+
         .title::-webkit-scrollbar {
           display: none; /*Chrome, Safari and Opera */
         }
       }
-      
+
       .control-info {
         display: flex;
         align-items: center;
-        
+
         .control-element {
           margin: 0 20px 0 0;
         }
       }
     }
-    
+
     .chat-message-board {
       overflow: scroll;
       width: 100%;
       height: calc(100% - (56px + 49px));
     }
   }
-  
+
   // Add Chat button
   .add-chat-button {
     display: flex;
@@ -215,13 +217,13 @@
     position: absolute;
     left: 20px;
     bottom: 16px;
-    background-color: $color-blue;
+    background-color: $theme-color-primary;
     height: 48px;
     width: 48px;
     border-radius: 50%;
     box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.14), 0px 1px 10px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.2);
     cursor: pointer;
-    
+
     img.plus-with-border {
       height: 20px;
       width: 20px;

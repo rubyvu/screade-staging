@@ -5,40 +5,40 @@
         = image_tag(@user.banner_picture_url, class: 'user-profile-banner')
       - else
         = image_pack_tag('media/images/placeholders/placeholder-banner-profile.png', class: 'user-profile-banner')
-      
+
       - if @user == current_user
         = link_to '', data: { toggle: 'modal', target: '#modal-edit-profile' } do
           = image_pack_tag('media/images/icons/ic_edit.png', class: 'user-profile-edit')
       - else
         = link_to '', data: { toggle: 'modal', target: '#modal-profile-menu' } do
           = image_pack_tag('media/images/icons/ic_three_dots_vertical_white.svg', class: 'user-profile-edit')
-          
+
     .user-profile-avatar-wrapper
       - if @user.profile_picture_url
         = image_tag(@user.profile_picture_url)
       - else
         = image_pack_tag('media/images/placeholders/placeholder-user-profile.png')
-        
+
     .user-profile-name.fonts-styling class="#{@user.setting.font_family} #{@user.setting.font_style}"
       h5 #{@user.full_name}
     .info-panel
       .info-panel-value-wrapper.pointer-disable
         i.ic.lit
         span.info-panel-value #{counter_measurement(@user.lits_count)}
-        
+
       .info-panel-value-wrapper.pointer-disable
         i.ic.comment
         span.info-panel-value #{counter_measurement(@user.comments_count)}
-        
+
       .info-panel-value-wrapper.pointer-disable
         i.ic.view
         span.info-panel-value #{counter_measurement(@user.views_count)}
-        
+
     .user-profile-squad-buttons
       - if @user == current_user
         - squad_requests_counter = @user.count_squad_requests
         = link_to squad_requests_counter > 0 ? "Requests (#{squad_requests_counter})" : 'Requests', squad_requests_path, class: "btn btn-primary mx-2 fonts-styling #{@user.setting.font_family} #{@user.setting.font_style}"
-      
+
       - if @user != current_user
         - if @squad_request && @squad_request.accepted_at
           = link_to "Remove From Squad", decline_squad_request_path(@squad_request, is_curent_user: true), method: :post, class: "btn btn-primary mx-2 fonts-styling #{@user.setting.font_family} #{@user.setting.font_style}"
@@ -46,17 +46,21 @@
           = link_to "Decline Request", decline_squad_request_path(@squad_request, is_curent_user: true), method: :post, class: "btn btn-primary mx-2 fonts-styling #{@user.setting.font_family} #{@user.setting.font_style}"
         - else
           = link_to "Send Squad Request", squad_requests_path(squad_request: { receiver_username: @user.username }, is_curent_user: true), method: :post, class: "btn btn-primary mx-2 fonts-styling #{@user.setting.font_family} #{@user.setting.font_style}"
-          
+
       - if @user == current_user
         = link_to "Squad (#{@user.count_squad_members})", user_squad_members_path(current_user.username), class: "btn btn-outline-primary mx-2 fonts-styling #{@user.setting.font_family} #{@user.setting.font_style}"
       - else
         = link_to "Squad (#{@user.count_squad_members})", user_squad_members_path(@user.username), class: "btn btn-outline-primary mx-2 fonts-styling #{@user.setting.font_family} #{@user.setting.font_style}"
-  
+
   .user-profile-assets-wrapper
-    h4 Posts
+    h4
+      'Posts
+      - if @user == current_user
+        = link_to '+', new_post_path
+
     - if @posts.present?
       = link_to 'See all', current_user == @user ? posts_path : posts_path(username: @user.username), class: 'see-all-assets'
-      
+
       .user-profile-assets
         .posts-cards-wrapper.profile
           - @posts.each do |post|
@@ -66,10 +70,10 @@
                   = image_tag(post.image_url, class: 'post-image', onerror: "this.error=null;this.src='#{asset_pack_path('media/images/placeholders/placeholder-news.png')}'")
                 - else
                   = image_pack_tag('media/images/placeholders/placeholder-news.png', class: 'post-image')
-                
+
                 .post-title-panel
                   = link_to post.title, post_post_comments_path(post)
-                
+
                 .post-info-panel
                   .div class="info-panel-value-wrapper"
                     - if post.is_lited(current_user)
@@ -78,32 +82,36 @@
                     - else
                       = link_to post_post_lits_path(post), method: :post, remote: true, id: "post-lit-#{post.id}" do
                         i.ic.lit
-                        
+
                     = link_to lits_post_path(post), remote: true do
                       span.info-panel-value #{counter_measurement(post.lits.size)}
-                    
+
                   .info-panel-value-wrapper
                     = link_to post_post_comments_path(post), class: 'comment-link-icon' do
                       i class=(post.is_commented(current_user) ? "ic comment active" : "ic comment")
                     span.info-panel-value #{counter_measurement(post.comments.size)}
-                    
+
                   .info-panel-value-wrapper.pointer-disable
                     i class=(post.is_viewed(current_user) ? "ic view active" : "ic view")
                     span.info-panel-value #{counter_measurement(post.views.size)}
-                    
+
     - elsif @user == current_user
       .new-assets
         = link_to 'You have no posts yet', posts_path
-        
+
     - else
       .new-assets
         h6 No Posts
-  
+
   .user-profile-assets-wrapper
-    h4 Images
+    h4
+      'Images
+      - if @user == current_user
+        = link_to '+', images_user_image_path(@user.username)
+
     - if @images.present?
       = link_to 'See all', images_user_image_path(@user.username), class: 'see-all-assets'
-      
+
       .user-profile-assets
         - @images.each do |user_image|
           - next if user_image.file_url.blank?
@@ -112,16 +120,20 @@
     - elsif @user == current_user
       .new-assets
         = link_to 'Your image library is empty', images_user_image_path(@user.username)
-        
+
     - else
       .new-assets
         h6 No Images
-          
+
   .user-profile-assets-wrapper
-    h4 Videos
+    h4
+      'Videos
+      - if @user == current_user
+        = link_to '+', videos_user_video_path(@user.username)
+
     - if @videos.present?
       = link_to 'See all', videos_user_video_path(@user.username), class: 'see-all-assets'
-      
+
       .user-profile-assets
         - @videos.each do |user_video|
           - if user_video.file_thumbnail_url
@@ -130,11 +142,11 @@
     - elsif @user == current_user
       .new-assets
         = link_to 'Your video library is empty', videos_user_video_path(@user.username)
-        
+
     - else
       .new-assets
         h6 No Videos
-          
+
 = render './shared/video_player/player', video_player_id: 'user-assets-video-player'
 
 - if @user == current_user

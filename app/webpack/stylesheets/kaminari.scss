@@ -1,6 +1,13 @@
-.page-item .page-link {
-  margin-right: 8px;
-  border-radius: 4px;
-  color: $color-black;
-  border-color: $color-light-grey;
+.page-item {
+  .page-link {
+    margin-right: 8px;
+    border-radius: 4px;
+    color: $color-black;
+    border-color: $color-light-grey;
+  }
+
+  &.active .page-link {
+    background-color: $theme-color-primary !important;
+    border-color: $theme-color-primary !important;
+  }
 }

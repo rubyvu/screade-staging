@@ -1,0 +1,12 @@
+// Dark 1 (orange)
+@import 'all';
+
+$color-background-main: #000000;
+$color-text-primary: $color-white;
+$color-text-secondary: $color-grey;
+$color-background-subscription: $color-dark-grey;
+$box-shadow-color: rgba(255, 255, 255, 0.12);
+$theme-color-primary: $color-orange;
+$theme-svg-filter: invert(29%) sepia(63%) saturate(5940%) hue-rotate(5deg) brightness(101%) contrast(101%);
+
+$ic-dropdown-arrow: 'ic_dropdown_arrow_reverse.png'

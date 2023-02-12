@@ -1,0 +1,30 @@
+.modal.fade.overflow-auto#customize-dark-theme aria-hidden='true' aria-labelledby='myLargeModalLabel' role='dialog' tabindex='-1'
+  .modal-dialog.modal-dialog-centered.mw-100.w-50
+    .modal-content
+      .modal-header
+        h4.modal-title Customize Dark Theme
+        button.close aria-label='Close' data-dismiss='modal' type='button'
+          = image_pack_tag('media/images/icons/ic_close.png')
+
+      .modal-body
+        .post-images-wrapper
+          .image-card.theme-card
+            = form_with url: theme_home_index_path, method: :put do |f|
+              = f.hidden_field :theme, value: 'dark-1'
+              = image_pack_tag 'media/images/themes/previews/dark-1.jpg', onclick: "$(this).closest('form').submit();"
+          .image-card.theme-card
+            = form_with url: theme_home_index_path, method: :put do |f|
+              = f.hidden_field :theme, value: 'dark-2'
+              = image_pack_tag 'media/images/themes/previews/dark-2.jpg', onclick: "$(this).closest('form').submit();"
+          .image-card.theme-card
+            = form_with url: theme_home_index_path, method: :put do |f|
+              = f.hidden_field :theme, value: 'dark-3'
+              = image_pack_tag 'media/images/themes/previews/dark-3.jpg', onclick: "$(this).closest('form').submit();"
+          .image-card.theme-card
+            = form_with url: theme_home_index_path, method: :put do |f|
+              = f.hidden_field :theme, value: 'dark-4'
+              = image_pack_tag 'media/images/themes/previews/dark-4.jpg', onclick: "$(this).closest('form').submit();"
+          .image-card.theme-card
+            = form_with url: theme_home_index_path, method: :put do |f|
+              = f.hidden_field :theme, value: 'dark-5'
+              = image_pack_tag 'media/images/themes/previews/dark-5.jpg', onclick: "$(this).closest('form').submit();"

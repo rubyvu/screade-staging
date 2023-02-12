@@ -2,7 +2,7 @@
   padding-left: 10%;
   width: 50%;
   height: 100%;
-  
+
   &.modal-view {
     width: 100%;
     padding-left: 0;
@@ -11,11 +11,11 @@
     // Hide scroll bar
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
-    
+
     p { color: $color-black; }
     .group-scroll .group-wrapper { padding-left: 0; }
   }
-  
+
   .group-search {
     width: 100%;
     text-align: end;
@@ -23,50 +23,50 @@
     margin-top: 20px;
     margin-bottom: 10px;
   }
-  
+
   .group-scroll {
     overflow: auto;
     width: 100%;
     height: 100%;
-    
+
     ul { padding-left: 18px; }
-    
+
     // Checkboxes
     .group-wrapper ul { display: none; }
     .group-wrapper input:checked ~ ul { display: block; }
     .group-wrapper input[type=checkbox] { display: none; }
-    
+
     .group-wrapper {
       cursor: pointer;
       width: 100%;
       display: block;
       padding: 0px 0px 0px 18px;
       align-items: center;
-      
+
       .main-content {
         margin: auto;
         display: flex;
-        
+
         width: 100%;
         justify-content: space-between;
         align-items: center;
         border-bottom: 1px solid $color-light-grey;
-        
+
         &.active {
-          background-color: $color-cadet-blue;
+          background-color: $color-background-subscription;
           .title-wrapper p { font-weight: 900;}
         }
-        
-        
+
         .title-wrapper {
           display: flex;
           padding: 18px 0;
-          
+
           img {
             height: 20px;
             width: 20px;
+            filter: $theme-svg-filter;
           }
-          
+
           p {
             margin: 0;
             padding-left: 12px;
@@ -74,34 +74,35 @@
             font-weight: 500;
             color: $color-text-primary;
           }
-          
+
           a.new-element {
             padding-left: 12px;
             font-size: 14px;
             font-weight: 700;
-            color: $color-blue;
+            color: $theme-color-primary;
             cursor: pointer;
           }
         }
-        
+
         .counter-dropdown-wrapper {
           display: flex;
           align-items: center;
           height: 40px;
-          
+
           span.counter {
             color: $color-text-secondary;
             margin-right: 18px
           }
-          
+
           label {
             cursor: pointer;
-            content: url("../images/icons/ic_dropdown_arrow.png");
+            content: url("../images/icons/#{$ic-dropdown-arrow}");
             padding: 16px 6px;
             height: 40px;
             width: 24px;
             margin: 0 18px 0 0;
-            
+            color: white;
+
             &.flip {
               transform: rotate(-180deg);
             }
@@ -109,15 +110,15 @@
         }
       }
     }
-    
+
     .group-search-wrapper {
       .main {
         p.parent {}
         p.title {}
       }
-      
+
       a.subscription {
-        
+
       }
     }
   }

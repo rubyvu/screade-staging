@@ -1,3 +1,7 @@
+- set_meta_tags title: @post.title,
+                description: @post.description,
+                keywords: @post.source.title
+
 .source-path
   = topic_full_title(@post.source)
   

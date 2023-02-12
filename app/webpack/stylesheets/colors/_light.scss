@@ -1,15 +1,12 @@
-$color-blue: #3F51B5;
-$color-light-blue: #D4D7ED;
-$color-cadet-blue: #EAF1FF;
-$color-dark-cadet-blue: #808BD0;
-$color-black: #000000;
-$color-red: #DA100B;
-$color-grey: #9C9C9C;
-$color-light-grey: #EBF0F3;
-$color-dark-grey: #272727;
-$color-green: #11933B;
-$color-white: #FFFFFF;
+// Light (original, blue)
+@import 'all';
 
 $color-background-main: #FFFFFF;
 $color-text-primary: $color-black;
 $color-text-secondary: $color-grey;
+$color-background-subscription: $color-cadet-blue;
+$box-shadow-color: rgba(0, 0, 0, 0.12);
+$theme-color-primary: $color-blue;
+$theme-svg-filter: invert(26%) sepia(69%) saturate(1470%) hue-rotate(213deg) brightness(93%) contrast(92%);
+
+$ic-dropdown-arrow: 'ic_dropdown_arrow.png'

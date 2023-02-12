@@ -1,4 +1,8 @@
 $(document).ready(function() {
   $('.modal').modal('hide');
-  location.reload();
+  <% if resource&.setting&.sign_in_redirect_location == 'Profile' %>
+    window.location.replace("<%= user_path(username: resource.username) %>");
+  <% else %>
+    window.location.replace("/");
+  <% end %>
 })

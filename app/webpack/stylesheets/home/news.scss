@@ -5,9 +5,9 @@
 .news-wrapper .news-switcher-title {
   display: inline-block;
   cursor: pointer;
-  
+
   &.active {
-    color: $color-blue;
+    color: $theme-color-primary;
   }
 }
 

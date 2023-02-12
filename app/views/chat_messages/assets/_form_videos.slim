@@ -6,8 +6,13 @@
           = image_tag(video.file_thumbnail_url, data: {'image-url': video.file_thumbnail_url, 'video-id': video.id })
   - else
     = link_to 'Your video library is empty', videos_user_video_path(current_user.username)
-    
+
 = form_for ChatMessage.new, url: chat_chat_messages_path(@chat.access_token), remote: true, authenticity_token: true, html: { method: :post } do |f|
   = f.hidden_field :message_type, value: 'video'
   = hidden_field_tag 'chat_message[video_id]'
   = f.submit "Save", style: "display: none;"
+
+= form_for ChatMessage.new, url: chat_chat_messages_path(@chat.access_token), remote: true, authenticity_token: true, html: { method: :post, id: :chat_message_video_direct_upload } do |f|
+  = f.hidden_field :message_type, value: 'video'
+  = f.file_field :video, direct_upload: true, accept: 'video/mp4'
+  = f.submit 'Upload'

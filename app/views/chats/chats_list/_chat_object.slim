@@ -6,7 +6,7 @@
       = image_tag(chat.owner.profile_picture_url, class: 'profile-image')
     - else
       = image_pack_tag('media/images/placeholders/placeholder-user-profile.png', class: 'profile-image')
-      
+
   .content
     .header
       .title
@@ -21,7 +21,7 @@
             = image_pack_tag('media/images/icons/ic_microphone.png')
         - when 'video'
           .icon
-            = image_pack_tag('media/images/icons/ic_chat_videocam.png')
+            = image_pack_tag('media/images/icons/ic_chat_videocam.png', class: 'themis-color-icon')
         - when 'image'
           .icon
             = image_pack_tag('media/images/icons/ic_chat_add_icon.png')
@@ -31,10 +31,10 @@
         - when 'video-room'
           .icon
             = image_pack_tag('media/images/icons/ic_chat_videocam.png')
-            
+
         .text
           span #{last_message_text(chat.last_message)}
-        
+
         - if is_message_counter
           - unread_messages_count = chat.get_membership(current_user).unread_messages_count
           - if unread_messages_count > 0

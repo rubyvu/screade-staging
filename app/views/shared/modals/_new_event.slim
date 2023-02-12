@@ -5,38 +5,38 @@
         h4.modal-title New Event
         button.close aria-label="Close" data-dismiss="modal" type="button"
           = image_pack_tag('media/images/icons/ic_close.png')
-          
+
       .modal-body
         .global-errors
         = form_for Event.new, url: events_path, method: :post, remote: true do |f|
           .input-group.mb-3
            = f.text_field :title, autocomplete: 'off', class: 'form-control', placeholder: 'Title', required: true
-          
+
           .input-group.mb-3
             = f.text_field :description, autocomplete: 'off', class: 'form-control', placeholder: 'Event Description', required: true
-            
+
           .input-group.mb-3
             .input-group-prepend
               .input-group-text
-                = image_pack_tag('media/images/icons/ic_calendar.png', class: 'img-responsive')
-                
+                = image_pack_tag 'media/images/icons/ic_calendar.png', class: 'img-responsive theme-color-icon'
+
             = text_field_tag 'event[date]', '', class: 'form-control datepicker-event', placeholder: 'Date', autocomplete: 'off', required: true
-            
+
           .input-group.mb-3
             .input-group-prepend
               .input-group-text
-                = image_pack_tag('media/images/icons/ic_clock.png', class: 'img-responsive')
-                
+                = image_pack_tag 'media/images/icons/ic_clock.png', class: 'img-responsive theme-color-icon'
+
             = f.text_field :start_date, autocomplete: 'off', class: 'form-control timepicker', placeholder: 'Start Time', required: true
-            
+
           .input-group.mb-3
             .input-group-prepend
               .input-group-text
-                = image_pack_tag('media/images/icons/ic_clock.png', class: 'img-responsive')
-                
+                = image_pack_tag 'media/images/icons/ic_clock.png', class: 'img-responsive theme-color-icon'
+
             = f.text_field :end_date, autocomplete: 'off', class: 'form-control timepicker', placeholder: 'End Time', required: true
-            
+
           .actions
             = f.submit 'Add', class: 'btn btn-primary w-100'
-            
+
       .modal-footer

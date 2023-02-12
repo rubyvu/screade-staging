@@ -894,6 +894,40 @@ ALTER SEQUENCE public.lits_id_seq OWNED BY public.lits.id;
 
 
 --
+-- Name: news_api_logs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.news_api_logs (
+    id bigint NOT NULL,
+    request_target character varying NOT NULL,
+    country_code character varying,
+    category character varying,
+    success boolean,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: news_api_logs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.news_api_logs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: news_api_logs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.news_api_logs_id_seq OWNED BY public.news_api_logs.id;
+
+
+--
 -- Name: news_articles; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1267,7 +1301,8 @@ CREATE TABLE public.settings (
     is_posts boolean DEFAULT true,
     user_id integer NOT NULL,
     is_email boolean,
-    is_current_location boolean DEFAULT false NOT NULL
+    is_current_location boolean DEFAULT false NOT NULL,
+    sign_in_redirect_location character varying DEFAULT 'Home'::character varying NOT NULL
 );
 
 
@@ -1932,6 +1967,13 @@ ALTER TABLE ONLY public.lits ALTER COLUMN id SET DEFAULT nextval('public.lits_id
 
 
 --
+-- Name: news_api_logs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.news_api_logs ALTER COLUMN id SET DEFAULT nextval('public.news_api_logs_id_seq'::regclass);
+
+
+--
 -- Name: news_articles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2242,6 +2284,14 @@ ALTER TABLE ONLY public.languages
 
 ALTER TABLE ONLY public.lits
     ADD CONSTRAINT lits_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: news_api_logs news_api_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.news_api_logs
+    ADD CONSTRAINT news_api_logs_pkey PRIMARY KEY (id);
 
 
 --
@@ -2699,6 +2749,13 @@ CREATE INDEX index_news_articles_on_lits_count ON public.news_articles USING btr
 
 
 --
+-- Name: index_news_articles_on_published_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_news_articles_on_published_at ON public.news_articles USING btree (published_at);
+
+
+--
 -- Name: index_news_articles_on_url; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3116,6 +3173,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211221104150'),
 ('20220111211621'),
 ('20220111211750'),
-('20220111212655');
+('20220111212655'),
+('20220728080802'),
+('20220731134632'),
+('20230117212522');
 
 

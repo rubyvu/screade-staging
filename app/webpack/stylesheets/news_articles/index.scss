@@ -19,6 +19,7 @@
     .news-article-title {
       font-size: 16px;
       font-weight: 400;
+      color: $color-text-primary;
     }
     
     .news-article-description {
@@ -27,6 +28,7 @@
       line-height: 20px;
       letter-spacing: 0.25px;
       opacity: 80%;
+      color: $color-text-secondary;
     }
   }
 }

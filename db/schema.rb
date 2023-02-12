@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_11_212655) do
+ActiveRecord::Schema.define(version: 2022_07_31_134632) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -221,6 +221,15 @@ ActiveRecord::Schema.define(version: 2022_01_11_212655) do
     t.index ["source_id", "source_type", "user_id"], name: "index_lits_on_source_id_and_source_type_and_user_id", unique: true
   end
 
+  create_table "news_api_logs", force: :cascade do |t|
+    t.string "request_target", null: false
+    t.string "country_code"
+    t.string "category"
+    t.boolean "success"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "news_articles", force: :cascade do |t|
     t.integer "country_id", null: false
     t.datetime "published_at", null: false
@@ -239,6 +248,7 @@ ActiveRecord::Schema.define(version: 2022_01_11_212655) do
     t.index ["country_id"], name: "index_news_articles_on_country_id"
     t.index ["detected_language"], name: "index_news_articles_on_detected_language"
     t.index ["lits_count"], name: "index_news_articles_on_lits_count"
+    t.index ["published_at"], name: "index_news_articles_on_published_at"
     t.index ["url"], name: "index_news_articles_on_url", unique: true
   end
 

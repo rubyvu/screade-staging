@@ -6,23 +6,22 @@
           p #{event.title}
         .event-description
           p #{event.description}
-          
+
         = link_to event_path(id: event.id), class: 'destroy-event', method: :delete, data: { confirm: 'Do you really want to delete this Event?' } do
-          = image_pack_tag('media/images/icons/ic_delete_object.png')
-          
+          = image_pack_tag 'media/images/icons/ic_delete_object.png', class: 'theme-color-icon'
+
       .footer
         .footer-content
           .date
-            = image_pack_tag 'media/images/icons/ic_calendar.png'
+            = image_pack_tag 'media/images/icons/ic_calendar.png', class: 'theme-color-icon'
             span #{month_with_date(event.start_date)}
-            
+
           .time
-            = image_pack_tag 'media/images/icons/ic_clock.png'
-            
+            = image_pack_tag 'media/images/icons/ic_clock.png', class: 'theme-color-icon'
+
             span #{hours_minutes(event.start_date)} - #{hours_minutes(event.end_date)}
-  
+
 #container-floating-wrapper
   #container-floating
     = link_to '', id: 'floating-button', data: { toggle: "modal", target: "#modal-new-event" } do
       p.plus #{image_pack_tag('media/images/icons/ic_plus.png')} Add Event
-  

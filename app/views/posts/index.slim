@@ -2,32 +2,34 @@
   .posts-cards-wrapper
     - @posts.each do |post|
       .posts-card value="#{post.id}"
-        
+
         - if post.user == current_user
           .post-header-panel
             .state
               - if !post.is_approved
                 p On approve
-                
+
             .actions
               = link_to edit_post_path(post) do
                 = image_pack_tag('media/images/icons/ic_edit.png')
-              
+
               = link_to post_path(post), method: :delete, data: { confirm: 'Do you really want to delete this Post?' } do
                 = image_pack_tag('media/images/icons/ic_delete_object.png')
-              
+
         .posts-image-wrapper
-          - if post.image_url.present?
+          - if post.video.attached?
+            = image_tag(post.video_thumbnail, class: 'post-image', onerror: "this.error=null;this.src='#{asset_pack_path('media/images/placeholders/placeholder-news.png')}'")
+          - elsif post.image.attached?
             = image_tag(post.image_url, class: 'post-image', onerror: "this.error=null;this.src='#{asset_pack_path('media/images/placeholders/placeholder-news.png')}'")
           - else
             = image_pack_tag('media/images/placeholders/placeholder-news.png', class: 'post-image')
-          
+
           .post-title-panel
             - if !post.is_approved
               a #{post.title}
             - else
               = link_to post.title, post_post_comments_path(post)
-              
+
           . class="#{post.is_approved ? 'post-info-panel' : 'post-info-panel on-approve'}"
             .div class="info-panel-value-wrapper"
               - if post.is_lited(current_user)
@@ -36,22 +38,22 @@
               - else
                 = link_to post_post_lits_path(post), method: :post, remote: true, id: "post-lit-#{post.id}" do
                   i.ic.lit
-                  
+
               = link_to lits_post_path(post), remote: true do
                 span.info-panel-value #{counter_measurement(post.lits.size)}
-              
+
             .info-panel-value-wrapper
               = link_to post_post_comments_path(post), class: 'comment-link-icon' do
                 i class=(post.is_commented(current_user) ? "ic comment active" : "ic comment")
               span.info-panel-value #{counter_measurement(post.comments.size)}
-              
+
             .info-panel-value-wrapper.pointer-disable
               i class=(post.is_viewed(current_user) ? "ic view active" : "ic view")
               span.info-panel-value #{counter_measurement(post.views.size)}
-          
+
   .mt-4.d-flex.justify-content-center
     = paginate @posts
-    
+
 - if @user == current_user
   #container-floating-wrapper
     #container-floating

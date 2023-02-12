@@ -212,6 +212,7 @@ Rails.application.routes.draw do
   
   resources :users, only: [:show, :edit], param: :username, username: User::USERNAME_ROUTE_FORMAT do
     collection do
+      patch :change_username
       patch :change_password
     end
     

@@ -4,24 +4,24 @@
 
 .d-width-wrapper
   = form_with(model: post, url: (post.persisted? ?  post_path(post) : posts_path), local: true) do |f|
-    
     .input-group.mb-3
-     = f.text_field :image_id, class: 'post-form-image'
-     
-     .post-form-image-mask#post-form-image-mask
-       - if post.image_url.present?
-         img#post-image.post-photo-image style= "display: inline;" src="#{post.image_url}"
-         = image_pack_tag 'media/images/icons/ic_add_photo.png', class: 'icon-add-photo', id: 'icon-add-photo', style: 'display:none;'
-       - else
-         img#post-image.post-photo-image src=""
-         = image_pack_tag 'media/images/icons/ic_add_photo.png', class: 'icon-add-photo', id: 'icon-add-photo'
-         
+      = f.label :image
+      - if post.image.attached?
+        = image_tag post.image, class: 'w-100'
+      = f.file_field :image, direct_upload: true, accept: 'image/png, image/jpeg'
+
     .input-group.mb-3
-     = f.text_field :title, autocomplete: 'off', class: 'form-control', placeholder: 'Title', required: true
-      
+      = f.label :video
+      - if post.video.attached?
+        = image_tag post.video_thumbnail, class: 'w-100'
+      = f.file_field :video, direct_upload: true, accept: 'video/mp4'
+
+    .input-group.mb-3
+      = f.text_field :title, autocomplete: 'off', class: 'form-control', placeholder: 'Title', required: true
+
     .input-group.mb-4
       = f.text_area :description, autocomplete: 'off', class: 'form-control', placeholder: 'Post Description', required: true, rows: 2
-    
+
     .material-field.dropdown.mb-3#post-select-dropdown-position
       - if f.object.persisted?
         = f.hidden_field :source, as: :text_field, value: "#{f.object&.source_type}:#{f.object&.source_id}", required: true
@@ -30,6 +30,6 @@
         - group = NewsCategory.find_by(title: 'general')
         = f.hidden_field :source, as: :text_field, value: "NewsCategory:#{group&.id}", required: true
         = f.text_field :virtual_source, as: :text_field, value: group&.title&.capitalize, class: 'form-control', readonly: true, required: true
-    
+
     .actions
       = f.submit 'Submit', class: 'btn btn-primary w-100'

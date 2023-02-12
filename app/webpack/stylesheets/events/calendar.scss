@@ -4,9 +4,9 @@
   display: inline-grid;
   justify-content: center;
   align-items: center;
-  background: $color-white;
+  background: $color-background-main;
   padding: 20px;
-  box-shadow: 0px 3px 14px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 3px 14px $box-shadow-color;
   border-radius: 4px;
   
   .month {
@@ -44,7 +44,7 @@
     justify-content: center;
     align-items: center;
     grid-template-columns: repeat(7, 1fr);
-    color: $color-grey;
+    color: $color-text-secondary;
     margin-bottom: 15px;
     
     span {
@@ -65,6 +65,7 @@
       outline: 0;
       border: 0;
       background: transparent;
+      color: $color-text-primary;
       font-size: 16px;
       justify-self: center;
       align-self: center;

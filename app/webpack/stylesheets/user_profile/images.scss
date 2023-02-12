@@ -2,13 +2,13 @@
   position: relative;
   margin: 24px 0px;
   overflow: hidden;
-  
+
   .see-all-assets {
     position: absolute;
     right: 0;
     top: 6px;
   }
-  
+
   .new-assets {
     text-align: center;
   }
@@ -19,17 +19,17 @@
   display: block;
   overflow: auto;
   white-space: nowrap;
-  
+
   &.full-list {
     margin: auto;
     overflow: unset;
     white-space: unset;
   }
-  
+
   // Hide scrolle bar
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
-  
+
   .image-wrapper {
     display: inline-flex;
     align-items: center;
@@ -40,29 +40,29 @@
     object-fit: cover;
     text-align: center;
     cursor: pointer;
-    
+
     &.custom-size {
       width: calc(100% * (1/6) - 14px);
       box-sizing: border-box;
     }
-    
+
     .update-asset {
       position: absolute;
       top: 8px;
       left: 8px;
     }
-    
+
     .destroy-asset {
       position: absolute;
       top: 8px;
       right: 8px;
     }
   }
-  
+
   .image-wrapper.custom-size:nth-child(6n) {
     margin-right: 0;
   }
-  
+
   .image-wrapper:before {
     content: "";
     position: absolute;
@@ -72,7 +72,7 @@
     top: 0;
     background: linear-gradient(180deg, rgba(0, 0, 0, 0.31) 0%, rgba(0, 0, 0, 0) 44.22%);
   }
-  
+
   .image-wrapper {
      &.video:after {
       content: url('../images/icons/ic_play.png');
@@ -82,12 +82,23 @@
       text-align: center;
     }
   }
-  
+
   img.user-asset {
     width: 100%;
     height: 100%;
     border-radius: 4px;
     object-fit: cover;
+  }
+}
+
+.full-image-wrapper.video {
+  position: relative;
+
+  &:after {
+    content: url('../images/icons/ic_play.png');
+    position: absolute;
+    top: 50%;
+    left: 50%;
   }
 }
 

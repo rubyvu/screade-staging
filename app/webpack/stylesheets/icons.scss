@@ -9,31 +9,31 @@
   left: 0;
   padding: 0 16px;
   z-index: 1;
-  
+
   &.on-approve { display: none; }
-  
+
   .info-panel-value-wrapper {
     cursor: pointer;
     display: inline-flex;
     width: auto;
     margin-right: 16px;
-    
+
     &.pointer-disable {
       cursor: default;
     }
   }
-  
+
   .info-panel-value-wrapper span.info-panel-value {
     margin-left: 4px;
     color: $color-white;
     font-size: 14px;
     font-weight: 500;
-    
+
     &.color-black {
       color: $color-text-primary;
     }
   }
-  
+
   // Link block for info-panel
   .comment-link-icon {
     line-height: 1;
@@ -63,6 +63,7 @@ i.ic.lit:after {
 
 i.ic.lit.reverse:after {
   content: url('../images/icons/ic_lit_reverse.png');
+  filter: $theme-svg-filter;
 }
 
 i.ic.lit.active:after {
@@ -76,6 +77,7 @@ i.ic.view:after {
 
 i.ic.view.reverse:after {
   content: url('../images/icons/ic_view_reverse.png');
+  filter: $theme-svg-filter;
 }
 
 i.ic.view.active:after {
@@ -89,8 +91,9 @@ i.ic.comment:after {
 
 i.ic.comment.reverse:after {
   content: url('../images/icons/ic_comment_reverse.png');
+  filter: $theme-svg-filter;
 }
- 
+
 i.ic.comment.active:after {
   content: url('../images/icons/ic_comment_active.png');
 }
@@ -114,6 +117,7 @@ i.ic.share:after {
 
 i.ic.share.reverse:after {
   content: url('../images/icons/ic_share_reverse.svg');
+  filter: $theme-svg-filter;
 }
 
 // Translate
@@ -124,6 +128,7 @@ i.ic.delete.reverse:after {
 // Delete
 i.ic.delete.reverse:after {
   content: url('../images/icons/ic_delete_reverse.svg');
+  filter: $theme-svg-filter;
 }
 
 /* Chat */

@@ -5,7 +5,7 @@ module Tasks
       country = Country.find_by(code: country_code)
       return unless country
       
-      NewsCategory.all.each do |category|
+      NewsCategory.where(title: NewsCategory::DEFAULT_CATEGORIES).each do |category|
         # Create Que job to save Article
         CreateNewsArticlesJob.perform_later(country.code, category.default_title)
       end
@@ -79,8 +79,10 @@ module Tasks
       begin
         # Get Source info
         sources = news.get_sources()
+        NewsApiLog.create(request_target: 'sources', success: true)
       rescue
         puts "!!!!!!! ERROR: Cannot get Sources list"
+        NewsApiLog.create(request_target: 'sources', success: false)
         return
       end
       
@@ -127,26 +129,23 @@ module Tasks
     end
     
     private
-      def self.get_all_category_articles(country_code, category, page=1, all_articles=[])
+      def self.get_all_category_articles(country_code, category)
         news = News.new(ENV['NEWS_API_KEY'])
         
         puts "=============================="
         puts "Country: #{country_code}"
         puts "Category: #{category}"
-        puts "Page: #{page}"
         
         begin
           # Return all headline articles published in 24 hour
-          news_array = news.get_top_headlines(country: country_code, category: category, page: page, pageSize: '100')
+          news_array = news.get_top_headlines(country: country_code, category: category, page: 1, pageSize: 100)
+          NewsApiLog.create(request_target: 'headlines', country_code: country_code, category: category, success: true)
+          return news_array
         rescue
           puts "!!!!!!! ERROR: Cannot get Top Headlines for #{country_code} country, #{category} category"
-          news_array = []
+          NewsApiLog.create(request_target: 'headlines', country_code: country_code, category: category, success: false)
+          return []
         end
-        
-        all_articles += news_array
-        return all_articles if news_array.count < 100
-        
-        get_all_category_articles(country_code, category, page+1, all_articles)
       end
   end
 end
