@@ -1,10 +1,13 @@
 .user-profile-assets-wrapper
   .user-profile-assets.full-list
+    - if @images.blank?
+      p You have no images yet
+
     - @images.each do |user_image|
       - next if user_image.file_url.blank?
       .image-wrapper.custom-size
         = image_tag(user_image.file_url, class: 'user-asset', data: { 'enlargeable': true, 'image-loaded': user_image.file_url.present?, 'image-id': user_image.id })
-        
+
         - if user_image.user == current_user
           - if user_image.is_private
             = link_to user_image_path(id: user_image.id, user_image: { is_private: false}), class: 'update-asset', method: :put, data: { confirm: 'Do you really want make this Image Public?' } do
@@ -12,12 +15,12 @@
           - else
             = link_to user_image_path(id: user_image.id, user_image: { is_private: true}), class: 'update-asset', method: :put, data: { confirm: 'Do you really want make this Image Private?' } do
               = image_pack_tag('media/images/icons/ic_public.png')
-            
+
           = link_to user_images_path(id: user_image.id), class: 'destroy-asset', method: :delete, data: { confirm: 'Do you really want to delete this Image?' } do
             = image_pack_tag('media/images/icons/ic_delete_object.png')
-        
+
 .mt-4.d-flex.justify-content-end
     = render 'form', image_uploader: @image_uploader unless @image_uploader.nil?
-            
+
 .mt-4.d-flex.justify-content-center
   = paginate @images

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_31_134632) do
+ActiveRecord::Schema.define(version: 2023_02_13_183930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -397,6 +397,7 @@ ActiveRecord::Schema.define(version: 2022_07_31_134632) do
     t.integer "user_id", null: false
     t.boolean "is_email"
     t.boolean "is_current_location", default: false, null: false
+    t.string "sign_in_redirect_location", default: "Home", null: false
     t.index ["user_id"], name: "index_settings_on_user_id"
   end
 

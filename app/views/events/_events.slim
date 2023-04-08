@@ -1,5 +1,8 @@
 .events-wrapper
-  - events .each do |event|
+  - if events.blank?
+    p You have no events yet
+
+  - events.each do |event|
     .event-card id="#{event.id}"
       .body
         .event-title

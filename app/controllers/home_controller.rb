@@ -44,17 +44,35 @@ class HomeController < ApplicationController
 
     # Get News
     if @home[:is_national]
-      @home[:news_articles] = NewsArticle.joins(:news_categories).where(news_articles: { country: country }, news_categories: { id: news_category.id }).order(published_at: :desc).page(params[:page]).per(16)
+      @home[:news_articles] = NewsArticle.joins(:news_categories)
+                                         .includes([:liting_users, :commenting_users, :viewing_users])
+                                         .where(news_articles: { country: country }, news_categories: { id: news_category.id })
+                                         .order(published_at: :desc)
+                                         .page(params[:page])
+                                         .per(16)
     else
       if current_user
         languages = Language.where(id: current_user.languages.ids).or(Language.where(id: country.languages.ids)).uniq
       else
         languages = Language.where(id: country.languages.ids)
       end
-      @home[:news_articles] = NewsArticle.joins(:news_categories).where.not(news_articles: { country: country }).where(news_articles: { detected_language: languages.pluck(:code) }, news_categories: { id: news_category.id }).order(published_at: :desc).page(params[:page]).per(16)
+      @home[:news_articles] = NewsArticle.joins(:news_categories)
+                                         .includes([:liting_users, :commenting_users, :viewing_users])
+                                         .where.not(news_articles: { country: country })
+                                         .where(news_articles: { detected_language: languages.pluck(:code) }, news_categories: { id: news_category.id })
+                                         .order(published_at: :desc)
+                                         .page(params[:page])
+                                         .per(16)
     end
 
-    @home[:news_articles] = NewsArticle.joins(:news_categories).where(news_articles: { country: Country.find_by(code: 'US')}, news_categories: { id: news_category.id } ).page(params[:page]).per(16) if @home[:news_articles].blank?
+    if @home[:news_articles].blank?
+      @home[:news_articles] = NewsArticle.joins(:news_categories)
+                                         .includes([:liting_users, :commenting_users, :viewing_users])
+                                         .where(news_articles: { country: Country.find_by(code: 'US')}, news_categories: { id: news_category.id } )
+                                         .order(published_at: :desc)
+                                         .page(params[:page])
+                                         .per(16)
+    end
   end
 
   # PUT /home/theme

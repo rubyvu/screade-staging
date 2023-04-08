@@ -1,15 +1,8 @@
 = form_for @image_uploader do |f|
   = f.file_field :file, direct_upload: true, accept: 'image/png, image/jpeg, image/jpg', class: 'upload-user-asset'
-  
+
   #container-floating-wrapper
     #container-floating
-      //.nd2.nds
-        //= image_pack_tag 'media/images/icons/ic_private.png', class: 'reminder'
-      //.nd1.nds
-        //= image_pack_tag 'media/images/icons/ic_private.png', class: 'reminder'
-      //#floating-button
-        //p.plus #{image_pack_tag('media/images/icons/ic_plus.png')} Add Image
-      
       = f.label :file do
         #floating-button
           p.plus #{image_pack_tag('media/images/icons/ic_plus.png')} Add Image

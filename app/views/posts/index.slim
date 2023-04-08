@@ -1,5 +1,8 @@
 .posts-wrapper.my-4
   .posts-cards-wrapper
+    - if @posts.blank?
+      p You have no posts yet
+
     - @posts.each do |post|
       .posts-card value="#{post.id}"
 
