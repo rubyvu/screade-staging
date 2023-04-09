@@ -6,11 +6,11 @@
         input#news-switcher type="checkbox"
       - else
         input#news-switcher type="checkbox" checked="checked"
-        
+
       span.slider.round
-          
+
     h4.news-switcher-title#news-switcher-world class="#{'active' unless is_national}" World News
-        
+
   .news-cards-wrapper
     - news_articles.each do |news_article|
       .news-card value="#{news_article.id}"
@@ -19,28 +19,27 @@
             = image_tag(news_article.img_url, class: 'news-image', onerror: "this.error=null;this.src='#{asset_pack_path('media/images/placeholders/placeholder-news.png')}'")
           - else
             = image_pack_tag('media/images/placeholders/placeholder-news.png', class: 'news-image')
-            
+
           .info-panel
             div class="#{ current_user ? 'info-panel-value-wrapper' : 'info-panel-value-wrapper pointer-disable' }"
               i class=(news_article.is_lited(current_user) ? 'ic lit active' : 'ic lit')
               = link_to lits_news_article_path(news_article), remote: true do
                 span.info-panel-value #{counter_measurement(news_article.lits.size)}
-                
+
             .info-panel-value-wrapper
               = link_to comments_news_article_path(news_article), class: 'comment-link-icon' do
                 i class=(news_article.is_commented(current_user) ? 'ic comment active' : 'ic comment')
               span.info-panel-value #{counter_measurement(news_article.comments.size)}
-              
+
             .info-panel-value-wrapper.pointer-disable
               i class=(news_article.is_viewed(current_user) ? 'ic view active' : 'ic view')
               span.info-panel-value #{counter_measurement(news_article.views.size)}
-              
+
         = link_to news_article.url, class: 'news-article-link', target: '_blank' do
           p.news-title
             = news_article.title
           p.news-description
             = news_article.description
-            
+
   .mt-4.d-flex.justify-content-center
     = paginate news_articles
-    
